@@ -9,18 +9,20 @@ class App extends Component {
   componentWillMount() {
       const {store} = this.props;
 
+      // add keys you've setup in reducers/index initialState
       const {greeting} = store.getState();
       this.setState({greeting});
 
+      // add keys you've setup in reducers/index initialState
       this.unsubscribe = store.subscribe(() => {
         const {greeting} = store.getState();
         this.setState({greeting});
       })
     }
 
-    componentWillUnmount() {
-      this.unsubscribe();
-    }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
   render() {
     const {store} = this.props;

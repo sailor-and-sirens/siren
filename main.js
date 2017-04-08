@@ -8,6 +8,7 @@ import App from './components/App';
 import { reducer } from './reducers/index';
 const store = createStore(reducer);
 
+// have to create it this way so that it's agreeable with registerRootComponent
 const AppWithStore = () => <App store={store} />;
 
 Expo.registerRootComponent(AppWithStore);
