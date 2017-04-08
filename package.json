@@ -1,0 +1,24 @@
+{
+  "name": "siren",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sailor-and-sirens/siren.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sailor-and-sirens/siren/issues"
+  },
+  "homepage": "https://github.com/sailor-and-sirens/siren#readme",
+  "dependencies": {
+    "expo": "^15.0.2",
+    "react": "~15.4.0",
+    "react-native": "https://github.com/exponent/react-native/archive/sdk-15.0.0.tar.gz"
+  }
+}
