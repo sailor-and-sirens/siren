@@ -1,24 +1,20 @@
 import Expo from 'expo';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, View } from 'react-native';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import App from './components/App';
 
-class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Testing 123</Text>
-      </View>
-    );
-  }
-}
+// Import the reducer and create a store
+import { reducer } from './reducers/index';
+const store = createStore(reducer);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// pass store into Provider so we can change how we're connecting to the store
+// no longer have to use componentWillMount/Unmount w/ setState
+const AppWithStore = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+)
 
-Expo.registerRootComponent(App);
+Expo.registerRootComponent(AppWithStore);
