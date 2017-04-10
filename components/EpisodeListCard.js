@@ -8,26 +8,76 @@ const mapStateToProps = (state) => ({
   podcast: state.podcast
 })
 
+hmsToSecondsOnly = (duration) => {
+    var p = duration.split(':'),
+        s = 0, m = 1;
+
+    while (p.length > 0) {
+        s += m * parseInt(p.pop(), 10);
+        m *= 60;
+    }
+    return s;
+}
+
+var renderClock = (duration) => {
+  if(duration.length < 5) {
+    duration = '00:' + duration;
+  }
+  duration = hmsToSecondsOnly(duration);
+  if (duration <= 300) {
+    return <Image source={require('../assets/clockIcons/clock5.png')} style={styles.clock} />
+  }
+  if (duration <= 900) {
+    return <Image source={require('../assets/clockIcons/clock15.png')} style={styles.clock} />
+  }
+  if (duration <= 1800) {
+    return <Image source={require('../assets/clockIcons/clock30.png')} style={styles.clock} />
+  }
+  if (duration <= 2700) {
+    return <Image source={require('../assets/clockIcons/clock45.png')} style={styles.clock} />
+  }
+  if (duration > 2700) {
+    return <Image source={require('../assets/clockIcons/clock60.png')} style={styles.clock} />
+  }
+};
+
+var renderBookmark = (bookmark) => {
+  if (bookmark) {
+    return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark"/>
+  }
+  return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark-outline"/>
+};
+
+var renderHeart = (liked) => {
+  if (liked) {
+    return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart"/>
+  }
+  return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart-outline"/>
+};
+
 class EpisodeListCard extends Component {
 
   render() {
     return (
-      <View style={styles.main}>
-        <View style={styles.leftView}>
-          <Image source={{uri: this.props.podcast.image}} style={styles.image}/>
-        </View>
-        <View style={styles.centerView}>
-          <Text style={styles.podcast}>{this.props.podcast.title}</Text>
-          <Text style={styles.episode} numberOfLines={1}>{this.props.podcast.feed.title}</Text>
-          <Text style={styles.date}>{this.props.podcast.feed.pubDate.substring(0,16)}</Text>
-          <View style={styles.tagTimeView}>
-            <Text style={styles.tag}> {this.props.podcast.tag} </Text>
-            <Text style={styles.time}>{this.props.podcast.feed.duration}</Text>
+      <View style={styles.mainView}>
+        <View style={styles.topView}>
+          <View style={styles.leftView}>
+            <Image source={{uri: this.props.podcast.image}} style={styles.image}/>
+          </View>
+          <View style={styles.rightView}>
+            <Text style={styles.date}>{this.props.podcast.feed.pubDate.substring(0,16)}</Text>
+            <Text style={styles.episode} numberOfLines={1}>{this.props.podcast.feed.title}</Text>
+            <Text style={styles.subtitle} numberOfLines={2}>{this.props.podcast.feed.subtitle}</Text>
           </View>
         </View>
-        <View style={styles.rightView}>
-          <Ionicons style={styles.favorite} size={40} name="ios-heart-outline"/>
-          <Text style={styles.clock}>◑</Text>
+        <View style={styles.bottomView}>
+          <Text style={styles.tag}> {this.props.podcast.tag} </Text>
+          <View style={styles.timeView}>
+            {renderClock(this.props.podcast.feed.duration)}
+            <Text style={styles.time}>{this.props.podcast.feed.duration}</Text>
+          </View>
+          {renderBookmark(this.props.podcast.bookmark)}
+          {renderHeart(this.props.podcast.liked)}
         </View>
       </View>
     );
@@ -35,37 +85,45 @@ class EpisodeListCard extends Component {
 }
 
 const styles = StyleSheet.create({
-  main: {
+  topView: {
     justifyContent: 'space-between',
     height: 80,
     alignItems: 'center',
     flexDirection: 'row',
-    borderBottomWidth: 2,
-    borderBottomColor: 'lightgrey',
-    borderTopWidth: 2,
-    borderTopColor: 'lightgrey',
-    // backgroundColor: 'green',
+    flex: .75,
+    marginBottom: 8,
+    marginTop: 10,
+    paddingRight: 5,
   },
   leftView: {
     flex: .25,
-    // backgroundColor: 'blue',
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  centerView: {
+  rightView: {
     paddingLeft: 3,
-    flex: .625,
-    // backgroundColor: 'red',
+    flex: .75,
     justifyContent: 'space-around',
     alignItems: 'stretch',
     height: 80,
   },
-  rightView: {
-    flex: .125,
-    height: 80,
-    // backgroundColor: 'yellow',
-    justifyContent: 'flex-end',
+  bottomView: {
+    flex: .25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: 10,
+    paddingLeft: 5,
+    paddingRight: 8,
+  },
+  mainView: {
+    height: 140,
+    justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomWidth: 2,
+    borderBottomColor: 'lightgrey',
+    borderTopWidth: 2,
+    borderTopColor: 'lightgrey',
   },
   image: {
     height: 80,
@@ -75,7 +133,11 @@ const styles = StyleSheet.create({
   },
   episode: {
     fontWeight: "500",
-    fontSize: 14,
+    fontSize: 16,
+  },
+  subtitle: {
+  fontWeight: "400",
+  fontSize: 12,
   },
   podcast: {
     fontWeight: "600",
@@ -83,10 +145,8 @@ const styles = StyleSheet.create({
   },
   tag: {
     backgroundColor: '#42f4c5',
-  },
-  tagTimeView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignSelf: 'center',
+    padding: 2,
   },
   date: {
     fontWeight: "400",
@@ -96,13 +156,24 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 14,
     marginRight: 5,
+    color: 'grey',
   },
   favorite: {
+    alignSelf: 'center',
+  },
+  bookmark: {
+    alignSelf: 'center',
   },
   clock: {
-    fontSize: 30,
+    marginRight: 7,
+    height: 23,
+    width: 23,
+  },
+  timeView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
-// export default EpisodeListCard;
 export default connect(mapStateToProps)(EpisodeListCard);
