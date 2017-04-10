@@ -21,7 +21,7 @@ class EpisodeListCard extends Component {
           <Text style={styles.episode} numberOfLines={1}>{this.props.podcast.feed.title}</Text>
           <Text style={styles.date}>{this.props.podcast.feed.pubDate.substring(0,16)}</Text>
           <View style={styles.tagTimeView}>
-            <Text style={styles.time}>{this.props.podcast.tag}</Text>
+            <Text style={styles.tag}> {this.props.podcast.tag} </Text>
             <Text style={styles.time}>{this.props.podcast.feed.duration}</Text>
           </View>
         </View>
@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
     height: 80,
     alignItems: 'center',
     flexDirection: 'row',
+    borderBottomWidth: 2,
+    borderBottomColor: 'lightgrey',
+    borderTopWidth: 2,
+    borderTopColor: 'lightgrey',
     // backgroundColor: 'green',
   },
   leftView: {
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
     flex: .125,
     height: 80,
     // backgroundColor: 'yellow',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   image: {
@@ -70,18 +74,28 @@ const styles = StyleSheet.create({
   textView: {
   },
   episode: {
+    fontWeight: "500",
+    fontSize: 14,
   },
   podcast: {
+    fontWeight: "600",
+    fontSize: 16,
   },
-  subtitle: {
+  tag: {
+    backgroundColor: '#42f4c5',
   },
   tagTimeView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   date: {
+    fontWeight: "400",
+    fontSize: 12,
   },
   time: {
+    fontWeight: "400",
+    fontSize: 14,
+    marginRight: 5,
   },
   favorite: {
   },
