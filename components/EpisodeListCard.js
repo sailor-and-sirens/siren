@@ -166,8 +166,8 @@ const styles = StyleSheet.create({
   },
   clock: {
     marginRight: 7,
-    height: 23,
-    width: 23,
+    height: 21,
+    width: 21,
   },
   timeView: {
     flexDirection: 'row',
