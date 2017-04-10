@@ -29,7 +29,7 @@ class Player extends Component {
             .then(loaded => {
               _this.audioSound.playAsync()
                 .then(played => {
-                  _this.props.dispatch(actionCreators.setPlayPause(true));
+                  _this.props.dispatch(actionCreators.setPlayStatus(true));
                   _this.timer = setInterval(function() {
                     _this.audioSound.getStatusAsync()
                       .then(status => {
@@ -48,7 +48,7 @@ class Player extends Component {
         .then(stopped => {
           _this.audioSound.playAsync()
             .then(played => {
-              _this.props.dispatch(actionCreators.setPlayPause(true));
+              _this.props.dispatch(actionCreators.setPlayStatus(true));
             })
         })
     }
@@ -58,7 +58,7 @@ class Player extends Component {
     let _this = this;
     _this.audioSound.pauseAsync()
       .then(paused => {
-        _this.props.dispatch(actionCreators.setPlayPause(false));
+        _this.props.dispatch(actionCreators.setPlayStatus(false));
       })
   }
 
@@ -87,11 +87,23 @@ class Player extends Component {
   }
 
   handleSkipToBeginning = () => {
-
+    let _this = this;
+    if (_this.audioSound !== '') {
+      _this.audioSound.getStatusAsync()
+        .then(status => {
+          _this.audioSound.setPositionAsync(0);
+        });
+    }
   }
 
   handleSkipToEnd = () => {
-
+    let _this = this;
+    if (_this.audioSound !== '') {
+      _this.audioSound.setPositionAsync(_this.audioSound.getDurationMillis())
+        .then(endOfSong => {
+          _this.props.dispatch(actionCreators.setPlayStatus(false));
+        })
+    }
   }
 
   render() {
@@ -119,7 +131,7 @@ class Player extends Component {
           </View>
           <View style={styles.playerControls}>
             <View style={styles.skipButton}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.handleSkipToBeginning}>
                 <SimpleLineIcons style={{textAlign: 'center'}} name="control-start" size={15} color="black" />
               </TouchableOpacity>
             </View>
@@ -137,7 +149,7 @@ class Player extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.skipButton}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.handleSkipToEnd}>
                 <SimpleLineIcons style={{textAlign: 'center'}} name="control-end" size={15} color="black" />
               </TouchableOpacity>
             </View>

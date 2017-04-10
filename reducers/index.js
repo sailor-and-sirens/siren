@@ -19,7 +19,7 @@ export const reducer = (state = initialState, action) => {
   if (action.type === types.CHANGE_GREETING) {
     return {...state, greeting: action.payload};
   }
-  if (action.type === types.SET_PLAY_PAUSE) {
+  if (action.type === types.SET_PLAY_STATUS) {
     return {...state, isPlaying: action.payload}
   }
   if (action.type === types.UPDATE_CURRENT_PLAYING_TIME) {
