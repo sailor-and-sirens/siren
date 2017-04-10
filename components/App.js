@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
+import EpisodeListCard from './EpisodeListCard';
 // App is connected to the store using connect - check out line 47 as well
 // it also gives us the dispatch method on this.props - see line 21
 import { connect } from 'react-redux';
@@ -15,13 +16,7 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* I'm just an example - delete me */}
-        <TextInput
-          style={styles.greetingInput}
-          onChangeText={(text) => this.props.dispatch(actionCreators.changeGreeting(text))}
-        />
-        <Text>{this.props.greeting}</Text>
-        {/* end example */}
+        <EpisodeListCard/>
       </View>
     );
   }
@@ -45,3 +40,12 @@ const styles = StyleSheet.create({
 });
 
 export default connect(mapStateToProps)(App);
+
+
+        // {/* I'm just an example - delete me */}
+        // <TextInput
+        //   style={styles.greetingInput}
+        //   onChangeText={(text) => this.props.dispatch(actionCreators.changeGreeting(text))}
+        // />
+        // <Text>{this.props.greeting}</Text>
+        // {/* end example */}
