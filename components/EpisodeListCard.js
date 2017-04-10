@@ -129,8 +129,6 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
   },
-  textView: {
-  },
   episode: {
     fontWeight: "500",
     fontSize: 16,
