@@ -4,10 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 
-const mapStateToProps = (state) => ({
-  podcast: state.podcast
-})
-
 hmsToSecondsOnly = (duration) => {
     var p = duration.split(':'),
         s = 0, m = 1;
@@ -62,22 +58,22 @@ class EpisodeListCard extends Component {
       <View style={styles.mainView}>
         <View style={styles.topView}>
           <View style={styles.leftView}>
-            <Image source={{uri: this.props.podcast.image}} style={styles.image}/>
+            <Image source={{uri: this.props.episode.image}} style={styles.image}/>
           </View>
           <View style={styles.rightView}>
-            <Text style={styles.date}>{this.props.podcast.feed.pubDate.substring(0,16)}</Text>
-            <Text style={styles.episode} numberOfLines={1}>{this.props.podcast.feed.title}</Text>
-            <Text style={styles.subtitle} numberOfLines={2}>{this.props.podcast.feed.subtitle}</Text>
+            <Text style={styles.date}>{this.props.episode.feed.pubDate.substring(0,16)}</Text>
+            <Text style={styles.episode} numberOfLines={1}>{this.props.episode.feed.title}</Text>
+            <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode.feed.subtitle}</Text>
           </View>
         </View>
         <View style={styles.bottomView}>
-          <Text style={styles.tag}> {this.props.podcast.tag} </Text>
+          <Text style={styles.tag}> {this.props.episode.tag} </Text>
           <View style={styles.timeView}>
-            {renderClock(this.props.podcast.feed.duration)}
-            <Text style={styles.time}>{this.props.podcast.feed.duration}</Text>
+            {renderClock(this.props.episode.feed.duration)}
+            <Text style={styles.time}>{this.props.episode.feed.duration}</Text>
           </View>
-          {renderBookmark(this.props.podcast.bookmark)}
-          {renderHeart(this.props.podcast.liked)}
+          {renderBookmark(this.props.episode.bookmark)}
+          {renderHeart(this.props.episode.liked)}
         </View>
       </View>
     );
@@ -174,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(EpisodeListCard);
+export default EpisodeListCard;
