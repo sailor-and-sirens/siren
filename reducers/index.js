@@ -7,7 +7,6 @@ const currentEpisode = {
 };
 
 // add your key/values for initialState here
-<<<<<<< HEAD
 const initialState = {
   currentEpisode: currentEpisode,
   isPlaying: false,

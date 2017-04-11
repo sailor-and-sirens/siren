@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Audio } from 'expo';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
@@ -14,11 +14,13 @@ import  ModalComponent  from './Modal';
 
 // connect gives us mapStateToProps, which gives us access to our state
 const mapStateToProps = (state) => ({
-  greeting: state.greeting,
   view: state.view
 })
 
 class App extends Component {
+  componentDidMount = () => {
+    Audio.setIsEnabledAsync(true)
+  }
 
   render() {
     return (
@@ -28,9 +30,9 @@ class App extends Component {
         <EpisodeListCard/>
         <Text>Podcast Card:</Text>
         <PodcastListCard/>
-        <Player />
         <ModalComponent>Hey! I'm a modal!</ModalComponent>
         <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
+        <Player />
       </View>
     );
   }
@@ -39,9 +41,7 @@ class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    backgroundColor: '#fff'
   }
 });
 

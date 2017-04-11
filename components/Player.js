@@ -1,6 +1,6 @@
 import { Audio } from 'expo';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
@@ -14,6 +14,8 @@ const mapStateToProps = (state) => ({
   isPlaying: state.isPlaying
 });
 
+const { height, width } = Dimensions.get('window');
+
 class Player extends Component {
   constructor(props) {
     super(props);
@@ -24,22 +26,19 @@ class Player extends Component {
   handlePlay = (url) => {
     let _this = this;
     if (_this.audioSound === '') {
-      Audio.setIsEnabledAsync(true)
-        .then(enabled => {
-          _this.audioSound = new Audio.Sound({ source: url });
-          _this.audioSound.loadAsync()
-            .then(loaded => {
-              _this.audioSound.playAsync()
-                .then(played => {
-                  _this.props.dispatch(actionCreators.setPlayStatus(true));
-                  _this.timer = setInterval(function() {
-                    _this.audioSound.getStatusAsync()
-                      .then(status => {
-                        let millis = status.positionMillis
-                        _this.props.dispatch(actionCreators.updateCurrentPlayingTime(convertMillis(millis)));
-                      })
-                  }, 100);
-                })
+      _this.audioSound = new Audio.Sound({ source: url });
+      _this.audioSound.loadAsync()
+        .then(loaded => {
+          _this.audioSound.playAsync()
+            .then(played => {
+              _this.props.dispatch(actionCreators.setPlayStatus(true));
+              _this.timer = setInterval(function() {
+                _this.audioSound.getStatusAsync()
+                  .then(status => {
+                    let millis = status.positionMillis
+                    _this.props.dispatch(actionCreators.updateCurrentPlayingTime(convertMillis(millis)));
+                  })
+              }, 100);
             })
         })
           .catch(function(err) {
@@ -219,7 +218,10 @@ class Player extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    bottom: 0,
+    // position: 'absolute',
+    // bottom: 0,
+    // right: 0,
+    // width: width,
     height: 70,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
