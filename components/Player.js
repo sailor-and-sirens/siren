@@ -8,10 +8,10 @@ import { truncateTitle, convertMillis } from '../helpers'
 
 const mapStateToProps = (state) => ({
   currentEpisode: state.currentEpisode,
-  isPlaying: state.isPlaying,
   currentPlayingTime: state.currentPlayingTime,
+  currentSpeed: state.currentSpeed,
   isModalVisible: state.isModalVisible,
-  currentSpeed: state.currentSpeed
+  isPlaying: state.isPlaying
 });
 
 class Player extends Component {
@@ -46,8 +46,9 @@ class Player extends Component {
             console.warn(err);
           })
     } else {
-      _this.audioSound.stopAsync()
-        .then(stopped => {
+      _this.audioSound.getStatusAsync()
+        .then(status => {
+          let currentPosition = status.positionMillis;
           _this.audioSound.playAsync()
             .then(played => {
               _this.props.dispatch(actionCreators.setPlayStatus(true));
@@ -191,7 +192,7 @@ class Player extends Component {
           </View>
         </View>
         <Modal
-          animationType={"fade"}
+          animationType={"slide"}
           transparent={true}
           visible={this.props.isModalVisible}
           >
@@ -218,14 +219,15 @@ class Player extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    bottom: 0,
     height: 70,
-    backgroundColor: '#dcdcdc',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    backgroundColor: '#dcdcdc',
   },
   currentlyPlayingWrapper: {
     flex: 0.3,
@@ -282,7 +284,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: '#e7e3e3',
+    backgroundColor: '#dcdcdc',
   },
   modalCurrentSpeed: {
     flex: 1
