@@ -4,9 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 
-const mapStateToProps = (state) => ({
-  podcast: state.iTunesResult
-})
+// const mapStateToProps = (state) => ({
+//   podcast: state.iTunesResult
+// })
 
 class PodcastListCard extends Component {
 
@@ -60,11 +60,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "500",
-    fontSize: 16,
+    fontSize: 18,
   },
   artist: {
   fontWeight: "400",
-  fontSize: 14,
+  fontSize: 16,
+  marginBottom: 5,
   },
   podcast: {
     fontWeight: "600",
@@ -82,4 +83,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(PodcastListCard);
+// export default connect(mapStateToProps)(PodcastListCard);
+export default PodcastListCard;
