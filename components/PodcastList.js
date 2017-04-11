@@ -36,7 +36,7 @@ class PodcastList extends Component {
     return (
       <View style={styles.mainView}>
         <View style={styles.searchBar}>
-          <TextInput style={styles.searchInput} onChangeText={(text) => {this.setState({text});}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.state.text}/>
+          <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.setState({text});}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.state.text}/>
           <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search" />
         </View>
         <ScrollView style={styles.podcastList}>
