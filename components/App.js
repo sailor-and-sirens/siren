@@ -24,14 +24,17 @@ class App extends Component {
       <View style={styles.container}>
 
         <Header></Header>
+
         <Text>Episode Card:</Text>
         <EpisodeListCard/>
         <Text>Podcast Card:</Text>
         <PodcastListCard/>
 
 
+
         <ModalComponent>Hey! I'm a modal!</ModalComponent>
         <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
+
 
 
       </View>
@@ -56,3 +59,4 @@ export default connect(mapStateToProps)(App);
         // />
         // <Text>{this.props.greeting}</Text>
         // {/* end example */}
+
