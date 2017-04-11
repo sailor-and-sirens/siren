@@ -1,6 +1,6 @@
 import { Audio } from 'expo';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
@@ -9,7 +9,9 @@ import { truncateTitle, convertMillis } from '../helpers'
 const mapStateToProps = (state) => ({
   currentEpisode: state.currentEpisode,
   isPlaying: state.isPlaying,
-  currentPlayingTime: state.currentPlayingTime
+  currentPlayingTime: state.currentPlayingTime,
+  isModalVisible: state.isModalVisible,
+  currentSpeed: state.currentSpeed
 });
 
 class Player extends Component {
@@ -106,6 +108,32 @@ class Player extends Component {
     }
   }
 
+  handleDecreaseSpeed = () => {
+    if (this.audioSound !== '' && this.props.currentSpeed > 0.75) {
+      this.audioSound.setRateAsync(this.props.currentSpeed - 0.25, true)
+        .then(status => {
+          this.props.dispatch(actionCreators.decreaseSpeed(0.25));
+        });
+    }
+  }
+
+  handleIncreaseSpeed = () => {
+    if (this.audioSound !== '' && this.props.currentSpeed < 2.5) {
+      this.audioSound.setRateAsync(this.props.currentSpeed + 0.25, true)
+        .then(status => {
+          this.props.dispatch(actionCreators.increaseSpeed(0.25));
+        });
+    }
+  }
+
+  handleSpeedButtonPress = () => {
+    this.props.dispatch(actionCreators.setModalVisible(true));
+  }
+
+  handleModalClose = () => {
+    this.props.dispatch(actionCreators.setModalVisible(false));
+  }
+
   render() {
     let playPauseButton = <TouchableOpacity onPress={this.handlePlay.bind(this, this.props.currentEpisode.url)}>
       <SimpleLineIcons style={{textAlign: 'center'}} name="control-play" size={35} color="black" />
@@ -156,10 +184,33 @@ class Player extends Component {
           </View>
           <View style={styles.currentSpeedWrapper}>
             <View style={styles.currentSpeed}>
-              <Text style={{textAlign: 'right'}}><SimpleLineIcons style={{textAlign: 'center'}} name="speedometer" size={15} color="black" /> 1.5x </Text>
+              <TouchableOpacity onPress={this.handleSpeedButtonPress}>
+                <Text style={{textAlign: 'right'}}><SimpleLineIcons style={{textAlign: 'center'}} name="speedometer" size={15} color="black" /> {this.props.currentSpeed}x </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
+        <Modal
+          animationType={"fade"}
+          transparent={true}
+          visible={this.props.isModalVisible}
+          >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalWrapper}>
+              <View style={styles.modalCurrentSpeed}>
+                <Text>Change Playback Speed</Text>
+                <Text style={{textAlign: 'center', fontWeight: 'bold',  marginTop: 5, marginBottom: 5}}>{this.props.currentSpeed}x</Text>
+                <View style={styles.modalSpeedButtons}>
+                  <TouchableOpacity onPress={this.handleDecreaseSpeed}><SimpleLineIcons style={{textAlign: 'center', marginRight: 2}} name="minus" size={20} color="black" /></TouchableOpacity>
+                  <TouchableOpacity onPress={this.handleIncreaseSpeed}><SimpleLineIcons style={{textAlign: 'center', marginLeft: 2}} name="plus" size={20} color="black" /></TouchableOpacity>
+                </View>
+              </View>
+              <View style={{position: 'absolute', bottom: 5, right: 5}}>
+                <TouchableOpacity onPress={this.handleModalClose}><SimpleLineIcons name="close" size={20} color="black" /></TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
@@ -215,6 +266,30 @@ const styles = StyleSheet.create({
   },
   currentSpeed: {
     flex: 1
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalWrapper: {
+    height: 75,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: '#e7e3e3',
+  },
+  modalCurrentSpeed: {
+    flex: 1
+  },
+  modalSpeedButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center'
   }
 });
 

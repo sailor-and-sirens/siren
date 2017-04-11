@@ -7,7 +7,13 @@ const currentEpisode = {
 };
 
 // add your key/values for initialState here
-const initialState = {greeting: 'Hello there!', currentEpisode: currentEpisode, isPlaying: false, currentPlayingTime: '0:00'};
+const initialState = {
+  currentEpisode: currentEpisode,
+  isPlaying: false,
+  currentPlayingTime: '0:00',
+  isModalVisible: false,
+  currentSpeed: 1.0
+};
 
 // store.dispatch(...) is what triggers the reducer
 export const reducer = (state = initialState, action) => {
@@ -24,6 +30,15 @@ export const reducer = (state = initialState, action) => {
   }
   if (action.type === types.UPDATE_CURRENT_PLAYING_TIME) {
     return {...state, currentPlayingTime: action.payload}
+  }
+  if (action.type === types.DECREASE_SPEED) {
+    return {...state, currentSpeed: (state.currentSpeed - action.payload)}
+  }
+  if (action.type === types.INCREASE_SPEED) {
+    return {...state, currentSpeed: (state.currentSpeed + action.payload)}
+  }
+  if (action.type === types.SET_MODAL_VISIBLE) {
+    return {...state, isModalVisible: action.payload}
   }
 
   return state;
