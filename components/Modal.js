@@ -26,7 +26,6 @@ class ModalComponent extends Component {
          </View>
         </Modal>
 
-
        </View>
     );
   }
