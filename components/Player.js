@@ -25,21 +25,25 @@ class Player extends Component {
   }
 
   handlePlay = (url) => {
-    this.props.currentSoundInstance.getStatusAsync()
-      .then(status => {
-        let currentPosition = status.positionMillis;
-        this.props.currentSoundInstance.playAsync()
-          .then(played => {
-            this.props.dispatch(actionCreators.setPlayStatus(true));
-          })
-      })
+    if (this.props.currentSoundInstance !== null) {
+      this.props.currentSoundInstance.getStatusAsync()
+        .then(status => {
+          let currentPosition = status.positionMillis;
+          this.props.currentSoundInstance.playAsync()
+            .then(played => {
+              this.props.dispatch(actionCreators.setPlayStatus(true));
+            })
+        })
+        .catch(error => console.log(error));
+    }
   }
 
   handlePause = () => {
     this.props.currentSoundInstance.pauseAsync()
       .then(paused => {
         this.props.dispatch(actionCreators.setPlayStatus(false));
-      });
+      })
+      .catch(error => console.log(error));
   }
 
   handleSkipBack = () => {
@@ -49,7 +53,8 @@ class Player extends Component {
         .then(status => {
           let currentPosition = status.positionMillis;
           this.props.currentSoundInstance.setPositionAsync((currentPosition - secondsToMillis(15)));
-        });
+        })
+        .catch(error => console.log(error));
     }
   }
 
@@ -60,35 +65,40 @@ class Player extends Component {
         .then(status => {
           let currentPosition = status.positionMillis;
           this.props.currentSoundInstance.setPositionAsync((currentPosition + secondsToMillis(15)));
-        });
+        })
+        .catch(error => console.log(error));
     }
   }
 
   handleSkipToBeginning = () => {
     if (this.props.currentSoundInstance !== null) {
       this.props.currentSoundInstance.getStatusAsync()
-        .then(status => this.props.currentSoundInstance.setPositionAsync(0));
+        .then(status => this.props.currentSoundInstance.setPositionAsync(0))
+        .catch(error => console.log(error));
     }
   }
 
   handleSkipToEnd = () => {
     if (this.props.currentSoundInstance !== null) {
       this.props.currentSoundInstance.setPositionAsync(this.props.currentSoundInstance.getDurationMillis())
-        .then(endOfSong => this.props.dispatch(actionCreators.setPlayStatus(false)));
+        .then(endOfSong => this.props.dispatch(actionCreators.setPlayStatus(false)))
+        .catch(error => console.log(error));
     }
   }
 
   handleDecreaseSpeed = () => {
     if (this.props.currentSoundInstance !== null && this.props.currentSpeed > 0.75) {
       this.props.currentSoundInstance.setRateAsync(this.props.currentSpeed - 0.25, true)
-        .then(status => this.props.dispatch(actionCreators.decreaseSpeed(0.25)));
+        .then(status => this.props.dispatch(actionCreators.decreaseSpeed(0.25)))
+        .catch(error => console.log(error));
     }
   }
 
   handleIncreaseSpeed = () => {
     if (this.props.currentSoundInstance !== null && this.props.currentSpeed < 2.5) {
       this.props.currentSoundInstance.setRateAsync(this.props.currentSpeed + 0.25, true)
-        .then(status => this.props.dispatch(actionCreators.increaseSpeed(0.25)));
+        .then(status => this.props.dispatch(actionCreators.increaseSpeed(0.25)))
+        .catch(error => console.log(error));
     }
   }
 
