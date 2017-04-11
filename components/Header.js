@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 
-// connect gives us mapStateToProps, which gives us access to our state
 const mapStateToProps = (state) => ({
   view: state.view
 })

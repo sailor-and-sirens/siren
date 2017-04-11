@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableHighlight, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 
-// connect gives us mapStateToProps, which gives us access to our state
 const mapStateToProps = (state) => ({
   modalVisible: state.modalVisible
 })
@@ -27,11 +26,7 @@ class ModalComponent extends Component {
          </View>
         </Modal>
 
-        <TouchableHighlight onPress={() => {
-           this.setModalVisible(true)
-         }}>
-           <Text onPress={() => this.props.dispatch(actionCreators.toggleModal())}>Show Modal</Text>
-         </TouchableHighlight>
+
        </View>
     );
   }
