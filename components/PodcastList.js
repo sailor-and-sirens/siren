@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PodcastListCard from './PodcastListCard';
-import { StyleSheet, Text, View, Button, TextInput, Image} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
@@ -39,11 +39,11 @@ class PodcastList extends Component {
           <TextInput style={styles.searchInput} onChangeText={(text) => {this.setState({text});}} value={this.state.text}/>
           <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search"/>
         </View>
-        <View style={styles.podcastList}>
+        <ScrollView style={styles.podcastList}>
           {this.state.podcasts.map((podcast, i) => (
               <PodcastListCard podcast={podcast} key={i}/>
             ))}
-        </View>
+        </ScrollView>
       </View>
     );
   }
