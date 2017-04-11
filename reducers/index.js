@@ -3,7 +3,8 @@ import { types } from '../actions';
 // add your key/values for initialState here
 const initialState = {
   greeting: 'Hello there!',
-  view: 'Inbox'
+  view: 'Inbox',
+  modalVisible: false
 };
 
 // store.dispatch(...) is what triggers the reducer
@@ -18,8 +19,11 @@ export const reducer = (state = initialState, action) => {
   }
 
   if (action.type === types.CHANGE_VIEW) {
-    console.log('hit reducers', action.payload);
     return {...state, view: action.payload};
+  }
+
+  if (action.type === types.TOGGLE_MODAL) {
+    return {...state, modalVisible: !state.modalVisible};
   }
 
   return state;
