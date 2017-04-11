@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
+import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+import { convertMillis } from '../helpers';
 
 const mapStateToProps = (state) => ({
+  audioSoundInstance: state.audioSoundInstance,
   podcast: state.podcast
 })
 
@@ -56,13 +59,54 @@ var renderHeart = (liked) => {
 };
 
 class EpisodeListCard extends Component {
+  newSoundInstance = null;
+  timer = null;
+
+  componentDidMount = () => {
+    Audio.setIsEnabledAsync(true);
+  }
+
+  handlePlay = (podcast) => {
+    if (this.newSoundInstance === null) {
+      this.playNewEpisode();
+    } else {
+      clearInterval(this.timer);
+      this.newSoundInstance.stopAsync()
+        .then(stopped => {
+          this.props.dispatch(actionCreators.updateCurrentPlayingTime('0:00'));
+          this.playNewEpisode();
+        });
+    }
+  }
+
+  playNewEpisode = () => {
+    this.newSoundInstance = new Audio.Sound({ source: this.props.podcast.feed.enclosure.url });
+    this.props.dispatch(actionCreators.createNewSoundInstance(this.newSoundInstance));
+    this.props.dispatch(actionCreators.setPlayStatus(true));
+    this.props.dispatch(actionCreators.updateCurrentlyPlayingEpisode(this.props.podcast.feed.title));
+    this.newSoundInstance.loadAsync()
+      .then(loaded => {
+        this.newSoundInstance.playAsync()
+          .then(played => {
+            this.timer = setInterval(function() {
+              this.newSoundInstance.getStatusAsync()
+                .then(status => {
+                  let millis = status.positionMillis
+                  this.props.dispatch(actionCreators.updateCurrentPlayingTime(convertMillis(millis)));
+                })
+            }.bind(this), 100);
+          })
+      });
+  }
 
   render() {
     return (
       <View style={styles.mainView}>
         <View style={styles.topView}>
           <View style={styles.leftView}>
-            <Image source={{uri: this.props.podcast.image}} style={styles.image}/>
+            <TouchableOpacity onPress={this.handlePlay.bind(this, this.props.podcast)}>
+              <Image source={{uri: this.props.podcast.image}} style={styles.image}/>
+            </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
             <Text style={styles.date}>{this.props.podcast.feed.pubDate.substring(0,16)}</Text>

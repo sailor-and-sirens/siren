@@ -4,11 +4,12 @@ import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'rea
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
-import { truncateTitle, convertMillis } from '../helpers'
+import { truncateTitle, convertMillis } from '../helpers';
 
 const mapStateToProps = (state) => ({
-  currentEpisode: state.currentEpisode,
+  currentEpisodeTitle: state.currentEpisodeTitle,
   currentPlayingTime: state.currentPlayingTime,
+  currentSoundInstance: state.currentSoundInstance,
   currentSpeed: state.currentSpeed,
   isModalVisible: state.isModalVisible,
   isPlaying: state.isPlaying
@@ -24,105 +25,70 @@ class Player extends Component {
   }
 
   handlePlay = (url) => {
-    let _this = this;
-    if (_this.audioSound === '') {
-      _this.audioSound = new Audio.Sound({ source: url });
-      _this.audioSound.loadAsync()
-        .then(loaded => {
-          _this.audioSound.playAsync()
-            .then(played => {
-              _this.props.dispatch(actionCreators.setPlayStatus(true));
-              _this.timer = setInterval(function() {
-                _this.audioSound.getStatusAsync()
-                  .then(status => {
-                    let millis = status.positionMillis
-                    _this.props.dispatch(actionCreators.updateCurrentPlayingTime(convertMillis(millis)));
-                  })
-              }, 100);
-            })
-        })
-          .catch(function(err) {
-            console.warn(err);
+    this.props.currentSoundInstance.getStatusAsync()
+      .then(status => {
+        let currentPosition = status.positionMillis;
+        this.props.currentSoundInstance.playAsync()
+          .then(played => {
+            this.props.dispatch(actionCreators.setPlayStatus(true));
           })
-    } else {
-      _this.audioSound.getStatusAsync()
-        .then(status => {
-          let currentPosition = status.positionMillis;
-          _this.audioSound.playAsync()
-            .then(played => {
-              _this.props.dispatch(actionCreators.setPlayStatus(true));
-            })
-        })
-    }
-  }
-
-  handlePause = () => {
-    let _this = this;
-    _this.audioSound.pauseAsync()
-      .then(paused => {
-        _this.props.dispatch(actionCreators.setPlayStatus(false));
       })
   }
 
-  handleSkipBack = () => {
-    let _this = this;
-    if (_this.audioSound !== '') {
-      let secondsToMillis = (seconds => seconds * 1000);
-      _this.audioSound.getStatusAsync()
-      .then(status => {
-        let currentPosition = status.positionMillis;
-        _this.audioSound.setPositionAsync((currentPosition - secondsToMillis(15)));
+  handlePause = () => {
+    this.props.currentSoundInstance.pauseAsync()
+      .then(paused => {
+        this.props.dispatch(actionCreators.setPlayStatus(false));
       });
+  }
+
+  handleSkipBack = () => {
+    if (this.props.currentSoundInstance !== null) {
+      let secondsToMillis = (seconds => seconds * 1000);
+      this.props.currentSoundInstance.getStatusAsync()
+        .then(status => {
+          let currentPosition = status.positionMillis;
+          this.props.currentSoundInstance.setPositionAsync((currentPosition - secondsToMillis(15)));
+        });
     }
   }
 
   handleSkipAhead = () => {
-    let _this = this;
-    if (_this.audioSound !== '') {
+    if (this.props.currentSoundInstance !== null) {
       let secondsToMillis = (seconds => seconds * 1000);
-      _this.audioSound.getStatusAsync()
+      this.props.currentSoundInstance.getStatusAsync()
         .then(status => {
           let currentPosition = status.positionMillis;
-          _this.audioSound.setPositionAsync((currentPosition + secondsToMillis(15)));
+          this.props.currentSoundInstance.setPositionAsync((currentPosition + secondsToMillis(15)));
         });
     }
   }
 
   handleSkipToBeginning = () => {
-    let _this = this;
-    if (_this.audioSound !== '') {
-      _this.audioSound.getStatusAsync()
-        .then(status => {
-          _this.audioSound.setPositionAsync(0);
-        });
+    if (this.props.currentSoundInstance !== null) {
+      this.props.currentSoundInstance.getStatusAsync()
+        .then(status => this.props.currentSoundInstance.setPositionAsync(0));
     }
   }
 
   handleSkipToEnd = () => {
-    let _this = this;
-    if (_this.audioSound !== '') {
-      _this.audioSound.setPositionAsync(_this.audioSound.getDurationMillis())
-        .then(endOfSong => {
-          _this.props.dispatch(actionCreators.setPlayStatus(false));
-        })
+    if (this.props.currentSoundInstance !== null) {
+      this.props.currentSoundInstance.setPositionAsync(this.props.currentSoundInstance.getDurationMillis())
+        .then(endOfSong => this.props.dispatch(actionCreators.setPlayStatus(false)));
     }
   }
 
   handleDecreaseSpeed = () => {
-    if (this.audioSound !== '' && this.props.currentSpeed > 0.75) {
-      this.audioSound.setRateAsync(this.props.currentSpeed - 0.25, true)
-        .then(status => {
-          this.props.dispatch(actionCreators.decreaseSpeed(0.25));
-        });
+    if (this.props.currentSoundInstance !== null && this.props.currentSpeed > 0.75) {
+      this.props.currentSoundInstance.setRateAsync(this.props.currentSpeed - 0.25, true)
+        .then(status => this.props.dispatch(actionCreators.decreaseSpeed(0.25)));
     }
   }
 
   handleIncreaseSpeed = () => {
-    if (this.audioSound !== '' && this.props.currentSpeed < 2.5) {
-      this.audioSound.setRateAsync(this.props.currentSpeed + 0.25, true)
-        .then(status => {
-          this.props.dispatch(actionCreators.increaseSpeed(0.25));
-        });
+    if (this.props.currentSoundInstance !== null && this.props.currentSpeed < 2.5) {
+      this.props.currentSoundInstance.setRateAsync(this.props.currentSpeed + 0.25, true)
+        .then(status => this.props.dispatch(actionCreators.increaseSpeed(0.25)));
     }
   }
 
@@ -135,20 +101,24 @@ class Player extends Component {
   }
 
   render() {
-    let playPauseButton = <TouchableOpacity onPress={this.handlePlay.bind(this, this.props.currentEpisode.url)}>
-      <SimpleLineIcons style={{textAlign: 'center'}} name="control-play" size={35} color="black" />
-    </TouchableOpacity>
+    let playPauseButton = (
+      <TouchableOpacity onPress={this.handlePlay}>
+        <SimpleLineIcons style={{textAlign: 'center'}} name="control-play" size={35} color="black" />
+      </TouchableOpacity>
+    )
 
     if (this.props.isPlaying) {
-      playPauseButton = <TouchableOpacity onPress={this.handlePause}>
-        <SimpleLineIcons style={{textAlign: 'center'}} name="control-pause" size={35} color="black" />
-      </TouchableOpacity>
+      playPauseButton = (
+        <TouchableOpacity onPress={this.handlePause}>
+          <SimpleLineIcons style={{textAlign: 'center'}} name="control-pause" size={35} color="black" />
+        </TouchableOpacity>
+      )
     }
     return (
       <View style={styles.container}>
         <View style={styles.currentlyPlayingWrapper}>
           <View style={styles.currentlyPlaying}>
-            <Text style={{textAlign: 'center'}}>{truncateTitle(this.props.currentEpisode.title)}</Text>
+            <Text style={{textAlign: 'center'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
           </View>
         </View>
         <View style={styles.timeSpeedPlayerWrapper}>

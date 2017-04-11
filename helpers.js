@@ -1,4 +1,5 @@
 export const truncateTitle = (title) => {
+  if (!title) return '';
   let truncatedTitle = [];
   let currentLength = 0;
   if (title.length <= 45) return title;

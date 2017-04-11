@@ -9,7 +9,6 @@ const mapStateToProps = (state) => ({
 })
 
 class PodcastListCard extends Component {
-
   render() {
     return (
       <View style={styles.mainView}>

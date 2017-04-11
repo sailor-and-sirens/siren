@@ -1,20 +1,15 @@
 import { types } from '../actions';
 
-const currentEpisode = {
-  title: '#232: The Tim Ferriss Radio Hour: Controlling Stress, Nutrition Upgrades, and Improved Health',
-  url: 'http://traffic.libsyn.com/timferriss/The_Tim_Ferriss_Show_-_Radio_Hour_episode_2.mp3?dest-id=189939'
-
-};
-
 // add your key/values for initialState here
 const initialState = {
-  currentEpisode: currentEpisode,
-  isPlaying: false,
+  currentEpisodeTitle: null,
   currentPlayingTime: '0:00',
-  isModalVisible: false,
+  currentSoundInstance: null,
   currentSpeed: 1.0,
-  view: 'Inbox',
+  isModalVisible: false,
+  isPlaying: false,
   modalVisible: false,
+  view: 'Inbox',
   //sample until call to API is setup
   iTunesResult: JSON.parse('{"wrapperType":"track", "kind":"podcast", "collectionId":592681501, "trackId":592681501, "artistName":"Black Astronauts Podcast Network", "collectionName":"Black Astronauts Podcast Network", "trackName":"Black Astronauts Podcast Network", "collectionCensoredName":"Black Astronauts Podcast Network", "trackCensoredName":"Black Astronauts Podcast Network", "collectionViewUrl":"https://itunes.apple.com/us/podcast/black-astronauts-podcast-network/id592681501?mt=2&uo=4", "feedUrl":"http://blackastronautspodcast.libsyn.com/rss", "trackViewUrl":"https://itunes.apple.com/us/podcast/black-astronauts-podcast-network/id592681501?mt=2&uo=4", "artworkUrl30":"http://is2.mzstatic.com/image/thumb/Music71/v4/7d/a2/6e/7da26ee8-e7fc-2cf9-42b3-95e12ef452f8/source/30x30bb.jpg", "artworkUrl60":"http://is2.mzstatic.com/image/thumb/Music71/v4/7d/a2/6e/7da26ee8-e7fc-2cf9-42b3-95e12ef452f8/source/60x60bb.jpg", "artworkUrl100":"http://is2.mzstatic.com/image/thumb/Music71/v4/7d/a2/6e/7da26ee8-e7fc-2cf9-42b3-95e12ef452f8/source/100x100bb.jpg", "collectionPrice":0.00, "trackPrice":0.00, "trackRentalPrice":0, "collectionHdPrice":0, "trackHdPrice":0, "trackHdRentalPrice":0, "releaseDate":"2017-04-10T14:02:00Z", "collectionExplicitness":"explicit", "trackExplicitness":"explicit", "trackCount":9, "country":"USA", "currency":"USD", "primaryGenreName":"Comedy", "contentAdvisoryRating":"Explicit", "artworkUrl600":"http://is2.mzstatic.com/image/thumb/Music71/v4/7d/a2/6e/7da26ee8-e7fc-2cf9-42b3-95e12ef452f8/source/600x600bb.jpg", "genreIds":["1303", "26", "1324", "1323", "1404"], "genres":["Comedy", "Podcasts", "Society & Culture", "Games & Hobbies", "Video Games"]}'),
   //sample until DB is set up
@@ -41,13 +36,17 @@ export const reducer = (state = initialState, action) => {
   if (action.type === types.SET_MODAL_VISIBLE) {
     return {...state, isModalVisible: action.payload}
   }
-
   if (action.type === types.CHANGE_VIEW) {
     return {...state, view: action.payload};
   }
-
   if (action.type === types.TOGGLE_MODAL) {
     return {...state, modalVisible: !state.modalVisible};
+  }
+  if (action.type === types.CREATE_NEW_SOUND_INSTANCE) {
+    return {...state, currentSoundInstance: action.payload};
+  }
+  if (action.type === types.UPDATE_CURRENTLY_PLAYING_EPISODE) {
+    return {...state, currentEpisodeTitle: action.payload}
   }
 
   return state;

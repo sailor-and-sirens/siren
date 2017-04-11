@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Audio } from 'expo';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
@@ -9,8 +8,8 @@ import PodcastListCard from './PodcastListCard';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import Player from './Player';
-import  Header  from './Header';
-import  ModalComponent  from './Modal';
+import Header from './Header';
+import ModalComponent from './Modal';
 
 // connect gives us mapStateToProps, which gives us access to our state
 const mapStateToProps = (state) => ({
@@ -18,18 +17,15 @@ const mapStateToProps = (state) => ({
 })
 
 class App extends Component {
-  componentDidMount = () => {
-    Audio.setIsEnabledAsync(true)
-  }
 
   render() {
     return (
       <View style={styles.container}>
         <Header></Header>
         <Text>Episode Card:</Text>
-        <EpisodeListCard/>
+        <EpisodeListCard />
         <Text>Podcast Card:</Text>
-        <PodcastListCard/>
+        <PodcastListCard />
         <ModalComponent>Hey! I'm a modal!</ModalComponent>
         <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
         <Player />
