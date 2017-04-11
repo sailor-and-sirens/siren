@@ -4,10 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 
-// const mapStateToProps = (state) => ({
-//   podcast: state.iTunesResult
-// })
-
 class PodcastListCard extends Component {
 
   render() {
@@ -18,7 +14,7 @@ class PodcastListCard extends Component {
         </View>
         <View style={styles.rightView}>
           <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
-          <Text style={styles.artist} numberOfLines={2}>{this.props.podcast.artistName}</Text>
+          <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
           <View style={styles.tagAddView}>
             <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
             <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline"/>
@@ -83,5 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-// export default connect(mapStateToProps)(PodcastListCard);
 export default PodcastListCard;
