@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   },
   podcastList:{
     width: '100%',
+    marginBottom: 180 //Prevents list from being cut off
   },
   searchBar: {
     flexDirection: 'row',
