@@ -27,12 +27,13 @@ class App extends Component {
         <Header/>
 
         {this.props.view === 'Search' ?
-        <PodcastList/> : null }
-
-        <ModalComponent>Hey! I'm a modal!</ModalComponent>
-        <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
-
-
+        <PodcastList/> :
+        <View>
+          <ModalComponent>Hey! I'm a modal!</ModalComponent>
+          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
+        </View>
+      }
+      
       </View>
     );
   }
