@@ -28,12 +28,16 @@ class App extends Component {
 
         {this.props.view === 'Search' ?
         <PodcastList/> :
+
+        this.props.view === 'Inbox' ?
+        <EpisodeList/> :
+
         <View>
           <ModalComponent>Hey! I'm a modal!</ModalComponent>
           <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
         </View>
       }
-      
+
       </View>
     );
   }
