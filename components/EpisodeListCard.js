@@ -78,6 +78,7 @@ class EpisodeListCard extends Component {
       </View>
     );
   }
+
 }
 
 const styles = StyleSheet.create({
