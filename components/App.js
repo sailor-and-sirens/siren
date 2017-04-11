@@ -24,10 +24,15 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header></Header>
+        <Header/>
+
+        {this.props.view === 'Search' ?
+        <PodcastList/> : null }
+
         <ModalComponent>Hey! I'm a modal!</ModalComponent>
         <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
-        <PodcastList/>
+
+
       </View>
     );
   }
@@ -50,4 +55,3 @@ export default connect(mapStateToProps)(App);
         // />
         // <Text>{this.props.greeting}</Text>
         // {/* end example */}
-
