@@ -5,7 +5,7 @@ import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
 
 // App is connected to the store using connect - check out line 47 as well
-// it also gives us the dispatch method on this.props - see line 21
+// it also gives us the dispatch method on this.props - see line 21.
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import  Header  from './Header';
