@@ -113,14 +113,14 @@ class Player extends Component {
   render() {
     let playPauseButton = (
       <TouchableOpacity onPress={this.handlePlay}>
-        <SimpleLineIcons style={{textAlign: 'center'}} name="control-play" size={35} color="black" />
+        <SimpleLineIcons style={{textAlign: 'center'}} name="control-play" size={40} color="black" />
       </TouchableOpacity>
     )
 
     if (this.props.isPlaying) {
       playPauseButton = (
         <TouchableOpacity onPress={this.handlePause}>
-          <SimpleLineIcons style={{textAlign: 'center'}} name="control-pause" size={35} color="black" />
+          <SimpleLineIcons style={{textAlign: 'center'}} name="control-pause" size={40} color="black" />
         </TouchableOpacity>
       )
     }
@@ -134,18 +134,18 @@ class Player extends Component {
         <View style={styles.timeSpeedPlayerWrapper}>
           <View style={styles.currentTimeWrapper}>
             <View style={styles.currentTime}>
-              <Text style={{textAlign: 'left'}}><SimpleLineIcons style={{textAlign: 'center'}} name="clock" size={15} color="black" /> {this.props.currentPlayingTime}</Text>
+              <Text style={{textAlign: 'left'}}><SimpleLineIcons style={{textAlign: 'center'}} name="clock" size={20} color="black" /> {this.props.currentPlayingTime}</Text>
             </View>
           </View>
           <View style={styles.playerControls}>
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={this.handleSkipToBeginning}>
-                <SimpleLineIcons style={{textAlign: 'center'}} name="control-start" size={15} color="black" />
+                <SimpleLineIcons style={{textAlign: 'center'}} name="control-start" size={20} color="black" />
               </TouchableOpacity>
             </View>
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={this.handleSkipBack}>
-                <SimpleLineIcons style={{textAlign: 'center'}} name="control-rewind" size={20} color="black" />
+                <SimpleLineIcons style={{textAlign: 'center'}} name="control-rewind" size={25} color="black" />
               </TouchableOpacity>
             </View>
             <View style={styles.playButton}>
@@ -153,19 +153,19 @@ class Player extends Component {
             </View>
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={this.handleSkipAhead}>
-                <SimpleLineIcons style={{textAlign: 'center'}} name="control-forward" size={20} color="black" />
+                <SimpleLineIcons style={{textAlign: 'center'}} name="control-forward" size={25} color="black" />
               </TouchableOpacity>
             </View>
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={this.handleSkipToEnd}>
-                <SimpleLineIcons style={{textAlign: 'center'}} name="control-end" size={15} color="black" />
+                <SimpleLineIcons style={{textAlign: 'center'}} name="control-end" size={20} color="black" />
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.currentSpeedWrapper}>
             <View style={styles.currentSpeed}>
               <TouchableOpacity onPress={this.handleSpeedButtonPress}>
-                <Text style={{textAlign: 'right'}}><SimpleLineIcons style={{textAlign: 'center'}} name="speedometer" size={15} color="black" /> {this.props.currentSpeed}x </Text>
+                <Text style={{textAlign: 'right'}}><SimpleLineIcons style={{textAlign: 'center'}} name="speedometer" size={20} color="black" /> {this.props.currentSpeed}x </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -181,8 +181,8 @@ class Player extends Component {
                 <Text>Change Playback Speed</Text>
                 <Text style={{textAlign: 'center', fontWeight: 'bold',  marginTop: 5, marginBottom: 5}}>{this.props.currentSpeed}x</Text>
                 <View style={styles.modalSpeedButtons}>
-                  <TouchableOpacity onPress={this.handleDecreaseSpeed}><SimpleLineIcons style={{textAlign: 'center', marginRight: 2}} name="minus" size={20} color="black" /></TouchableOpacity>
-                  <TouchableOpacity onPress={this.handleIncreaseSpeed}><SimpleLineIcons style={{textAlign: 'center', marginLeft: 2}} name="plus" size={20} color="black" /></TouchableOpacity>
+                  <TouchableOpacity onPress={this.handleDecreaseSpeed}><SimpleLineIcons style={{textAlign: 'center', marginRight: 5}} name="minus" size={25} color="black" /></TouchableOpacity>
+                  <TouchableOpacity onPress={this.handleIncreaseSpeed}><SimpleLineIcons style={{textAlign: 'center', marginLeft: 5}} name="plus" size={25} color="black" /></TouchableOpacity>
                 </View>
               </View>
               <View style={{position: 'absolute', bottom: 5, right: 5}}>
@@ -198,10 +198,9 @@ class Player extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    // position: 'absolute',
-    // bottom: 0,
-    // right: 0,
-    // width: width,
+    position: 'absolute',
+    bottom: 0,
+    width: width,
     height: 70,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
@@ -225,7 +224,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   currentTimeWrapper: {
-    flex: 0.25,
+    flex: 0.2,
     flexDirection: 'row',
     alignItems: 'flex-end'
   },
@@ -233,7 +232,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   playerControls: {
-    flex: 0.5,
+    flex: 0.6,
     flexDirection: 'row',
     alignItems: 'center'
   },
@@ -244,7 +243,7 @@ const styles = StyleSheet.create({
     flex: 0.2
   },
   currentSpeedWrapper: {
-    flex: 0.25,
+    flex: 0.2,
     flexDirection: 'row',
     alignItems: 'flex-end'
   },
@@ -257,7 +256,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   modalWrapper: {
-    height: 75,
+    position: 'absolute',
+    bottom: 0,
+    width: width,
+    height: 80,
     alignSelf: 'stretch',
     justifyContent: 'center',
     alignItems: 'center',
@@ -273,7 +275,8 @@ const styles = StyleSheet.create({
   },
   modalSpeedButtons: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 5
   }
 });
 
