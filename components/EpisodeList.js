@@ -37,6 +37,7 @@ class EpisodeList extends Component {
     this.props.dispatch(actionCreators.createNewSoundInstance(this.newSoundInstance));
     this.props.dispatch(actionCreators.setPlayStatus(true));
     this.props.dispatch(actionCreators.updateCurrentlyPlayingEpisode(episode.feed.title));
+    this.props.dispatch(actionCreators.storeEpisodeData(episode));
     this.newSoundInstance.loadAsync()
       .then(loaded => {
         this.newSoundInstance.playAsync()

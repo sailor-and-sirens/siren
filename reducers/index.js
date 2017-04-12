@@ -2,11 +2,13 @@ import { types } from '../actions';
 
 // add your key/values for initialState here
 const initialState = {
+  currentEpisode: null,
   currentEpisodeTitle: null,
   currentPlayingTime: '0:00',
   currentSoundInstance: null,
   currentSpeed: 1.0,
   isModalVisible: false,
+  isFullSizeModalVisible: false,
   isPlaying: false,
   modalVisible: false,
   view: 'Inbox',
@@ -37,11 +39,17 @@ export const reducer = (state = initialState, action) => {
   if (action.type === types.INCREASE_SPEED) {
     return {...state, currentSpeed: (state.currentSpeed + action.payload)}
   }
+  if (action.type === types.SET_FULL_SIZE_MODAL_VISIBLE) {
+    return {...state, isFullSizeModalVisible: action.payload}
+  }
   if (action.type === types.SET_MODAL_VISIBLE) {
     return {...state, isModalVisible: action.payload}
   }
   if (action.type === types.SET_PLAY_STATUS) {
     return {...state, isPlaying: action.payload}
+  }
+  if (action.type === types.STORE_EPISODE_DATA) {
+    return {...state, currentEpisode: action.payload}
   }
   if (action.type === types.TOGGLE_MODAL) {
     return {...state, modalVisible: !state.modalVisible};

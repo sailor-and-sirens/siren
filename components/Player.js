@@ -6,13 +6,16 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import { truncateTitle, convertMillis } from '../helpers';
 import PlayerSpeedModal from './PlayerSpeedModal';
+import PlayerFullSizeModal from './PlayerFullSizeModal';
 
 const mapStateToProps = (state) => ({
+  currentEpisode: state.currentEpisode,
   currentEpisodeTitle: state.currentEpisodeTitle,
   currentPlayingTime: state.currentPlayingTime,
   currentSoundInstance: state.currentSoundInstance,
   currentSpeed: state.currentSpeed,
   isModalVisible: state.isModalVisible,
+  isFullSizeModalVisible: state.isFullSizeModalVisible,
   isPlaying: state.isPlaying
 });
 
@@ -106,6 +109,10 @@ class Player extends Component {
     this.props.dispatch(actionCreators.setModalVisible(false));
   }
 
+  handleFullSizeButtonPress = () => {
+    this.props.dispatch(actionCreators.setFullSizeModalVisible(true));
+  }
+
   render() {
     let playPauseButton = (
       <TouchableOpacity onPress={this.handlePlay}>
@@ -123,6 +130,9 @@ class Player extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.currentlyPlayingWrapper}>
+          <TouchableOpacity onPress={this.handleFullSizeButtonPress}>
+            <SimpleLineIcons name="arrow-up" size={15}/>
+          </TouchableOpacity>
           <View style={styles.currentlyPlaying}>
             <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
           </View>
@@ -172,6 +182,10 @@ class Player extends Component {
           handleDecreaseSpeed={this.handleDecreaseSpeed}
           handleIncreaseSpeed={this.handleIncreaseSpeed}
           handleModalClose={this.handleModalClose}
+        />
+        <PlayerFullSizeModal
+          isFullSizeModalVisible={this.props.isFullSizeModalVisible}
+          episode={this.props.currentEpisode}
         />
       </View>
     );

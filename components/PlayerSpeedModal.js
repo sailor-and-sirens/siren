@@ -11,7 +11,7 @@ const PlayerSpeedModal = (props) => {
       animationType={"slide"}
       transparent={true}
       visible={props.isModalVisible}
-      >
+    >
       <View style={styles.modalContainer}>
         <View style={styles.modalWrapper}>
           <View style={styles.modalCurrentSpeed}>
