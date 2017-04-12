@@ -19,11 +19,6 @@ const mapStateToProps = (state) => ({
 const { height, width } = Dimensions.get('window');
 
 class Player extends Component {
-  constructor(props) {
-    super(props);
-    this.audioSound = '';
-    this.timer = '';
-  }
 
   handlePlay = (url) => {
     if (this.props.currentSoundInstance !== null) {
