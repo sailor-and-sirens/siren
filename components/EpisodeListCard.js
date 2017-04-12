@@ -67,7 +67,7 @@ class EpisodeListCard extends Component {
           </View>
         </View>
         <View style={styles.bottomView}>
-          <Text style={styles.tag}> {this.props.episode.tag} </Text>
+          <Text style={styles.tag} numberOfLines={1} ellipsizeMode='tail'> {this.props.episode.tag} </Text>
           <View style={styles.timeView}>
             {renderClock(this.props.episode.feed.duration)}
             <Text style={styles.time}>{this.props.episode.feed.duration}</Text>
@@ -142,6 +142,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#42f4c5',
     alignSelf: 'center',
     padding: 2,
+    width: '30%',
+    textAlign: 'center',
   },
   date: {
     fontWeight: "400",

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, Image, Picker} from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, Button, Image, Picker} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
@@ -10,55 +10,68 @@ const mapStateToProps = (state) => ({
   filters: state.inboxFilters
 })
 
+var tempInboxFilters = {
+  liked: "likedOff",
+  bookmarked: "bookmarkedOff",
+  time: "timeOff",
+  tag: "tagOff"
+};
 
 class Filter extends Component {
-
   render() {
    return (
       <View style={styles.mainView}>
 
         <View style={styles.filterBar}>
-          <Ionicons style={styles.favorite} size={30} color='grey' name="ios-heart-outline"/>
-          <Picker style={styles.picker}>
-            <Picker.Item value="bookmarksReset" label="All" />
-            <Picker.Item value="bookmarksOnly" label="Liked" />
-            <Picker.Item value="bookmarksHide" label="Not Liked" />
+          <Ionicons style={styles.icon} size={30} color='grey' name="ios-heart-outline"/>
+          <Picker style={styles.picker}
+              selectedValue={this.props.filters.liked}
+              onValueChange={(value) => {tempInboxFilters.liked = value; this.props.dispatch(actionCreators.updateInboxFilters(tempInboxFilters));}}>
+            <Picker.Item value="likedOff" label="All" />
+            <Picker.Item value="liked" label="Liked" />
+            <Picker.Item value="notLiked" label="Not Liked" />
           </Picker>
         </View>
 
         <View style={styles.filterBar}>
-            <Ionicons style={styles.favorite} size={30} color='grey' name="ios-bookmark-outline"/>
-            <Picker style={styles.picker}>
-              <Picker.Item value="bookmarksReset" label="All" />
-              <Picker.Item value="bookmarksOnly" label="Bookmarked" />
-              <Picker.Item value="bookmarksHide" label="Not Bookmarked" />
+            <Ionicons style={styles.bookmark} size={30} color='grey' name="ios-bookmark-outline"/>
+            <Picker style={styles.picker}
+                selectedValue={this.props.filters.liked}
+                onValueChange={(value) => {tempInboxFilters.bookmarked = value; this.props.dispatch(actionCreators.updateInboxFilters(tempInboxFilters));}}>
+              <Picker.Item value="bookmarkedOff" label="All" />
+              <Picker.Item value="bookmarked" label="Bookmarked" />
+              <Picker.Item value="notBookmarked" label="Not Bookmarked" />
             </Picker>
         </View>
 
         <View style={styles.filterBar}>
           <Image source={require('../assets/clockIcons/clock5.png')} style={styles.clock} />
-          <Picker style={styles.picker}>
-            <Picker.Item value="bookmarksReset" label="All" />
-            <Picker.Item value="bookmarksOnly" label="< 5 min" />
-            <Picker.Item value="bookmarksHide" label="< 15 min" />
-            <Picker.Item value="bookmarksHide" label="< 30 min" />
-            <Picker.Item value="bookmarksHide" label="< 45 min" />
-            <Picker.Item value="bookmarksHide" label="< 60 min" />
-            <Picker.Item value="bookmarksHide" label="> 60 min" />
+          <Picker style={styles.picker}
+              selectedValue={this.props.filters.time}
+              onValueChange={(value) => {tempInboxFilters.time = value; this.props.dispatch(actionCreators.updateInboxFilters(tempInboxFilters));}}>
+            <Picker.Item value="timeOff" label="All" />
+            <Picker.Item value="5" label="< 5 min" />
+            <Picker.Item value="15" label="< 15 min" />
+            <Picker.Item value="30" label="< 30 min" />
+            <Picker.Item value="45" label="< 45 min" />
+            <Picker.Item value="60" label="< 60 min" />
+            <Picker.Item value="60+" label="> 60 min" />
           </Picker>
         </View>
 
         <View style={styles.filterBar}>
-        <Ionicons style={styles.favorite} size={30} color='grey' name="ios-pricetag-outline"/>
-        <Picker style={styles.picker}>
-            <Picker.Item value="bookmarksReset" label="All" />
-             {this.props.inbox.map((episode, i) => (
-               <Picker.Item value={episode.tag} label={episode.tag} />
+        <Ionicons style={styles.icon} size={30} color='grey' name="ios-pricetag-outline"/>
+        <Picker style={styles.picker}
+              selectedValue={this.props.filters.tag}
+              onValueChange={(value, i) => {tempInboxFilters.tag = value; this.props.dispatch(actionCreators.updateInboxFilters(tempInboxFilters));}}>
+            <Picker.Item value="tagOff" label="All" />
+            {this.props.inbox.map((episode, i) => (
+              <Picker.Item value={episode.tag} label={episode.tag} key={i}/>
             ))}
         </Picker>
         </View>
-        <View>
-          <Text style={styles.done} onPress={() => this.props.dispatch(actionCreators.toggleModal())}>Done</Text>
+        <View style={styles.buttonView}>
+          <Button style={styles.done} color='grey' onPress={() =>{this.props.dispatch(actionCreators.toggleModal())}} title='Filter'/>
         </View>
       </View>
     );
@@ -81,14 +94,24 @@ const styles = StyleSheet.create({
     height: 28,
     width: 28,
   },
+  bookmark: {
+    marginLeft: 5,
+    alignSelf: 'center',
+  },
   picker: {
     width: 200,
+  },
+  icon: {
+    alignSelf: 'center',
   },
   done: {
     alignSelf: 'center',
     fontWeight: '500',
-    color: 'grey',
-  }
+    padding: 5,
+  },
+  buttonView: {
+    marginTop: 15,
+  },
 });
 
 export default connect(mapStateToProps)(Filter);
