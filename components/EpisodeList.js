@@ -129,7 +129,7 @@ hmsToSecondsOnly = (duration) => {
       <View style={styles.mainView}>
          <ScrollView style={styles.episodeList}>
           {this.filterEpisodes(this.props.inbox).map((episode, i) => (
-              <EpisodeListCard episode={episode} handlePlay={this.handlePlay} key={i}/>
+              <EpisodeListCard episode={episode} handlePlay={this.handlePlay} id={i} key={i}/>
             ))}
         </ScrollView>
       </View>

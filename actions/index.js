@@ -44,10 +44,10 @@ export const actionCreators = {
   updateInboxFilters: (filters) => {
     return {type: types.UPDATE_INBOX_FILTERS, payload: filters}
   },
-  toggleLike: (key) => {
-    return {type: types.TOGGLE_LIKE, payload: key}
+  toggleLike: (inbox) => {
+    return {type: types.TOGGLE_LIKE, payload: inbox}
   },
-  toggleBookmark: (key) => {
-    return {type: types.TOGGLE_BOOKMARK, payload: key}
+  toggleBookmark: (inbox) => {
+    return {type: types.TOGGLE_BOOKMARK, payload: inbox}
   }
 }

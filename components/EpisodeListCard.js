@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import { actionCreators } from '../actions';
+
+const mapStateToProps = (state) => ({
+  inbox: state.inbox,
+});
 
 hmsToSecondsOnly = (duration) => {
     var p = duration.split(':'),
@@ -13,43 +19,44 @@ hmsToSecondsOnly = (duration) => {
     return s;
 }
 
-var renderClock = (duration) => {
-  if(duration.length < 5) {
-    duration = '00:' + duration;
-  }
-  duration = hmsToSecondsOnly(duration);
-  if (duration <= 300) {
-    return <Image source={require('../assets/clockIcons/clock5.png')} style={styles.clock} />
-  }
-  if (duration <= 900) {
-    return <Image source={require('../assets/clockIcons/clock15.png')} style={styles.clock} />
-  }
-  if (duration <= 1800) {
-    return <Image source={require('../assets/clockIcons/clock30.png')} style={styles.clock} />
-  }
-  if (duration <= 2700) {
-    return <Image source={require('../assets/clockIcons/clock45.png')} style={styles.clock} />
-  }
-  if (duration > 2700) {
-    return <Image source={require('../assets/clockIcons/clock60.png')} style={styles.clock} />
-  }
-};
-
-var renderBookmark = (bookmark, id) => {
-  if (bookmark) {
-    return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark" onPress={() =>{this.props.dispatch(actionCreators.toggleBookmark(id))}}/>
-  }
-  return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark-outline" onPress={() =>{this.props.dispatch(actionCreators.toggleBookmark(id))}}/>
-};
-
-var renderHeart = (liked) => {
-  if (liked) {
-    return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart" onPress={() =>{this.props.dispatch(actionCreators.toggleLike(id))}}/>
-  }
-  return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart-outline" onPress={() =>{this.props.dispatch(actionCreators.toggleLike(id))}}/>
-};
 
 class EpisodeListCard extends Component {
+
+  renderClock = (duration) => {
+    if (duration.length < 5) {
+      duration = '00:' + duration;
+    }
+    duration = hmsToSecondsOnly(duration);
+    if (duration <= 300) {
+      return <Image source={require('../assets/clockIcons/clock5.png')} style={styles.clock} />
+    }
+    if (duration <= 900) {
+      return <Image source={require('../assets/clockIcons/clock15.png')} style={styles.clock} />
+    }
+    if (duration <= 1800) {
+      return <Image source={require('../assets/clockIcons/clock30.png')} style={styles.clock} />
+    }
+    if (duration <= 2700) {
+      return <Image source={require('../assets/clockIcons/clock45.png')} style={styles.clock} />
+    }
+    if (duration > 2700) {
+      return <Image source={require('../assets/clockIcons/clock60.png')} style={styles.clock} />
+    }
+  };
+
+  toggleLike= (id) => {
+    var inbox = this.props.inbox.slice();
+    inbox[id].liked = !inbox[id].liked;
+    console.warn(this.props.inbox[id].liked)
+    this.props.dispatch(actionCreators.toggleLike(inbox));
+  };
+
+  toggleBookmark = (id) => {
+    var inbox = this.props.inbox.slice();
+    inbox[id].bookmark = !inbox[id].bookmark;
+
+    this.props.dispatch(actionCreators.toggleBookmark(inbox));
+  };
 
   render() {
     return (
@@ -69,11 +76,17 @@ class EpisodeListCard extends Component {
         <View style={styles.bottomView}>
           <Text style={styles.tag} numberOfLines={1} ellipsizeMode='tail'> {this.props.episode.tag} </Text>
           <View style={styles.timeView}>
-            {renderClock(this.props.episode.feed.duration)}
-            <Text style={styles.time}>{this.props.episode.feed.duration}</Text>
+            {this.renderClock(this.props.episode.feed.duration)}
+            <Text style={styles.time}>{this.props.episode.feed.duration} Key: {this.props.key}</Text>
           </View>
-          {renderBookmark(this.props.episode.bookmark, this.props.episode.key)}
-          {renderHeart(this.props.episode.liked, this.props.episode.key)}
+          {this.props.episode.bookmark === true ?
+          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark" onPress={()=>(this.toggleBookmark(this.props.id))}/> :
+          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark-outline" onPress={() =>(this.toggleBookmark(this.props.id))}/>
+          }
+          {this.props.episode.liked === true ?
+          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart" onPress={() =>(this.toggleLike(this.props.id))}/> :
+          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart-outline" onPress={() =>(this.toggleLike(this.props.id))}/>
+          }
         </View>
       </View>
     );
@@ -173,4 +186,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EpisodeListCard;
+export default connect(mapStateToProps)(EpisodeListCard);
