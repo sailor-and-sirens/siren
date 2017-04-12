@@ -12,7 +12,7 @@ class Header extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Text style={styles.header}>{this.props.view}</Text>
         <View style={styles.navigation}>
           <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(actionCreators.changeView('Inbox'))} size={30} name='inbox'/>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#cccccc',
   },
   navigationLink: {
-    padding: 20
+    padding: 8,
   }
 });
 
