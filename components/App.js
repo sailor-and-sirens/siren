@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
@@ -10,12 +9,12 @@ import PodcastList from './PodcastList';
 // it also gives us the dispatch method on this.props - see line 21.
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
-import  Header  from './Header';
-import  ModalComponent  from './Modal';
+import Player from './Player';
+import Header from './Header';
+import ModalComponent from './Modal';
 
 // connect gives us mapStateToProps, which gives us access to our state
 const mapStateToProps = (state) => ({
-  greeting: state.greeting,
   view: state.view
 })
 
@@ -36,8 +35,8 @@ class App extends Component {
           <ModalComponent>Hey! I'm a modal!</ModalComponent>
           <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
         </View>
-      }
-
+        }
+        <Player />
       </View>
     );
   }
@@ -51,12 +50,3 @@ const styles = StyleSheet.create({
 });
 
 export default connect(mapStateToProps)(App);
-
-
-        // {/* I'm just an example - delete me */}
-        // <TextInput
-        //   style={styles.greetingInput}
-        //   onChangeText={(text) => this.props.dispatch(actionCreators.changeGreeting(text))}
-        // />
-        // <Text>{this.props.greeting}</Text>
-        // {/* end example */}

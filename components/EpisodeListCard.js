@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
 
 hmsToSecondsOnly = (duration) => {
     var p = duration.split(':'),
@@ -58,7 +56,9 @@ class EpisodeListCard extends Component {
       <View style={styles.mainView}>
         <View style={styles.topView}>
           <View style={styles.leftView}>
-            <Image source={{uri: this.props.episode.image}} style={styles.image}/>
+            <TouchableOpacity onPress={this.props.handlePlay.bind(this, this.props.episode)}>
+              <Image source={{uri: this.props.episode.image}} style={styles.image}/>
+            </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
             <Text style={styles.date}>{this.props.episode.feed.pubDate.substring(0,16)}</Text>
