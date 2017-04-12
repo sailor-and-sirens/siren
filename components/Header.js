@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: 'grey',
+    backgroundColor: '#cccccc',
   },
   navigationLink: {
     padding: 20
