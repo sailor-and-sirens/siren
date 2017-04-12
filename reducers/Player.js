@@ -7,7 +7,7 @@ const initialState = {
   currentSoundInstance: null,
   currentSpeed: 1.0,
   isModalVisible: false,
-  isFullSizeModalVisible: false,
+  isFullSizeModalVisible: true,
   isPlaying: false,
 }
 
