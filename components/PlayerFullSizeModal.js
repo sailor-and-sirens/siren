@@ -107,7 +107,7 @@ const PlayerFullSizeModal = (props) => {
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    marginTop: 30,
+    marginTop: 15,
     padding: 10
   },
   scrollableContentWrapper: {
