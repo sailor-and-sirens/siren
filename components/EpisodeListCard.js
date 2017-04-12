@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
-import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
-import { convertMillis } from '../helpers';
-
-const mapStateToProps = (state) => ({
-  audioSoundInstance: state.audioSoundInstance,
-  podcast: state.podcast
-})
 
 hmsToSecondsOnly = (duration) => {
     var p = duration.split(':'),
@@ -59,69 +50,30 @@ var renderHeart = (liked) => {
 };
 
 class EpisodeListCard extends Component {
-  newSoundInstance = null;
-  timer = null;
-
-  componentDidMount = () => {
-    Audio.setIsEnabledAsync(true);
-  }
-
-  handlePlay = (podcast) => {
-    if (this.newSoundInstance === null) {
-      this.playNewEpisode();
-    } else {
-      clearInterval(this.timer);
-      this.newSoundInstance.stopAsync()
-        .then(stopped => {
-          this.props.dispatch(actionCreators.updateCurrentPlayingTime('0:00'));
-          this.playNewEpisode();
-        });
-    }
-  }
-
-  playNewEpisode = () => {
-    this.newSoundInstance = new Audio.Sound({ source: this.props.podcast.feed.enclosure.url });
-    this.props.dispatch(actionCreators.createNewSoundInstance(this.newSoundInstance));
-    this.props.dispatch(actionCreators.setPlayStatus(true));
-    this.props.dispatch(actionCreators.updateCurrentlyPlayingEpisode(this.props.podcast.feed.title));
-    this.newSoundInstance.loadAsync()
-      .then(loaded => {
-        this.newSoundInstance.playAsync()
-          .then(played => {
-            this.timer = setInterval(function() {
-              this.newSoundInstance.getStatusAsync()
-                .then(status => {
-                  let millis = status.positionMillis
-                  this.props.dispatch(actionCreators.updateCurrentPlayingTime(convertMillis(millis)));
-                })
-            }.bind(this), 100);
-          })
-      });
-  }
 
   render() {
     return (
       <View style={styles.mainView}>
         <View style={styles.topView}>
           <View style={styles.leftView}>
-            <TouchableOpacity onPress={this.handlePlay.bind(this, this.props.podcast)}>
-              <Image source={{uri: this.props.podcast.image}} style={styles.image}/>
+            <TouchableOpacity onPress={this.props.handlePlay.bind(this, this.props.episode)}>
+              <Image source={{uri: this.props.episode.image}} style={styles.image}/>
             </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
-            <Text style={styles.date}>{this.props.podcast.feed.pubDate.substring(0,16)}</Text>
-            <Text style={styles.episode} numberOfLines={1}>{this.props.podcast.feed.title}</Text>
-            <Text style={styles.subtitle} numberOfLines={2}>{this.props.podcast.feed.subtitle}</Text>
+            <Text style={styles.date}>{this.props.episode.feed.pubDate.substring(0,16)}</Text>
+            <Text style={styles.episode} numberOfLines={1}>{this.props.episode.feed.title}</Text>
+            <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode.feed.subtitle}</Text>
           </View>
         </View>
         <View style={styles.bottomView}>
-          <Text style={styles.tag}> {this.props.podcast.tag} </Text>
+          <Text style={styles.tag}> {this.props.episode.tag} </Text>
           <View style={styles.timeView}>
-            {renderClock(this.props.podcast.feed.duration)}
-            <Text style={styles.time}>{this.props.podcast.feed.duration}</Text>
+            {renderClock(this.props.episode.feed.duration)}
+            <Text style={styles.time}>{this.props.episode.feed.duration}</Text>
           </View>
-          {renderBookmark(this.props.podcast.bookmark)}
-          {renderHeart(this.props.podcast.liked)}
+          {renderBookmark(this.props.episode.bookmark)}
+          {renderHeart(this.props.episode.liked)}
         </View>
       </View>
     );
@@ -218,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(EpisodeListCard);
+export default EpisodeListCard;

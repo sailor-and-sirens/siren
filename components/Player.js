@@ -128,7 +128,7 @@ class Player extends Component {
       <View style={styles.container}>
         <View style={styles.currentlyPlayingWrapper}>
           <View style={styles.currentlyPlaying}>
-            <Text style={{textAlign: 'center'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
+            <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
           </View>
         </View>
         <View style={styles.timeSpeedPlayerWrapper}>
@@ -201,17 +201,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: width,
-    height: 70,
+    height: 80,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     paddingTop: 5,
-    paddingBottom: 5,
+    paddingBottom: 10,
     paddingLeft: 10,
     paddingRight: 10,
     backgroundColor: '#dcdcdc',
   },
   currentlyPlayingWrapper: {
-    flex: 0.3,
+    flex: 0.2,
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginBottom: 10
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   timeSpeedPlayerWrapper: {
-    flex: 0.7,
+    flex: 0.8,
     flexDirection: 'row'
   },
   currentTimeWrapper: {

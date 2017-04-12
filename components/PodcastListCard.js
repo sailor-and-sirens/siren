@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
-
-const mapStateToProps = (state) => ({
-  podcast: state.iTunesResult
-})
 
 class PodcastListCard extends Component {
   render() {
@@ -17,7 +11,7 @@ class PodcastListCard extends Component {
         </View>
         <View style={styles.rightView}>
           <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
-          <Text style={styles.artist} numberOfLines={2}>{this.props.podcast.artistName}</Text>
+          <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
           <View style={styles.tagAddView}>
             <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
             <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline"/>
@@ -59,11 +53,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "500",
-    fontSize: 16,
+    fontSize: 18,
   },
   artist: {
   fontWeight: "400",
-  fontSize: 14,
+  fontSize: 16,
+  marginBottom: 5,
   },
   podcast: {
     fontWeight: "600",
@@ -81,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(PodcastListCard);
+export default PodcastListCard;
