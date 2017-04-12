@@ -135,7 +135,7 @@ class Player extends Component {
       <View style={styles.container}>
         <View style={styles.currentlyPlayingWrapper}>
           <TouchableOpacity onPress={this.handleFullSizeButtonPress}>
-            <SimpleLineIcons name="arrow-up" size={15}/>
+            <SimpleLineIcons name="arrow-up" size={20}/>
           </TouchableOpacity>
           <View style={styles.currentlyPlaying}>
             <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>

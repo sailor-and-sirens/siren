@@ -42,34 +42,20 @@ const PlayerFullSizeModal = (props) => {
     >
       <View style={styles.modalContainer}>
         <TouchableOpacity onPress={props.handleFullSizeModalClose} style={{alignSelf: 'flex-start'}}>
-          <SimpleLineIcons name="arrow-down" size={15}/>
+          <SimpleLineIcons name="arrow-down" size={20}/>
         </TouchableOpacity>
-        <View style={styles.imageEpisodeInfoWrapper}>
-          <Image source={{uri: episode.image}} style={styles.image}/>
-          <View style={styles.episodeInfoWrapper}>
-            <View style={styles.episodeInfoRow}>
-              <SimpleLineIcons name="user" size={15}></SimpleLineIcons><Text style={styles.infoText}> NPR</Text>
-            </View>
-            <View style={styles.episodeInfoRow}>
-              <SimpleLineIcons name="calendar" size={15}></SimpleLineIcons><Text style={styles.infoText}> April 6, 2017</Text>
-            </View>
-            <View style={styles.episodeInfoRow}>
-              <SimpleLineIcons name="clock" size={15}></SimpleLineIcons><Text style={styles.infoText}> 76min</Text>
-            </View>
-            <View style={styles.episodeInfoRow}>
-              <SimpleLineIcons name="tag" size={15}></SimpleLineIcons><Text style={styles.infoText}> Productivity</Text>
-            </View>
+        <ScrollView style={styles.scrollableContentWrapper}>
+          <View style={styles.imageEpisodeInfoWrapper}>
+            <Image source={{uri: episode.image}} style={styles.image}/>
           </View>
-        </View>
-        <View style={styles.actionIconsWrapper}>
-          <Ionicons style={styles.actionIcon} name="ios-link" size={35}></Ionicons>
-          <MaterialIcons style={styles.actionIcon} name="playlist-play" size={35}></MaterialIcons>
-          <Ionicons style={styles.actionIcon} name="ios-bookmark-outline" size={35}></Ionicons>
-          <Ionicons style={styles.actionIcon} name="ios-heart-outline" size={35}></Ionicons>
-        </View>
-        <Text style={styles.episodeTitle}>{episode.feed.title}</Text>
-        <Text style={styles.summaryHeading}>Episode Summary</Text>
-        <ScrollView style={styles.summary}>
+          <View style={styles.actionIconsWrapper}>
+            <Ionicons style={styles.actionIcon} name="ios-link" size={35}></Ionicons>
+            <MaterialIcons style={styles.actionIcon} name="playlist-play" size={35}></MaterialIcons>
+            <Ionicons style={styles.actionIcon} name="ios-bookmark-outline" size={35}></Ionicons>
+            <Ionicons style={styles.actionIcon} name="ios-heart-outline" size={35}></Ionicons>
+          </View>
+          <Text style={styles.episodeTitle}>{episode.feed.title}</Text>
+          <Text style={styles.summaryHeading}>Episode Summary</Text>
           <Text>{episode.summary}</Text>
         </ScrollView>
         <View style={styles.playerWrapper}>
@@ -124,14 +110,17 @@ const styles = StyleSheet.create({
     marginTop: 30,
     padding: 10
   },
+  scrollableContentWrapper: {
+    flex: 0.6
+  },
   imageEpisodeInfoWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 10
   },
   image: {
-    height: (width / 2) - 15,
-    width: (width / 2) - 15
+    height: width - 20,
+    width: width - 20
   },
   episodeInfoWrapper: {
     height: (width / 2) - 15,
@@ -169,7 +158,7 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   playerWrapper: {
-    flex: 0.35,
+    flex: 0.25,
     flexDirection: 'row',
     borderTopWidth: 1,
     borderTopColor: '#dcdcdc'
@@ -186,7 +175,7 @@ const styles = StyleSheet.create({
     flex: 0.2
   },
   timeSpeedWrapper: {
-    flex: 0.15,
+    flex: 0.05,
     flexDirection: 'row'
   },
   currentTimeWrapper: {
