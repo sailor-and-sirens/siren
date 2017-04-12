@@ -113,6 +113,10 @@ class Player extends Component {
     this.props.dispatch(actionCreators.setFullSizeModalVisible(true));
   }
 
+  handleFullSizeModalClose = () => {
+    this.props.dispatch(actionCreators.setFullSizeModalVisible(false));
+  }
+
   render() {
     let playPauseButton = (
       <TouchableOpacity onPress={this.handlePlay}>
@@ -184,8 +188,10 @@ class Player extends Component {
           handleModalClose={this.handleModalClose}
         />
         <PlayerFullSizeModal
-          isFullSizeModalVisible={this.props.isFullSizeModalVisible}
           episode={this.props.currentEpisode}
+          handleFullSizeModalClose={this.handleFullSizeModalClose}
+          isFullSizeModalVisible={this.props.isFullSizeModalVisible}
+          isPlaying={false}
         />
       </View>
     );
