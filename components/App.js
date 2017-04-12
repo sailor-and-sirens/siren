@@ -24,10 +24,20 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header></Header>
-        <ModalComponent>Hey! I'm a modal!</ModalComponent>
-        <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
-        <PodcastList/>
+        <Header/>
+
+        {this.props.view === 'Search' ?
+        <PodcastList/> :
+
+        this.props.view === 'Inbox' ?
+        <EpisodeList/> :
+
+        <View>
+          <ModalComponent>Hey! I'm a modal!</ModalComponent>
+          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
+        </View>
+      }
+
       </View>
     );
   }
@@ -50,4 +60,3 @@ export default connect(mapStateToProps)(App);
         // />
         // <Text>{this.props.greeting}</Text>
         // {/* end example */}
-

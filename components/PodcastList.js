@@ -36,8 +36,8 @@ class PodcastList extends Component {
     return (
       <View style={styles.mainView}>
         <View style={styles.searchBar}>
-          <TextInput style={styles.searchInput} onChangeText={(text) => {this.setState({text});}} value={this.state.text}/>
-          <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search"/>
+          <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.setState({text});}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.state.text}/>
+          <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search" />
         </View>
         <ScrollView style={styles.podcastList}>
           {this.state.podcasts.map((podcast, i) => (
@@ -52,9 +52,10 @@ class PodcastList extends Component {
 const styles = StyleSheet.create({
   searchInput: {
     height: 40,
-    width: 300,
+    width: 250,
     borderColor: 'gray',
     borderWidth: 1,
+    padding: 10
   },
   mainView: {
     alignItems: 'center',
@@ -65,11 +66,12 @@ const styles = StyleSheet.create({
   },
   podcastList:{
     width: '100%',
+    marginBottom: 180 //Prevents list from being cut off
   },
   searchBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    margin: 10,
   }
 })
 
