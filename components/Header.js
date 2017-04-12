@@ -5,7 +5,7 @@ import { actionCreators } from '../actions';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const mapStateToProps = (state) => ({
-  view: state.view
+  view: state.main.view
 })
 
 class Header extends Component {

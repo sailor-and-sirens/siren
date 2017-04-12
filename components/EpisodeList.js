@@ -3,12 +3,12 @@ import { StyleSheet, Text, View, TextInput, ScrollView, Image} from 'react-nativ
 import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
+import { actionCreators } from '../actions/Player';
 import { convertMillis } from '../helpers';
 import EpisodeListCard from './EpisodeListCard';
 
 const mapStateToProps = (state) => ({
-  inbox: state.inbox
+  inbox: state.main.inbox
 });
 
 class EpisodeList extends Component {

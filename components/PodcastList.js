@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 
 const mapStateToProps = (state) => ({
-  podcasts: state.iTunesResult
+  podcasts: state.main.iTunesResult
 })
 
 

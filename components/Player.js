@@ -3,20 +3,20 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
+import { actionCreators } from '../actions/Player';
 import { truncateTitle, convertMillis } from '../helpers';
 import PlayerSpeedModal from './PlayerSpeedModal';
 import PlayerFullSizeModal from './PlayerFullSizeModal';
 
 const mapStateToProps = (state) => ({
-  currentEpisode: state.currentEpisode,
-  currentEpisodeTitle: state.currentEpisodeTitle,
-  currentPlayingTime: state.currentPlayingTime,
-  currentSoundInstance: state.currentSoundInstance,
-  currentSpeed: state.currentSpeed,
-  isModalVisible: state.isModalVisible,
-  isFullSizeModalVisible: state.isFullSizeModalVisible,
-  isPlaying: state.isPlaying
+  currentEpisode: state.player.currentEpisode,
+  currentEpisodeTitle: state.player.currentEpisodeTitle,
+  currentPlayingTime: state.player.currentPlayingTime,
+  currentSoundInstance: state.player.currentSoundInstance,
+  currentSpeed: state.player.currentSpeed,
+  isModalVisible: state.player.isModalVisible,
+  isFullSizeModalVisible: state.player.isFullSizeModalVisible,
+  isPlaying: state.player.isPlaying
 });
 
 const { height, width } = Dimensions.get('window');

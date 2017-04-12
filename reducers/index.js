@@ -1,15 +1,9 @@
+import { combineReducers } from 'redux';
 import { types } from '../actions';
+import player from './Player';
 
 // add your key/values for initialState here
 const initialState = {
-  currentEpisode: null,
-  currentEpisodeTitle: null,
-  currentPlayingTime: '0:00',
-  currentSoundInstance: null,
-  currentSpeed: 1.0,
-  isModalVisible: false,
-  isFullSizeModalVisible: false,
-  isPlaying: false,
   modalVisible: false,
   view: 'Inbox',
   //sample until call to API is setup
@@ -23,43 +17,20 @@ const initialState = {
 };
 
 // store.dispatch(...) is what triggers the reducer
-export const reducer = (state = initialState, action) => {
-  if (action.type === types.CHANGE_GREETING) {
-    return {...state, greeting: action.payload};
-  }
+const main = (state = initialState, action) => {
   if (action.type === types.CHANGE_VIEW) {
     return {...state, view: action.payload};
-  }
-  if (action.type === types.CREATE_NEW_SOUND_INSTANCE) {
-    return {...state, currentSoundInstance: action.payload};
-  }
-  if (action.type === types.DECREASE_SPEED) {
-    return {...state, currentSpeed: (state.currentSpeed - action.payload)}
-  }
-  if (action.type === types.INCREASE_SPEED) {
-    return {...state, currentSpeed: (state.currentSpeed + action.payload)}
-  }
-  if (action.type === types.SET_FULL_SIZE_MODAL_VISIBLE) {
-    return {...state, isFullSizeModalVisible: action.payload}
-  }
-  if (action.type === types.SET_MODAL_VISIBLE) {
-    return {...state, isModalVisible: action.payload}
-  }
-  if (action.type === types.SET_PLAY_STATUS) {
-    return {...state, isPlaying: action.payload}
-  }
-  if (action.type === types.STORE_EPISODE_DATA) {
-    return {...state, currentEpisode: action.payload}
   }
   if (action.type === types.TOGGLE_MODAL) {
     return {...state, modalVisible: !state.modalVisible};
   }
-  if (action.type === types.UPDATE_CURRENT_PLAYING_TIME) {
-    return {...state, currentPlayingTime: action.payload}
-  }
-  if (action.type === types.UPDATE_CURRENTLY_PLAYING_EPISODE) {
-    return {...state, currentEpisodeTitle: action.payload}
-  }
 
   return state;
 }
+
+const rootReducer = combineReducers({
+  main,
+  player
+});
+
+export default rootReducer;

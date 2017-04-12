@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 
 // Import the reducer and create a store
-import { reducer } from './reducers/index';
+import reducer from './reducers/index';
 const store = createStore(reducer);
 
 // pass store into Provider so we can change how we're connecting to the store
