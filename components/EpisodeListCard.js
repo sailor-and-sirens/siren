@@ -35,18 +35,18 @@ var renderClock = (duration) => {
   }
 };
 
-var renderBookmark = (bookmark) => {
+var renderBookmark = (bookmark, id) => {
   if (bookmark) {
-    return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark"/>
+    return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark" onPress={() =>{this.props.dispatch(actionCreators.toggleBookmark(id))}}/>
   }
-  return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark-outline"/>
+  return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark-outline" onPress={() =>{this.props.dispatch(actionCreators.toggleBookmark(id))}}/>
 };
 
 var renderHeart = (liked) => {
   if (liked) {
-    return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart"/>
+    return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart" onPress={() =>{this.props.dispatch(actionCreators.toggleLike(id))}}/>
   }
-  return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart-outline"/>
+  return <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart-outline" onPress={() =>{this.props.dispatch(actionCreators.toggleLike(id))}}/>
 };
 
 class EpisodeListCard extends Component {
@@ -72,8 +72,8 @@ class EpisodeListCard extends Component {
             {renderClock(this.props.episode.feed.duration)}
             <Text style={styles.time}>{this.props.episode.feed.duration}</Text>
           </View>
-          {renderBookmark(this.props.episode.bookmark)}
-          {renderHeart(this.props.episode.liked)}
+          {renderBookmark(this.props.episode.bookmark, this.props.episode.key)}
+          {renderHeart(this.props.episode.liked, this.props.episode.key)}
         </View>
       </View>
     );
