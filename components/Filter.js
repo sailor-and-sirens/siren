@@ -23,8 +23,8 @@ class Filter extends Component {
 
   render() {
    return (
-      <View style={styles.mainView}>
-
+      <ScrollView style={{flex: 1, width: 400}}>
+        <View style={styles.mainView}>
         <View style={styles.filterBar}>
           <Ionicons style={styles.icon} size={30} color='grey' name="ios-heart-outline"/>
           <Picker style={styles.picker}
@@ -75,16 +75,18 @@ class Filter extends Component {
         <View style={styles.buttonView}>
           <Button style={styles.done} color='grey' onPress={() =>{this.props.dispatch(actionCreators.toggleModal()); this.props.dispatch(actionCreators.updateInboxFilters(this.state));}} title='Filter'/>
         </View>
-      </View>
+        </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   mainView: {
+    // flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: 400,
+    // width: 400,
   },
   filterBar:{
     flexDirection: 'row',
