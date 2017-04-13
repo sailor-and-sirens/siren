@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, Button, Image, Picker} from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, Button, Image, Platform, Picker} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import EpisodeListCard from './EpisodeListCard';
+
+let _ = require('lodash')
 
 const mapStateToProps = (state) => ({
   inbox: state.inbox,
@@ -17,8 +19,16 @@ class Filter extends Component {
       liked: props.filters.liked,
       bookmarked: props.filters.bookmarked,
       time: props.filters.time,
-      tag: props.filters.tag
+      tag: props.filters.tag,
     }
+  }
+
+  getTags = () => {
+    var tags = ['All'];
+    this.props.inbox.forEach((episode) => {
+      tags.push(episode.tag);
+    });
+    return  _.uniq(tags);
   }
 
   render() {
@@ -27,12 +37,12 @@ class Filter extends Component {
 
         <View style={styles.filterBar}>
           <Ionicons style={styles.icon} size={30} color='grey' name="ios-heart-outline"/>
-          <Picker style={styles.picker}
+          <Picker itemStyle={styles.pickerItem} style={styles.picker}
               selectedValue={this.state.liked}
               onValueChange={(value) => {this.setState({liked: value});}}>
-            <Picker.Item value="likedOff" label="All" />
-            <Picker.Item value="liked" label="Liked" />
-            <Picker.Item value="notLiked" label="Not Liked" />
+            <Picker.Item style={styles.pickerItem} value="likedOff" label="All" />
+            <Picker.Item style={styles.pickerItem} value="liked" label="Liked" />
+            <Picker.Item style={styles.pickerItem} value="notLiked" label="Not Liked" />
           </Picker>
         </View>
 
@@ -67,8 +77,8 @@ class Filter extends Component {
         <Picker style={styles.picker}
               selectedValue={this.state.tag}
               onValueChange={(value, i) => {this.setState({tag: value});}}>
-            {this.props.inbox.map((episode, i) => (
-              <Picker.Item value={episode.tag} label={episode.tag} key={i}/>
+            {this.getTags().map((tag, i) => (
+              <Picker.Item value={tag} label={tag} key={i}/>
             ))}
         </Picker>
         </View>
@@ -88,7 +98,14 @@ const styles = StyleSheet.create({
   },
   filterBar:{
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    ...Platform.select({
+      ios: {
+        justifyContent: 'center',
+      },
+      android: {
+        justifyContent: 'space-between',
+      },
+    }),
     alignItems: 'center',
     width: 250,
   },
@@ -102,6 +119,21 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: 200,
+    ...Platform.select({
+      ios: {
+        justifyContent: 'center',
+      },
+      android: {
+        justifyContent: 'space-between',
+      },
+    }),
+  },
+  pickerItem: {
+ ...Platform.select({
+      ios: {
+        fontSize: 10,
+      },
+    }),
   },
   icon: {
     alignSelf: 'center',
