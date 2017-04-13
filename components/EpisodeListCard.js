@@ -19,7 +19,6 @@ hmsToSecondsOnly = (duration) => {
     return s;
 }
 
-
 class EpisodeListCard extends Component {
 
   renderClock = (duration) => {

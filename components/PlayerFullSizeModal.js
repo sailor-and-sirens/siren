@@ -38,7 +38,7 @@ const PlayerFullSizeModal = (props) => {
 
   let playPauseImage = (
     <TouchableOpacity onPress={props.handlePlay}>
-      <Image source={{uri: props.episode.image}} style={styles.image}/>
+      <Image source={{uri: props.episode.image600}} style={styles.image}/>
     </TouchableOpacity>
   )
 
@@ -57,7 +57,7 @@ const PlayerFullSizeModal = (props) => {
 
     playPauseImage = (
       <TouchableOpacity onPress={props.handlePause}>
-        <Image source={{uri: props.episode.image}} style={styles.image}/>
+        <Image source={{uri: props.episode.image600}} style={styles.image}/>
       </TouchableOpacity>
     )
   }
