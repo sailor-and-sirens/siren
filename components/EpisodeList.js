@@ -3,15 +3,15 @@ import { StyleSheet, Text, View, TextInput, ScrollView, Image} from 'react-nativ
 import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
+import { actionCreators } from '../actions/Player';
 import { convertMillis } from '../helpers';
 import EpisodeListCard from './EpisodeListCard';
 
 let _ = require('lodash')
 
 const mapStateToProps = (state) => ({
-  inbox: state.inbox,
-  filters: state.inboxFilters
+  inbox: state.main.inbox,
+  filters: state.main.inboxFilters
 });
 
 class EpisodeList extends Component {
@@ -109,6 +109,7 @@ hmsToSecondsOnly = (duration) => {
     this.props.dispatch(actionCreators.createNewSoundInstance(this.newSoundInstance));
     this.props.dispatch(actionCreators.setPlayStatus(true));
     this.props.dispatch(actionCreators.updateCurrentlyPlayingEpisode(episode.feed.title));
+    this.props.dispatch(actionCreators.storeEpisodeData(episode));
     this.newSoundInstance.loadAsync()
       .then(loaded => {
         this.newSoundInstance.playAsync()

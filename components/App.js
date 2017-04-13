@@ -15,7 +15,7 @@ import ModalComponent from './Modal';
 
 // connect gives us mapStateToProps, which gives us access to our state
 const mapStateToProps = (state) => ({
-  view: state.view
+  view: state.main.view
 })
 
 class App extends Component {

@@ -3,26 +3,25 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
+import { actionCreators } from '../actions/Player';
 import { truncateTitle, convertMillis } from '../helpers';
+import PlayerSpeedModal from './PlayerSpeedModal';
+import PlayerFullSizeModal from './PlayerFullSizeModal';
 
 const mapStateToProps = (state) => ({
-  currentEpisodeTitle: state.currentEpisodeTitle,
-  currentPlayingTime: state.currentPlayingTime,
-  currentSoundInstance: state.currentSoundInstance,
-  currentSpeed: state.currentSpeed,
-  isModalVisible: state.isModalVisible,
-  isPlaying: state.isPlaying
+  currentEpisode: state.player.currentEpisode,
+  currentEpisodeTitle: state.player.currentEpisodeTitle,
+  currentPlayingTime: state.player.currentPlayingTime,
+  currentSoundInstance: state.player.currentSoundInstance,
+  currentSpeed: state.player.currentSpeed,
+  isModalVisible: state.player.isModalVisible,
+  isFullSizeModalVisible: state.player.isFullSizeModalVisible,
+  isPlaying: state.player.isPlaying
 });
 
 const { height, width } = Dimensions.get('window');
 
 class Player extends Component {
-  constructor(props) {
-    super(props);
-    this.audioSound = '';
-    this.timer = '';
-  }
 
   handlePlay = (url) => {
     if (this.props.currentSoundInstance !== null) {
@@ -110,7 +109,17 @@ class Player extends Component {
     this.props.dispatch(actionCreators.setModalVisible(false));
   }
 
+  handleFullSizeButtonPress = () => {
+    this.props.dispatch(actionCreators.setFullSizeModalVisible(true));
+  }
+
+  handleFullSizeModalClose = () => {
+    this.props.dispatch(actionCreators.setFullSizeModalVisible(false));
+  }
+
   render() {
+    let playerFullSizeModal;
+    let openModalButton;
     let playPauseButton = (
       <TouchableOpacity onPress={this.handlePlay}>
         <SimpleLineIcons style={{textAlign: 'center'}} name="control-play" size={40} color="black" />
@@ -124,9 +133,38 @@ class Player extends Component {
         </TouchableOpacity>
       )
     }
+
+    if (this.props.currentSoundInstance !== null) {
+      playerFullSizeModal = (
+        <PlayerFullSizeModal
+          currentPlayingTime={this.props.currentPlayingTime}
+          currentSpeed={this.props.currentSpeed}
+          episode={this.props.currentEpisode}
+          handleFullSizeModalClose={this.handleFullSizeModalClose}
+          handlePlay={this.handlePlay}
+          handlePause={this.handlePause}
+          handleSkipBack={this.handleSkipBack}
+          handleSkipAhead={this.handleSkipAhead}
+          handleSkipToBeginning={this.handleSkipToBeginning}
+          handleSkipToEnd={this.handleSkipToEnd}
+          handleIncreaseSpeed={this.handleIncreaseSpeed}
+          handleDecreaseSpeed={this.handleDecreaseSpeed}
+          isFullSizeModalVisible={this.props.isFullSizeModalVisible}
+          isPlaying={this.props.isPlaying}
+        />
+      )
+
+      openModalButton = (
+        <TouchableOpacity onPress={this.handleFullSizeButtonPress}>
+          <SimpleLineIcons name="arrow-up" size={20}/>
+        </TouchableOpacity>
+      )
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.currentlyPlayingWrapper}>
+          {openModalButton}
           <View style={styles.currentlyPlaying}>
             <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
           </View>
@@ -170,27 +208,14 @@ class Player extends Component {
             </View>
           </View>
         </View>
-        <Modal
-          animationType={"slide"}
-          transparent={true}
-          visible={this.props.isModalVisible}
-          >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalWrapper}>
-              <View style={styles.modalCurrentSpeed}>
-                <Text>Change Playback Speed</Text>
-                <Text style={{textAlign: 'center', fontWeight: 'bold',  marginTop: 5, marginBottom: 5}}>{this.props.currentSpeed}x</Text>
-                <View style={styles.modalSpeedButtons}>
-                  <TouchableOpacity onPress={this.handleDecreaseSpeed}><SimpleLineIcons style={{textAlign: 'center', marginRight: 5}} name="minus" size={25} color="black" /></TouchableOpacity>
-                  <TouchableOpacity onPress={this.handleIncreaseSpeed}><SimpleLineIcons style={{textAlign: 'center', marginLeft: 5}} name="plus" size={25} color="black" /></TouchableOpacity>
-                </View>
-              </View>
-              <View style={{position: 'absolute', bottom: 5, right: 5}}>
-                <TouchableOpacity onPress={this.handleModalClose}><SimpleLineIcons name="close" size={20} color="black" /></TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
+        <PlayerSpeedModal
+          currentSpeed={this.props.currentSpeed}
+          isModalVisible={this.props.isModalVisible}
+          handleDecreaseSpeed={this.handleDecreaseSpeed}
+          handleIncreaseSpeed={this.handleIncreaseSpeed}
+          handleModalClose={this.handleModalClose}
+        />
+        {playerFullSizeModal}
       </View>
     );
   }
@@ -249,34 +274,6 @@ const styles = StyleSheet.create({
   },
   currentSpeed: {
     flex: 1
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  modalWrapper: {
-    position: 'absolute',
-    bottom: 0,
-    width: width,
-    height: 80,
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: '#dcdcdc',
-  },
-  modalCurrentSpeed: {
-    flex: 1
-  },
-  modalSpeedButtons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 5
   }
 });
 

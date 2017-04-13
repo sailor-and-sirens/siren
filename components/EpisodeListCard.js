@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 
 const mapStateToProps = (state) => ({
-  inbox: state.inbox,
+  inbox: state.main.inbox,
 });
 
 hmsToSecondsOnly = (duration) => {
@@ -152,7 +152,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#42f4c5',
     alignSelf: 'center',
     padding: 2,
-    width: '30%',
+    // width: '30%',
+    width: 80,
+    marginLeft: 1,
+    fontSize: 12,
     textAlign: 'center',
   },
   date: {

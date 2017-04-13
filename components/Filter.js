@@ -8,8 +8,8 @@ import EpisodeListCard from './EpisodeListCard';
 let _ = require('lodash')
 
 const mapStateToProps = (state) => ({
-  inbox: state.inbox,
-  filters: state.inboxFilters
+  inbox: state.main.inbox,
+  filters: state.main.inboxFilters
 })
 
 class Filter extends Component {

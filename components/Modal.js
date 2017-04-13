@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 
 const mapStateToProps = (state) => ({
-  modalVisible: state.modalVisible
+  modalVisible: state.main.modalVisible
 })
 
 class ModalComponent extends Component {

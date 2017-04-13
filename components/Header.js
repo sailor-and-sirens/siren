@@ -7,14 +7,14 @@ import ModalComponent from './Modal';
 import Filter from './Filter';
 
 const mapStateToProps = (state) => ({
-  view: state.view
+  view: state.main.view
 })
 
 class Header extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Text style={styles.header}>{this.props.view}</Text>
         <View style={styles.navigation}>
           <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(actionCreators.changeView('Inbox'))} size={30} name='inbox'/>
@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: 'grey',
+    backgroundColor: '#cccccc',
   },
   navigationLink: {
-    padding: 20
+    padding: 8,
   }
 });
 

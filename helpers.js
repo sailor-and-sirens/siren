@@ -13,7 +13,10 @@ export const truncateTitle = (title) => {
 }
 
 export const convertMillis = (millis) => {
-  let minutes = Math.floor(millis / 60000);
-  let seconds = ((millis % 60000) / 1000).toFixed(0);
+  let seconds = (millis / 1000).toFixed(0);
+  let hours = parseInt( seconds / 3600 );
+  seconds = seconds % 3600;
+  let minutes = parseInt( seconds / 60 );
+  seconds = seconds % 60;
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
