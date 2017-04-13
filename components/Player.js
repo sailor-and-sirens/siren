@@ -137,8 +137,18 @@ class Player extends Component {
     if (this.props.currentSoundInstance !== null) {
       playerFullSizeModal = (
         <PlayerFullSizeModal
+          currentPlayingTime={this.props.currentPlayingTime}
+          currentSpeed={this.props.currentSpeed}
           episode={this.props.currentEpisode}
           handleFullSizeModalClose={this.handleFullSizeModalClose}
+          handlePlay={this.handlePlay}
+          handlePause={this.handlePause}
+          handleSkipBack={this.handleSkipBack}
+          handleSkipAhead={this.handleSkipAhead}
+          handleSkipToBeginning={this.handleSkipToBeginning}
+          handleSkipToEnd={this.handleSkipToEnd}
+          handleIncreaseSpeed={this.handleIncreaseSpeed}
+          handleDecreaseSpeed={this.handleDecreaseSpeed}
           isFullSizeModalVisible={this.props.isFullSizeModalVisible}
           isPlaying={this.props.isPlaying}
         />
@@ -199,8 +209,8 @@ class Player extends Component {
           </View>
         </View>
         <PlayerSpeedModal
-          isModalVisible={this.props.isModalVisible}
           currentSpeed={this.props.currentSpeed}
+          isModalVisible={this.props.isModalVisible}
           handleDecreaseSpeed={this.handleDecreaseSpeed}
           handleIncreaseSpeed={this.handleIncreaseSpeed}
           handleModalClose={this.handleModalClose}

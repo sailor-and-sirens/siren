@@ -18,21 +18,45 @@ const episode = {
 
 const PlayerFullSizeModal = (props) => {
   let episodeImage = '';
+  let episodeLink;
+
+  let episodeBookmark = () => {
+    if (props.episode.bookmark) {
+      return {name: 'ios-bookmark', color: 'blue'}
+    } else {
+      return {name: 'ios-bookmark-outline', color: 'gray'}
+    }
+  }
+
+  let episodeLike = () => {
+    if (props.episode.liked) {
+      return {name: 'ios-heart', color: 'red'}
+    } else {
+      return {name: 'ios-heart-outline', color: 'gray'}
+    }
+  }
+
   if (props.episode) {
     episodeImage = <Image source={{uri: props.episode.image}} style={styles.image}/>;
   }
 
   let playPauseButton = (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={props.handlePlay}>
       <SimpleLineIcons style={{textAlign: 'center'}} name="control-play" size={50} color="black" />
     </TouchableOpacity>
   )
 
   if (props.isPlaying) {
     playPauseButton = (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={props.handlePause}>
         <SimpleLineIcons style={{textAlign: 'center'}} name="control-pause" size={50} color="black" />
       </TouchableOpacity>
+    )
+  }
+
+  if (props.episode.feed.link) {
+    episodeLink = (
+      <Ionicons style={styles.actionIcon} name="ios-link" size={35} color={'gray'} onPress={() => Linking.openURL(props.episode.feed.link)}></Ionicons>
     )
   }
 
@@ -51,24 +75,24 @@ const PlayerFullSizeModal = (props) => {
             {episodeImage}
           </View>
           <View style={styles.actionIconsWrapper}>
-            <Ionicons style={styles.actionIcon} name="ios-link" size={35} onPress={() => Linking.openURL('')}></Ionicons>
-            <MaterialIcons style={styles.actionIcon} name="playlist-play" size={35}></MaterialIcons>
-            <Ionicons style={styles.actionIcon} name="ios-bookmark-outline" size={35}></Ionicons>
-            <Ionicons style={styles.actionIcon} name="ios-heart-outline" size={35}></Ionicons>
+            {episodeLink}
+            <MaterialIcons style={styles.actionIcon} name="playlist-play" size={35} color={'gray'}></MaterialIcons>
+            <Ionicons style={styles.actionIcon} name={episodeBookmark().name} size={35} color={episodeBookmark().color}></Ionicons>
+            <Ionicons style={styles.actionIcon} name={episodeLike().name} size={35} color={episodeLike().color}></Ionicons>
           </View>
-          <Text style={styles.episodeTitle}>{episode.feed.title}</Text>
+          <Text style={styles.episodeTitle}>{props.episode.feed.title}</Text>
           <Text style={styles.summaryHeading}>Episode Summary</Text>
           <Text>{episode.summary}</Text>
         </ScrollView>
         <View style={styles.playerWrapper}>
           <View style={styles.playerControls}>
             <View style={styles.skipButton}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={props.handleSkipToBeginning}>
                 <SimpleLineIcons style={{textAlign: 'center'}} name="control-start" size={30} color="black" />
               </TouchableOpacity>
             </View>
             <View style={styles.skipButton}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={props.handleSkipBack}>
                 <SimpleLineIcons style={{textAlign: 'center'}} name="control-rewind" size={35} color="black" />
               </TouchableOpacity>
             </View>
@@ -76,12 +100,12 @@ const PlayerFullSizeModal = (props) => {
               {playPauseButton}
             </View>
             <View style={styles.skipButton}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={props.handleSkipAhead}>
                 <SimpleLineIcons style={{textAlign: 'center'}} name="control-forward" size={35} color="black" />
               </TouchableOpacity>
             </View>
             <View style={styles.skipButton}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={props.handleSkipToEnd}>
                 <SimpleLineIcons style={{textAlign: 'center'}} name="control-end" size={30} color="black" />
               </TouchableOpacity>
             </View>
@@ -89,15 +113,15 @@ const PlayerFullSizeModal = (props) => {
         </View>
         <View style={styles.timeSpeedWrapper}>
           <View style={styles.currentTimeWrapper}>
-            <SimpleLineIcons name="clock" size={25} color="black" /><Text style={{textAlign: 'left'}}> 0:00</Text>
+            <SimpleLineIcons name="clock" size={25} color="black" /><Text style={{textAlign: 'left'}}> {props.currentPlayingTime}</Text>
           </View>
           <View style={styles.currentSpeedWrapper}>
-            <Text style={{marginRight: 3}}>Current Speed: 1x </Text>
+            <Text style={{marginRight: 3}}>Current Speed: {props.currentSpeed}x </Text>
             <View style={{marginRight: 3}}>
-              <TouchableOpacity><SimpleLineIcons name="minus" size={25} color="black" /></TouchableOpacity>
+              <TouchableOpacity onPress={props.handleDecreaseSpeed}><SimpleLineIcons name="minus" size={25} color="black" /></TouchableOpacity>
             </View>
             <View style={{marginLeft: 3}}>
-              <TouchableOpacity><SimpleLineIcons name="plus" size={25} color="black" /></TouchableOpacity>
+              <TouchableOpacity onPress={props.handleIncreaseSpeed}><SimpleLineIcons name="plus" size={25} color="black" /></TouchableOpacity>
             </View>
           </View>
         </View>
@@ -148,6 +172,7 @@ const styles = StyleSheet.create({
   },
   episodeTitle: {
     marginTop: 5,
+    marginBottom: 10,
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center'
