@@ -47,14 +47,12 @@ class EpisodeListCard extends Component {
   toggleLike= (id) => {
     var inbox = this.props.inbox.slice();
     inbox[id].liked = !inbox[id].liked;
-    console.warn(this.props.inbox[id].liked)
     this.props.dispatch(actionCreators.toggleLike(inbox));
   };
 
   toggleBookmark = (id) => {
     var inbox = this.props.inbox.slice();
     inbox[id].bookmark = !inbox[id].bookmark;
-
     this.props.dispatch(actionCreators.toggleBookmark(inbox));
   };
 
@@ -77,7 +75,7 @@ class EpisodeListCard extends Component {
           <Text style={styles.tag} numberOfLines={1} ellipsizeMode='tail'> {this.props.episode.tag} </Text>
           <View style={styles.timeView}>
             {this.renderClock(this.props.episode.feed.duration)}
-            <Text style={styles.time}>{this.props.episode.feed.duration} Key: {this.props.key}</Text>
+            <Text style={styles.time}>{this.props.episode.feed.duration}</Text>
           </View>
           {this.props.episode.bookmark === true ?
           <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark" onPress={()=>(this.toggleBookmark(this.props.id))}/> :
