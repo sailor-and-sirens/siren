@@ -22,7 +22,7 @@ const PlayerFullSizeModal = (props) => {
 
   let episodeBookmark = () => {
     if (props.episode.bookmark) {
-      return {name: 'ios-bookmark', color: 'rgb(25, 100, 175)'}
+      return {name: 'ios-bookmark', color: 'gray'}
     } else {
       return {name: 'ios-bookmark-outline', color: 'gray'}
     }
@@ -30,7 +30,7 @@ const PlayerFullSizeModal = (props) => {
 
   let episodeLike = () => {
     if (props.episode.liked) {
-      return {name: 'ios-heart', color: 'rgb(170, 5, 5)'}
+      return {name: 'ios-heart', color: 'gray'}
     } else {
       return {name: 'ios-heart-outline', color: 'gray'}
     }
@@ -72,7 +72,7 @@ const PlayerFullSizeModal = (props) => {
         </TouchableOpacity>
         <ScrollView style={styles.scrollableContentWrapper}>
           <View style={styles.imageEpisodeInfoWrapper}>
-            {episodeImage}
+            <Image source={{uri: props.episode.image}} style={styles.image}/>
           </View>
           <View style={styles.actionIconsWrapper}>
             {episodeLink}
