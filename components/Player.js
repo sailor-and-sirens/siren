@@ -118,6 +118,8 @@ class Player extends Component {
   }
 
   render() {
+    let playerFullSizeModal;
+    let openModalButton;
     let playPauseButton = (
       <TouchableOpacity onPress={this.handlePlay}>
         <SimpleLineIcons style={{textAlign: 'center'}} name="control-play" size={40} color="black" />
@@ -131,12 +133,28 @@ class Player extends Component {
         </TouchableOpacity>
       )
     }
+
+    if (this.props.currentSoundInstance !== null) {
+      playerFullSizeModal = (
+        <PlayerFullSizeModal
+          episode={this.props.currentEpisode}
+          handleFullSizeModalClose={this.handleFullSizeModalClose}
+          isFullSizeModalVisible={this.props.isFullSizeModalVisible}
+          isPlaying={this.props.isPlaying}
+        />
+      )
+
+      openModalButton = (
+        <TouchableOpacity onPress={this.handleFullSizeButtonPress}>
+          <SimpleLineIcons name="arrow-up" size={20}/>
+        </TouchableOpacity>
+      )
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.currentlyPlayingWrapper}>
-          <TouchableOpacity onPress={this.handleFullSizeButtonPress}>
-            <SimpleLineIcons name="arrow-up" size={20}/>
-          </TouchableOpacity>
+          {openModalButton}
           <View style={styles.currentlyPlaying}>
             <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
           </View>
@@ -187,12 +205,7 @@ class Player extends Component {
           handleIncreaseSpeed={this.handleIncreaseSpeed}
           handleModalClose={this.handleModalClose}
         />
-        <PlayerFullSizeModal
-          episode={this.props.currentEpisode}
-          handleFullSizeModalClose={this.handleFullSizeModalClose}
-          isFullSizeModalVisible={this.props.isFullSizeModalVisible}
-          isPlaying={false}
-        />
+        {playerFullSizeModal}
       </View>
     );
   }

@@ -1,6 +1,6 @@
 import { Audio } from 'expo';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, Image, ScrollView, Linking } from 'react-native';
 import { Ionicons, SimpleLineIcons, MaterialIcons } from '@expo/vector-icons';
 
 const { height, width } = Dimensions.get('window');
@@ -14,6 +14,7 @@ const episode = {
   pubDate: "Wed, 29 Mar 2017 00:00:00 -0400",
   enclosure: {"url":"https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/notetoself/notetoself032917_cms745660_pod.mp3", length: 0, type: "audio/mpeg"}}
 };
+
 
 const PlayerFullSizeModal = (props) => {
   let episodeImage = '';
@@ -34,6 +35,7 @@ const PlayerFullSizeModal = (props) => {
       </TouchableOpacity>
     )
   }
+
   return (
     <Modal
       animationType={"slide"}
@@ -46,10 +48,10 @@ const PlayerFullSizeModal = (props) => {
         </TouchableOpacity>
         <ScrollView style={styles.scrollableContentWrapper}>
           <View style={styles.imageEpisodeInfoWrapper}>
-            <Image source={{uri: episode.image}} style={styles.image}/>
+            {episodeImage}
           </View>
           <View style={styles.actionIconsWrapper}>
-            <Ionicons style={styles.actionIcon} name="ios-link" size={35}></Ionicons>
+            <Ionicons style={styles.actionIcon} name="ios-link" size={35} onPress={() => Linking.openURL('')}></Ionicons>
             <MaterialIcons style={styles.actionIcon} name="playlist-play" size={35}></MaterialIcons>
             <Ionicons style={styles.actionIcon} name="ios-bookmark-outline" size={35}></Ionicons>
             <Ionicons style={styles.actionIcon} name="ios-heart-outline" size={35}></Ionicons>
