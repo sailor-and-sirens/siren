@@ -13,7 +13,7 @@ const initialState = {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",
     time: "timeOff",
-    tag: "tagOff"
+    tag: "All"
   },
 
 iTunesResult: [
