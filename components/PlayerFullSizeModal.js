@@ -22,7 +22,7 @@ const PlayerFullSizeModal = (props) => {
 
   let episodeBookmark = () => {
     if (props.episode.bookmark) {
-      return {name: 'ios-bookmark', color: 'blue'}
+      return {name: 'ios-bookmark', color: 'rgb(30, 120, 205)'}
     } else {
       return {name: 'ios-bookmark-outline', color: 'gray'}
     }
@@ -30,7 +30,7 @@ const PlayerFullSizeModal = (props) => {
 
   let episodeLike = () => {
     if (props.episode.liked) {
-      return {name: 'ios-heart', color: 'red'}
+      return {name: 'ios-heart', color: 'rgb(195, 5, 5)'}
     } else {
       return {name: 'ios-heart-outline', color: 'gray'}
     }
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   episodeTitle: {
     marginTop: 5,
     marginBottom: 10,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center'
   },
