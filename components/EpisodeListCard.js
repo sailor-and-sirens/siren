@@ -47,14 +47,12 @@ class EpisodeListCard extends Component {
   toggleLike= (id) => {
     var inbox = this.props.inbox.slice();
     inbox[id].liked = !inbox[id].liked;
-    console.warn(this.props.inbox[id].liked)
     this.props.dispatch(actionCreators.toggleLike(inbox));
   };
 
   toggleBookmark = (id) => {
     var inbox = this.props.inbox.slice();
     inbox[id].bookmark = !inbox[id].bookmark;
-
     this.props.dispatch(actionCreators.toggleBookmark(inbox));
   };
 
