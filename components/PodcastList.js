@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     margin: 10,
   }
-})
+});
 
 export default connect(mapStateToProps)(PodcastList);

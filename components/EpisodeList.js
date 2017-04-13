@@ -7,8 +7,11 @@ import { actionCreators } from '../actions/Player';
 import { convertMillis } from '../helpers';
 import EpisodeListCard from './EpisodeListCard';
 
+let _ = require('lodash')
+
 const mapStateToProps = (state) => ({
-  inbox: state.main.inbox
+  inbox: state.main.inbox,
+  filters: state.main.inboxFilters
 });
 
 class EpisodeList extends Component {
@@ -17,6 +20,75 @@ class EpisodeList extends Component {
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
+  }
+
+
+hmsToSecondsOnly = (duration) => {
+    var p = duration.split(':'),
+        s = 0, m = 1;
+
+    while (p.length > 0) {
+        s += m * parseInt(p.pop(), 10);
+        m *= 60;
+    }
+    return s;
+}
+
+  filterEpisodes = (episodes) => {
+    if (this.props.filters.liked === 'liked') {
+      episodes = _.filter(episodes, function(episode) {
+        return episode.liked === true;
+      });
+    }
+    if (this.props.filters.liked === 'notLiked') {
+      episodes = _.filter(episodes, function(episode) {
+        return episode.liked === false;
+      });
+    }
+    if (this.props.filters.bookmarked === 'bookmarked') {
+      episodes = _.filter(episodes, function(episode) {
+        return episode.bookmark === true;
+      });
+    }
+    if (this.props.filters.bookmarked === 'notBookmarked') {
+       episodes = _.filter(episodes, function(episode) {
+        return episode.bookmark === false;
+      });
+    }
+    if (this.props.filters.time !== 'timeOff') {
+      if(this.props.filters.time === '5') {
+        episodes = _.filter(episodes, function(episode) {
+        return hmsToSecondsOnly(episode.feed.duration) < 300;
+        });
+      } else if (this.props.filters.time === '15') {
+        episodes = _.filter(episodes, function(episode) {
+        return hmsToSecondsOnly(episode.feed.duration) < 900;
+        });
+      } else if (this.props.filters.time === '30') {
+        episodes = _.filter(episodes, function(episode) {
+        return hmsToSecondsOnly(episode.feed.duration) < 1800;
+        });
+      }else if (this.props.filters.time === '45') {
+        episodes = _.filter(episodes, function(episode) {
+        return hmsToSecondsOnly(episode.feed.duration) < 2700;
+        });
+      }else if (this.props.filters.time === '60') {
+        episodes = _.filter(episodes, function(episode) {
+        return hmsToSecondsOnly(episode.feed.duration) < 3600;
+        });
+      }else if (this.props.filters.time === '60+') {
+        episodes = _.filter(episodes, function(episode) {
+        return hmsToSecondsOnly(episode.feed.duration) > 3600;
+        });
+      }
+    }
+    if (this.props.filters.tag !== 'tagOff') {
+      var tag = this.props.filters.tag;
+      episodes = _.filter(episodes, function(episode) {
+        return episode.tag === tag;
+      })
+    }
+    return episodes;
   }
 
   handlePlay = (episode) => {
@@ -57,8 +129,8 @@ class EpisodeList extends Component {
    return (
       <View style={styles.mainView}>
          <ScrollView style={styles.episodeList}>
-          {this.props.inbox.map((episode, i) => (
-              <EpisodeListCard episode={episode} handlePlay={this.handlePlay} key={i}/>
+          {this.filterEpisodes(this.props.inbox).map((episode, i) => (
+              <EpisodeListCard episode={episode} handlePlay={this.handlePlay} id={i} key={i}/>
             ))}
         </ScrollView>
       </View>
