@@ -82,7 +82,7 @@ hmsToSecondsOnly = (duration) => {
         });
       }
     }
-    if (this.props.filters.tag !== 'tagOff') {
+    if (this.props.filters.tag !== 'All') {
       var tag = this.props.filters.tag;
       episodes = _.filter(episodes, function(episode) {
         return episode.tag === tag;
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
   },
   episodeList:{
     width: '100%',
+    marginBottom: 210,
   },
 })
 
