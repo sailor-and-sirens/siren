@@ -36,9 +36,11 @@ const PlayerFullSizeModal = (props) => {
     }
   }
 
-  if (props.episode) {
-    episodeImage = <Image source={{uri: props.episode.image}} style={styles.image}/>;
-  }
+  let playPauseImage = (
+    <TouchableOpacity onPress={props.handlePlay}>
+      <Image source={{uri: props.episode.image}} style={styles.image}/>
+    </TouchableOpacity>
+  )
 
   let playPauseButton = (
     <TouchableOpacity onPress={props.handlePlay}>
@@ -50,6 +52,12 @@ const PlayerFullSizeModal = (props) => {
     playPauseButton = (
       <TouchableOpacity onPress={props.handlePause}>
         <SimpleLineIcons style={{textAlign: 'center'}} name="control-pause" size={50} color="black" />
+      </TouchableOpacity>
+    )
+
+    playPauseImage = (
+      <TouchableOpacity onPress={props.handlePause}>
+        <Image source={{uri: props.episode.image}} style={styles.image}/>
       </TouchableOpacity>
     )
   }
@@ -72,7 +80,7 @@ const PlayerFullSizeModal = (props) => {
         </TouchableOpacity>
         <ScrollView style={styles.scrollableContentWrapper}>
           <View style={styles.imageEpisodeInfoWrapper}>
-            <Image source={{uri: props.episode.image}} style={styles.image}/>
+            {playPauseImage}
           </View>
           <View style={styles.actionIconsWrapper}>
             {episodeLink}
