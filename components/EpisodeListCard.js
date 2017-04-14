@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
+import { actionCreators as mainActions } from '../actions';
+import { actionCreators as swipeActions } from '../actions/Swipe';
 import Swipeable from 'react-native-swipeable';
 
 const mapStateToProps = (state) => ({
@@ -54,13 +55,13 @@ class EpisodeListCard extends Component {
   toggleLike= (id) => {
     var inbox = this.props.inbox.slice();
     inbox[id].liked = !inbox[id].liked;
-    this.props.dispatch(actionCreators.toggleLike(inbox));
+    this.props.dispatch(mainActions.toggleLike(inbox));
   };
 
   toggleBookmark = (id) => {
     var inbox = this.props.inbox.slice();
     inbox[id].bookmark = !inbox[id].bookmark;
-    this.props.dispatch(actionCreators.toggleBookmark(inbox));
+    this.props.dispatch(mainActions.toggleBookmark(inbox));
   };
 
   render() {

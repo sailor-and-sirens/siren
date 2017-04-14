@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { types } from '../actions';
 import player from './Player';
+import swipe from './Swipe';
 
 // add your key/values for initialState here
 const initialState = {
@@ -55,6 +56,9 @@ const main = (state = initialState, action) => {
   if (action.type === types.TOGGLE_BOOKMARK) {
     return {...state, inbox: action.payload}
   }
+  if (action.type === types.TOGGLE_OPEN_SWIPEABLE) {
+    return {...state, currentlyOpenSwipeable: action.payload}
+  }
   if (action.type === types.UPDATE_LIKED_FILTER) {
     return {...state, inboxFilters: {...state.inboxFilters, liked: action.payload}}
   }
@@ -73,7 +77,8 @@ const main = (state = initialState, action) => {
 
 const rootReducer = combineReducers({
   main,
-  player
+  player,
+  swipe
 });
 
 export default rootReducer;

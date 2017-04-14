@@ -3,21 +3,20 @@ import { StyleSheet, Text, View, TextInput, ScrollView, Image} from 'react-nativ
 import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions/Player';
+import { actionCreators as playerActions } from '../actions/Player';
+import { actionCreators as swipeActions } from '../actions/Swipe';
 import { convertMillis } from '../helpers';
 import EpisodeListCard from './EpisodeListCard';
 
 let _ = require('lodash')
 
 const mapStateToProps = (state) => ({
+  currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   inbox: state.main.inbox,
   filters: state.main.inboxFilters
 });
 
 class EpisodeList extends Component {
-  state = {
-    currentlyOpenSwipeable: null
-  };
 
   newSoundInstance = null;
   timer = null;
@@ -102,7 +101,7 @@ hmsToSecondsOnly = (duration) => {
       clearInterval(this.timer);
       this.newSoundInstance.stopAsync()
         .then(stopped => {
-          this.props.dispatch(actionCreators.updateCurrentPlayingTime('0:00'));
+          this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
           this.playNewEpisode(episode);
         });
     }
@@ -110,10 +109,10 @@ hmsToSecondsOnly = (duration) => {
 
   playNewEpisode = (episode) => {
     this.newSoundInstance = new Audio.Sound({ source: episode.feed.enclosure.url });
-    this.props.dispatch(actionCreators.createNewSoundInstance(this.newSoundInstance));
-    this.props.dispatch(actionCreators.setPlayStatus(true));
-    this.props.dispatch(actionCreators.updateCurrentlyPlayingEpisode(episode.feed.title));
-    this.props.dispatch(actionCreators.storeEpisodeData(episode));
+    this.props.dispatch(playerActions.createNewSoundInstance(this.newSoundInstance));
+    this.props.dispatch(playerActions.setPlayStatus(true));
+    this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(episode.feed.title));
+    this.props.dispatch(playerActions.storeEpisodeData(episode));
     this.newSoundInstance.loadAsync()
       .then(loaded => {
         this.newSoundInstance.playAsync()
@@ -122,7 +121,7 @@ hmsToSecondsOnly = (duration) => {
               this.newSoundInstance.getStatusAsync()
                 .then(status => {
                   let millis = status.positionMillis
-                  this.props.dispatch(actionCreators.updateCurrentPlayingTime(convertMillis(millis)));
+                  this.props.dispatch(playerActions.updateCurrentPlayingTime(convertMillis(millis)));
                 })
             }.bind(this), 100);
           })
@@ -130,16 +129,15 @@ hmsToSecondsOnly = (duration) => {
   }
 
   render() {
-    const {currentlyOpenSwipeable} = this.state;
+    const {currentlyOpenSwipeable} = this.props;
     const itemProps = {
       onOpen: (event, gestureState, swipeable) => {
         if (currentlyOpenSwipeable && currentlyOpenSwipeable !== swipeable) {
           currentlyOpenSwipeable.recenter();
         }
-
-        this.setState({currentlyOpenSwipeable: swipeable});
+        this.props.dispatch(swipeActions.toggleOpenSwipeable(swipeable));
       },
-      onClose: () => this.setState({currentlyOpenSwipeable: null})
+      onClose: () => this.props.dispatch(swipeActions.toggleOpenSwipeable(null))
     };
    return (
       <View style={styles.mainView}>
