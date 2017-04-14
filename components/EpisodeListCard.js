@@ -8,6 +8,7 @@ import Swipeable from 'react-native-swipeable';
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
+  leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
   rightActionActivated: state.swipe.isRightActionActivated,
   rightToggle: state.swipe.isRightToggled
@@ -25,11 +26,6 @@ hmsToSecondsOnly = (duration) => {
 }
 
 class EpisodeListCard extends Component {
-
-  state = {
-    leftActionActivated: false,
-    leftToggle: false,
-  };
 
   renderClock = (duration) => {
     if (duration.length < 5) {
@@ -66,8 +62,7 @@ class EpisodeListCard extends Component {
   };
 
   render() {
-    const {leftActionActivated} = this.state;
-    const {leftToggle, rightActionActivated, rightToggle} = this.props;
+    const {leftActionActivated, leftToggle, rightActionActivated, rightToggle} = this.props;
     return (
       <Swipeable
         leftActionActivationDistance={200}
@@ -86,8 +81,8 @@ class EpisodeListCard extends Component {
               <Text>Remove Episode</Text>}
           </View>
         )}
-        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
-        onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
+        onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
+        onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
         onLeftActionComplete={() => this.props.dispatch(swipeActions.updateLeftToggle(!leftToggle))}
 
         onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
