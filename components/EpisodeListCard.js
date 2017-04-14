@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+let _ = require('lodash')
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
@@ -44,13 +45,13 @@ class EpisodeListCard extends Component {
   };
 
   toggleLike= (id) => {
-    var inbox = this.props.inbox.slice();
+    var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].liked = !inbox[id].liked;
     this.props.dispatch(actionCreators.toggleLike(inbox));
   };
 
   toggleBookmark = (id) => {
-    var inbox = this.props.inbox.slice();
+    var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].bookmark = !inbox[id].bookmark;
     this.props.dispatch(actionCreators.toggleBookmark(inbox));
   };
