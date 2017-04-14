@@ -8,6 +8,8 @@ import Swipeable from 'react-native-swipeable';
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
+  rightActionActivated: state.swipe.isRightActionActivated,
+  rightToggle: state.swipe.isRightToggled
 });
 
 hmsToSecondsOnly = (duration) => {
@@ -65,7 +67,8 @@ class EpisodeListCard extends Component {
   };
 
   render() {
-    const {leftActionActivated, rightActionActivated, toggle, rightToggle} = this.state;
+    const {leftActionActivated, toggle, rightToggle} = this.state;
+    const {rightActionActivated} = this.props;
     return (
       <Swipeable
         leftActionActivationDistance={200}
@@ -88,7 +91,8 @@ class EpisodeListCard extends Component {
         onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
         onLeftActionComplete={() => this.setState({toggle: !toggle})}
         onRightActionActivate={() => this.setState({rightActionActivated: true})}
-        onRightActionDeactivate={() => this.setState({rightActionActivated: false})}
+        onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
+        onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
         onRightActionComplete={() => this.setState({rightToggle: !rightToggle})}
       >
       <View style={styles.mainView}>
