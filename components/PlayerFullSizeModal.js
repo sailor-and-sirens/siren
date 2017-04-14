@@ -73,6 +73,7 @@ const PlayerFullSizeModal = (props) => {
       animationType={"slide"}
       transparent={false}
       visible={props.isFullSizeModalVisible}
+      onRequestClose={() => {props.handleFullSizeModalClose}}
     >
       <View style={styles.modalContainer}>
         <TouchableOpacity onPress={props.handleFullSizeModalClose} style={{alignSelf: 'flex-start'}}>

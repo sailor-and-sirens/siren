@@ -11,6 +11,7 @@ const PlayerSpeedModal = (props) => {
       animationType={"slide"}
       transparent={true}
       visible={props.isModalVisible}
+      onRequestClose={() => {props.handleModalClose}}
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalWrapper}>
