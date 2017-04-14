@@ -6,6 +6,8 @@ import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import Swipeable from 'react-native-swipeable';
 
+let _ = require('lodash');
+
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
   leftActionActivated: state.swipe.isLeftActionActivated,
@@ -50,13 +52,13 @@ class EpisodeListCard extends Component {
   };
 
   toggleLike= (id) => {
-    var inbox = this.props.inbox.slice();
+    var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].liked = !inbox[id].liked;
     this.props.dispatch(mainActions.toggleLike(inbox));
   };
 
   toggleBookmark = (id) => {
-    var inbox = this.props.inbox.slice();
+    var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].bookmark = !inbox[id].bookmark;
     this.props.dispatch(mainActions.toggleBookmark(inbox));
   };
@@ -185,7 +187,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#42f4c5',
     alignSelf: 'center',
     padding: 2,
-    // width: '30%',
     width: 80,
     marginLeft: 1,
     fontSize: 12,

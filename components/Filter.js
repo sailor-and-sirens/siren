@@ -16,8 +16,8 @@ class Filter extends Component {
 
   getTags = () => {
     var tags = ['All'];
-    this.props.inbox.forEach((episode) => {
-      tags.push(episode.tag);
+    Object.keys(this.props.inbox).forEach((key) => {
+      tags.push(this.props.inbox[key].tag);
     });
     return  _.uniq(tags);
   }
@@ -29,7 +29,6 @@ class Filter extends Component {
           <View style={styles.filterBar}>
             <Ionicons style={styles.icon} size={30} color='grey' name="ios-heart-outline"/>
             <Picker itemStyle={styles.pickerItem} style={styles.picker}
-              selectedValue={this.props.filters.liked}
                 selectedValue={this.props.filters.liked}
                 onValueChange={(value) => {this.props.dispatch(actionCreators.updateLikedFilter(value))}}>
               <Picker.Item style={styles.pickerItem} value="likedOff" label="All" />
@@ -115,9 +114,6 @@ const styles = StyleSheet.create({
       ios: {
         justifyContent: 'center',
       },
-      android: {
-        justifyContent: 'space-between',
-      },
     }),
   },
   pickerItem: {
@@ -136,7 +132,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   buttonView: {
-    marginTop: 15,
   },
 });
 
