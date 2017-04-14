@@ -2,8 +2,7 @@ export const types = {
   TOGGLE_OPEN_SWIPEABLE: 'TOGGLE_OPEN_SWIPEABLE',
   UPDATE_LEFT_ACTIVATION: 'UPDATE_LEFT_ACTIVATION',
   UPDATE_LEFT_TOGGLE: 'UPDATE_LEFT_TOGGLE',
-  UPDATE_RIGHT_ACTIVATION: 'UPDATE_RIGHT_ACTIVATION',
-  UPDATE_RIGHT_TOGGLE: 'UPDATE_RIGHT_TOGGLE'
+  UPDATE_RIGHT_ACTIVATION: 'UPDATE_RIGHT_ACTIVATION'
 }
 
 export const actionCreators = {
@@ -18,9 +17,6 @@ export const actionCreators = {
   },
   updateRightActivation: (boolean) => {
     return {type: types.UPDATE_RIGHT_ACTIVATION, payload: boolean}
-  },
-  updateRightToggle: (boolean) => {
-    return {type: types.UPDATE_RIGHT_TOGGLE, payload: boolean}
   }
 
 }

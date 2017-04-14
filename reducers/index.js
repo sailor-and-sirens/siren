@@ -47,6 +47,13 @@ const main = (state = initialState, action) => {
   if (action.type === types.CHANGE_VIEW) {
     return {...state, view: action.payload};
   }
+  if (action.type === types.REMOVE_EPISODE_FROM_INBOX) {
+    let newInbox = Object.keys(state.inbox).reduce((accum, key) => {
+      if (key !== action.payload) accum[key] = state.inbox[key];
+      return accum;
+    }, {});
+    return {...state, inbox: newInbox}
+  }
   if (action.type === types.TOGGLE_MODAL) {
     return {...state, modalVisible: !state.modalVisible};
   }

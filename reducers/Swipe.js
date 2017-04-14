@@ -4,8 +4,7 @@ const initialState = {
   currentlyOpenSwipeable: null,
   isLeftActionActivated: false,
   isLeftToggled: false,
-  isRightActionActivated: false,
-  isRightToggled: false
+  isRightActionActivated: false
 }
 
 const swipe = (state = initialState, action) => {
@@ -17,9 +16,6 @@ const swipe = (state = initialState, action) => {
   }
   if (action.type === types.UPDATE_RIGHT_ACTIVATION) {
     return {...state, isRightActionActivated: action.payload};
-  }
-  if (action.type === types.UPDATE_RIGHT_TOGGLE) {
-    return {...state, isRightToggled: action.payload};
   }
 
   return state;
