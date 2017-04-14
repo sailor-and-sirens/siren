@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../actions/Player';
 import { convertMillis } from '../helpers';
 import EpisodeListCard from './EpisodeListCard';
+import SwipeTestCard from './SwipeTestCard';
 
 let _ = require('lodash')
 
@@ -15,6 +16,10 @@ const mapStateToProps = (state) => ({
 });
 
 class EpisodeList extends Component {
+  state = {
+    currentlyOpenSwipeable: null
+  };
+
   newSoundInstance = null;
   timer = null;
 
@@ -126,9 +131,21 @@ hmsToSecondsOnly = (duration) => {
   }
 
   render() {
+    const {currentlyOpenSwipeable} = this.state;
+    const itemProps = {
+      onOpen: (event, gestureState, swipeable) => {
+        if (currentlyOpenSwipeable && currentlyOpenSwipeable !== swipeable) {
+          currentlyOpenSwipeable.recenter();
+        }
+
+        this.setState({currentlyOpenSwipeable: swipeable});
+      },
+      onClose: () => this.setState({currentlyOpenSwipeable: null})
+    };
    return (
       <View style={styles.mainView}>
          <ScrollView style={styles.episodeList}>
+           <SwipeTestCard {...itemProps}/>
           {this.filterEpisodes(this.props.inbox).map((episode, i) => (
               <EpisodeListCard episode={episode} handlePlay={this.handlePlay} id={i} key={i}/>
             ))}
