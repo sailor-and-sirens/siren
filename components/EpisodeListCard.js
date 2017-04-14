@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+import Swipeable from 'react-native-swipeable';
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
@@ -20,6 +21,13 @@ hmsToSecondsOnly = (duration) => {
 }
 
 class EpisodeListCard extends Component {
+
+  state = {
+    leftActionActivated: false,
+    rightActionActivated: false,
+    toggle: false,
+    rightToggle: false
+  };
 
   renderClock = (duration) => {
     if (duration.length < 5) {
@@ -56,7 +64,32 @@ class EpisodeListCard extends Component {
   };
 
   render() {
+    const {leftActionActivated, rightActionActivated, toggle, rightToggle} = this.state;
     return (
+      <Swipeable
+        leftActionActivationDistance={200}
+        leftContent={(
+          <View style={[styles.leftSwipeItem, {backgroundColor: '#42f4c5'}]}>
+            {leftActionActivated ?
+              <Text>Toggle Playlist Selection Modal</Text> :
+              <Text>Add to Playlist</Text>}
+          </View>
+        )}
+        rightActionActivationDistance={200}
+        rightContent={(
+          <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
+            {rightActionActivated ?
+              <Text>Removed!</Text> :
+              <Text>Remove Episode</Text>}
+          </View>
+        )}
+        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
+        onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
+        onLeftActionComplete={() => this.setState({toggle: !toggle})}
+        onRightActionActivate={() => this.setState({rightActionActivated: true})}
+        onRightActionDeactivate={() => this.setState({rightActionActivated: false})}
+        onRightActionComplete={() => this.setState({rightToggle: !rightToggle})}
+      >
       <View style={styles.mainView}>
         <View style={styles.topView}>
           <View style={styles.leftView}>
@@ -86,6 +119,7 @@ class EpisodeListCard extends Component {
           }
         </View>
       </View>
+    </Swipeable>
     );
   }
 
@@ -183,6 +217,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  leftSwipeItem: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingRight: 20
+  },
+  rightSwipeItem: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingLeft: 20
   },
 });
 

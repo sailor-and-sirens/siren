@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../actions/Player';
 import { convertMillis } from '../helpers';
 import EpisodeListCard from './EpisodeListCard';
-import SwipeTestCard from './SwipeTestCard';
 
 let _ = require('lodash')
 
@@ -145,9 +144,8 @@ hmsToSecondsOnly = (duration) => {
    return (
       <View style={styles.mainView}>
          <ScrollView style={styles.episodeList}>
-           <SwipeTestCard {...itemProps}/>
           {this.filterEpisodes(this.props.inbox).map((episode, i) => (
-              <EpisodeListCard episode={episode} handlePlay={this.handlePlay} id={i} key={i}/>
+              <EpisodeListCard {...itemProps} episode={episode} handlePlay={this.handlePlay} id={i} key={i}/>
             ))}
         </ScrollView>
       </View>
