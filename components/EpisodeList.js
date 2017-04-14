@@ -34,61 +34,61 @@ hmsToSecondsOnly = (duration) => {
     return s;
 }
 
-  filterEpisodes = (episodes) => {
+  filterEpisodes = (keys) => {
     if (this.props.filters.liked === 'liked') {
-      episodes = _.filter(episodes, function(episode) {
-        return episode.liked === true;
+      keys = _.filter(keys, (key) => {
+        return this.props.inbox[key].liked === true;
       });
     }
     if (this.props.filters.liked === 'notLiked') {
-      episodes = _.filter(episodes, function(episode) {
-        return episode.liked === false;
+      keys = _.filter(keys, (key) => {
+        return this.props.inbox[key].liked === false;
       });
     }
     if (this.props.filters.bookmarked === 'bookmarked') {
-      episodes = _.filter(episodes, function(episode) {
-        return episode.bookmark === true;
+      keys = _.filter(keys, (key) => {
+        return this.props.inbox[key].bookmark === true;
       });
     }
     if (this.props.filters.bookmarked === 'notBookmarked') {
-       episodes = _.filter(episodes, function(episode) {
-        return episode.bookmark === false;
+       keys = _.filter(keys, (key) => {
+        return this.props.inbox[key].bookmark === false;
       });
     }
     if (this.props.filters.time !== 'timeOff') {
       if(this.props.filters.time === '5') {
-        episodes = _.filter(episodes, function(episode) {
-        return hmsToSecondsOnly(episode.feed.duration) < 300;
+        keys = _.filter(keys, (key) => {
+        return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 300;
         });
       } else if (this.props.filters.time === '15') {
-        episodes = _.filter(episodes, function(episode) {
-        return hmsToSecondsOnly(episode.feed.duration) < 900;
+        keys = _.filter(keys, (key) => {
+        return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 900;
         });
       } else if (this.props.filters.time === '30') {
-        episodes = _.filter(episodes, function(episode) {
-        return hmsToSecondsOnly(episode.feed.duration) < 1800;
+        keys = _.filter(keys, (key) => {
+        return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 1800;
         });
       }else if (this.props.filters.time === '45') {
-        episodes = _.filter(episodes, function(episode) {
-        return hmsToSecondsOnly(episode.feed.duration) < 2700;
+        keys = _.filter(keys, (key) => {
+        return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 2700;
         });
       }else if (this.props.filters.time === '60') {
-        episodes = _.filter(episodes, function(episode) {
-        return hmsToSecondsOnly(episode.feed.duration) < 3600;
+        keys = _.filter(keys, (key) => {
+        return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 3600;
         });
       }else if (this.props.filters.time === '60+') {
-        episodes = _.filter(episodes, function(episode) {
-        return hmsToSecondsOnly(episode.feed.duration) > 3600;
+        keys = _.filter(keys, (key) => {
+        return hmsToSecondsOnly(this.props.inbox[key].feed.duration) > 3600;
         });
       }
     }
     if (this.props.filters.tag !== 'All') {
       var tag = this.props.filters.tag;
-      episodes = _.filter(episodes, function(episode) {
-        return episode.tag === tag;
+      keys = _.filter(keys, (key) => {
+        return this.props.inbox[key].tag === tag;
       })
     }
-    return episodes;
+    return keys;
   }
 
   handlePlay = (episode) => {
@@ -129,8 +129,8 @@ hmsToSecondsOnly = (duration) => {
    return (
       <View style={styles.mainView}>
          <ScrollView style={styles.episodeList}>
-          {this.filterEpisodes(this.props.inbox).map((episode, i) => (
-              <EpisodeListCard episode={episode} handlePlay={this.handlePlay} id={i} key={i}/>
+          {this.filterEpisodes(Object.keys(this.props.inbox)).map((key, i) => (
+              <EpisodeListCard episode={this.props.inbox[key]} handlePlay={this.handlePlay} id={key} key={key}/>
             ))}
         </ScrollView>
       </View>
