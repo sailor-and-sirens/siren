@@ -44,7 +44,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#cccccc',
   },
   navigationLink: {
-    padding: 8,
+    padding: 20,
+    paddingTop: 8,
+    paddingBottom: 8
   }
 });
 
