@@ -12,6 +12,7 @@ import { actionCreators } from '../actions';
 import Player from './Player';
 import Header from './Header';
 import ModalComponent from './Modal';
+import Authentication from './Authentication';
 
 // connect gives us mapStateToProps, which gives us access to our state
 const mapStateToProps = (state) => ({
@@ -24,6 +25,7 @@ class App extends Component {
     return (
       <View style={styles.container}>
         <Header/>
+        <Authentication/>
 
         {this.props.view === 'Search' ?
         <PodcastList/> :
