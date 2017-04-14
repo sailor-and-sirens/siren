@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PodcastListCard from './PodcastListCard';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const mapStateToProps = (state) => ({
   podcasts: state.main.iTunesResult
@@ -16,17 +17,19 @@ class PodcastList extends Component {
     this.state = {
       text: '',
       podcasts: [],
+      visible: false,
     }
   }
 
   getPodcasts () {
     query = this.state.text.slice().split().join('+');
-    this.setState({text: ""});
+    this.setState({text: "",  visible: true});
     fetch('http://itunes.apple.com/search?entity=podcast&term=' + query)
       .then(response => response.json())
       .then(response => {
         this.setState({
-          podcasts: response.results
+          podcasts: response.results,
+          visible: false
         });
       })
       .catch(console.warn);
@@ -40,7 +43,9 @@ class PodcastList extends Component {
           <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search" />
         </View>
         <ScrollView style={styles.podcastList}>
-          {this.state.podcasts.map((podcast, i) => (
+          {this.state.visible?
+            <Spinner visible={this.state.visible} textContent={"Searching..."} textStyle={{color: '#FFF'}} />  :
+          this.state.podcasts.map((podcast, i) => (
               <PodcastListCard podcast={podcast} key={i}/>
             ))}
         </ScrollView>
@@ -66,13 +71,13 @@ const styles = StyleSheet.create({
   },
   podcastList:{
     width: '100%',
-    marginBottom: 180 //Prevents list from being cut off
+    marginBottom: 210,
   },
   searchBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     margin: 10,
-  }
+  },
 });
 
 export default connect(mapStateToProps)(PodcastList);
