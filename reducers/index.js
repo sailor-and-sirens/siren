@@ -49,14 +49,23 @@ const main = (state = initialState, action) => {
   if (action.type === types.TOGGLE_MODAL) {
     return {...state, modalVisible: !state.modalVisible};
   }
-  if (action.type === types.UPDATE_INBOX_FILTERS) {
-    return {...state, inboxFilters: action.payload}
-  }
   if (action.type === types.TOGGLE_LIKE) {
     return {...state, inbox: action.payload}
   }
   if (action.type === types.TOGGLE_BOOKMARK) {
     return {...state, inbox: action.payload}
+  }
+  if (action.type === types.UPDATE_LIKED_FILTER) {
+    return {...state, inboxFilters: {...state.inboxFilters, liked: action.payload}}
+  }
+  if (action.type === types.UPDATE_BOOKMARKED_FILTER) {
+    return {...state, inboxFilters: {...state.inboxFilters, bookmarked: action.payload}}
+  }
+  if (action.type === types.UPDATE_TIME_FILTER) {
+    return {...state, inboxFilters: {...state.inboxFilters, time: action.payload}}
+  }
+  if (action.type === types.UPDATE_TAG_FILTER) {
+    return {...state, inboxFilters: {...state.inboxFilters, tag: action.payload}}
   }
 
   return state;
