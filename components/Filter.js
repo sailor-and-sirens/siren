@@ -29,7 +29,6 @@ class Filter extends Component {
           <View style={styles.filterBar}>
             <Ionicons style={styles.icon} size={30} color='grey' name="ios-heart-outline"/>
             <Picker itemStyle={styles.pickerItem} style={styles.picker}
-              selectedValue={this.props.filters.liked}
                 selectedValue={this.props.filters.liked}
                 onValueChange={(value) => {this.props.dispatch(actionCreators.updateLikedFilter(value))}}>
               <Picker.Item style={styles.pickerItem} value="likedOff" label="All" />
