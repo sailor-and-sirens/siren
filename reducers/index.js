@@ -5,7 +5,7 @@ import player from './Player';
 // add your key/values for initialState here
 const initialState = {
   modalVisible: false,
-  view: 'Inbox',
+  view: 'Authentication',
   //sample until call to API is setup
   inboxFilters: {
     liked: "likedOff",

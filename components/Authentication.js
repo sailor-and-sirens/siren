@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, AsyncStorage, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage, TextInput, Platform, Button, Alert} from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
-
-
-var STORAGE_KEY = 'id_token';
 const options = {};
+
+const mapStateToProps = (state) => ({
+  view: state.main.view
+})
 
 class Authentication extends Component {
   constructor() {
@@ -22,19 +23,24 @@ class Authentication extends Component {
   async _onValueChange(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
-      AsyncStorage.getItem(STORAGE_KEY, (err, res) => {
-        if (err) {
-          console.warn('err: ', err);
-        } else {
-          console.warn('res:', res);
-        }
-      })
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
   }
 
   _userSignup() {
+    if(this.state.password === '' || this.state.username === '' || this.state.email === '') {
+      Alert.alert('Missing fields');
+      return;
+    }
+    if(this.state.password.length < 6) {
+      Alert.alert('Password must be at least 6 characters long.');
+      return;
+    }
+    if(!this.state.email.includes('@')) {
+      Alert.alert('Please enter a valid email.');
+      return;
+    }
     var value = {username: this.state.username, password: this.state.password, email: this.state.email, avatarUrl: this.state.avatarUrl};
       fetch("http:localhost:3000/api/users/", {
         method: "POST",
@@ -47,7 +53,7 @@ class Authentication extends Component {
       .then((response) => {
         if (response.status !== 201) {
           response.json()
-          .then((responseData) => console.warn('Warning!: ', responseData.message))
+          .then((responseData) => Alert.alert(responseData.message))
           .catch(console.warn);
         } else {
           return response.json();
@@ -55,10 +61,8 @@ class Authentication extends Component {
       })
       .then((responseData) => {
         if (responseData) {
-          return this._onValueChange(STORAGE_KEY, responseData.id_token),
-          console.warn(
-            "Signup Success!"
-          )
+          this.props.dispatch(actionCreators.changeView('Inbox'))
+          return this._onValueChange('id_token', responseData.id_token)
         }
       })
       .catch((error) => {
@@ -68,6 +72,10 @@ class Authentication extends Component {
   }
 
   _userLogin() {
+    if(this.state.password === '' || this.state.username === '') {
+      Alert.alert('Missing fields');
+      return;
+    }
     var value = {username: this.state.username, password: this.state.password};
       fetch("http://localhost:3000/api/users/login", {
         method: "POST",
@@ -77,12 +85,22 @@ class Authentication extends Component {
         },
         body: JSON.stringify(value)
       })
-      .then((response) => response.json())
+       .then((response) => {
+        if (response.status !== 201) {
+          response.json()
+          .then((responseData) => Alert.alert(responseData.message))
+        } else {
+          return response.json();
+        }
+      })
       .then((responseData) => {
-        console.warn(
-          "Login Success!",
-        ),
-        this._onValueChange(STORAGE_KEY, responseData.id_token)
+        if (responseData) {
+          this.props.dispatch(actionCreators.changeView('Inbox'))
+          return this._onValueChange('id_token', responseData.id_token)
+        }
+      })
+      .catch((error) => {
+        console.warn('Error: ', error);
       })
       .done();
   }
@@ -90,15 +108,15 @@ class Authentication extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.row}>
+        <View style={styles.titleRow}>
           <Text style={styles.title}>Siren</Text>
         </View>
-        <View style={styles.row}>
+        <View style={styles.inputRow}>
           <View style={styles.form}>
-            <TextInput value={this.state.username} placeholder="Username" onChangeText={(text) => {this.setState({username: text});}} style={{ width: 200, height: 44, padding: 8 }} />
-            <TextInput value={this.state.password} placeholder="Password" onChangeText={(text) => {this.setState({password: text});}} style={{ width: 200, height: 44, padding: 8 }} />
+            <TextInput value={this.state.username} placeholder="Username" autoCapitalize="none" onChangeText={(text) => {this.setState({username: text});}} style={{ width: 200, height: 44, padding: 8 }} />
+            <TextInput value={this.state.password} autoCapitalize="none" secureTextEntry={true} placeholder="Password" onChangeText={(text) => {this.setState({password: text});}} style={{ width: 200, height: 44, padding: 8 }} />
             {this.state.view === 'signup' ?
-              <TextInput value={this.state.email} placeholder="Email" onChangeText={(text) => {this.setState({email: text});}} style={{ width: 200, height: 44, padding: 8 }} /> : <Text></Text>
+              <TextInput value={this.state.email} autoCapitalize="none" placeholder="Email" onChangeText={(text) => {this.setState({email: text});}} style={{ width: 200, height: 44, padding: 8 }} /> : <Text></Text>
             }
           </View>
         </View>
@@ -106,11 +124,11 @@ class Authentication extends Component {
           {this.state.view === 'login' ?
             <View>
               <Button style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4' title='Login' />
-              <Button style={styles.optButton} color='grey' onPress={() => this.setState({view: 'signup'})} title='Switch to signup' />
+              <Text style={styles.switchTo} onPress={() => this.setState({view: 'signup'})}>Switch to signup</Text>
             </View> :
             <View>
               <Button style={styles.button} onPress={this._userSignup.bind(this)} underlayColor='#99d9f4' title='Signup' />
-              <Button style={styles.optButton} color='grey' onPress={() => this.setState({view: 'login'})} title='Switch to login' />
+              <Text style={styles.switchTo} onPress={() => this.setState({view: 'login'})}>Switch to login</Text>
             </View>
           }
         </View>
@@ -148,18 +166,22 @@ var styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'center',
   },
-  optButton: {
+  switchTo: {
     height: 36,
+    marginTop: 10,
     color: 'grey',
-    backgroundColor: 'white',
-    marginBottom: 10,
-    marginTop: 20,
+    fontSize: 16,
     alignSelf: 'stretch',
     justifyContent: 'center',
   },
-  row: {
+  titleRow: {
     justifyContent: 'center',
     alignSelf: 'center',
+  },
+  inputRow: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 10,
   },
   buttonRow: {
     flexDirection: 'row',
@@ -168,4 +190,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default Authentication;
+export default connect(mapStateToProps)(Authentication);

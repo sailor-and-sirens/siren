@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, Button } from 'react-native';
 import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
 import EpisodeList from './EpisodeList';
@@ -22,14 +22,18 @@ const mapStateToProps = (state) => ({
 class App extends Component {
 
   render() {
+    if (this.props.view === 'Authentication') {
+      return (
+        <View style={styles.container}>
+          <Authentication/>
+        </View>
+      )
+    }
     return (
       <View style={styles.container}>
         <Header/>
-        <Authentication/>
-
         {this.props.view === 'Search' ?
         <PodcastList/> :
-
         this.props.view === 'Inbox' ?
         <EpisodeList/> :
         <View>
@@ -42,11 +46,13 @@ class App extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
   }
+
 });
 export default connect(mapStateToProps)(App);
 
