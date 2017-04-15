@@ -9,11 +9,11 @@ import Swipeable from 'react-native-swipeable';
 let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
+  currentEpisode: state.player.currentEpisode,
   inbox: state.main.inbox,
   leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
-  rightActionActivated: state.swipe.isRightActionActivated,
-  rightToggle: state.swipe.isRightToggled
+  rightActionActivated: state.swipe.isRightActionActivated
 });
 
 hmsToSecondsOnly = (duration) => {
@@ -89,7 +89,12 @@ class EpisodeListCard extends Component {
 
         onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
         onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
-        onRightActionComplete={() => this.props.dispatch(mainActions.removeEpisodeFromInbox(this.props.id))}
+        onRightActionComplete={() => {
+            this.props.dispatch(mainActions.removeEpisodeFromInbox(this.props.id));
+            if (this.props.currentEpisode.feed.enclosure.url === this.props.episode.feed.enclosure.url) {
+              this.props.handleRemovePlayingEpisode();
+            }
+        }}
       >
       <View style={styles.mainView}>
         <View style={styles.topView}>

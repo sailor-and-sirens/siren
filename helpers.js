@@ -20,3 +20,10 @@ export const convertMillis = (millis) => {
   seconds = seconds % 60;
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
+
+export const removeItemFromObjectById = (object, id) => {
+  return Object.keys(object).reduce((accum, key) => {
+    if (key !== id) accum[key] = object[key];
+    return accum;
+  }, {});
+}

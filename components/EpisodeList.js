@@ -111,12 +111,13 @@ hmsToSecondsOnly = (duration) => {
     this.newSoundInstance = new Audio.Sound({ source: episode.feed.enclosure.url });
     this.props.dispatch(playerActions.createNewSoundInstance(this.newSoundInstance));
     this.props.dispatch(playerActions.setPlayStatus(true));
-    this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(episode.feed.title));
+    this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode('LOADING'));
     this.props.dispatch(playerActions.storeEpisodeData(episode));
     this.newSoundInstance.loadAsync()
       .then(loaded => {
         this.newSoundInstance.playAsync()
           .then(played => {
+            this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(episode.feed.title));
             this.timer = setInterval(function() {
               this.newSoundInstance.getStatusAsync()
                 .then(status => {
@@ -126,6 +127,15 @@ hmsToSecondsOnly = (duration) => {
             }.bind(this), 100);
           })
       });
+  }
+
+  handleRemovePlayingEpisode = () => {
+    this.newSoundInstance.stopAsync()
+    .then(stopped => {
+      this.props.dispatch(playerActions.createNewSoundInstance(null));
+      this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(null));
+      this.props.dispatch(playerActions.setPlayStatus(false));
+    });
   }
 
   render() {
@@ -143,7 +153,12 @@ hmsToSecondsOnly = (duration) => {
       <View style={styles.mainView}>
          <ScrollView style={styles.episodeList}>
           {this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
-              <EpisodeListCard {...itemProps} episode={this.props.inbox[key]} handlePlay={this.handlePlay} id={key} key={key}/>
+              <EpisodeListCard {...itemProps}
+                episode={this.props.inbox[key]}
+                handlePlay={this.handlePlay}
+                handleRemovePlayingEpisode={this.handleRemovePlayingEpisode}
+                id={key}
+                key={key}/>
             ))}
         </ScrollView>
       </View>

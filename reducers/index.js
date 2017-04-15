@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { types } from '../actions';
+import { removeItemFromObjectById } from '../helpers'
 import player from './Player';
 import swipe from './Swipe';
 
@@ -48,10 +49,7 @@ const main = (state = initialState, action) => {
     return {...state, view: action.payload};
   }
   if (action.type === types.REMOVE_EPISODE_FROM_INBOX) {
-    let newInbox = Object.keys(state.inbox).reduce((accum, key) => {
-      if (key !== action.payload) accum[key] = state.inbox[key];
-      return accum;
-    }, {});
+    let newInbox = removeItemFromObjectById(state.inbox, action.payload);
     return {...state, inbox: newInbox}
   }
   if (action.type === types.TOGGLE_MODAL) {
