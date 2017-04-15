@@ -5,7 +5,8 @@ import { actionCreators } from '../actions';
 const options = {};
 
 const mapStateToProps = (state) => ({
-  view: state.main.view
+  view: state.main.view,
+  token: state.main.token
 })
 
 class Authentication extends Component {
@@ -23,6 +24,7 @@ class Authentication extends Component {
   async _onValueChange(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
+      this.props.dispatch(actionCreators.addtoken(selectedValue))
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
@@ -42,7 +44,7 @@ class Authentication extends Component {
       return;
     }
     var value = {username: this.state.username, password: this.state.password, email: this.state.email, avatarUrl: this.state.avatarUrl};
-      fetch("http:localhost:3000/api/users/", {
+      fetch("http:localhost:3000/api/users/createUser", {
         method: "POST",
         headers: {
           'Accept': 'application/json',

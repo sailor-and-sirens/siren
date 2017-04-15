@@ -6,7 +6,8 @@ export const types = {
   UPDATE_LIKED_FILTER: 'UPDATE_LIKED_FILTER',
   UPDATE_BOOKMARKED_FILTER: 'UPDATE_BOOKMARKED_FILTER',
   UPDATE_TIME_FILTER: 'UPDATE_TIME_FILTER',
-  UPDATE_TAG_FILTER: 'UPDATE_TAG_FILTER'
+  UPDATE_TAG_FILTER: 'UPDATE_TAG_FILTER',
+  ADD_TOKEN: 'ADD_TOKEN'
 }
 
 export const actionCreators = {
@@ -33,5 +34,8 @@ export const actionCreators = {
   },
   updateTagFilter: (value) => {
     return {type: types.UPDATE_TAG_FILTER, payload: value}
+  },
+  addToken: (token) => {
+    return {type: types.ADD_TOKEN, playload: token}
   }
 }

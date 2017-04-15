@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorage} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
@@ -7,7 +7,10 @@ let _ = require('lodash')
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
+  token: state.main.token
 });
+
+const token = null;
 
 hmsToSecondsOnly = (duration) => {
     var p = duration.split(':'),
@@ -48,12 +51,30 @@ class EpisodeListCard extends Component {
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].liked = !inbox[id].liked;
     this.props.dispatch(actionCreators.toggleLike(inbox));
+    fetch("http:localhost:3000/api/users/likeEpisode", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify({id: id})
+    })
   };
 
   toggleBookmark = (id) => {
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].bookmark = !inbox[id].bookmark;
     this.props.dispatch(actionCreators.toggleBookmark(inbox));
+        fetch("http:localhost:3000/api/users/bookmarkEpisode", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify({id: id})
+    })
   };
 
   render() {

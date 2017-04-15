@@ -4,6 +4,7 @@ import player from './Player';
 
 // add your key/values for initialState here
 const initialState = {
+  token: null,
   modalVisible: false,
   view: 'Authentication',
   //sample until call to API is setup
@@ -67,7 +68,9 @@ const main = (state = initialState, action) => {
   if (action.type === types.UPDATE_TAG_FILTER) {
     return {...state, inboxFilters: {...state.inboxFilters, tag: action.payload}}
   }
-
+  if (action.type === types.ADD_TOKEN) {
+    return {...state, token: action.payload}
+  }
   return state;
 }
 
