@@ -91,7 +91,7 @@ class EpisodeListCard extends Component {
         onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
         onRightActionComplete={() => {
             this.props.dispatch(mainActions.removeEpisodeFromInbox(this.props.id));
-            if (this.props.currentEpisode.feed.enclosure.url === this.props.episode.feed.enclosure.url) {
+            if (this.props.currentEpisode && this.props.currentEpisode.feed.enclosure.url === this.props.episode.feed.enclosure.url) {
               this.props.handleRemovePlayingEpisode();
             }
         }}
