@@ -12,8 +12,8 @@ import ModalComponent from './Modal';
 import Authentication from './Authentication';
 
 const mapStateToProps = (state) => ({
-  view: state.main.view,
-  token: state.main.token
+  token: state.main.token,
+  view: state.header.view
 })
 
 class App extends Component {
@@ -44,10 +44,7 @@ class App extends Component {
         <PodcastList/> :
         this.props.view === 'Inbox' ?
         <EpisodeList/> :
-        <View>
-          <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>
-          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
-        </View>
+        null
         }
         <Player />
       </View>
@@ -63,5 +60,3 @@ const styles = StyleSheet.create({
 
 });
 export default connect(mapStateToProps)(App);
-
-
