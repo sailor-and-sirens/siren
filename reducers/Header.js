@@ -1,6 +1,6 @@
 import { types } from '../actions/Header';
 
-const initialState = {
+export const initialState = {
   view: 'Inbox'
 }
 

@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`reducer changes state and renders correctly 1`] = `
+Object {
+  "view": "Filter",
+}
+`;
+
+exports[`reducer returns default state and renders correctly 1`] = `
+Object {
+  "view": "Inbox",
+}
+`;
+
 exports[`renders correctly 1`] = `
 <View>
   <Text
@@ -13,7 +25,9 @@ exports[`renders correctly 1`] = `
         "textAlign": "center",
       }
     }
-  />
+  >
+    Inbox
+  </Text>
   <View
     style={
       Object {
