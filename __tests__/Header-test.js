@@ -1,11 +1,9 @@
-import 'react-native';
 import React from 'react';
-import { connect } from 'react-redux';
 import Header from '../components/Header.js';
 import * as renderer from "react-test-renderer";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { reducer } from '../reducers/index';
+import reducer from '../reducers/index';
 const store = createStore(reducer);
 
 test('renders correctly', () => {
@@ -16,3 +14,5 @@ test('renders correctly', () => {
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });
+
+//To retake snapshots: npm test -- -u Header

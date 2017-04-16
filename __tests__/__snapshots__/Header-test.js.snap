@@ -1,28 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<View
-  style={undefined}
->
+<View>
   <Text
     accessible={true}
     allowFontScaling={true}
     ellipsizeMode="tail"
     style={
       Object {
-        "marginTop": 200,
+        "marginTop": 20,
         "padding": 10,
         "textAlign": "center",
       }
     }
-  >
-    Inbox
-  </Text>
+  />
   <View
     style={
       Object {
         "alignSelf": "stretch",
-        "backgroundColor": "grey",
+        "backgroundColor": "#cccccc",
         "flexDirection": "row",
         "justifyContent": "space-around",
       }
@@ -78,259 +74,280 @@ exports[`renders correctly 1`] = `
                   }
                 }
               >
-                <View
+                <ScrollView
                   style={
                     Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "space-between",
-                      "width": 250,
+                      "height": "90%",
+                      "marginBottom": 10,
                     }
                   }
                 >
-                  <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
-                  />
                   <View
                     style={
                       Object {
-                        "width": 200,
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "width": 250,
                       }
                     }
                   >
-                    <RCTPicker
-                      items={
-                        Array [
-                          Object {
-                            "label": "All",
-                            "textColor": undefined,
-                            "value": "likedOff",
-                          },
-                          Object {
-                            "label": "Liked",
-                            "textColor": undefined,
-                            "value": "liked",
-                          },
-                          Object {
-                            "label": "Not Liked",
-                            "textColor": undefined,
-                            "value": "notLiked",
-                          },
-                        ]
-                      }
-                      onChange={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      selectedIndex={0}
-                      style={
-                        Array [
-                          Object {
-                            "height": 216,
-                          },
-                          undefined,
-                        ]
-                      }
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="tail"
                     />
+                    <View
+                      style={
+                        Object {
+                          "justifyContent": "center",
+                          "width": 200,
+                        }
+                      }
+                    >
+                      <RCTPicker
+                        items={
+                          Array [
+                            Object {
+                              "label": "All",
+                              "textColor": undefined,
+                              "value": "likedOff",
+                            },
+                            Object {
+                              "label": "Liked",
+                              "textColor": undefined,
+                              "value": "liked",
+                            },
+                            Object {
+                              "label": "Not Liked",
+                              "textColor": undefined,
+                              "value": "notLiked",
+                            },
+                          ]
+                        }
+                        onChange={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        selectedIndex={0}
+                        style={
+                          Array [
+                            Object {
+                              "height": 216,
+                            },
+                            Object {
+                              "fontSize": 10,
+                            },
+                          ]
+                        }
+                      />
+                    </View>
                   </View>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "space-between",
-                      "width": 250,
-                    }
-                  }
-                >
-                  <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
-                  />
                   <View
                     style={
                       Object {
-                        "width": 200,
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "width": 250,
                       }
                     }
                   >
-                    <RCTPicker
-                      items={
-                        Array [
-                          Object {
-                            "label": "All",
-                            "textColor": undefined,
-                            "value": "bookmarkedOff",
-                          },
-                          Object {
-                            "label": "Bookmarked",
-                            "textColor": undefined,
-                            "value": "bookmarked",
-                          },
-                          Object {
-                            "label": "Not Bookmarked",
-                            "textColor": undefined,
-                            "value": "notBookmarked",
-                          },
-                        ]
-                      }
-                      onChange={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      selectedIndex={0}
-                      style={
-                        Array [
-                          Object {
-                            "height": 216,
-                          },
-                          undefined,
-                        ]
-                      }
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="tail"
                     />
-                  </View>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "space-between",
-                      "width": 250,
-                    }
-                  }
-                >
-                  <Image
-                    source={1}
-                    style={
-                      Object {
-                        "height": 28,
-                        "width": 28,
+                    <View
+                      style={
+                        Object {
+                          "justifyContent": "center",
+                          "width": 200,
+                        }
                       }
-                    }
-                  />
+                    >
+                      <RCTPicker
+                        items={
+                          Array [
+                            Object {
+                              "label": "All",
+                              "textColor": undefined,
+                              "value": "bookmarkedOff",
+                            },
+                            Object {
+                              "label": "Bookmarked",
+                              "textColor": undefined,
+                              "value": "bookmarked",
+                            },
+                            Object {
+                              "label": "Not Bookmarked",
+                              "textColor": undefined,
+                              "value": "notBookmarked",
+                            },
+                          ]
+                        }
+                        onChange={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        selectedIndex={0}
+                        style={
+                          Array [
+                            Object {
+                              "height": 216,
+                            },
+                            undefined,
+                          ]
+                        }
+                      />
+                    </View>
+                  </View>
                   <View
                     style={
                       Object {
-                        "width": 200,
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "width": 250,
                       }
                     }
                   >
-                    <RCTPicker
-                      items={
-                        Array [
-                          Object {
-                            "label": "All",
-                            "textColor": undefined,
-                            "value": "timeOff",
-                          },
-                          Object {
-                            "label": "< 5 min",
-                            "textColor": undefined,
-                            "value": "5",
-                          },
-                          Object {
-                            "label": "< 15 min",
-                            "textColor": undefined,
-                            "value": "15",
-                          },
-                          Object {
-                            "label": "< 30 min",
-                            "textColor": undefined,
-                            "value": "30",
-                          },
-                          Object {
-                            "label": "< 45 min",
-                            "textColor": undefined,
-                            "value": "45",
-                          },
-                          Object {
-                            "label": "< 60 min",
-                            "textColor": undefined,
-                            "value": "60",
-                          },
-                          Object {
-                            "label": "> 60 min",
-                            "textColor": undefined,
-                            "value": "60+",
-                          },
-                        ]
-                      }
-                      onChange={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      selectedIndex={0}
+                    <Image
+                      source={1}
                       style={
-                        Array [
-                          Object {
-                            "height": 216,
-                          },
-                          undefined,
-                        ]
+                        Object {
+                          "height": 28,
+                          "width": 28,
+                        }
                       }
                     />
+                    <View
+                      style={
+                        Object {
+                          "justifyContent": "center",
+                          "width": 200,
+                        }
+                      }
+                    >
+                      <RCTPicker
+                        items={
+                          Array [
+                            Object {
+                              "label": "All",
+                              "textColor": undefined,
+                              "value": "timeOff",
+                            },
+                            Object {
+                              "label": "< 5 min",
+                              "textColor": undefined,
+                              "value": "5",
+                            },
+                            Object {
+                              "label": "< 15 min",
+                              "textColor": undefined,
+                              "value": "15",
+                            },
+                            Object {
+                              "label": "< 30 min",
+                              "textColor": undefined,
+                              "value": "30",
+                            },
+                            Object {
+                              "label": "< 45 min",
+                              "textColor": undefined,
+                              "value": "45",
+                            },
+                            Object {
+                              "label": "< 60 min",
+                              "textColor": undefined,
+                              "value": "60",
+                            },
+                            Object {
+                              "label": "> 60 min",
+                              "textColor": undefined,
+                              "value": "60+",
+                            },
+                          ]
+                        }
+                        onChange={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        selectedIndex={0}
+                        style={
+                          Array [
+                            Object {
+                              "height": 216,
+                            },
+                            undefined,
+                          ]
+                        }
+                      />
+                    </View>
                   </View>
-                </View>
-                <View
-                  style={
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                      "justifyContent": "space-between",
-                      "width": 250,
-                    }
-                  }
-                >
-                  <Text
-                    accessible={true}
-                    allowFontScaling={true}
-                    ellipsizeMode="tail"
-                  />
                   <View
                     style={
                       Object {
-                        "width": 200,
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "width": 250,
                       }
                     }
                   >
-                    <RCTPicker
-                      items={
-                        Array [
-                          Object {
-                            "label": "Tech News",
-                            "textColor": undefined,
-                            "value": "Tech News",
-                          },
-                          Object {
-                            "label": "Science and other rad things!",
-                            "textColor": undefined,
-                            "value": "Science and other rad things!",
-                          },
-                        ]
-                      }
-                      onChange={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      selectedIndex={0}
-                      style={
-                        Array [
-                          Object {
-                            "height": 216,
-                          },
-                          undefined,
-                        ]
-                      }
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="tail"
                     />
+                    <View
+                      style={
+                        Object {
+                          "justifyContent": "center",
+                          "width": 200,
+                        }
+                      }
+                    >
+                      <RCTPicker
+                        items={
+                          Array [
+                            Object {
+                              "label": "All",
+                              "textColor": undefined,
+                              "value": "All",
+                            },
+                            Object {
+                              "label": "Tech News",
+                              "textColor": undefined,
+                              "value": "Tech News",
+                            },
+                            Object {
+                              "label": "Science",
+                              "textColor": undefined,
+                              "value": "Science",
+                            },
+                            Object {
+                              "label": "Technology",
+                              "textColor": undefined,
+                              "value": "Technology",
+                            },
+                          ]
+                        }
+                        onChange={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        selectedIndex={0}
+                        style={
+                          Array [
+                            Object {
+                              "height": 216,
+                            },
+                            undefined,
+                          ]
+                        }
+                      />
+                    </View>
                   </View>
-                </View>
+                </ScrollView>
                 <View
-                  style={
-                    Object {
-                      "marginTop": 15,
-                    }
-                  }
+                  style={Object {}}
                 >
                   <View
                     accessibilityComponentType="button"

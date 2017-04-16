@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { types } from '../actions';
 import player from './Player';
+import header from './Header';
 
 // add your key/values for initialState here
 const initialState = {
@@ -47,9 +48,6 @@ inbox: {
 
 // store.dispatch(...) is what triggers the reducer
 const main = (state = initialState, action) => {
-  if (action.type === types.CHANGE_VIEW) {
-    return {...state, view: action.payload}
-  }
   if (action.type === types.TOGGLE_MODAL) {
     return {...state, modalVisible: !state.modalVisible};
   }
@@ -91,7 +89,8 @@ const main = (state = initialState, action) => {
 
 const rootReducer = combineReducers({
   main,
-  player
+  player,
+  header
 });
 
 export default rootReducer;

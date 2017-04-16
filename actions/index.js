@@ -1,5 +1,4 @@
 export const types = {
-  CHANGE_VIEW: 'CHANGE_VIEW',
   TOGGLE_MODAL: 'TOGGLE_MODAL',
   TOGGLE_LIKE: 'TOGGLE_LIKE',
   TOGGLE_BOOKMARK: 'TOGGLE_BOOKMARK',
@@ -15,9 +14,6 @@ export const types = {
 }
 
 export const actionCreators = {
-  changeView: (view) => {
-    return {type: types.CHANGE_VIEW, payload: view}
-  },
   toggleModal: () => {
     return {type: types.TOGGLE_MODAL}
   },
