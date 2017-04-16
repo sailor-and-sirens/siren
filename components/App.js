@@ -16,10 +16,24 @@ import Authentication from './Authentication';
 
 // connect gives us mapStateToProps, which gives us access to our state
 const mapStateToProps = (state) => ({
-  view: state.main.view
+  view: state.main.view,
+  token: state.main.token
 })
 
 class App extends Component {
+
+componentWillMount() {
+  AsyncStorage.getItem('id_token', (err, res) => {
+      if (err) {
+        this.props.dispatch(actionCreators.changeView('Authentication'))
+      } else {
+        console.warn('res:', res);
+        this.props.dispatch(actionCreators.addToken(res))
+        // this.props.dispatch(actionCreators.changeView('Inbox'))
+      }
+    })
+}
+
 
   render() {
     if (this.props.view === 'Authentication') {
@@ -29,6 +43,7 @@ class App extends Component {
         </View>
       )
     }
+    console.warn('this.props.token', this.props.token);
     return (
       <View style={styles.container}>
         <Header/>
@@ -37,7 +52,7 @@ class App extends Component {
         this.props.view === 'Inbox' ?
         <EpisodeList/> :
         <View>
-          <ModalComponent>Hey! I'm a modal!</ModalComponent>
+          <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>
           <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
         </View>
         }

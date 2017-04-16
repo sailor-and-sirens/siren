@@ -7,7 +7,6 @@ const initialState = {
   token: null,
   modalVisible: false,
   view: 'Authentication',
-  //sample until call to API is setup
   inboxFilters: {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",
@@ -45,7 +44,7 @@ inbox: {
 // store.dispatch(...) is what triggers the reducer
 const main = (state = initialState, action) => {
   if (action.type === types.CHANGE_VIEW) {
-    return {...state, view: action.payload};
+    return {...state, view: action.payload}
   }
   if (action.type === types.TOGGLE_MODAL) {
     return {...state, modalVisible: !state.modalVisible};
@@ -69,6 +68,7 @@ const main = (state = initialState, action) => {
     return {...state, inboxFilters: {...state.inboxFilters, tag: action.payload}}
   }
   if (action.type === types.ADD_TOKEN) {
+       console.warn('add token reducer payload: ', action.payload);
     return {...state, token: action.payload}
   }
   return state;

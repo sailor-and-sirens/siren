@@ -3,25 +3,13 @@ import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorag
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+import {hmsToSecondsOnly} from '../helpers';
 let _ = require('lodash')
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
   token: state.main.token
 });
-
-const token = null;
-
-hmsToSecondsOnly = (duration) => {
-    var p = duration.split(':'),
-        s = 0, m = 1;
-
-    while (p.length > 0) {
-        s += m * parseInt(p.pop(), 10);
-        m *= 60;
-    }
-    return s;
-}
 
 class EpisodeListCard extends Component {
 
@@ -47,7 +35,7 @@ class EpisodeListCard extends Component {
     }
   };
 
-  toggleLike= (id) => {
+  toggleLike = (id) => {
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].liked = !inbox[id].liked;
     this.props.dispatch(actionCreators.toggleLike(inbox));
@@ -58,7 +46,7 @@ class EpisodeListCard extends Component {
         'Content-Type': 'application/json',
         'Authorization': this.props.token
       },
-      body: JSON.stringify({id: id})
+      body: JSON.stringify({id: id, liked: !this.props.inbox[id].liked})
     })
   };
 
@@ -66,14 +54,14 @@ class EpisodeListCard extends Component {
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].bookmark = !inbox[id].bookmark;
     this.props.dispatch(actionCreators.toggleBookmark(inbox));
-        fetch("http:localhost:3000/api/users/bookmarkEpisode", {
+    fetch("http:localhost:3000/api/users/bookmarkEpisode", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': this.props.token
       },
-      body: JSON.stringify({id: id})
+      body: JSON.stringify({id: id, bookmark: !this.props.inbox[id].bookmark})
     })
   };
 

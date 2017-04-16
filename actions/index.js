@@ -35,7 +35,8 @@ export const actionCreators = {
   updateTagFilter: (value) => {
     return {type: types.UPDATE_TAG_FILTER, payload: value}
   },
-  addToken: (token) => {
-    return {type: types.ADD_TOKEN, playload: token}
+  addToken: (value) => {
+    console.warn('add token payload creator: ', value);
+    return {type: types.ADD_TOKEN, playload: value}
   }
 }
