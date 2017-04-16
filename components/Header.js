@@ -8,7 +8,7 @@ import ModalComponent from './Modal';
 import Filter from './Filter';
 
 const mapStateToProps = (state) => ({
-  view: state.main.view
+  view: state.header.view
 })
 
 class Header extends Component {
