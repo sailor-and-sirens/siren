@@ -1,4 +1,5 @@
 export const types = {
+  TOGGLE_ADD_TO_PLAYLIST_MODAL: 'TOGGLE_ADD_TO_PLAYLIST_MODAL',
   TOGGLE_OPEN_SWIPEABLE: 'TOGGLE_OPEN_SWIPEABLE',
   UPDATE_LEFT_ACTIVATION: 'UPDATE_LEFT_ACTIVATION',
   UPDATE_LEFT_TOGGLE: 'UPDATE_LEFT_TOGGLE',
@@ -6,6 +7,9 @@ export const types = {
 }
 
 export const actionCreators = {
+  toggleAddToPlaylistModal: () => {
+    return {type: types.TOGGLE_ADD_TO_PLAYLIST_MODAL}
+  },
   toggleOpenSwipeable: (value) => {
     return {type: types.TOGGLE_OPEN_SWIPEABLE, payload: value}
   },

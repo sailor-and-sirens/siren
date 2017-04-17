@@ -71,7 +71,7 @@ class EpisodeListCard extends Component {
         leftContent={(
           <View style={[styles.leftSwipeItem, {backgroundColor: '#42f4c5'}]}>
             {leftActionActivated ?
-              <Text>Toggle Playlist Selection Modal</Text> :
+              <Text>(( release ))</Text> :
               <Text>Add to Playlist</Text>}
           </View>
         )}
@@ -85,7 +85,9 @@ class EpisodeListCard extends Component {
         )}
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
         onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
-        onLeftActionComplete={() => this.props.dispatch(swipeActions.updateLeftToggle(!leftToggle))}
+        onLeftActionComplete={() => {
+          this.props.dispatch(swipeActions.toggleAddToPlaylistModal());
+        }}
 
         onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
         onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}

@@ -7,12 +7,14 @@ import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { convertMillis } from '../helpers';
 import EpisodeListCard from './EpisodeListCard';
+import AddPlaylistModal from './AddPlaylistModal';
 
 let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   inbox: state.main.inbox,
+  isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
   filters: state.main.inboxFilters
 });
 
@@ -95,16 +97,43 @@ hmsToSecondsOnly = (duration) => {
   }
 
   handlePlay = (episode) => {
+    // TODO get real EpisodeId
+    let newEpisodeCurrentTime = 0;
+    let newEpisodeLastPlayed = new Date();
+
     if (this.newSoundInstance === null) {
+      // TODO if PlaylistEpisode assoc doesn't already exist, create it
+      this.updateCurrentEpisode(1, newEpisodeCurrentTime, newEpisodeLastPlayed);
       this.playNewEpisode(episode);
     } else {
       clearInterval(this.timer);
+      this.newSoundInstance.getStatusAsync()
+      .then(status => {
+        let currentEpisodeCurrentTime = status.positionMillis;
+        let currentEpisodeLastPlayed = new Date();
+        this.updateCurrentEpisode(1, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
+      });
+      this.updateCurrentEpisode(2, newEpisodeCurrentTime, newEpisodeLastPlayed);
       this.newSoundInstance.stopAsync()
         .then(stopped => {
           this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
           this.playNewEpisode(episode);
         });
     }
+  }
+
+  updateCurrentEpisode = (episodeId, currentTime, lastPlayed) => {
+    let episodeData = {episodeId, currentTime, lastPlayed};
+    fetch('http:localhost:3000/api/episodes/user-episodes', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(episodeData)
+    })
+    .then(response => response.json())
+    .then(responseData => {
+      console.warn(responseData)
+    })
+    .catch(err => console.warn(err));
   }
 
   playNewEpisode = (episode) => {
@@ -138,6 +167,10 @@ hmsToSecondsOnly = (duration) => {
     });
   }
 
+  handleAddToPlaylistModalClose = () => {
+    this.props.dispatch(swipeActions.toggleAddToPlaylistModal());
+  }
+
   render() {
     const {currentlyOpenSwipeable} = this.props;
     const itemProps = {
@@ -151,6 +184,10 @@ hmsToSecondsOnly = (duration) => {
     };
    return (
       <View style={styles.mainView}>
+        <AddPlaylistModal
+          isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible}
+          handleAddToPlaylistModalClose={this.handleAddToPlaylistModalClose}
+        />
          <ScrollView style={styles.episodeList}>
           {this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
               <EpisodeListCard {...itemProps}
