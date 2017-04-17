@@ -4,9 +4,6 @@ import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
 import EpisodeList from './EpisodeList';
 import PodcastList from './PodcastList';
-
-// App is connected to the store using connect - check out line 47 as well
-// it also gives us the dispatch method on this.props - see line 21.
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import Player from './Player';
@@ -14,7 +11,6 @@ import Header from './Header';
 import ModalComponent from './Modal';
 import Authentication from './Authentication';
 
-// connect gives us mapStateToProps, which gives us access to our state
 const mapStateToProps = (state) => ({
   view: state.main.view,
   token: state.main.token
@@ -22,18 +18,16 @@ const mapStateToProps = (state) => ({
 
 class App extends Component {
 
-componentWillMount() {
-  AsyncStorage.getItem('id_token', (err, res) => {
-      if (err) {
-        this.props.dispatch(actionCreators.changeView('Authentication'))
-      } else {
-        console.warn('res:', res);
-        this.props.dispatch(actionCreators.addToken(res))
-        // this.props.dispatch(actionCreators.changeView('Inbox'))
-      }
-    })
-}
-
+  // componentWillMount() {
+  //   AsyncStorage.getItem('id_token', (err, res) => {
+  //     if (err) {
+  //       this.props.dispatch(actionCreators.changeView('Authentication'))
+  //     } else {
+  //       this.props.dispatch(actionCreators.addToken(res))
+  //       this.props.dispatch(actionCreators.changeView('Inbox'))
+  //     }
+  //   })
+  // }
 
   render() {
     if (this.props.view === 'Authentication') {
@@ -43,7 +37,6 @@ componentWillMount() {
         </View>
       )
     }
-    console.warn('this.props.token', this.props.token);
     return (
       <View style={styles.container}>
         <Header/>

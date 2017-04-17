@@ -7,7 +7,11 @@ export const types = {
   UPDATE_BOOKMARKED_FILTER: 'UPDATE_BOOKMARKED_FILTER',
   UPDATE_TIME_FILTER: 'UPDATE_TIME_FILTER',
   UPDATE_TAG_FILTER: 'UPDATE_TAG_FILTER',
-  ADD_TOKEN: 'ADD_TOKEN'
+  ADD_TOKEN: 'ADD_TOKEN',
+  CHANGE_USERNAME: 'CHANGE_USERNAME',
+  CHANGE_PASSWORD: 'CHANGE_PASSWORD',
+  CHANGE_EMAIL: 'CHANGE_EMAIL',
+  CHANGE_AUTHVIEW: 'CHANGE_AUTHVIEW'
 }
 
 export const actionCreators = {
@@ -36,7 +40,18 @@ export const actionCreators = {
     return {type: types.UPDATE_TAG_FILTER, payload: value}
   },
   addToken: (value) => {
-    console.warn('add token payload creator: ', value);
-    return {type: types.ADD_TOKEN, playload: value}
+    return {type: types.ADD_TOKEN, payload: value}
+  },
+  changeEmail: (value) => {
+    return {type: types.CHANGE_EMAIL, payload: value}
+  },
+  changeUsername: (value) => {
+    return {type: types.CHANGE_USERNAME, payload: value}
+  },
+  changePassword: (value) => {
+    return {type: types.CHANGE_PASSWORD, payload: value}
+  },
+  changeAuthView: (value) => {
+    return {type: types.CHANGE_AUTHVIEW, payload: value}
   }
 }

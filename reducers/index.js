@@ -13,6 +13,10 @@ const initialState = {
     time: "timeOff",
     tag: "All"
   },
+  username: '',
+  password: '',
+  email: '',
+  authView: 'login',
 
 iTunesResult: [
 
@@ -68,8 +72,19 @@ const main = (state = initialState, action) => {
     return {...state, inboxFilters: {...state.inboxFilters, tag: action.payload}}
   }
   if (action.type === types.ADD_TOKEN) {
-       console.warn('add token reducer payload: ', action.payload);
     return {...state, token: action.payload}
+  }
+  if (action.type === types.CHANGE_USERNAME) {
+    return {...state, username: action.payload}
+  }
+  if (action.type === types.CHANGE_PASSWORD) {
+    return {...state, password: action.payload}
+  }
+  if (action.type === types.CHANGE_EMAIL) {
+    return {...state, email: action.payload}
+  }
+  if (action.type === types.CHANGE_AUTHVIEW) {
+    return {...state, authView: action.payload}
   }
   return state;
 }

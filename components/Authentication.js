@@ -2,29 +2,102 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, AsyncStorage, TextInput, Platform, Button, Alert} from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
-import { _userSignup(), _userLogin } from '../helpers':
+
 const mapStateToProps = (state) => ({
-  view: state.main.view
+  view: state.main.view,
+  token: state.main.token,
+  username: state.main.username,
+  password: state.main.password,
+  email: state.main.email,
+  authView: state.main.authView
 })
 
 class Authentication extends Component {
-  constructor() {
-  super();
-  this.state = {
-    username: '',
-    password: '',
-    email: '',
-    avatarUrl: 'http://portfolio.pspu.ru/uploads/avatars/noimage.png',
-    view: 'login'
-  }
-}
 
   async _onValueChange(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
-    } catch (error) {
+      this.props.dispatch(actionCreators.addToken(selectedValue))
+     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
+  }
+
+  _userSignup() {
+    if(this.props.password === '' || this.props.username === '' || this.props.email === '') {
+      Alert.alert('Missing fields');
+      return;
+    }
+    if(this.props.password.length < 6) {
+      Alert.alert('Password must be at least 6 characters long.');
+      return;
+    }
+    if(!this.props.email.includes('@')) {
+      Alert.alert('Please enter a valid email.');
+      return;
+    }
+    var value = {username: this.props.username, password: this.props.password, email: this.props.email};
+      fetch("http:localhost:3000/api/users/createUser", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(value)
+      })
+      .then((response) => {
+        if (response.status !== 201) {
+          response.json()
+          .then((responseData) => Alert.alert(responseData.message))
+          .catch(console.warn);
+        } else {
+          return response.json();
+        }
+      })
+      .then((responseData) => {
+        if (responseData) {
+          this.props.dispatch(actionCreators.changeView('Inbox'))
+          return this._onValueChange('id_token', responseData.id_token)
+        }
+      })
+      .catch((error) => {
+        console.warn('Error: ', error);
+      })
+      .done();
+  }
+
+  _userLogin() {
+    if(this.props.password === '' || this.props.username === '') {
+      Alert.alert('Missing fields');
+      return;
+    }
+    var value = {username: this.props.username, password: this.props.password};
+      fetch("http://localhost:3000/api/users/login", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(value)
+      })
+       .then((response) => {
+        if (response.status !== 201) {
+          response.json()
+          .then((responseData) => Alert.alert(responseData.message))
+        } else {
+          return response.json();
+        }
+      })
+      .then((responseData) => {
+        if (responseData) {
+          this.props.dispatch(actionCreators.changeView('Inbox'))
+          return this._onValueChange('id_token', responseData.id_token)
+        }
+      })
+      .catch((error) => {
+        console.warn('Error: ', error);
+      })
+      .done();
   }
 
   render() {
@@ -35,22 +108,22 @@ class Authentication extends Component {
         </View>
         <View style={styles.inputRow}>
           <View style={styles.form}>
-            <TextInput value={this.state.username} placeholder="Username" autoCapitalize="none" onChangeText={(text) => {this.setState({username: text});}} style={{ width: 200, height: 44, padding: 8 }} />
-            <TextInput value={this.state.password} autoCapitalize="none" secureTextEntry={true} placeholder="Password" onChangeText={(text) => {this.setState({password: text});}} style={{ width: 200, height: 44, padding: 8 }} />
-            {this.state.view === 'signup' ?
-              <TextInput value={this.state.email} autoCapitalize="none" placeholder="Email" onChangeText={(text) => {this.setState({email: text});}} style={{ width: 200, height: 44, padding: 8 }} /> : <Text></Text>
+            <TextInput value={this.props.username} placeholder="Username" autoCapitalize="none" onChangeText={(text) => {this.props.dispatch(actionCreators.changeUsername(text))}} style={{ width: 200, height: 44, padding: 8 }} />
+            <TextInput value={this.props.password} autoCapitalize="none" secureTextEntry={true} placeholder="Password" onChangeText={(text) => {this.props.dispatch(actionCreators.changePassword(text))}} style={{ width: 200, height: 44, padding: 8 }} />
+            {this.props.authView === 'signup' ?
+              <TextInput value={this.props.email} autoCapitalize="none" placeholder="Email" onChangeText={(text) => {this.props.dispatch(actionCreators.changeEmail(text))}} style={{ width: 200, height: 44, padding: 8 }} /> : <Text></Text>
             }
           </View>
         </View>
         <View style={styles.buttonRow}>
-          {this.state.view === 'login' ?
+          {this.props.authView === 'login' ?
             <View>
               <Button style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4' title='Login' />
-              <Text style={styles.switchTo} onPress={() => this.setState({view: 'signup'})}>Switch to signup</Text>
+              <Text style={styles.switchTo} onPress={() => {this.props.dispatch(actionCreators.changeAuthView('signup'))}}>Switch to signup</Text>
             </View> :
             <View>
               <Button style={styles.button} onPress={this._userSignup.bind(this)} underlayColor='#99d9f4' title='Signup' />
-              <Text style={styles.switchTo} onPress={() => this.setState({view: 'login'})}>Switch to login</Text>
+              <Text style={styles.switchTo} onPress={() => {this.props.dispatch(actionCreators.changeAuthView('login'))}}>Switch to login</Text>
             </View>
           }
         </View>
