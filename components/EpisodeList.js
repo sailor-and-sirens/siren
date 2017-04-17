@@ -123,15 +123,14 @@ hmsToSecondsOnly = (duration) => {
   }
 
   updateCurrentEpisode = (episodeId, currentTime, lastPlayed) => {
-    let episodeData = {episodeId, currentTime, lastPlayed};
+    let episodeData = { episodeId, currentTime, lastPlayed };
     fetch('http:localhost:3000/api/episodes/user-episodes', {
       method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(episodeData)
     })
-    .then(response => response.json())
-    .then(responseData => {
-      console.warn(responseData)
+    .then(response => {
+      // do something with the response if need be
     })
     .catch(err => console.warn(err));
   }
@@ -172,7 +171,7 @@ hmsToSecondsOnly = (duration) => {
   }
 
   render() {
-    const {currentlyOpenSwipeable} = this.props;
+    const { currentlyOpenSwipeable } = this.props;
     const itemProps = {
       onOpen: (event, gestureState, swipeable) => {
         if (currentlyOpenSwipeable && currentlyOpenSwipeable !== swipeable) {
