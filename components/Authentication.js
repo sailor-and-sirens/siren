@@ -101,6 +101,12 @@ class Authentication extends Component {
   }
 
   render() {
+
+    let emailField = null;
+    if (this.props.authView === 'signup') {
+      emailField =  <TextInput value={this.props.email} autoCapitalize="none" placeholder="Email" onChangeText={(text) => {this.props.dispatch(actionCreators.changeEmail(text))}} style={{ width: 200, height: 44, padding: 8 }} />;
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.titleRow}>
@@ -110,9 +116,7 @@ class Authentication extends Component {
           <View style={styles.form}>
             <TextInput value={this.props.username} placeholder="Username" autoCapitalize="none" onChangeText={(text) => {this.props.dispatch(actionCreators.changeUsername(text))}} style={{ width: 200, height: 44, padding: 8 }} />
             <TextInput value={this.props.password} autoCapitalize="none" secureTextEntry={true} placeholder="Password" onChangeText={(text) => {this.props.dispatch(actionCreators.changePassword(text))}} style={{ width: 200, height: 44, padding: 8 }} />
-            {this.props.authView === 'signup' ?
-              <TextInput value={this.props.email} autoCapitalize="none" placeholder="Email" onChangeText={(text) => {this.props.dispatch(actionCreators.changeEmail(text))}} style={{ width: 200, height: 44, padding: 8 }} /> : <Text></Text>
-            }
+            {emailField}
           </View>
         </View>
         <View style={styles.buttonRow}>
