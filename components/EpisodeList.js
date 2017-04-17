@@ -102,7 +102,7 @@ hmsToSecondsOnly = (duration) => {
     let newEpisodeLastPlayed = new Date();
 
     if (this.newSoundInstance === null) {
-      // TODO if PlaylistEpisode assoc doesn't already exist, create it
+      this.addEpisodeToListeningTo(1);
       this.updateCurrentEpisode(1, newEpisodeCurrentTime, newEpisodeLastPlayed);
       this.playNewEpisode(episode);
     } else {
@@ -114,6 +114,7 @@ hmsToSecondsOnly = (duration) => {
         this.updateCurrentEpisode(1, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
       });
       this.updateCurrentEpisode(2, newEpisodeCurrentTime, newEpisodeLastPlayed);
+      this.addEpisodeToListeningTo(2);
       this.newSoundInstance.stopAsync()
         .then(stopped => {
           this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
@@ -122,15 +123,22 @@ hmsToSecondsOnly = (duration) => {
     }
   }
 
-  updateCurrentEpisode = (episodeId, currentTime, lastPlayed) => {
-    let episodeData = { episodeId, currentTime, lastPlayed };
-    fetch('http:localhost:3000/api/episodes/user-episodes', {
-      method: 'PUT',
+  addEpisodeToListeningTo = (episodeId) => {
+    let episodeData = { episodeId, playlistId: 2 };
+    fetch('http://localhost:3000/api/playlists/add-episode', {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(episodeData)
     })
-    .then(response => {
-      // do something with the response if need be
+    .catch(err => console.warn(err));
+  }
+
+  updateCurrentEpisode = (episodeId, currentTime, lastPlayed) => {
+    let episodeData = { episodeId, currentTime, lastPlayed };
+    fetch('http://localhost:3000/api/episodes/user-episode', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(episodeData)
     })
     .catch(err => console.warn(err));
   }

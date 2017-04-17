@@ -69,7 +69,7 @@ class EpisodeListCard extends Component {
       <Swipeable
         leftActionActivationDistance={200}
         leftContent={(
-          <View style={[styles.leftSwipeItem, {backgroundColor: '#42f4c5'}]}>
+          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
             {leftActionActivated ?
               <Text>(( release ))</Text> :
               <Text>Add to Playlist</Text>}
@@ -79,7 +79,7 @@ class EpisodeListCard extends Component {
         rightContent={(
           <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
             {rightActionActivated ?
-              <Text>Removed!</Text> :
+              <Text>(( release ))</Text> :
               <Text>Remove Episode</Text>}
           </View>
         )}
