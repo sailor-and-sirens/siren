@@ -103,7 +103,7 @@ hmsToSecondsOnly = (duration) => {
 
     if (this.newSoundInstance === null) {
       this.addEpisodeToListeningTo(1);
-      this.updateCurrentEpisode(1, newEpisodeCurrentTime, newEpisodeLastPlayed);
+      this.updateCurrentEpisodeStats(1, newEpisodeCurrentTime, newEpisodeLastPlayed);
       this.playNewEpisode(episode);
     } else {
       clearInterval(this.timer);
@@ -111,9 +111,9 @@ hmsToSecondsOnly = (duration) => {
       .then(status => {
         let currentEpisodeCurrentTime = status.positionMillis;
         let currentEpisodeLastPlayed = new Date();
-        this.updateCurrentEpisode(1, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
+        this.updateCurrentEpisodeStats(1, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
       });
-      this.updateCurrentEpisode(2, newEpisodeCurrentTime, newEpisodeLastPlayed);
+      this.updateCurrentEpisodeStats(2, newEpisodeCurrentTime, newEpisodeLastPlayed);
       this.addEpisodeToListeningTo(2);
       this.newSoundInstance.stopAsync()
         .then(stopped => {
@@ -133,7 +133,17 @@ hmsToSecondsOnly = (duration) => {
     .catch(err => console.warn(err));
   }
 
-  updateCurrentEpisode = (episodeId, currentTime, lastPlayed) => {
+  removeCurrentEpisodeFromListeningTo = (episodeId) => {
+    let episodeData = { episodeId, playlistId: 2 };
+    fetch('http://localhost:3000/api/playlists/remove-episode', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(episodeData)
+    })
+    .catch(err => console.warn(err));
+  }
+
+  updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
     let episodeData = { episodeId, currentTime, lastPlayed };
     fetch('http://localhost:3000/api/episodes/user-episode', {
       method: 'PUT',
@@ -153,6 +163,12 @@ hmsToSecondsOnly = (duration) => {
       .then(loaded => {
         this.newSoundInstance.playAsync()
           .then(played => {
+            this.newSoundInstance.setPlaybackFinishedCallback(() => {
+              let currentTime = null;
+              let lastPlayed = new Date();
+              this.removeCurrentEpisodeFromListeningTo(1)
+              this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+            })
             this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(episode.feed.title));
             this.timer = setInterval(function() {
               this.newSoundInstance.getStatusAsync()
