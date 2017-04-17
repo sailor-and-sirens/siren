@@ -9,7 +9,8 @@ import header from './Header';
 const initialState = {
   token: null,
   modalVisible: false,
-  view: 'Authentication',
+  // view: 'Authentication',
+  view: 'Inbox',
   inboxFilters: {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",
@@ -32,7 +33,7 @@ iTunesResult: [
 //sample until DB is set up
 inbox: {
 
-  1: {title: 'Note to Self', liked: true, bookmark: false, tag: 'Tech News', image: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg', image600: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/600x600bb.jpg', creator: 'NPR', feed: {title:"Deep-Dark-Data-Driven Politics\r\n", link:"http://www.wnyc.org/story/cambridge-analytica-psychometrics/", duration:"00:26:14", subtitle:" Data mining is nothing new in presidential campaigns. But in 2016, the Trump team took voter research to a new level. They hired consultants called Cambridge Analytica, which says it has thousands of data points on every American. They also claim they ca", pubDate: "Wed, 29 Mar 2017 00:00:00 -0400", enclosure: {"url":"https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/notetoself/notetoself032917_cms745660_pod.mp3", length: 0, type: "audio/mpeg"}}},
+  1: {title: 'Note to Self', liked: true, bookmark: false, tag: 'Tech News', image: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg', image600: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/600x600bb.jpg', creator: 'NPR', feed: {title:"Deep-Dark-Data-Driven Politics", link:"http://www.wnyc.org/story/cambridge-analytica-psychometrics/", duration:"00:26:14", subtitle:"Data mining is nothing new in presidential campaigns. But in 2016, the Trump team took voter research to a new level. They hired consultants called Cambridge Analytica, which says it has thousands of data points on every American. They also claim they ca", pubDate: "Wed, 29 Mar 2017 00:00:00 -0400", enclosure: {"url":"https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/notetoself/notetoself032917_cms745660_pod.mp3", length: 0, type: "audio/mpeg"}}},
 
   2: {title: 'Science VS', liked: false, bookmark: true, tag: 'Science', image: 'http://is5.mzstatic.com/image/thumb/Music71/v4/25/1a/3a/251a3a40-c10d-0047-d93f-ae3ae0b5b480/source/100x100bb.jpg', image600: 'http://is5.mzstatic.com/image/thumb/Music71/v4/25/1a/3a/251a3a40-c10d-0047-d93f-ae3ae0b5b480/source/600x600bb.jpg', creator: 'Gimlet Media', feed: {title:"Death, Lies and Lemmings",duration:"00:17:93",subtitle:"Science Vs The News + a Surprise",pubDate:"Thu, 06 Apr 2017 15:07:00 -0000",enclosure:{"url":"http://traffic.megaphone.fm/GLT9261655165.mp3",length:43051258,type:"audio/mpeg"}}},
 

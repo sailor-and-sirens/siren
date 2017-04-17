@@ -11,6 +11,7 @@ import Player from './Player';
 import Header from './Header';
 import ModalComponent from './Modal';
 import Authentication from './Authentication';
+import Settings from './Settings';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -19,16 +20,17 @@ const mapStateToProps = (state) => ({
 
 class App extends Component {
 
-  // componentWillMount() {
-  //   AsyncStorage.getItem('id_token', (err, res) => {
-  //     if (err || res === null) {
-  //       this.props.dispatch(headerActions.changeView('Authentication'))
-  //     } else {
-  //       this.props.dispatch(actionCreators.addToken(res))
-  //       this.props.dispatch(headerActions.changeView('Inbox'))
-  //     }
-  //   })
-  // }
+  componentWillMount() {
+
+    AsyncStorage.getItem('id_token', (err, res) => {
+      if (err || res === null) {
+        this.props.dispatch(headerActions.changeView('Authentication'))
+      } else {
+        this.props.dispatch(actionCreators.addToken(res))
+        this.props.dispatch(headerActions.changeView('Inbox'))
+      }
+    })
+  }
 
   render() {
     if (this.props.view === 'Authentication') {
@@ -45,7 +47,14 @@ class App extends Component {
         <PodcastList/> :
         this.props.view === 'Inbox' ?
         <EpisodeList/> :
-        null
+        this.props.view === 'Settings' ?
+         <View>
+          <Settings />
+        </View> :
+        <View>
+          <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>
+          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
+        </View>
         }
         <Player />
       </View>

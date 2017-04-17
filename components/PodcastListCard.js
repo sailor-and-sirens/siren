@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, Platform} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 class PodcastListCard extends Component {
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     height: 100,
     paddingTop: 10,
     paddingBottom: 10,
+    paddingLeft: (Platform.OS === 'ios') ? 10 : 0,
   },
   mainView: {
     height: 100,
@@ -53,16 +54,37 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "500",
-    fontSize: 18,
+    ...Platform.select({
+      ios: {
+        fontSize: 16,
+      },
+      android: {
+        fontSize: 18,
+      },
+    }),
   },
   artist: {
   fontWeight: "400",
-  fontSize: 16,
+  ...Platform.select({
+    ios: {
+      fontSize: 13,
+    },
+    android: {
+      fontSize: 14,
+    },
+  }),
   marginBottom: 5,
   },
   podcast: {
     fontWeight: "600",
-    fontSize: 16,
+    ...Platform.select({
+      ios: {
+        fontSize: 14,
+      },
+      android: {
+        fontSize: 16,
+      },
+    }),
   },
   tagAddView: {
     flexDirection: 'row',

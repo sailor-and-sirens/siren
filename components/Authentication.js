@@ -14,14 +14,14 @@ const mapStateToProps = (state) => ({
 
 class Authentication extends Component {
 
-  async _onValueChange(item, selectedValue) {
-    try {
-      await AsyncStorage.setItem(item, selectedValue);
-      this.props.dispatch(actionCreators.addToken(selectedValue))
-     } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
-  }
+  // async _onValueChange(item, selectedValue) {
+  //   try {
+  //     await AsyncStorage.setItem(item, selectedValue);
+  //     this.props.dispatch(actionCreators.addToken(selectedValue));
+  //    } catch (error) {
+  //     console.log('AsyncStorage error: ' + error.message);
+  //   }
+  // }
 
   _userSignup() {
     if(this.props.password === '' || this.props.username === '' || this.props.email === '') {

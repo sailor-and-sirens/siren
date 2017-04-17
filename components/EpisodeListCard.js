@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorage, Platform} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'stretch',
     height: 80,
+    paddingLeft: (Platform.OS === 'ios') ? 10 : 0,
   },
   bottomView: {
     flex: .25,
@@ -189,15 +190,36 @@ const styles = StyleSheet.create({
   },
   episode: {
     fontWeight: "500",
-    fontSize: 16,
+   ...Platform.select({
+      ios: {
+        fontSize: 14,
+      },
+      android: {
+        fontSize: 16,
+      },
+    }),
   },
   subtitle: {
   fontWeight: "400",
-  fontSize: 12,
+   ...Platform.select({
+      ios: {
+        fontSize: 12,
+      },
+      android: {
+        fontSize: 14,
+      },
+    }),
   },
   podcast: {
     fontWeight: "600",
-    fontSize: 16,
+   ...Platform.select({
+      ios: {
+        fontSize: 14,
+      },
+      android: {
+        fontSize: 16,
+      },
+    }),
   },
   tag: {
     backgroundColor: '#42f4c5',
@@ -214,7 +236,14 @@ const styles = StyleSheet.create({
   },
   time: {
     fontWeight: "400",
-    fontSize: 14,
+  ...Platform.select({
+    ios: {
+      fontSize: 13,
+    },
+    android: {
+      fontSize: 14,
+    },
+  }),
     marginRight: 5,
     color: 'grey',
   },
