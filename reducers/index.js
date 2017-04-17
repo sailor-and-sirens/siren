@@ -4,15 +4,19 @@ import player from './Player';
 
 // add your key/values for initialState here
 const initialState = {
+  token: null,
   modalVisible: false,
-  view: 'Inbox',
-  //sample until call to API is setup
+  view: 'Authentication',
   inboxFilters: {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",
     time: "timeOff",
     tag: "All"
   },
+  username: '',
+  password: '',
+  email: '',
+  authView: 'login',
 
 iTunesResult: [
 
@@ -44,7 +48,7 @@ inbox: {
 // store.dispatch(...) is what triggers the reducer
 const main = (state = initialState, action) => {
   if (action.type === types.CHANGE_VIEW) {
-    return {...state, view: action.payload};
+    return {...state, view: action.payload}
   }
   if (action.type === types.TOGGLE_MODAL) {
     return {...state, modalVisible: !state.modalVisible};
@@ -67,7 +71,21 @@ const main = (state = initialState, action) => {
   if (action.type === types.UPDATE_TAG_FILTER) {
     return {...state, inboxFilters: {...state.inboxFilters, tag: action.payload}}
   }
-
+  if (action.type === types.ADD_TOKEN) {
+    return {...state, token: action.payload}
+  }
+  if (action.type === types.CHANGE_USERNAME) {
+    return {...state, username: action.payload}
+  }
+  if (action.type === types.CHANGE_PASSWORD) {
+    return {...state, password: action.payload}
+  }
+  if (action.type === types.CHANGE_EMAIL) {
+    return {...state, email: action.payload}
+  }
+  if (action.type === types.CHANGE_AUTHVIEW) {
+    return {...state, authView: action.payload}
+  }
   return state;
 }
 

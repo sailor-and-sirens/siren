@@ -20,3 +20,16 @@ export const convertMillis = (millis) => {
   seconds = seconds % 60;
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
+
+export const hmsToSecondsOnly = (duration) => {
+  var p = duration.split(':'),
+      s = 0, m = 1;
+
+  while (p.length > 0) {
+      s += m * parseInt(p.pop(), 10);
+      m *= 60;
+  }
+  return s;
+}
+
+
