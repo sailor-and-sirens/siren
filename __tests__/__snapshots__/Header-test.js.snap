@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Creates changeview action for Inbox 1`] = `
+Object {
+  "payload": "Inbox",
+  "type": "CHANGE_VIEW",
+}
+`;
+
+exports[`Creates changeview action for Playlist 1`] = `
+Object {
+  "payload": "Playlist",
+  "type": "CHANGE_VIEW",
+}
+`;
+
 exports[`reducer changes state and renders correctly 1`] = `
 Object {
   "view": "Filter",

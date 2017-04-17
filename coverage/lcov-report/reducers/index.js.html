@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for reducers/index.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">reducers</a> index.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">61.11% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>11/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">53.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>8/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/1</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">61.11% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>11/18</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { combineReducers } from 'redux';
+import { types } from '../actions';
+import player from './Player';
+import header from './Header';
+&nbsp;
+// add your key/values for initialState here
+const initialState = {
+  modalVisible: false,
+  //sample until call to API is setup
+  inboxFilters: {
+    liked: "likedOff",
+    bookmarked: "bookmarkedOff",
+    time: "timeOff",
+    tag: "All"
+  },
+&nbsp;
+iTunesResult: [
+&nbsp;
+  {"wrapperType":"track", "kind":"podcast", "artistId":127981066, "collectionId":561470997, "trackId":561470997, "artistName":"WNYC Studios", "collectionName":"Note to Self", "trackName":"Note to Self", "collectionCensoredName":"Note to Self", "trackCensoredName":"Note to Self", "artistViewUrl":"https://itunes.apple.com/us/artist/wnyc/id127981066?mt=2&amp;uo=4", "collectionViewUrl":"https://itunes.apple.com/us/podcast/note-to-self/id561470997?mt=2&amp;uo=4", "feedUrl":"http://feeds.wnyc.org/notetoself-podcast", "trackViewUrl":"https://itunes.apple.com/us/podcast/note-to-self/id561470997?mt=2&amp;uo=4", "artworkUrl30":"http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/30x30bb.jpg", "artworkUrl60":"http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/60x60bb.jpg", "artworkUrl100":"http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg", "collectionPrice":0.00, "trackPrice":0.00, "trackRentalPrice":0, "collectionHdPrice":0, "trackHdPrice":0, "trackHdRentalPrice":0, "releaseDate":"2017-04-05T04:00:00Z", "collectionExplicitness":"cleaned", "trackExplicitness":"cleaned", "trackCount":87, "country":"USA", "currency":"USD", "primaryGenreName":"Tech News", "contentAdvisoryRating":"Clean", "artworkUrl600":"http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/600x600bb.jpg", "genreIds":["1448", "26", "1318"], "genres":["Tech News", "Podcasts", "Technology"]},
+&nbsp;
+  {"wrapperType":"track", "kind":"podcast", "collectionId":305727517, "trackId":305727517, "artistName":"Note to Beautiful Self", "collectionName":"Note to Beautiful Self", "trackName":"Note to Beautiful Self", "collectionCensoredName":"Note to Beautiful Self", "trackCensoredName":"Note to Beautiful Self", "collectionViewUrl":"https://itunes.apple.com/us/podcast/note-to-beautiful-self/id305727517?mt=2&amp;uo=4", "feedUrl":"http://www.blogtalkradio.com/note2beautifulself/podcast", "trackViewUrl":"https://itunes.apple.com/us/podcast/note-to-beautiful-self/id305727517?mt=2&amp;uo=4", "artworkUrl30":"http://is5.mzstatic.com/image/thumb/Music71/v4/41/27/e2/4127e299-472c-4fe6-c6bd-bb2594b39d03/source/30x30bb.jpg", "artworkUrl60":"http://is5.mzstatic.com/image/thumb/Music71/v4/41/27/e2/4127e299-472c-4fe6-c6bd-bb2594b39d03/source/60x60bb.jpg", "artworkUrl100":"http://is5.mzstatic.com/image/thumb/Music71/v4/41/27/e2/4127e299-472c-4fe6-c6bd-bb2594b39d03/source/100x100bb.jpg", "collectionPrice":0.00, "trackPrice":0.00, "trackRentalPrice":0, "collectionHdPrice":0, "trackHdPrice":0, "trackHdRentalPrice":0, "releaseDate":"2015-04-12T21:30:00Z", "collectionExplicitness":"cleaned", "trackExplicitness":"cleaned", "trackCount":39, "country":"USA", "currency":"USD", "primaryGenreName":"Careers", "contentAdvisoryRating":"Clean", "artworkUrl600":"http://is5.mzstatic.com/image/thumb/Music71/v4/41/27/e2/4127e299-472c-4fe6-c6bd-bb2594b39d03/source/600x600bb.jpg", "genreIds":["1410", "26", "1321"], "genres":["Careers", "Podcasts", "Business"]},
+&nbsp;
+  {"wrapperType":"track", "kind":"podcast", "collectionId":1197015104, "trackId":1197015104, "artistName":"C David Baker", "collectionName":"Notes to Self", "trackName":"Notes to Self", "collectionCensoredName":"Notes to Self", "trackCensoredName":"Notes to Self", "collectionViewUrl":"https://itunes.apple.com/us/podcast/notes-to-self/id1197015104?mt=2&amp;uo=4", "feedUrl":"http://cdbaker.podomatic.com/rss2.xml", "trackViewUrl":"https://itunes.apple.com/us/podcast/notes-to-self/id1197015104?mt=2&amp;uo=4", "artworkUrl30":"http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/30x30bb.jpg", "artworkUrl60":"http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/60x60bb.jpg", "artworkUrl100":"http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/100x100bb.jpg", "collectionPrice":0.00, "trackPrice":0.00, "trackRentalPrice":0, "collectionHdPrice":0, "trackHdPrice":0, "trackHdRentalPrice":0, "releaseDate":"2017-04-07T20:41:00Z", "collectionExplicitness":"cleaned", "trackExplicitness":"cleaned", "trackCount":9, "country":"USA", "currency":"USD", "primaryGenreName":"Literature", "contentAdvisoryRating":"Clean", "artworkUrl600":"http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/600x600bb.jpg", "genreIds":["1401", "26", "1301"], "genres":["Literature", "Podcasts", "Arts"]}
+],
+//sample until DB is set up
+inbox: {
+&nbsp;
+  1: {title: 'Note to Self', liked: true, bookmark: false, tag: 'Tech News', image: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg', image600: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/600x600bb.jpg', creator: 'NPR', feed: {title:"Deep-Dark-Data-Driven Politics\r\n", link:"http://www.wnyc.org/story/cambridge-analytica-psychometrics/", duration:"00:26:14", subtitle:" Data mining is nothing new in presidential campaigns. But in 2016, the Trump team took voter research to a new level. They hired consultants called Cambridge Analytica, which says it has thousands of data points on every American. They also claim they ca", pubDate: "Wed, 29 Mar 2017 00:00:00 -0400", enclosure: {"url":"https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/notetoself/notetoself032917_cms745660_pod.mp3", length: 0, type: "audio/mpeg"}}},
+&nbsp;
+  2: {title: 'Science VS', liked: false, bookmark: true, tag: 'Science', image: 'http://is5.mzstatic.com/image/thumb/Music71/v4/25/1a/3a/251a3a40-c10d-0047-d93f-ae3ae0b5b480/source/100x100bb.jpg', image600: 'http://is5.mzstatic.com/image/thumb/Music71/v4/25/1a/3a/251a3a40-c10d-0047-d93f-ae3ae0b5b480/source/600x600bb.jpg', creator: 'Gimlet Media', feed: {title:"Death, Lies and Lemmings",duration:"00:17:93",subtitle:"Science Vs The News + a Surprise",pubDate:"Thu, 06 Apr 2017 15:07:00 -0000",enclosure:{"url":"http://traffic.megaphone.fm/GLT9261655165.mp3",length:43051258,type:"audio/mpeg"}}},
+&nbsp;
+  3: {title: 'Science VS' , liked: true, bookmark: false, tag: 'Science', image: 'http://is5.mzstatic.com/image/thumb/Music71/v4/25/1a/3a/251a3a40-c10d-0047-d93f-ae3ae0b5b480/source/100x100bb.jpg', image600: 'http://is5.mzstatic.com/image/thumb/Music71/v4/25/1a/3a/251a3a40-c10d-0047-d93f-ae3ae0b5b480/source/600x600bb.jpg', creator: 'Gimlet Media', feed:{title:"Climate Change... the Apocalypse? ",duration:"00:25:93",subtitle:"How bad will it get and how do scientists know humans are to blame?",pubDate:"Thu, 16 Mar 2017 15:54:00 -0000",enclosure:{"url":"http://traffic.megaphone.fm/GLT4607516870.mp3",length:62237466,type:"audio/mpeg"}}},
+&nbsp;
+  4: {title: 'Science Vs', liked: false, bookmark: false, tag: 'Science', image: 'http://is5.mzstatic.com/image/thumb/Music71/v4/25/1a/3a/251a3a40-c10d-0047-d93f-ae3ae0b5b480/source/100x100bb.jpg', image600: 'http://is5.mzstatic.com/image/thumb/Music71/v4/25/1a/3a/251a3a40-c10d-0047-d93f-ae3ae0b5b480/source/600x600bb.jpg', creator: 'Gimlet Media', feed: {title:"Immigration",duration:"00:27:00",subtitle:"Are immigrants bad for America? ",pubDate:"Thu, 09 Mar 2017 20:00:00 -0000",enclosure:{url:"http://traffic.megaphone.fm/GLT9750488370.mp3?updated=1489088490",length:64801018,type:"audio/mpeg"}}},
+&nbsp;
+  5: {title: 'Note to Self', liked: false, bookmark: false, tag: 'Technology', image: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg', image600: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/600x600bb.jpg', creator: 'WNYC Studios', feed: {title:"Spring Cleaning for the Min",link:"http://www.wnyc.org/story/infomagical-focus-bootcamp/",duration:"00:17:35",subtitle:" There is a lot to take in in our world right now. And there are a lot of ways to do it. You can read articles posted by your Facebook friends, or by the journalists you follow on Twitter. You can watch cable news with your morning oatmeal. Which makes it",pubDate:"Wed, 12 Apr 2017 00:00:00 -0400",enclosure:{url:"https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/notetoself/notetoself041217_cms749087_pod.mp3",length:0,type:"audio/mpeg"}}},
+&nbsp;
+  6: {title: 'Note to Self', liked: false, bookmark: true, tag: 'Technology', image: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg', image600: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/600x600bb.jpg', creator: 'WNYC Studios', feed: {title:"Zapping Your Brain To Blis",link:"http://www.wnyc.org/story/wearable-tech-brain-boost/",duration:"00:19:25",subtitle:" At Manoush’s house, there’s an object the size of a big potato chip. Which she stuck to her forehead, and used to zap her brain. This brain stimulation is supposed to calm you down. Maybe replace a glass of wine, just wind you down a little. But it turns",pubDate:"Wed, 01 Mar 2017 00:00:00 -0500",enclosure:{url:"https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/notetoself/notetoself030117_cms739269_pod.mp3",length:0,type:"audio/mpeg"}}},
+&nbsp;
+  7: {title: 'Note to Self', liked: false, bookmark: false, tag: 'Technology', image: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg', image600: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/600x600bb.jpg', creator: 'WNYC Studios', feed: {title:"Will You Do a Snapchat Streak With Me?",link:"http://www.wnyc.org/story/snapchat-ipo/",duration:"00:18:07",subtitle:" If you are between the ages of 18 and 34, there’s a good chance you’ve already checked Snapchat today. This week, Manoush joins you—despite her reservations. Those reservations are not just because the Note to Self team isn’t the app’s target demo.",pubDate:"Wed, 08 Mar 2017 00:00:00 -0500",enclosure:{url:"https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/notetoself/notetoself030817_cms740978_pod.mp3",length:0,type:"audio/mpeg"}}}
+  }
+}
+&nbsp;
+// store.dispatch(...) is what triggers the reducer
+const main = (state = initialState, action) =&gt; {
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (action.type === types.TOGGLE_MODAL) {
+<span class="cstat-no" title="statement not covered" >    return {...state, modalVisible: !state.modalVisible};</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (action.type === types.TOGGLE_LIKE) {
+<span class="cstat-no" title="statement not covered" >    return {...state, inbox: action.payload}</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (action.type === types.TOGGLE_BOOKMARK) {
+<span class="cstat-no" title="statement not covered" >    return {...state, inbox: action.payload}</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (action.type === types.UPDATE_LIKED_FILTER) {
+<span class="cstat-no" title="statement not covered" >    return {...state, inboxFilters: {...state.inboxFilters, liked: action.payload}}</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (action.type === types.UPDATE_BOOKMARKED_FILTER) {
+<span class="cstat-no" title="statement not covered" >    return {...state, inboxFilters: {...state.inboxFilters, bookmarked: action.payload}}</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (action.type === types.UPDATE_TIME_FILTER) {
+<span class="cstat-no" title="statement not covered" >    return {...state, inboxFilters: {...state.inboxFilters, time: action.payload}}</span>
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (action.type === types.UPDATE_TAG_FILTER) {
+<span class="cstat-no" title="statement not covered" >    return {...state, inboxFilters: {...state.inboxFilters, tag: action.payload}}</span>
+  }
+&nbsp;
+  return state;
+}
+&nbsp;
+const rootReducer = combineReducers({
+  main,
+  player,
+  header
+});
+&nbsp;
+export default rootReducer;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 16 2017 00:46:33 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

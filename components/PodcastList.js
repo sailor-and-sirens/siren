@@ -12,11 +12,11 @@ const mapStateToProps = (state) => ({
 
 
 class PodcastList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       text: '',
-      podcasts: [],
+      podcasts: props.podcasts || [],
       visible: false,
     }
   }
