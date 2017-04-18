@@ -1,6 +1,6 @@
 import { Audio } from 'expo';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, ActivityIndicator, AppState } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/Player';
@@ -23,11 +23,34 @@ const { height, width } = Dimensions.get('window');
 
 class Player extends Component {
 
+  componentDidMount = () => {
+    AppState.addEventListener('change', this.handleAppClose);
+  }
+
+  componentWillUnmount = () => {
+    AppState.removeEventListener('change');
+  }
+
+  handleAppClose = () => {
+    console.warn(AppState.currentState);
+    if (['inactive', 'background'].includes(AppState.currentState) && this.props.currentSoundInstance !== null) {
+      this.props.currentSoundInstance.getStatusAsync()
+      .then(status => {
+        let currentTime = status.positionMillis;
+        let lastPlayed = new Date();
+        this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+      })
+    }
+  }
+
   handlePlay = (url) => {
+    // TODO Replace hardcoded episodeId w/ real EpisodeId
     if (this.props.currentSoundInstance !== null) {
       this.props.currentSoundInstance.getStatusAsync()
         .then(status => {
-          let currentPosition = status.positionMillis;
+          let currentTime = status.positionMillis;
+          let lastPlayed = new Date();
+          this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
           this.props.currentSoundInstance.playAsync()
             .then(played => {
               this.props.dispatch(actionCreators.setPlayStatus(true));
@@ -38,11 +61,28 @@ class Player extends Component {
   }
 
   handlePause = () => {
+    // TODO Replace hardcoded episodeId w/ real EpisodeId
     this.props.currentSoundInstance.pauseAsync()
       .then(paused => {
         this.props.dispatch(actionCreators.setPlayStatus(false));
+        this.props.currentSoundInstance.getStatusAsync()
+        .then(status => {
+          let currentTime = status.positionMillis;
+          let lastPlayed = new Date();
+          this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+        });
       })
       .catch(error => console.log(error));
+  }
+
+  updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
+    let episodeData = { episodeId, currentTime, lastPlayed };
+    fetch('http://localhost:3000/api/episodes/user-episode', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(episodeData)
+    })
+    .catch(err => console.warn(err));
   }
 
   handleSkipBack = () => {
@@ -163,11 +203,15 @@ class Player extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.currentlyPlayingWrapper}>
-          {openModalButton}
-          <View style={styles.currentlyPlaying}>
-            <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
+        <View style={styles.topRowWrapper}>
+          <View style={styles.topRowLeft}>{openModalButton}</View>
+          <View style={styles.topRowMiddle}>
+            {this.props.currentEpisodeTitle === 'LOADING' ?
+              <ActivityIndicator animating={true} size="small" />  :
+              <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
+            }
           </View>
+          <View style={styles.topRowRight}></View>
         </View>
         <View style={styles.timeSpeedPlayerWrapper}>
           <View style={styles.currentTimeWrapper}>
@@ -235,6 +279,23 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     backgroundColor: '#dcdcdc',
   },
+  topRowWrapper: {
+    flex: 0.2,
+    flexDirection: 'row',
+    marginBottom: 10
+  },
+  topRowLeft: {
+    flex: 0.10,
+    alignItems: 'flex-start'
+  },
+  topRowMiddle: {
+    flex: 0.8,
+    alignItems: 'center'
+  },
+  topRowRight: {
+    flex: 0.10,
+    alignItems: 'flex-end'
+  },
   currentlyPlayingWrapper: {
     flex: 0.2,
     flexDirection: 'row',
@@ -242,7 +303,8 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   currentlyPlaying: {
-    flex: 1
+    flex: 1,
+    borderWidth: 1
   },
   timeSpeedPlayerWrapper: {
     flex: 0.8,

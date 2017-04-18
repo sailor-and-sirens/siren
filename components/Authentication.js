@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 
 const mapStateToProps = (state) => ({
-  view: state.main.view,
+  view: state.header.view,
   token: state.main.token,
   username: state.main.username,
   password: state.main.password,

@@ -6,6 +6,7 @@ import EpisodeList from './EpisodeList';
 import PodcastList from './PodcastList';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+import { headerActions } from '../actions/Header'
 import Player from './Player';
 import Header from './Header';
 import ModalComponent from './Modal';
@@ -20,11 +21,11 @@ class App extends Component {
 
   // componentWillMount() {
   //   AsyncStorage.getItem('id_token', (err, res) => {
-  //     if (err) {
-  //       this.props.dispatch(actionCreators.changeView('Authentication'))
+  //     if (err || res === null) {
+  //       this.props.dispatch(headerActions.changeView('Authentication'))
   //     } else {
   //       this.props.dispatch(actionCreators.addToken(res))
-  //       this.props.dispatch(actionCreators.changeView('Inbox'))
+  //       this.props.dispatch(headerActions.changeView('Inbox'))
   //     }
   //   })
   // }

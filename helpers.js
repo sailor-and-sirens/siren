@@ -21,6 +21,13 @@ export const convertMillis = (millis) => {
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
+export const removeItemFromObjectById = (object, id) => {
+  return Object.keys(object).reduce((accum, key) => {
+    if (key !== id) accum[key] = object[key];
+    return accum;
+  }, {});
+}
+
 export const hmsToSecondsOnly = (duration) => {
   var p = duration.split(':'),
       s = 0, m = 1;
@@ -31,5 +38,3 @@ export const hmsToSecondsOnly = (duration) => {
   }
   return s;
 }
-
-

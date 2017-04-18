@@ -1,4 +1,5 @@
 export const types = {
+  REMOVE_EPISODE_FROM_INBOX: 'REMOVE_EPISODE_FROM_INBOX',
   TOGGLE_MODAL: 'TOGGLE_MODAL',
   TOGGLE_LIKE: 'TOGGLE_LIKE',
   TOGGLE_BOOKMARK: 'TOGGLE_BOOKMARK',
@@ -14,6 +15,9 @@ export const types = {
 }
 
 export const actionCreators = {
+  removeEpisodeFromInbox: (episodeId) => {
+    return {type: types.REMOVE_EPISODE_FROM_INBOX, payload: episodeId}
+  },
   toggleModal: () => {
     return {type: types.TOGGLE_MODAL}
   },

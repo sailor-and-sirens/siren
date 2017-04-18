@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorage} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
+import Swipeable from 'react-native-swipeable';
+import { actionCreators as mainActions } from '../actions';
+import { actionCreators as swipeActions } from '../actions/Swipe';
 import {hmsToSecondsOnly} from '../helpers';
-let _ = require('lodash')
+
+let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
+  currentEpisode: state.player.currentEpisode,
   inbox: state.main.inbox,
-  token: state.main.token
+  token: state.main.token,
+  leftActionActivated: state.swipe.isLeftActionActivated,
+  leftToggle: state.swipe.isLeftToggled,
+  rightActionActivated: state.swipe.isRightActionActivated
 });
 
 class EpisodeListCard extends Component {
@@ -38,7 +45,7 @@ class EpisodeListCard extends Component {
   toggleLike = (id) => {
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].liked = !inbox[id].liked;
-    this.props.dispatch(actionCreators.toggleLike(inbox));
+    this.props.dispatch(mainActions.toggleLike(inbox));
     fetch("http:localhost:3000/api/users/likeEpisode", {
       method: "POST",
       headers: {
@@ -53,7 +60,7 @@ class EpisodeListCard extends Component {
   toggleBookmark = (id) => {
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].bookmark = !inbox[id].bookmark;
-    this.props.dispatch(actionCreators.toggleBookmark(inbox));
+    this.props.dispatch(mainActions.toggleBookmark(inbox));
     fetch("http:localhost:3000/api/users/bookmarkEpisode", {
       method: "POST",
       headers: {
@@ -66,7 +73,40 @@ class EpisodeListCard extends Component {
   };
 
   render() {
+    const {leftActionActivated, leftToggle, rightActionActivated, rightToggle} = this.props;
     return (
+      <Swipeable
+        leftActionActivationDistance={200}
+        leftContent={(
+          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
+            {leftActionActivated ?
+              <Text>(( release ))</Text> :
+              <Text>Add to Playlist</Text>}
+          </View>
+        )}
+        rightActionActivationDistance={200}
+        rightContent={(
+          <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
+            {rightActionActivated ?
+              <Text>(( release ))</Text> :
+              <Text>Remove Episode</Text>}
+          </View>
+        )}
+        onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
+        onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
+        onLeftActionComplete={() => {
+          this.props.dispatch(swipeActions.toggleAddToPlaylistModal());
+        }}
+
+        onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
+        onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
+        onRightActionComplete={() => {
+            this.props.dispatch(mainActions.removeEpisodeFromInbox(this.props.id));
+            if (this.props.currentEpisode && this.props.currentEpisode.feed.enclosure.url === this.props.episode.feed.enclosure.url) {
+              this.props.handleRemovePlayingEpisode();
+            }
+        }}
+      >
       <View style={styles.mainView}>
         <View style={styles.topView}>
           <View style={styles.leftView}>
@@ -96,6 +136,7 @@ class EpisodeListCard extends Component {
           }
         </View>
       </View>
+    </Swipeable>
     );
   }
 
@@ -162,7 +203,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#42f4c5',
     alignSelf: 'center',
     padding: 2,
-    // width: '30%',
     width: 80,
     marginLeft: 1,
     fontSize: 12,
@@ -193,6 +233,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  leftSwipeItem: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingRight: 20
+  },
+  rightSwipeItem: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingLeft: 20
   },
 });
 

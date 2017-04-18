@@ -1,20 +1,13 @@
 import { Audio } from 'expo';
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, Image, ScrollView, Linking } from 'react-native';
 import { Ionicons, SimpleLineIcons, MaterialIcons } from '@expo/vector-icons';
 
 const { height, width } = Dimensions.get('window');
 
 const episode = {
-  title: 'Note to Self', liked: true, bookmark: false, tag: 'Tech News',
-  image: 'https://media2.wnyc.org/i/1400/1400/l/80/1/NoteToSelf_WAAA_2016.png', creator: 'NPR',
-  summary: "Data mining is nothing new in presidential campaigns. But in 2016, the Trump team took voter research to a new level. They hired consultants called Cambridge Analytica, which says it has thousands of data points on every American. They also claim they can use that data to create personality profiles. Assessments of each of our hopes, fears, and desires - and target us accordingly.\n\nThis is the science of psychometrics. And, as the story went, Cambridge Analytica’s dark digital arts helped Trump win, with ads designed to ring every reader’s individual bell.\n\nOr, did they? Over the past few weeks, reporters and data experts started asking questions. Where did this data come from? Could the Trump campaign really execute a micro-targeted social media strategy? Did they have a secret sauce? Or was it just more ketchup?\n\nThis week, psychometrics and the future of campaign data-mining. With Matt Oczkowski of Cambridge Analytica, psychometrics pioneer Michal Kosinski, and Nicholas Confessore of the New York Times.\n\nAnd if you're curious about Apply Magic Sauce, the psychometric tool we all tried during the Privacy Paradox, you can find it right here.",
-  feed: {title:"Deep-Dark-Data-Driven Politics\r\n", link:"http://www.wnyc.org/story/cambridge-analytica-psychometrics/", duration:"26:14",
-  subtitle:"Data mining is nothing new in presidential campaigns. But in 2016, the Trump team took voter research to a new level. They hired consultants called Cambridge Analytica, which says it has thousands of data points on every American. They also claim they ca",
-  pubDate: "Wed, 29 Mar 2017 00:00:00 -0400",
-  enclosure: {"url":"https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/notetoself/notetoself032917_cms745660_pod.mp3", length: 0, type: "audio/mpeg"}}
+  summary: "Data mining is nothing new in presidential campaigns. But in 2016, the Trump team took voter research to a new level. They hired consultants called Cambridge Analytica, which says it has thousands of data points on every American. They also claim they can use that data to create personality profiles. Assessments of each of our hopes, fears, and desires - and target us accordingly.\n\nThis is the science of psychometrics. And, as the story went, Cambridge Analytica’s dark digital arts helped Trump win, with ads designed to ring every reader’s individual bell.\n\nOr, did they? Over the past few weeks, reporters and data experts started asking questions. Where did this data come from? Could the Trump campaign really execute a micro-targeted social media strategy? Did they have a secret sauce? Or was it just more ketchup?\n\nThis week, psychometrics and the future of campaign data-mining. With Matt Oczkowski of Cambridge Analytica, psychometrics pioneer Michal Kosinski, and Nicholas Confessore of the New York Times.\n\nAnd if you're curious about Apply Magic Sauce, the psychometric tool we all tried during the Privacy Paradox, you can find it right here."
 };
-
 
 const PlayerFullSizeModal = (props) => {
   let episodeImage = '';
@@ -73,6 +66,7 @@ const PlayerFullSizeModal = (props) => {
       animationType={"slide"}
       transparent={false}
       visible={props.isFullSizeModalVisible}
+      onRequestClose={() => {props.handleFullSizeModalClose}}
     >
       <View style={styles.modalContainer}>
         <TouchableOpacity onPress={props.handleFullSizeModalClose} style={{alignSelf: 'flex-start'}}>
