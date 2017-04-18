@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for actions/Player.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">actions</a> Player.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">18.18% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>2/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">18.18% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>2/11</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const types = {
+  CREATE_NEW_SOUND_INSTANCE: 'CREATE_NEW_SOUND_INSTANCE',
+  DECREASE_SPEED: 'DECREASE_SPEED',
+  INCREASE_SPEED: 'INCREASE_SPEED',
+  SET_MODAL_VISIBLE: 'SET_MODAL_VISIBLE',
+  SET_FULL_SIZE_MODAL_VISIBLE: 'SET_FULL_SIZE_MODAL_VISIBLE',
+  SET_PLAY_STATUS: 'SET_PLAY_STATUS',
+  STORE_EPISODE_DATA: 'STORE_EPISODE_DATA',
+  UPDATE_CURRENT_PLAYING_TIME: 'UPDATE_CURRENT_PLAYING_TIME',
+  UPDATE_CURRENTLY_PLAYING_EPISODE: 'UPDATE_CURRENTLY_PLAYING_EPISODE'
+}
+&nbsp;
+export const actionCreators = {
+  createNewSoundInstance: <span class="fstat-no" title="function not covered" >(n</span>ewSoundInstance) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {type: types.CREATE_NEW_SOUND_INSTANCE, payload: newSoundInstance}</span>
+  },
+  decreaseSpeed: <span class="fstat-no" title="function not covered" >(s</span>peed) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {type: types.DECREASE_SPEED, payload: speed}</span>
+  },
+  increaseSpeed: <span class="fstat-no" title="function not covered" >(s</span>peed) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {type: types.INCREASE_SPEED, payload: speed}</span>
+  },
+  setFullSizeModalVisible: <span class="fstat-no" title="function not covered" >(b</span>oolean) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {type: types.SET_FULL_SIZE_MODAL_VISIBLE, payload: boolean}</span>
+  },
+  setModalVisible: <span class="fstat-no" title="function not covered" >(b</span>oolean) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {type: types.SET_MODAL_VISIBLE, payload: boolean}</span>
+  },
+  setPlayStatus: <span class="fstat-no" title="function not covered" >(b</span>oolean) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {type: types.SET_PLAY_STATUS, payload: boolean}</span>
+  },
+  storeEpisodeData: <span class="fstat-no" title="function not covered" >(e</span>pisode) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {type: types.STORE_EPISODE_DATA, payload: episode}</span>
+  },
+  updateCurrentPlayingTime: <span class="fstat-no" title="function not covered" >(t</span>ime) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {type: types.UPDATE_CURRENT_PLAYING_TIME, payload: time}</span>
+  },
+  updateCurrentlyPlayingEpisode: <span class="fstat-no" title="function not covered" >(e</span>pisodeTitle) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {type: types.UPDATE_CURRENTLY_PLAYING_EPISODE, payload: episodeTitle}</span>
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Apr 16 2017 00:46:33 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

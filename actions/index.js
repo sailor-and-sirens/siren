@@ -1,5 +1,4 @@
 export const types = {
-  CHANGE_VIEW: 'CHANGE_VIEW',
   REMOVE_EPISODE_FROM_INBOX: 'REMOVE_EPISODE_FROM_INBOX',
   TOGGLE_MODAL: 'TOGGLE_MODAL',
   TOGGLE_LIKE: 'TOGGLE_LIKE',
@@ -7,13 +6,15 @@ export const types = {
   UPDATE_LIKED_FILTER: 'UPDATE_LIKED_FILTER',
   UPDATE_BOOKMARKED_FILTER: 'UPDATE_BOOKMARKED_FILTER',
   UPDATE_TIME_FILTER: 'UPDATE_TIME_FILTER',
-  UPDATE_TAG_FILTER: 'UPDATE_TAG_FILTER'
+  UPDATE_TAG_FILTER: 'UPDATE_TAG_FILTER',
+  ADD_TOKEN: 'ADD_TOKEN',
+  CHANGE_USERNAME: 'CHANGE_USERNAME',
+  CHANGE_PASSWORD: 'CHANGE_PASSWORD',
+  CHANGE_EMAIL: 'CHANGE_EMAIL',
+  CHANGE_AUTHVIEW: 'CHANGE_AUTHVIEW'
 }
 
 export const actionCreators = {
-  changeView: (view) => {
-    return {type: types.CHANGE_VIEW, payload: view}
-  },
   removeEpisodeFromInbox: (episodeId) => {
     return {type: types.REMOVE_EPISODE_FROM_INBOX, payload: episodeId}
   },
@@ -37,5 +38,20 @@ export const actionCreators = {
   },
   updateTagFilter: (value) => {
     return {type: types.UPDATE_TAG_FILTER, payload: value}
+  },
+  addToken: (value) => {
+    return {type: types.ADD_TOKEN, payload: value}
+  },
+  changeEmail: (value) => {
+    return {type: types.CHANGE_EMAIL, payload: value}
+  },
+  changeUsername: (value) => {
+    return {type: types.CHANGE_USERNAME, payload: value}
+  },
+  changePassword: (value) => {
+    return {type: types.CHANGE_PASSWORD, payload: value}
+  },
+  changeAuthView: (value) => {
+    return {type: types.CHANGE_AUTHVIEW, payload: value}
   }
 }

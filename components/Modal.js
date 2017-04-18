@@ -43,3 +43,10 @@ const styles = StyleSheet.create({
 });
 
 export default connect(mapStateToProps)(ModalComponent);
+
+
+{/* Example Button
+
+          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
+
+   */}
