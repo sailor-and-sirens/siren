@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playlistActions } from '../actions/Playlist';
@@ -7,35 +7,21 @@ import { actionCreators as swipeActions } from '../actions/Swipe';
 
 const mapStateToProps = (state) => ({
   isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
+  isPlaylistSelected: state.playlist.isPlaylistSelected,
   playlists: state.playlist.playlists
-})
-
-// const playlists = [
-//   {id: 1, name: 'Monday', totalEpisodes: 4, totalTime: '180+', isSelected: false},
-//   {id: 2, name: 'Tuesday', totalEpisodes: 1, totalTime: '75', isSelected: false},
-//   {id: 3, name: 'Wednesday', totalEpisodes: 2, totalTime: '90', isSelected: false},
-//   {id: 4, name: 'Thursday', totalEpisodes: 3, totalTime: '120', isSelected: false},
-//   {id: 5, name: 'Friday', totalEpisodes: 0, totalTime: '0', isSelected: false},
-//   {id: 6, name: 'Weekend', totalEpisodes: 1, totalTime: '56', isSelected: false},
-//   {id: 7, name: 'Productivity Mix', totalEpisodes: 5, totalTime: '180+', isSelected: false},
-//   {id: 8, name: 'A Really Long Title', totalEpisodes: 2, totalTime: '65', isSelected: false},
-//   {id: 9, name: 'Health & Wellness', totalEpisodes: 3, totalTime: '130', isSelected: false},
-//   {id: 10, name: 'Soul Food', totalEpisodes: 4, totalTime: '180+', isSelected: false},
-//   {id: 11, name: 'WebDev', totalEpisodes: 2, totalTime: '85', isSelected: false},
-//   {id: 12, name: 'Entrepreneurship', totalEpisodes: 3, totalTime: '120', isSelected: false}
-// ]
+});
 
 class AddPlaylistModal extends Component {
   constructor(props) {
     super(props);
-  }
+  };
 
   playlistStyle = (index) => {
     if (index % 2 === 0) {
       return [styles.playlistWrapper, styles.playlistAltBackground];
     }
     return styles.playlistWrapper;
-  }
+  };
 
   iconStyle = (isSelected) => {
     if (isSelected) {
@@ -46,7 +32,7 @@ class AddPlaylistModal extends Component {
     return (
       <MaterialIcons size={25} name='playlist-add'></MaterialIcons>
     )
-  }
+  };
 
   cancelSaveButton = (props) => {
     if (this.props.playlists.some(playlist => playlist.isSelected)) {
@@ -68,22 +54,26 @@ class AddPlaylistModal extends Component {
         </TouchableOpacity>
       </View>
     )
-  }
+  };
 
   handlePlaylistToggle = (index) => {
-    this.props.dispatch(playlistActions.togglePlaylistSelected(index));
-  }
+    if (this.props.isPlaylistSelected === false || this.props.playlists[index].isSelected === true) {
+      this.props.dispatch(playlistActions.togglePlaylistSelected(index));
+    } else {
+      Alert.alert('Please deselect the currently selected playlist before selecting a new one.');
+    }
+  };
 
   handleAddToPlaylistModalClose = () => {
     this.props.dispatch(swipeActions.toggleAddToPlaylistModal());
-  }
+  };
 
   render() {
     return (
       <Modal
         animationType={"fade"}
         transparent={false}
-        visible={this.props.isAddPlaylistModalVisible}
+        visible={true}
         onRequestClose={() => console.log('point me to a function')}
       >
         <View style={styles.container}>

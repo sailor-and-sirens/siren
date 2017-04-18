@@ -1,6 +1,7 @@
 import { types } from '../actions/Playlist';
 
 const initialState = {
+  isPlaylistSelected: false,
   playlists: [
     {id: 1, name: 'Monday', totalEpisodes: 4, totalTime: '180+', isSelected: false},
     {id: 2, name: 'Tuesday', totalEpisodes: 1, totalTime: '75', isSelected: false},
@@ -22,7 +23,7 @@ const playlist = (state = initialState, action) => {
     let index = action.payload;
     let playlistsCopy = state.playlists.slice(0);
     playlistsCopy[index].isSelected = !playlistsCopy[index].isSelected;
-    return {...state, playlists: playlistsCopy};
+    return {...state, playlists: playlistsCopy, isPlaylistSelected: !state.isPlaylistSelected};
   }
 
   return state;
