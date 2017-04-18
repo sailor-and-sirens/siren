@@ -38,7 +38,7 @@ class Authentication extends Component {
       return;
     }
     var value = {username: this.props.username, password: this.props.password, email: this.props.email};
-      fetch("http:localhost:3000/api/users/createUser", {
+      fetch("http://siren-server.herokuapp.com/api/users/createUser", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -73,7 +73,7 @@ class Authentication extends Component {
       return;
     }
     var value = {username: this.props.username, password: this.props.password};
-      fetch("http://localhost:3000/api/users/login", {
+      fetch("http://siren-server.herokuapp.com/api/users/login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',

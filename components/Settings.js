@@ -20,6 +20,7 @@ class Settings extends Component {
   }
 
   logoutUser () {
+    fetch("http:localhost:3000/logout", { method: "GET" });
     this.deleteToken('id_token')
     .then (() => {
       this.props.dispatch(actionCreators.addToken(null));

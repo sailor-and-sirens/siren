@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, ScrollView, Button } from 'react-native';
 import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
 import EpisodeList from './EpisodeList';
@@ -12,6 +12,8 @@ import Header from './Header';
 import ModalComponent from './Modal';
 import Authentication from './Authentication';
 import Settings from './Settings';
+import PodcastEpisodeList from './PodcastEpisodeList';
+import PodcastViewCard from './PodcastViewCard';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -50,6 +52,15 @@ class App extends Component {
         this.props.view === 'Settings' ?
          <View>
           <Settings />
+          <ScrollView>
+            <PodcastViewCard />
+            <PodcastEpisodeList />
+          </ScrollView>
+        </View> :
+        this.props.view === 'Podcast' ?
+        <View>
+          <PodcastViewCard />
+          <PodcastEpisodeList />
         </View> :
         <View>
           <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>

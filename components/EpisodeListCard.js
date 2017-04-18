@@ -46,7 +46,7 @@ class EpisodeListCard extends Component {
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].liked = !inbox[id].liked;
     this.props.dispatch(mainActions.toggleLike(inbox));
-    fetch("http:localhost:3000/api/users/likeEpisode", {
+    fetch("http://siren-server.herokuapp.com/api/users/likeEpisode", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
@@ -61,7 +61,7 @@ class EpisodeListCard extends Component {
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].bookmark = !inbox[id].bookmark;
     this.props.dispatch(mainActions.toggleBookmark(inbox));
-    fetch("http:localhost:3000/api/users/bookmarkEpisode", {
+    fetch("http://siren-server.herokuapp.com/api/users/bookmarkEpisode", {
       method: "POST",
       headers: {
         'Accept': 'application/json',

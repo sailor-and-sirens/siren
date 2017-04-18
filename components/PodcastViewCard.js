@@ -1,44 +1,35 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, Platform, Alert} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, ScrollView, Platform, Alert} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { actionCreators } from '../actions';
-import { headerActions } from '../actions/Header'
 import { connect } from 'react-redux';
+import { actionCreators as playerActions } from '../actions/index';
 
 const mapStateToProps = (state) => ({
-  token: state.main.token,
-  view: state.header.view
+  podcast: state.main.iTunesResult[0]
 });
 
 
-class PodcastListCard extends Component {
+class PodcastViewCard extends Component {
 
   subscribePodcast = () => {
-    fetch("http://siren-server.herokuapp.com/api/podcasts/", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      },
-      body: JSON.stringify(this.props.podcast)
-    }).then((response) => {console.warn('Response: ', response)});
+    //TODO
   }
 
   render() {
     return (
       <View style={styles.mainView}>
         <View style={styles.leftView}>
-          <TouchableOpacity onPress={() => this.props.dispatch(headerActions.changeView('Podcast'))}>
-            <Image source={{uri: this.props.podcast.artworkUrl100}} style={styles.image}/>
-          </TouchableOpacity>
+          <Image source={{uri: this.props.podcast.artworkUrl600}} style={styles.image}/>
         </View>
         <View style={styles.rightView}>
           <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
           <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
+          <ScrollView style={styles.descriptionView}>
+            <Text style={styles.description}>Podcast description goes here. There are many show details that appear here. Guests, topics, info, galore! Even more info. These could be quite long.</Text>
+          </ScrollView>
           <View style={styles.tagAddView}>
             <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
-            <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {this.subscribePodcast(); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}/>
+            <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {this.subscribePodcast(); Alert.alert('Subscribed to ' + this.props.podcast.collectionName);}}/>
           </View>
         </View>
       </View>
@@ -48,22 +39,23 @@ class PodcastListCard extends Component {
 
 const styles = StyleSheet.create({
   leftView: {
-    flex: .25,
+    flex: .5,
     justifyContent: 'space-around',
     alignItems: 'center',
   },
   rightView: {
-    paddingLeft: 3,
-    flex: .75,
+    paddingLeft: 2,
+    flex: .5,
     justifyContent: 'space-around',
     alignItems: 'stretch',
-    height: 100,
+    height: 150,
     paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: (Platform.OS === 'ios') ? 10 : 0,
+    paddingBottom: 5,
+    paddingLeft: (Platform.OS === 'ios') ? 2 : 0,
+    paddingRight: 2,
   },
   mainView: {
-    height: 100,
+    height: 150,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
@@ -72,9 +64,22 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: 'lightgrey',
   },
+  descriptionView: {
+    marginBottom: 4,
+  },
   image: {
-    height: 80,
-    width: 80,
+    height: 146,
+    width: 146,
+  },
+  description: {
+     ...Platform.select({
+      ios: {
+        fontSize: 12,
+      },
+      android: {
+        fontSize: 14,
+      },
+    }),
   },
   title: {
     fontWeight: "500",
@@ -119,7 +124,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4a442',
     padding: 2,
     alignSelf: 'flex-start',
+    marginTop: 6,
   },
 });
 
-export default connect(mapStateToProps)(PodcastListCard);
+export default connect(mapStateToProps)(PodcastViewCard);

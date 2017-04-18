@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import PodcastListCard from './PodcastListCard';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image} from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { actionCreators as swipeActions } from '../actions/Swipe';
 
 const mapStateToProps = (state) => ({
-  podcasts: state.main.iTunesResult
+  podcasts: state.main.iTunesResult,
+  currentEpisode: state.player.currentEpisode,
+  inbox: state.main.inbox,
+  token: state.main.token,
+  leftActionActivated: state.swipe.isLeftActionActivated,
+  leftToggle: state.swipe.isLeftToggled,
 })
-
 
 class PodcastList extends Component {
   constructor(props) {
