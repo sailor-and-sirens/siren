@@ -6,11 +6,7 @@ import EpisodeList from './EpisodeList';
 import PodcastList from './PodcastList';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
-<<<<<<< HEAD
 import { headerActions } from '../actions/Header'
-=======
-import { headerActions } from '../actions/Header';
->>>>>>> Update dispatches
 import Player from './Player';
 import Header from './Header';
 import ModalComponent from './Modal';

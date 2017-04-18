@@ -92,7 +92,7 @@ exports[`renders correctly without data 1`] = `
             "height": 100,
             "justifyContent": "space-around",
             "paddingBottom": 10,
-            "paddingLeft": 3,
+            "paddingLeft": 10,
             "paddingTop": 10,
           }
         }
@@ -104,7 +104,7 @@ exports[`renders correctly without data 1`] = `
           numberOfLines={1}
           style={
             Object {
-              "fontSize": 18,
+              "fontSize": 16,
               "fontWeight": "500",
             }
           }
@@ -118,7 +118,7 @@ exports[`renders correctly without data 1`] = `
           numberOfLines={1}
           style={
             Object {
-              "fontSize": 16,
+              "fontSize": 13,
               "fontWeight": "400",
               "marginBottom": 5,
             }
@@ -204,7 +204,7 @@ exports[`renders correctly without data 1`] = `
             "height": 100,
             "justifyContent": "space-around",
             "paddingBottom": 10,
-            "paddingLeft": 3,
+            "paddingLeft": 10,
             "paddingTop": 10,
           }
         }
@@ -216,7 +216,7 @@ exports[`renders correctly without data 1`] = `
           numberOfLines={1}
           style={
             Object {
-              "fontSize": 18,
+              "fontSize": 16,
               "fontWeight": "500",
             }
           }
@@ -230,7 +230,7 @@ exports[`renders correctly without data 1`] = `
           numberOfLines={1}
           style={
             Object {
-              "fontSize": 16,
+              "fontSize": 13,
               "fontWeight": "400",
               "marginBottom": 5,
             }
@@ -316,7 +316,7 @@ exports[`renders correctly without data 1`] = `
             "height": 100,
             "justifyContent": "space-around",
             "paddingBottom": 10,
-            "paddingLeft": 3,
+            "paddingLeft": 10,
             "paddingTop": 10,
           }
         }
@@ -328,7 +328,7 @@ exports[`renders correctly without data 1`] = `
           numberOfLines={1}
           style={
             Object {
-              "fontSize": 18,
+              "fontSize": 16,
               "fontWeight": "500",
             }
           }
@@ -342,7 +342,7 @@ exports[`renders correctly without data 1`] = `
           numberOfLines={1}
           style={
             Object {
-              "fontSize": 16,
+              "fontSize": 13,
               "fontWeight": "400",
               "marginBottom": 5,
             }
