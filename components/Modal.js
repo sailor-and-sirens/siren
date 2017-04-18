@@ -17,6 +17,7 @@ class ModalComponent extends Component {
           animationType={"fade"}
           transparent={true}
           visible={this.props.modalVisible}
+          onRequestClose={() => {alert("Modal has been closed.")}}
           >
          <View style={styles.outerView}>
           <View style={styles.innerView}>
