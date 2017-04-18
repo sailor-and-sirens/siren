@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, AsyncStorage, TextInput, Platform, Button, Alert} from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+import { headerActions } from '../actions/Header';
 
 const mapStateToProps = (state) => ({
   view: state.header.view,
@@ -14,14 +15,14 @@ const mapStateToProps = (state) => ({
 
 class Authentication extends Component {
 
-  // async _onValueChange(item, selectedValue) {
-  //   try {
-  //     await AsyncStorage.setItem(item, selectedValue);
-  //     this.props.dispatch(actionCreators.addToken(selectedValue));
-  //    } catch (error) {
-  //     console.log('AsyncStorage error: ' + error.message);
-  //   }
-  // }
+  async _onValueChange(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue);
+      this.props.dispatch(actionCreators.addToken(selectedValue));
+     } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  }
 
   _userSignup() {
     if(this.props.password === '' || this.props.username === '' || this.props.email === '') {
@@ -56,7 +57,7 @@ class Authentication extends Component {
       })
       .then((responseData) => {
         if (responseData) {
-          this.props.dispatch(actionCreators.changeView('Inbox'))
+          this.props.dispatch(headerActions.changeView('Inbox'))
           return this._onValueChange('id_token', responseData.id_token)
         }
       })
@@ -90,7 +91,7 @@ class Authentication extends Component {
       })
       .then((responseData) => {
         if (responseData) {
-          this.props.dispatch(actionCreators.changeView('Inbox'))
+          this.props.dispatch(headerActions.changeView('Inbox'))
           return this._onValueChange('id_token', responseData.id_token)
         }
       })

@@ -9,8 +9,8 @@ import header from './Header';
 const initialState = {
   token: null,
   modalVisible: false,
-  // view: 'Authentication',
-  view: 'Inbox',
+  view: 'Authentication',
+  // view: 'Inbox',
   inboxFilters: {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",

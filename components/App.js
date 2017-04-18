@@ -6,7 +6,11 @@ import EpisodeList from './EpisodeList';
 import PodcastList from './PodcastList';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+<<<<<<< HEAD
 import { headerActions } from '../actions/Header'
+=======
+import { headerActions } from '../actions/Header';
+>>>>>>> Update dispatches
 import Player from './Player';
 import Header from './Header';
 import ModalComponent from './Modal';
@@ -20,8 +24,8 @@ const mapStateToProps = (state) => ({
 
 class App extends Component {
 
-  componentWillMount() {
 
+  componentWillMount() {
     AsyncStorage.getItem('id_token', (err, res) => {
       if (err || res === null) {
         this.props.dispatch(headerActions.changeView('Authentication'))

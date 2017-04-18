@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, AsyncStorage} from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+import { headerActions } from '../actions/Header';
 
 const mapStateToProps = (state) => ({
   token: state.main.token
@@ -22,7 +23,7 @@ class Settings extends Component {
     this.deleteToken('id_token')
     .then (() => {
       this.props.dispatch(actionCreators.addToken(null));
-      this.props.dispatch(actionCreators.changeView('Authentication'));
+      this.props.dispatch(headerActions.changeView('Authentication'));
     })
   }
 
