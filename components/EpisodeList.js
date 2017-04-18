@@ -14,7 +14,6 @@ let _ = require('lodash');
 const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   inbox: state.main.inbox,
-  isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
   filters: state.main.inboxFilters
 });
 
@@ -190,10 +189,6 @@ hmsToSecondsOnly = (duration) => {
     });
   }
 
-  handleAddToPlaylistModalClose = () => {
-    this.props.dispatch(swipeActions.toggleAddToPlaylistModal());
-  }
-
   render() {
     const { currentlyOpenSwipeable } = this.props;
     const itemProps = {
@@ -207,10 +202,7 @@ hmsToSecondsOnly = (duration) => {
     };
    return (
       <View style={styles.mainView}>
-        <AddPlaylistModal
-          isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible}
-          handleAddToPlaylistModalClose={this.handleAddToPlaylistModalClose}
-        />
+        <AddPlaylistModal />
          <ScrollView style={styles.episodeList}>
           {this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
               <EpisodeListCard {...itemProps}
