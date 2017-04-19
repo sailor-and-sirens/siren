@@ -9,8 +9,8 @@ export const actionCreators = {
   addNewPlaylist: (newPlaylist) => {
     return {type: types.ADD_NEW_PLAYLIST, payload: newPlaylist}
   },
-  toggleAddToPlaylistModal: () => {
-    return {type: types.TOGGLE_ADD_TO_PLAYLIST_MODAL}
+  toggleAddToPlaylistModal: (isSaved) => {
+    return {type: types.TOGGLE_ADD_TO_PLAYLIST_MODAL, payload: isSaved}
   },
   togglePlaylistSelected: (playlistId) => {
     return {type: types.TOGGLE_PLAYLIST_SELECTED, payload: playlistId}

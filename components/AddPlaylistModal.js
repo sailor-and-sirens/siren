@@ -9,7 +9,6 @@ import Swipeable from 'react-native-swipeable';
 const mapStateToProps = (state) => ({
   addNewPlaylistInputValue: state.playlist.addNewPlaylistInputValue,
   isAddPlaylistModalVisible: state.playlist.isAddPlaylistModalVisible,
-  isPlaylistSelected: state.playlist.isPlaylistSelected,
   leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
   playlists: state.playlist.playlists,
@@ -18,20 +17,20 @@ const mapStateToProps = (state) => ({
 
 class AddPlaylistModal extends Component {
 
+  isPlaylistSelected = (playlistId) => {
+    return this.props.selectedPlaylistId === playlistId;
+  }
+
   handleAddNewPlaylist = () => {
     this.props.dispatch(playlistActions.addNewPlaylist(this.props.addNewPlaylistInputValue));
   };
 
-  handlePlaylistToggle = (index) => {
-    if (this.props.isPlaylistSelected === false || this.props.playlists[index].isSelected === true) {
-      this.props.dispatch(playlistActions.togglePlaylistSelected(index));
-    } else {
-      Alert.alert('Please deselect the currently selected playlist before selecting a new one.');
-    }
+  handlePlaylistToggle = (playlistId) => {
+    this.props.dispatch(playlistActions.togglePlaylistSelected(playlistId));
   };
 
   handleAddToPlaylistModalClose = () => {
-    this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
+    this.props.dispatch(playlistActions.toggleAddToPlaylistModal(false));
   };
 
   render() {
@@ -56,7 +55,7 @@ class AddPlaylistModal extends Component {
     };
 
     const cancelSaveButton = () => {
-      if (this.props.playlists.some(playlist => playlist.isSelected)) {
+      if (this.props.selectedPlaylistId !== null) {
         return (
           <View style={styles.cancelSaveWrapper}>
             <TouchableOpacity onPress={this.handleAddToPlaylistModalClose} style={styles.cancelButton}>
@@ -88,7 +87,7 @@ class AddPlaylistModal extends Component {
       <Modal
         animationType={"fade"}
         transparent={false}
-        visible={true}
+        visible={this.props.isAddPlaylistModalVisible}
         onRequestClose={() => console.log('point me to a function')}
       >
         <View style={styles.container}>
@@ -110,19 +109,19 @@ class AddPlaylistModal extends Component {
                   <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
                     {leftActionActivated ?
                       <Text>(( release ))</Text> :
-                      swipeToSelectPlaylistText(playlist.isSelected)}
+                      swipeToSelectPlaylistText(this.isPlaylistSelected(playlist.id))}
                   </View>
                 )}
 
                 onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
                 onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
-                onLeftActionComplete={() => this.handlePlaylistToggle(index)}
+                onLeftActionComplete={() => this.handlePlaylistToggle(playlist.id)}
               >
               <TouchableWithoutFeedback>
                 <View style={playlistStyle(index)}>
                   <View style={styles.playlistIconWrapper}>
-                    <TouchableOpacity onPress={this.handlePlaylistToggle.bind(this, index)}>
-                      {iconStyle(playlist.isSelected)}
+                    <TouchableOpacity onPress={this.handlePlaylistToggle.bind(this, playlist.id)}>
+                      {iconStyle(this.isPlaylistSelected(playlist.id))}
                     </TouchableOpacity>
                   </View>
                   <View style={styles.playlistNameWrapper}>
