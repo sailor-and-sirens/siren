@@ -13,15 +13,7 @@ const mapStateToProps = (state) => ({
 class PodcastViewCard extends Component {
 
   subscribePodcast = () => {
-    fetch("http://siren-server.herokuapp.com/api/podcasts/", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      },
-      body: JSON.stringify(this.props.podcast)
-    }).then((response) => {console.warn('Response: ', response)});
+    //TODO
   }
 
   render() {
@@ -49,7 +41,7 @@ class PodcastViewCard extends Component {
 const styles = StyleSheet.create({
   leftView: {
     flex: .5,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   rightView: {

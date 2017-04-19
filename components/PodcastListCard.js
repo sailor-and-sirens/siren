@@ -28,8 +28,8 @@ class PodcastListCard extends Component {
         'Authorization': this.props.token
       },
       body: JSON.stringify(this.props.podcast)
-    }).then((response) => {console.warn('Response: ', response)});
-  }
+    });
+  };
 
   render() {
     const {leftActionActivated, leftToggle} = this.props;
