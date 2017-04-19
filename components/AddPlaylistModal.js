@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView, Alert, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playlistActions } from '../actions/Playlist';
@@ -12,26 +12,41 @@ const mapStateToProps = (state) => ({
   leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
   playlists: state.playlist.playlists,
-  selectedPlaylistId: state.playlist.selectedPlaylistId
+  selectedPlaylistId: state.playlist.selectedPlaylistId,
+  token: state.main.token
 });
 
 class AddPlaylistModal extends Component {
 
-  isPlaylistSelected = (playlistId) => {
-    return this.props.selectedPlaylistId === playlistId;
+  createNewPlaylist = (playlistName) => {
+    let playlistData = { name: playlistName };
+    fetch('http://localhost:3000/api/playlists/create-playlist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify(playlistData)
+    })
+    .catch(err => console.warn(err));
   }
 
   handleAddNewPlaylist = () => {
     this.props.dispatch(playlistActions.addNewPlaylist(this.props.addNewPlaylistInputValue));
+    this.createNewPlaylist(this.props.addNewPlaylistInputValue);
+  };
+
+  handleAddToPlaylistModalClose = () => {
+    this.props.dispatch(playlistActions.toggleAddToPlaylistModal(false));
   };
 
   handlePlaylistToggle = (playlistId) => {
     this.props.dispatch(playlistActions.togglePlaylistSelected(playlistId));
   };
 
-  handleAddToPlaylistModalClose = () => {
-    this.props.dispatch(playlistActions.toggleAddToPlaylistModal(false));
-  };
+  isPlaylistSelected = (playlistId) => {
+    return this.props.selectedPlaylistId === playlistId;
+  }
 
   render() {
     const { leftActionActivated } = this.props;
