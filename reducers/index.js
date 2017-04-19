@@ -6,6 +6,7 @@ import swipe from './Swipe';
 import header from './Header';
 import playlist from './Playlist';
 import podcasts from './Podcasts';
+import playlists from './Playlists';
 
 // add your key/values for initialState here
 const initialState = {
@@ -82,7 +83,8 @@ const rootReducer = combineReducers({
   swipe,
   header,
   playlist,
-  podcasts
+  podcasts,
+  playlists
 });
 
 export default rootReducer;

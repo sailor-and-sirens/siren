@@ -9,6 +9,9 @@ const initialState = {
 };
 
 const playlist = (state = initialState, action) => {
+  if (action.type === types.GET_PLAYLISTS) {
+    return {...state, playlists: action.payload};
+  }
   if (action.type === types.ADD_NEW_PLAYLIST) {
     let newId = action.payload.id;
     let newPlaylist = { id: newId, name: action.payload.name, totalEpisodes: 0, totalTime: '0' };
