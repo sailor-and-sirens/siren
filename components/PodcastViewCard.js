@@ -1,3 +1,4 @@
+//UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, ScrollView, Platform, Alert} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,7 +13,15 @@ const mapStateToProps = (state) => ({
 class PodcastViewCard extends Component {
 
   subscribePodcast = () => {
-    //TODO
+    fetch("http://siren-server.herokuapp.com/api/podcasts/", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify(this.props.podcast)
+    }).then((response) => {console.warn('Response: ', response)});
   }
 
   render() {
@@ -55,7 +64,7 @@ const styles = StyleSheet.create({
     paddingRight: 2,
   },
   mainView: {
-    height: 150,
+    height: 155,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
@@ -119,6 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingRight: 10,
+    marginBottom: 4,
   },
   tag: {
     backgroundColor: '#f4a442',

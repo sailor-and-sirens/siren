@@ -1,13 +1,19 @@
+//UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, Platform, Alert} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header'
+import Swipeable from 'react-native-swipeable';
+import { actionCreators as swipeActions } from '../actions/Swipe';
+import { actionCreators as mainActions } from '../actions';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
-  view: state.header.view
+  view: state.header.view,
+  leftActionActivated: state.swipe.isLeftActionActivated,
+  leftToggle: state.swipe.isLeftToggled,
 });
 
 
@@ -26,22 +32,40 @@ class PodcastListCard extends Component {
   }
 
   render() {
+    const {leftActionActivated, leftToggle} = this.props;
     return (
-      <View style={styles.mainView}>
-        <View style={styles.leftView}>
-          <TouchableOpacity onPress={() => this.props.dispatch(headerActions.changeView('Podcast'))}>
-            <Image source={{uri: this.props.podcast.artworkUrl100}} style={styles.image}/>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.rightView}>
-          <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
-          <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
-          <View style={styles.tagAddView}>
-            <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
-            <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {this.subscribePodcast(); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}/>
+      <Swipeable
+            leftActionActivationDistance={200}
+            leftContent={(
+              <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
+                {leftActionActivated ?
+                  <Text>(( release ))</Text> :
+                  <Text>Subscribe</Text>}
+              </View>
+            )}
+            onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
+            onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
+            onLeftActionComplete={() => {
+              this.subscribePodcast();
+              Alert.alert('Subscribed to ' + this.props.podcast.collectionName);
+            }}
+          >
+        <View style={styles.mainView}>
+          <View style={styles.leftView}>
+            <TouchableOpacity onPress={() => this.props.dispatch(headerActions.changeView('Podcast'))}>
+              <Image source={{uri: this.props.podcast.artworkUrl100}} style={styles.image}/>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.rightView}>
+            <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
+            <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
+            <View style={styles.tagAddView}>
+              <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
+              <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {this.subscribePodcast(); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}/>
+            </View>
           </View>
         </View>
-      </View>
+      </Swipeable>
     );
   }
 }
@@ -119,6 +143,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4a442',
     padding: 2,
     alignSelf: 'flex-start',
+  },
+  leftSwipeItem: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingRight: 20
   },
 });
 

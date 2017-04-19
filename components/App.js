@@ -52,15 +52,13 @@ class App extends Component {
         this.props.view === 'Settings' ?
          <View>
           <Settings />
-          <ScrollView>
-            <PodcastViewCard />
-            <PodcastEpisodeList />
-          </ScrollView>
         </View> :
         this.props.view === 'Podcast' ?
         <View>
           <PodcastViewCard />
-          <PodcastEpisodeList />
+          <ScrollView style={styles.podcastEpisodes}>
+            <PodcastEpisodeList />
+          </ScrollView>
         </View> :
         <View>
           <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>
@@ -76,8 +74,10 @@ class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
-  }
-
+    backgroundColor: '#fff',
+  },
+  podcastEpisodes: {
+    marginBottom: 245,
+  },
 });
 export default connect(mapStateToProps)(App);

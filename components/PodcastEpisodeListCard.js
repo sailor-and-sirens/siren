@@ -1,3 +1,4 @@
+//UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorage, Alert, Platform} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -116,6 +117,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: 'lightgrey',
     borderTopColor: 'lightgrey',
+    marginLeft: 6,
+    marginRight: 2,
   },
   episode: {
     fontWeight: "500",
