@@ -22,7 +22,7 @@ Object {
 
 exports[`reducer returns default state and renders correctly 1`] = `
 Object {
-  "view": "Inbox",
+  "view": "Authentication",
 }
 `;
 
@@ -40,7 +40,7 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    Inbox
+    Authentication
   </Text>
   <View
     style={
@@ -71,6 +71,7 @@ exports[`renders correctly 1`] = `
       <Modal
         animationType="fade"
         hardwareAccelerated={false}
+        onRequestClose={[Function]}
         transparent={true}
         visible={false}
       >

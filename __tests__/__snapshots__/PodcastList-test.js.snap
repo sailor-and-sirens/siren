@@ -48,338 +48,797 @@ exports[`renders correctly without data 1`] = `
     }
   >
     <View
+      leftActionActivationDistance={200}
+      leftActionReleaseAnimationConfig={null}
+      leftActionReleaseAnimationFn={null}
+      leftButtonWidth={75}
+      leftButtonsActivationDistance={75}
+      leftButtonsCloseReleaseAnimationConfig={null}
+      leftButtonsCloseReleaseAnimationFn={null}
+      leftButtonsOpenReleaseAnimationConfig={null}
+      leftButtonsOpenReleaseAnimationFn={null}
+      onLayout={[Function]}
+      onLeftActionActivate={[Function]}
+      onLeftActionComplete={[Function]}
+      onLeftActionDeactivate={[Function]}
+      onLeftActionRelease={[Function]}
+      onLeftButtonsActivate={[Function]}
+      onLeftButtonsCloseComplete={[Function]}
+      onLeftButtonsCloseRelease={[Function]}
+      onLeftButtonsDeactivate={[Function]}
+      onLeftButtonsOpenComplete={[Function]}
+      onLeftButtonsOpenRelease={[Function]}
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onPanAnimatedValueRef={[Function]}
+      onRef={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onRightActionActivate={[Function]}
+      onRightActionComplete={[Function]}
+      onRightActionDeactivate={[Function]}
+      onRightActionRelease={[Function]}
+      onRightButtonsActivate={[Function]}
+      onRightButtonsCloseComplete={[Function]}
+      onRightButtonsCloseRelease={[Function]}
+      onRightButtonsDeactivate={[Function]}
+      onRightButtonsOpenComplete={[Function]}
+      onRightButtonsOpenRelease={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      onSwipeComplete={[Function]}
+      onSwipeMove={[Function]}
+      onSwipeRelease={[Function]}
+      onSwipeStart={[Function]}
+      rightActionActivationDistance={125}
+      rightActionReleaseAnimationConfig={null}
+      rightActionReleaseAnimationFn={null}
+      rightButtonWidth={75}
+      rightButtonsActivationDistance={75}
+      rightButtonsCloseReleaseAnimationConfig={null}
+      rightButtonsCloseReleaseAnimationFn={null}
+      rightButtonsOpenReleaseAnimationConfig={null}
+      rightButtonsOpenReleaseAnimationFn={null}
       style={
+        Array [
+          Object {
+            "flexDirection": "row",
+          },
+          undefined,
+        ]
+      }
+      swipeReleaseAnimationConfig={
         Object {
-          "alignItems": "center",
-          "borderBottomColor": "lightgrey",
-          "borderBottomWidth": 2,
-          "borderTopColor": "lightgrey",
-          "borderTopWidth": 2,
-          "flexDirection": "row",
-          "height": 100,
-          "justifyContent": "space-between",
+          "duration": 250,
+          "easing": [Function],
+          "toValue": Object {
+            "x": 0,
+            "y": 0,
+          },
         }
       }
+      swipeReleaseAnimationFn={[Function]}
+      swipeStartMinDistance={15}
     >
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flex": 0.25,
-            "justifyContent": "space-around",
+            "marginLeft": -0,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+            ],
+            "width": 0,
           }
         }
       >
-        <Image
-          source={
-            Object {
-              "uri": "http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg",
-            }
-          }
+        <View
           style={
-            Object {
-              "height": 80,
-              "width": 80,
-            }
+            Array [
+              Object {
+                "alignItems": "flex-end",
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingRight": 20,
+              },
+              Object {
+                "backgroundColor": "#42f4c5",
+              },
+            ]
           }
-        />
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            Subscribe
+          </Text>
+        </View>
       </View>
       <View
         style={
           Object {
-            "alignItems": "stretch",
-            "flex": 0.75,
-            "height": 100,
-            "justifyContent": "space-around",
-            "paddingBottom": 10,
-            "paddingLeft": 3,
-            "paddingTop": 10,
+            "flex": 1,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+            ],
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          numberOfLines={1}
-          style={
-            Object {
-              "fontSize": 18,
-              "fontWeight": "500",
-            }
-          }
-        >
-          Note to Self
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          numberOfLines={1}
-          style={
-            Object {
-              "fontSize": 16,
-              "fontWeight": "400",
-              "marginBottom": 5,
-            }
-          }
-        >
-          WNYC Studios
-        </Text>
         <View
           style={
             Object {
+              "alignItems": "center",
+              "borderBottomColor": "lightgrey",
+              "borderBottomWidth": 2,
+              "borderTopColor": "lightgrey",
+              "borderTopWidth": 2,
               "flexDirection": "row",
+              "height": 100,
               "justifyContent": "space-between",
-              "paddingRight": 10,
             }
           }
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
             style={
               Object {
-                "alignSelf": "flex-start",
-                "backgroundColor": "#f4a442",
-                "padding": 2,
+                "alignItems": "center",
+                "flex": 0.25,
+                "justifyContent": "space-around",
               }
             }
           >
-             
-            Tech News
-             
-          </Text>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          />
+            <View
+              accessibilityComponentType={undefined}
+              accessibilityLabel={undefined}
+              accessibilityTraits={undefined}
+              accessible={true}
+              hitSlop={undefined}
+              isTVSelectable={true}
+              onLayout={undefined}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID={undefined}
+              tvParallaxProperties={undefined}
+            >
+              <Image
+                source={
+                  Object {
+                    "uri": "http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg",
+                  }
+                }
+                style={
+                  Object {
+                    "height": 80,
+                    "width": 80,
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "stretch",
+                "flex": 0.75,
+                "height": 100,
+                "justifyContent": "space-around",
+                "paddingBottom": 10,
+                "paddingLeft": 10,
+                "paddingTop": 10,
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+              style={
+                Object {
+                  "fontSize": 16,
+                  "fontWeight": "500",
+                }
+              }
+            >
+              Note to Self
+            </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+              style={
+                Object {
+                  "fontSize": 13,
+                  "fontWeight": "400",
+                  "marginBottom": 5,
+                }
+              }
+            >
+              WNYC Studios
+            </Text>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "paddingRight": 10,
+                }
+              }
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Object {
+                    "alignSelf": "flex-start",
+                    "backgroundColor": "#f4a442",
+                    "padding": 2,
+                  }
+                }
+              >
+                 
+                Tech News
+                 
+              </Text>
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
     <View
+      leftActionActivationDistance={200}
+      leftActionReleaseAnimationConfig={null}
+      leftActionReleaseAnimationFn={null}
+      leftButtonWidth={75}
+      leftButtonsActivationDistance={75}
+      leftButtonsCloseReleaseAnimationConfig={null}
+      leftButtonsCloseReleaseAnimationFn={null}
+      leftButtonsOpenReleaseAnimationConfig={null}
+      leftButtonsOpenReleaseAnimationFn={null}
+      onLayout={[Function]}
+      onLeftActionActivate={[Function]}
+      onLeftActionComplete={[Function]}
+      onLeftActionDeactivate={[Function]}
+      onLeftActionRelease={[Function]}
+      onLeftButtonsActivate={[Function]}
+      onLeftButtonsCloseComplete={[Function]}
+      onLeftButtonsCloseRelease={[Function]}
+      onLeftButtonsDeactivate={[Function]}
+      onLeftButtonsOpenComplete={[Function]}
+      onLeftButtonsOpenRelease={[Function]}
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onPanAnimatedValueRef={[Function]}
+      onRef={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onRightActionActivate={[Function]}
+      onRightActionComplete={[Function]}
+      onRightActionDeactivate={[Function]}
+      onRightActionRelease={[Function]}
+      onRightButtonsActivate={[Function]}
+      onRightButtonsCloseComplete={[Function]}
+      onRightButtonsCloseRelease={[Function]}
+      onRightButtonsDeactivate={[Function]}
+      onRightButtonsOpenComplete={[Function]}
+      onRightButtonsOpenRelease={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      onSwipeComplete={[Function]}
+      onSwipeMove={[Function]}
+      onSwipeRelease={[Function]}
+      onSwipeStart={[Function]}
+      rightActionActivationDistance={125}
+      rightActionReleaseAnimationConfig={null}
+      rightActionReleaseAnimationFn={null}
+      rightButtonWidth={75}
+      rightButtonsActivationDistance={75}
+      rightButtonsCloseReleaseAnimationConfig={null}
+      rightButtonsCloseReleaseAnimationFn={null}
+      rightButtonsOpenReleaseAnimationConfig={null}
+      rightButtonsOpenReleaseAnimationFn={null}
       style={
+        Array [
+          Object {
+            "flexDirection": "row",
+          },
+          undefined,
+        ]
+      }
+      swipeReleaseAnimationConfig={
         Object {
-          "alignItems": "center",
-          "borderBottomColor": "lightgrey",
-          "borderBottomWidth": 2,
-          "borderTopColor": "lightgrey",
-          "borderTopWidth": 2,
-          "flexDirection": "row",
-          "height": 100,
-          "justifyContent": "space-between",
+          "duration": 250,
+          "easing": [Function],
+          "toValue": Object {
+            "x": 0,
+            "y": 0,
+          },
         }
       }
+      swipeReleaseAnimationFn={[Function]}
+      swipeStartMinDistance={15}
     >
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flex": 0.25,
-            "justifyContent": "space-around",
+            "marginLeft": -0,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+            ],
+            "width": 0,
           }
         }
       >
-        <Image
-          source={
-            Object {
-              "uri": "http://is5.mzstatic.com/image/thumb/Music71/v4/41/27/e2/4127e299-472c-4fe6-c6bd-bb2594b39d03/source/100x100bb.jpg",
-            }
-          }
+        <View
           style={
-            Object {
-              "height": 80,
-              "width": 80,
-            }
+            Array [
+              Object {
+                "alignItems": "flex-end",
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingRight": 20,
+              },
+              Object {
+                "backgroundColor": "#42f4c5",
+              },
+            ]
           }
-        />
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            Subscribe
+          </Text>
+        </View>
       </View>
       <View
         style={
           Object {
-            "alignItems": "stretch",
-            "flex": 0.75,
-            "height": 100,
-            "justifyContent": "space-around",
-            "paddingBottom": 10,
-            "paddingLeft": 3,
-            "paddingTop": 10,
+            "flex": 1,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+            ],
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          numberOfLines={1}
-          style={
-            Object {
-              "fontSize": 18,
-              "fontWeight": "500",
-            }
-          }
-        >
-          Note to Beautiful Self
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          numberOfLines={1}
-          style={
-            Object {
-              "fontSize": 16,
-              "fontWeight": "400",
-              "marginBottom": 5,
-            }
-          }
-        >
-          Note to Beautiful Self
-        </Text>
         <View
           style={
             Object {
+              "alignItems": "center",
+              "borderBottomColor": "lightgrey",
+              "borderBottomWidth": 2,
+              "borderTopColor": "lightgrey",
+              "borderTopWidth": 2,
               "flexDirection": "row",
+              "height": 100,
               "justifyContent": "space-between",
-              "paddingRight": 10,
             }
           }
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
             style={
               Object {
-                "alignSelf": "flex-start",
-                "backgroundColor": "#f4a442",
-                "padding": 2,
+                "alignItems": "center",
+                "flex": 0.25,
+                "justifyContent": "space-around",
               }
             }
           >
-             
-            Careers
-             
-          </Text>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          />
+            <View
+              accessibilityComponentType={undefined}
+              accessibilityLabel={undefined}
+              accessibilityTraits={undefined}
+              accessible={true}
+              hitSlop={undefined}
+              isTVSelectable={true}
+              onLayout={undefined}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID={undefined}
+              tvParallaxProperties={undefined}
+            >
+              <Image
+                source={
+                  Object {
+                    "uri": "http://is5.mzstatic.com/image/thumb/Music71/v4/41/27/e2/4127e299-472c-4fe6-c6bd-bb2594b39d03/source/100x100bb.jpg",
+                  }
+                }
+                style={
+                  Object {
+                    "height": 80,
+                    "width": 80,
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "stretch",
+                "flex": 0.75,
+                "height": 100,
+                "justifyContent": "space-around",
+                "paddingBottom": 10,
+                "paddingLeft": 10,
+                "paddingTop": 10,
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+              style={
+                Object {
+                  "fontSize": 16,
+                  "fontWeight": "500",
+                }
+              }
+            >
+              Note to Beautiful Self
+            </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+              style={
+                Object {
+                  "fontSize": 13,
+                  "fontWeight": "400",
+                  "marginBottom": 5,
+                }
+              }
+            >
+              Note to Beautiful Self
+            </Text>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "paddingRight": 10,
+                }
+              }
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Object {
+                    "alignSelf": "flex-start",
+                    "backgroundColor": "#f4a442",
+                    "padding": 2,
+                  }
+                }
+              >
+                 
+                Careers
+                 
+              </Text>
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
     <View
+      leftActionActivationDistance={200}
+      leftActionReleaseAnimationConfig={null}
+      leftActionReleaseAnimationFn={null}
+      leftButtonWidth={75}
+      leftButtonsActivationDistance={75}
+      leftButtonsCloseReleaseAnimationConfig={null}
+      leftButtonsCloseReleaseAnimationFn={null}
+      leftButtonsOpenReleaseAnimationConfig={null}
+      leftButtonsOpenReleaseAnimationFn={null}
+      onLayout={[Function]}
+      onLeftActionActivate={[Function]}
+      onLeftActionComplete={[Function]}
+      onLeftActionDeactivate={[Function]}
+      onLeftActionRelease={[Function]}
+      onLeftButtonsActivate={[Function]}
+      onLeftButtonsCloseComplete={[Function]}
+      onLeftButtonsCloseRelease={[Function]}
+      onLeftButtonsDeactivate={[Function]}
+      onLeftButtonsOpenComplete={[Function]}
+      onLeftButtonsOpenRelease={[Function]}
+      onMoveShouldSetResponder={[Function]}
+      onMoveShouldSetResponderCapture={[Function]}
+      onPanAnimatedValueRef={[Function]}
+      onRef={[Function]}
+      onResponderEnd={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderReject={[Function]}
+      onResponderRelease={[Function]}
+      onResponderStart={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onRightActionActivate={[Function]}
+      onRightActionComplete={[Function]}
+      onRightActionDeactivate={[Function]}
+      onRightActionRelease={[Function]}
+      onRightButtonsActivate={[Function]}
+      onRightButtonsCloseComplete={[Function]}
+      onRightButtonsCloseRelease={[Function]}
+      onRightButtonsDeactivate={[Function]}
+      onRightButtonsOpenComplete={[Function]}
+      onRightButtonsOpenRelease={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onStartShouldSetResponderCapture={[Function]}
+      onSwipeComplete={[Function]}
+      onSwipeMove={[Function]}
+      onSwipeRelease={[Function]}
+      onSwipeStart={[Function]}
+      rightActionActivationDistance={125}
+      rightActionReleaseAnimationConfig={null}
+      rightActionReleaseAnimationFn={null}
+      rightButtonWidth={75}
+      rightButtonsActivationDistance={75}
+      rightButtonsCloseReleaseAnimationConfig={null}
+      rightButtonsCloseReleaseAnimationFn={null}
+      rightButtonsOpenReleaseAnimationConfig={null}
+      rightButtonsOpenReleaseAnimationFn={null}
       style={
+        Array [
+          Object {
+            "flexDirection": "row",
+          },
+          undefined,
+        ]
+      }
+      swipeReleaseAnimationConfig={
         Object {
-          "alignItems": "center",
-          "borderBottomColor": "lightgrey",
-          "borderBottomWidth": 2,
-          "borderTopColor": "lightgrey",
-          "borderTopWidth": 2,
-          "flexDirection": "row",
-          "height": 100,
-          "justifyContent": "space-between",
+          "duration": 250,
+          "easing": [Function],
+          "toValue": Object {
+            "x": 0,
+            "y": 0,
+          },
         }
       }
+      swipeReleaseAnimationFn={[Function]}
+      swipeStartMinDistance={15}
     >
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flex": 0.25,
-            "justifyContent": "space-around",
+            "marginLeft": -0,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+            ],
+            "width": 0,
           }
         }
       >
-        <Image
-          source={
-            Object {
-              "uri": "http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/100x100bb.jpg",
-            }
-          }
+        <View
           style={
-            Object {
-              "height": 80,
-              "width": 80,
-            }
+            Array [
+              Object {
+                "alignItems": "flex-end",
+                "flex": 1,
+                "justifyContent": "center",
+                "paddingRight": 20,
+              },
+              Object {
+                "backgroundColor": "#42f4c5",
+              },
+            ]
           }
-        />
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            Subscribe
+          </Text>
+        </View>
       </View>
       <View
         style={
           Object {
-            "alignItems": "stretch",
-            "flex": 0.75,
-            "height": 100,
-            "justifyContent": "space-around",
-            "paddingBottom": 10,
-            "paddingLeft": 3,
-            "paddingTop": 10,
+            "flex": 1,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+            ],
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          numberOfLines={1}
-          style={
-            Object {
-              "fontSize": 18,
-              "fontWeight": "500",
-            }
-          }
-        >
-          Notes to Self
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          numberOfLines={1}
-          style={
-            Object {
-              "fontSize": 16,
-              "fontWeight": "400",
-              "marginBottom": 5,
-            }
-          }
-        >
-          C David Baker
-        </Text>
         <View
           style={
             Object {
+              "alignItems": "center",
+              "borderBottomColor": "lightgrey",
+              "borderBottomWidth": 2,
+              "borderTopColor": "lightgrey",
+              "borderTopWidth": 2,
               "flexDirection": "row",
+              "height": 100,
               "justifyContent": "space-between",
-              "paddingRight": 10,
             }
           }
         >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
+          <View
             style={
               Object {
-                "alignSelf": "flex-start",
-                "backgroundColor": "#f4a442",
-                "padding": 2,
+                "alignItems": "center",
+                "flex": 0.25,
+                "justifyContent": "space-around",
               }
             }
           >
-             
-            Literature
-             
-          </Text>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          />
+            <View
+              accessibilityComponentType={undefined}
+              accessibilityLabel={undefined}
+              accessibilityTraits={undefined}
+              accessible={true}
+              hitSlop={undefined}
+              isTVSelectable={true}
+              onLayout={undefined}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+              testID={undefined}
+              tvParallaxProperties={undefined}
+            >
+              <Image
+                source={
+                  Object {
+                    "uri": "http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/100x100bb.jpg",
+                  }
+                }
+                style={
+                  Object {
+                    "height": 80,
+                    "width": 80,
+                  }
+                }
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "stretch",
+                "flex": 0.75,
+                "height": 100,
+                "justifyContent": "space-around",
+                "paddingBottom": 10,
+                "paddingLeft": 10,
+                "paddingTop": 10,
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+              style={
+                Object {
+                  "fontSize": 16,
+                  "fontWeight": "500",
+                }
+              }
+            >
+              Notes to Self
+            </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              numberOfLines={1}
+              style={
+                Object {
+                  "fontSize": 13,
+                  "fontWeight": "400",
+                  "marginBottom": 5,
+                }
+              }
+            >
+              C David Baker
+            </Text>
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                  "paddingRight": 10,
+                }
+              }
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Object {
+                    "alignSelf": "flex-start",
+                    "backgroundColor": "#f4a442",
+                    "padding": 2,
+                  }
+                }
+              >
+                 
+                Literature
+                 
+              </Text>
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>

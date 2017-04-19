@@ -1,34 +1,41 @@
+//UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
 import PodcastListCard from './PodcastListCard';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image} from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { actionCreators as swipeActions } from '../actions/Swipe';
 
 const mapStateToProps = (state) => ({
-  podcasts: state.main.iTunesResult
+  podcasts: state.main.iTunesResult,
+  currentEpisode: state.player.currentEpisode,
+  inbox: state.main.inbox,
+  token: state.main.token,
+  leftActionActivated: state.swipe.isLeftActionActivated,
+  leftToggle: state.swipe.isLeftToggled,
 })
-
 
 class PodcastList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       text: '',
-      podcasts: props.podcasts || [],
       visible: false,
     }
   }
 
   getPodcasts () {
+    console.log('This.props.podcasts: ', this.props.podcasts);
     query = this.state.text.slice().split().join('+');
     this.setState({text: "",  visible: true});
     fetch('http://itunes.apple.com/search?entity=podcast&term=' + query)
       .then(response => response.json())
       .then(response => {
+        this.props.dispatch(actionCreators.searchPodcasts(response.results));
         this.setState({
-          podcasts: response.results,
           visible: false
         });
       })
@@ -45,7 +52,7 @@ class PodcastList extends Component {
         <ScrollView style={styles.podcastList}>
           {this.state.visible?
             <Spinner visible={this.state.visible} textContent={"Searching..."} textStyle={{color: '#FFF'}} />  :
-          this.state.podcasts.map((podcast, i) => (
+          this.props.podcasts.map((podcast, i) => (
               <PodcastListCard podcast={podcast} key={i}/>
             ))}
         </ScrollView>

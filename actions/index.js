@@ -11,7 +11,8 @@ export const types = {
   CHANGE_USERNAME: 'CHANGE_USERNAME',
   CHANGE_PASSWORD: 'CHANGE_PASSWORD',
   CHANGE_EMAIL: 'CHANGE_EMAIL',
-  CHANGE_AUTHVIEW: 'CHANGE_AUTHVIEW'
+  CHANGE_AUTHVIEW: 'CHANGE_AUTHVIEW',
+  SEARCH_PODCASTS: 'SEARCH_PODCASTS'
 }
 
 export const actionCreators = {
@@ -53,5 +54,8 @@ export const actionCreators = {
   },
   changeAuthView: (value) => {
     return {type: types.CHANGE_AUTHVIEW, payload: value}
+  },
+  searchPodcasts: (value) => {
+    return {type: types.SEARCH_PODCASTS, payload: value}
   }
 }

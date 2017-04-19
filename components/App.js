@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, AsyncStorage, ScrollView, Button } from 'react-native';
 import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
 import EpisodeList from './EpisodeList';
@@ -11,6 +11,9 @@ import Player from './Player';
 import Header from './Header';
 import ModalComponent from './Modal';
 import Authentication from './Authentication';
+import Settings from './Settings';
+import PodcastEpisodeList from './PodcastEpisodeList';
+import PodcastViewCard from './PodcastViewCard';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -19,16 +22,17 @@ const mapStateToProps = (state) => ({
 
 class App extends Component {
 
-  // componentWillMount() {
-  //   AsyncStorage.getItem('id_token', (err, res) => {
-  //     if (err || res === null) {
-  //       this.props.dispatch(headerActions.changeView('Authentication'))
-  //     } else {
-  //       this.props.dispatch(actionCreators.addToken(res))
-  //       this.props.dispatch(headerActions.changeView('Inbox'))
-  //     }
-  //   })
-  // }
+
+  componentWillMount() {
+    AsyncStorage.getItem('id_token', (err, res) => {
+      if (err || res === null) {
+        this.props.dispatch(headerActions.changeView('Authentication'))
+      } else {
+        this.props.dispatch(actionCreators.addToken(res))
+        this.props.dispatch(headerActions.changeView('Inbox'))
+      }
+    })
+  }
 
   render() {
     if (this.props.view === 'Authentication') {
@@ -45,7 +49,21 @@ class App extends Component {
         <PodcastList/> :
         this.props.view === 'Inbox' ?
         <EpisodeList/> :
-        null
+        this.props.view === 'Settings' ?
+         <View>
+          <Settings />
+        </View> :
+        this.props.view === 'Podcast' ?
+        <View>
+          <PodcastViewCard />
+          <ScrollView style={styles.podcastEpisodes}>
+            <PodcastEpisodeList />
+          </ScrollView>
+        </View> :
+        <View>
+          <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>
+          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
+        </View>
         }
         <Player />
       </View>
@@ -56,8 +74,10 @@ class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
-  }
-
+    backgroundColor: '#fff',
+  },
+  podcastEpisodes: {
+    marginBottom: 245,
+  },
 });
 export default connect(mapStateToProps)(App);
