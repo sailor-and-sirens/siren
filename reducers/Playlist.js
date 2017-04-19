@@ -27,11 +27,11 @@ const playlist = (state = initialState, action) => {
     let newId = state.playlists.length + 1;
     let newPlaylist = { id: newId, name: action.payload, totalEpisodes: 0, totalTime: '0', isSelected: true };
     let playlists = deselectSelectedPlaylists(state.isPlaylistSelected, state.playlists);
-    return {...state, addNewPlaylistInputValue: '', playlists: [newPlaylist, ...playlists]};
+    return {...state, addNewPlaylistInputValue: '', playlists: [newPlaylist, ...playlists], isPlaylistSelected: true};
   }
   if (action.type === types.TOGGLE_ADD_TO_PLAYLIST_MODAL) {
     let playlists = deselectSelectedPlaylists(state.isPlaylistSelected, state.playlists);
-    return {...state, isAddPlaylistModalVisible: !state.isAddPlaylistModalVisible, playlists}
+    return {...state, isAddPlaylistModalVisible: !state.isAddPlaylistModalVisible, isPlaylistSelected: false, playlists}
   }
   if (action.type === types.TOGGLE_PLAYLIST_SELECTED) {
     let index = action.payload;
