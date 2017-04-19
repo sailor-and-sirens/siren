@@ -14,7 +14,8 @@ let _ = require('lodash');
 const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   inbox: state.main.inbox,
-  filters: state.main.inboxFilters
+  filters: state.main.inboxFilters,
+  token: state.main.token
 });
 
 class EpisodeList extends Component {
@@ -126,7 +127,10 @@ hmsToSecondsOnly = (duration) => {
     let episodeData = { episodeId, playlistId: 2 };
     fetch('http://localhost:3000/api/playlists/add-episode', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
       body: JSON.stringify(episodeData)
     })
     .catch(err => console.warn(err));
@@ -136,7 +140,10 @@ hmsToSecondsOnly = (duration) => {
     let episodeData = { episodeId, playlistId: 2 };
     fetch('http://localhost:3000/api/playlists/remove-episode', {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
       body: JSON.stringify(episodeData)
     })
     .catch(err => console.warn(err));
@@ -146,7 +153,10 @@ hmsToSecondsOnly = (duration) => {
     let episodeData = { episodeId, currentTime, lastPlayed };
     fetch('http://localhost:3000/api/episodes/user-episode', {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
       body: JSON.stringify(episodeData)
     })
     .catch(err => console.warn(err));

@@ -78,7 +78,10 @@ class Player extends Component {
     let episodeData = { episodeId, currentTime, lastPlayed };
     fetch('http://localhost:3000/api/episodes/user-episode', {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
       body: JSON.stringify(episodeData)
     })
     .catch(err => console.warn(err));
