@@ -26,7 +26,7 @@ const playlist = (state = initialState, action) => {
   if (action.type === types.ADD_NEW_PLAYLIST) {
     let newId = state.playlists.length + 1;
     let newPlaylist = { id: newId, name: action.payload, totalEpisodes: 0, totalTime: '0' };
-    return {...state, addNewPlaylistInputValue: '', playlists: [newPlaylist, ...playlists], selectedPlaylistId: newId};
+    return {...state, addNewPlaylistInputValue: '', playlists: [newPlaylist, ...state.playlists], selectedPlaylistId: newId};
   }
   if (action.type === types.TOGGLE_ADD_TO_PLAYLIST_MODAL) {
     return {...state, isAddPlaylistModalVisible: !state.isAddPlaylistModalVisible, selectedPlaylistId: null}
