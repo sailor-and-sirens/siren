@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
+import { actionCreators as playlistActions } from '../actions/Playlist';
 import {hmsToSecondsOnly} from '../helpers';
 
 let _ = require('lodash');
@@ -95,7 +96,7 @@ class EpisodeListCard extends Component {
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
         onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
         onLeftActionComplete={() => {
-          this.props.dispatch(swipeActions.toggleAddToPlaylistModal());
+          this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
         }}
 
         onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}

@@ -1,6 +1,10 @@
 import { types } from '../actions/Playlist';
+import { deselectSelectedPlaylists } from '../helpers';
+
 
 const initialState = {
+  addNewPlaylistInputValue: '',
+  isAddPlaylistModalVisible: false,
   isPlaylistSelected: false,
   playlists: [
     {id: 1, name: 'Monday', totalEpisodes: 4, totalTime: '180+', isSelected: false},
@@ -19,11 +23,24 @@ const initialState = {
 }
 
 const playlist = (state = initialState, action) => {
+  if (action.type === types.ADD_NEW_PLAYLIST) {
+    let newId = state.playlists.length + 1;
+    let newPlaylist = { id: newId, name: action.payload, totalEpisodes: 0, totalTime: '0', isSelected: true };
+    let playlists = deselectSelectedPlaylists(state.isPlaylistSelected, state.playlists);
+    return {...state, addNewPlaylistInputValue: '', playlists: [newPlaylist, ...playlists]};
+  }
+  if (action.type === types.TOGGLE_ADD_TO_PLAYLIST_MODAL) {
+    let playlists = deselectSelectedPlaylists(state.isPlaylistSelected, state.playlists);
+    return {...state, isAddPlaylistModalVisible: !state.isAddPlaylistModalVisible, playlists}
+  }
   if (action.type === types.TOGGLE_PLAYLIST_SELECTED) {
     let index = action.payload;
     let playlistsCopy = state.playlists.slice(0);
     playlistsCopy[index].isSelected = !playlistsCopy[index].isSelected;
     return {...state, playlists: playlistsCopy, isPlaylistSelected: !state.isPlaylistSelected};
+  }
+  if (action.type === types.UPDATE_NEW_PLAYLIST_INPUT) {
+    return {...state, addNewPlaylistInputValue: action.payload}
   }
 
   return state;

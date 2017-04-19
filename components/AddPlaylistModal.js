@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView, Alert, TouchableWithoutFeedback } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playlistActions } from '../actions/Playlist';
 import { actionCreators as swipeActions } from '../actions/Swipe';
+import Swipeable from 'react-native-swipeable';
 
 const mapStateToProps = (state) => ({
-  isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
+  addNewPlaylistInputValue: state.playlist.addNewPlaylistInputValue,
+  isAddPlaylistModalVisible: state.playlist.isAddPlaylistModalVisible,
   isPlaylistSelected: state.playlist.isPlaylistSelected,
+  leftActionActivated: state.swipe.isLeftActionActivated,
+  leftToggle: state.swipe.isLeftToggled,
   playlists: state.playlist.playlists
 });
 
@@ -56,6 +60,17 @@ class AddPlaylistModal extends Component {
     )
   };
 
+  swipeToSelectPlaylistText = (isSelected) => {
+    if (isSelected === true) {
+      return (
+        <Text>Deselect Playlist</Text>
+      )
+    }
+    return (
+      <Text>Select Playlist</Text>
+    )
+  }
+
   handlePlaylistToggle = (index) => {
     if (this.props.isPlaylistSelected === false || this.props.playlists[index].isSelected === true) {
       this.props.dispatch(playlistActions.togglePlaylistSelected(index));
@@ -65,45 +80,71 @@ class AddPlaylistModal extends Component {
   };
 
   handleAddToPlaylistModalClose = () => {
-    this.props.dispatch(swipeActions.toggleAddToPlaylistModal());
+    this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
+  };
+
+  handleAddNewPlaylist = () => {
+    this.props.dispatch(playlistActions.addNewPlaylist(this.props.addNewPlaylistInputValue));
   };
 
   render() {
+    const { leftActionActivated } = this.props;
+
     return (
       <Modal
         animationType={"fade"}
         transparent={false}
-        visible={true}
+        visible={this.props.isAddPlaylistModalVisible}
         onRequestClose={() => console.log('point me to a function')}
       >
         <View style={styles.container}>
           <ScrollView style={styles.scrollWrapper}>
             <View style={styles.topWrapper}>
-              <Text style={styles.topHeading}>Select Playlist to Add Episode</Text>
+                <Text style={styles.topHeading}>Select Playlist to Add Episode</Text>
               <View style={styles.createPlaylistWrapper}>
-                <TextInput style={styles.addPlaylistInput} placeholder="Enter Name of New Playlist"/>
-                <View style={styles.addPlaylistButton}>
+                <TextInput onChangeText={(text) => this.props.dispatch(playlistActions.updateAddNewPlaylistInput(text))} style={styles.addPlaylistInput} value={this.props.addNewPlaylistInputValue} placeholder="Enter Name of New Playlist"/>
+                <TouchableOpacity onPress={this.handleAddNewPlaylist} style={styles.addPlaylistButton}>
                   <Text style={styles.addPlaylistButtonText}>Create + Add</Text>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
             {this.props.playlists.map((playlist, index) => (
-              <View style={this.playlistStyle(index)} key={index}>
-                <View style={styles.playlistIconWrapper}>
-                  <TouchableOpacity onPress={this.handlePlaylistToggle.bind(this, index)}>{this.iconStyle(playlist.isSelected)}</TouchableOpacity>
+              <Swipeable
+                key={index}
+                leftActionActivationDistance={200}
+                leftContent={(
+                  <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
+                    {leftActionActivated ?
+                      <Text>(( release ))</Text> :
+                      this.swipeToSelectPlaylistText(playlist.isSelected)}
+                  </View>
+                )}
+
+                onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
+                onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
+                onLeftActionComplete={() => {
+                  this.handlePlaylistToggle(index);
+                }}
+              >
+              <TouchableWithoutFeedback>
+                <View style={this.playlistStyle(index)}>
+                  <View style={styles.playlistIconWrapper}>
+                    <TouchableOpacity onPress={this.handlePlaylistToggle.bind(this, index)}>{this.iconStyle(playlist.isSelected)}</TouchableOpacity>
+                  </View>
+                  <View style={styles.playlistNameWrapper}>
+                    <Text style={styles.playlistName}>{playlist.name}</Text>
+                  </View>
+                  <View style={styles.playlistTotalEpisodesWrapper}>
+                    <Text style={styles.totalHeading}>Total Episodes</Text>
+                    <Text style={styles.totalNumber}>{playlist.totalEpisodes}</Text>
+                  </View>
+                  <View style={styles.playlistTotalDurationWrapper}>
+                    <Text style={styles.totalHeading}>Total Time</Text>
+                    <Text style={styles.totalNumber}>{playlist.totalTime}min</Text>
+                  </View>
                 </View>
-                <View style={styles.playlistNameWrapper}>
-                  <Text style={styles.playlistName}>{playlist.name}</Text>
-                </View>
-                <View style={styles.playlistTotalEpisodesWrapper}>
-                  <Text style={styles.totalHeading}>Total Episodes</Text>
-                  <Text style={styles.totalNumber}>{playlist.totalEpisodes}</Text>
-                </View>
-                <View style={styles.playlistTotalDurationWrapper}>
-                  <Text style={styles.totalHeading}>Total Time</Text>
-                  <Text style={styles.totalNumber}>{playlist.totalTime}min</Text>
-                </View>
-              </View>
+              </TouchableWithoutFeedback>
+            </Swipeable>
             ))}
           </ScrollView>
           {this.cancelSaveButton(this.props)}
@@ -236,9 +277,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#2EAC6D'
+  },
+  leftSwipeItem: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingRight: 20
+  },
+  rightSwipeItem: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingLeft: 20
   }
 })
 
 export default connect(mapStateToProps)(AddPlaylistModal);
 
-// visible={props.isAddPlaylistModalVisible}
+// visible={this.props.isAddPlaylistModalVisible}
