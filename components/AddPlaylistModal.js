@@ -12,10 +12,15 @@ const mapStateToProps = (state) => ({
   isPlaylistSelected: state.playlist.isPlaylistSelected,
   leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
-  playlists: state.playlist.playlists
+  playlists: state.playlist.playlists,
+  selectedPlaylistId: state.playlist.selectedPlaylistId
 });
 
 class AddPlaylistModal extends Component {
+
+  handleAddNewPlaylist = () => {
+    this.props.dispatch(playlistActions.addNewPlaylist(this.props.addNewPlaylistInputValue));
+  };
 
   handlePlaylistToggle = (index) => {
     if (this.props.isPlaylistSelected === false || this.props.playlists[index].isSelected === true) {
@@ -27,10 +32,6 @@ class AddPlaylistModal extends Component {
 
   handleAddToPlaylistModalClose = () => {
     this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
-  };
-
-  handleAddNewPlaylist = () => {
-    this.props.dispatch(playlistActions.addNewPlaylist(this.props.addNewPlaylistInputValue));
   };
 
   render() {

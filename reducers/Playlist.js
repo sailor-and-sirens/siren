@@ -6,6 +6,7 @@ const initialState = {
   addNewPlaylistInputValue: '',
   isAddPlaylistModalVisible: false,
   isPlaylistSelected: false,
+  selectedPlaylistId: null,
   playlists: [
     {id: 1, name: 'Monday', totalEpisodes: 4, totalTime: '180+', isSelected: false},
     {id: 2, name: 'Tuesday', totalEpisodes: 1, totalTime: '75', isSelected: false},
