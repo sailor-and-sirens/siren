@@ -1,7 +1,7 @@
 import { types } from '../actions/Header';
 
 export const initialState = {
-  view: 'Inbox'
+  view: 'Authentication'
 }
 
 const header = (state = initialState, action) => {

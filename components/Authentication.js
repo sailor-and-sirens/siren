@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, AsyncStorage, TextInput, Platform, Button, Alert} from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
+import { headerActions } from '../actions/Header';
 
 const mapStateToProps = (state) => ({
   view: state.header.view,
@@ -17,7 +18,7 @@ class Authentication extends Component {
   async _onValueChange(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
-      this.props.dispatch(actionCreators.addToken(selectedValue))
+      this.props.dispatch(actionCreators.addToken(selectedValue));
      } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
@@ -37,7 +38,7 @@ class Authentication extends Component {
       return;
     }
     var value = {username: this.props.username, password: this.props.password, email: this.props.email};
-      fetch("http:localhost:3000/api/users/createUser", {
+      fetch("http://siren-server.herokuapp.com/api/users/createUser", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -56,7 +57,7 @@ class Authentication extends Component {
       })
       .then((responseData) => {
         if (responseData) {
-          this.props.dispatch(actionCreators.changeView('Inbox'))
+          this.props.dispatch(headerActions.changeView('Inbox'))
           return this._onValueChange('id_token', responseData.id_token)
         }
       })
@@ -72,7 +73,7 @@ class Authentication extends Component {
       return;
     }
     var value = {username: this.props.username, password: this.props.password};
-      fetch("http://localhost:3000/api/users/login", {
+      fetch("http://siren-server.herokuapp.com/api/users/login", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -90,7 +91,7 @@ class Authentication extends Component {
       })
       .then((responseData) => {
         if (responseData) {
-          this.props.dispatch(actionCreators.changeView('Inbox'))
+          this.props.dispatch(headerActions.changeView('Inbox'))
           return this._onValueChange('id_token', responseData.id_token)
         }
       })
