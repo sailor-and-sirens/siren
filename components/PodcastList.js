@@ -23,19 +23,19 @@ class PodcastList extends Component {
     super(props);
     this.state = {
       text: '',
-      podcasts: props.podcasts || [],
       visible: false,
     }
   }
 
   getPodcasts () {
+    console.log('This.props.podcasts: ', this.props.podcasts);
     query = this.state.text.slice().split().join('+');
     this.setState({text: "",  visible: true});
     fetch('http://itunes.apple.com/search?entity=podcast&term=' + query)
       .then(response => response.json())
       .then(response => {
+        this.props.dispatch(actionCreators.searchPodcasts(response.results));
         this.setState({
-          podcasts: response.results,
           visible: false
         });
       })
@@ -52,7 +52,7 @@ class PodcastList extends Component {
         <ScrollView style={styles.podcastList}>
           {this.state.visible?
             <Spinner visible={this.state.visible} textContent={"Searching..."} textStyle={{color: '#FFF'}} />  :
-          this.state.podcasts.map((podcast, i) => (
+          this.props.podcasts.map((podcast, i) => (
               <PodcastListCard podcast={podcast} key={i}/>
             ))}
         </ScrollView>
