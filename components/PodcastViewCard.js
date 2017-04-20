@@ -39,7 +39,6 @@ class PodcastViewCard extends Component {
     })
     .then(inbox => inbox.json())
     .then((inbox) => {
-      console.warn('fetchInbox response: ', inbox);
       this.props.dispatch(mainActions.updateInbox(inbox));
     })
     .catch((err) => console.log(err));
