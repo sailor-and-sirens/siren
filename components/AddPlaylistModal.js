@@ -81,7 +81,12 @@ class AddPlaylistModal extends Component {
             <View style={styles.topWrapper}>
                 <Text style={styles.topHeading}>Select Playlist to Add Episode</Text>
               <View style={styles.createPlaylistWrapper}>
-                <TextInput onChangeText={(text) => this.props.dispatch(playlistActions.updateAddNewPlaylistInput(text))} style={styles.addPlaylistInput} value={this.props.addNewPlaylistInputValue} placeholder="Enter Name of New Playlist"/>
+                <TextInput
+                  onChangeText={(text) => this.props.dispatch(playlistActions.updateAddNewPlaylistInput(text))} style={styles.addPlaylistInput}
+                  value={this.props.addNewPlaylistInputValue}
+                  placeholder="Enter Name of New Playlist"
+                  underlineColorAndroid="transparent"
+                />
                 <TouchableOpacity onPress={this.handleAddNewPlaylist} style={styles.addPlaylistButton}>
                   <Text style={styles.addPlaylistButtonText}>Create + Add</Text>
                 </TouchableOpacity>

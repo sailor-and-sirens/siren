@@ -230,12 +230,13 @@ hmsToSecondsOnly = (duration) => {
 
 const styles = StyleSheet.create({
   mainView: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   episodeList:{
     width: '100%',
-    marginBottom: 210,
+    marginBottom: 80,
   },
 })
 
