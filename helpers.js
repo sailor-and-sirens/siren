@@ -38,13 +38,3 @@ export const hmsToSecondsOnly = (duration) => {
   }
   return s;
 }
-
-export const deselectSelectedPlaylists = (isPlaylistSelected, playlists) => {
-  if (isPlaylistSelected) {
-    return playlists.map(playlist => {
-      playlist.isSelected = false;
-      return playlist
-    });
-  }
-  return playlists;
-}

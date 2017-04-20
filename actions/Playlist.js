@@ -7,8 +7,8 @@ export const types = {
 }
 
 export const actionCreators = {
-  addNewPlaylist: (newPlaylist) => {
-    return {type: types.ADD_NEW_PLAYLIST, payload: newPlaylist}
+  addNewPlaylist: (playlistData) => {
+    return {type: types.ADD_NEW_PLAYLIST, payload: playlistData}
   },
   storeAddModalPlaylists: (playlists) => {
     return {type: types.STORE_ADD_MODAL_PLAYLISTS, payload: playlists}

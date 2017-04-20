@@ -32,8 +32,8 @@ class AddPlaylistModal extends Component {
     })
   }
 
-  createNewPlaylist = (playlistName) => {
-    let playlistData = { name: playlistName };
+  handleAddNewPlaylist = () => {
+    let playlistData = { name: this.props.addNewPlaylistInputValue };
     fetch('http://localhost:3000/api/playlists/create-playlist', {
       method: 'POST',
       headers: {
@@ -42,12 +42,11 @@ class AddPlaylistModal extends Component {
       },
       body: JSON.stringify(playlistData)
     })
+    .then(response => response.json())
+    .then(playlist => {
+      this.props.dispatch(playlistActions.addNewPlaylist({ name: playlistData.name, id: playlist[0].id}));
+    })
     .catch(err => console.warn(err));
-  }
-
-  handleAddNewPlaylist = () => {
-    this.props.dispatch(playlistActions.addNewPlaylist(this.props.addNewPlaylistInputValue));
-    this.createNewPlaylist(this.props.addNewPlaylistInputValue);
   };
 
   handleAddToPlaylistModalClose = () => {
