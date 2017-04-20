@@ -18,7 +18,7 @@ class AddPlaylistModal extends Component {
 
   handleAddNewPlaylist = () => {
     let playlistData = { name: this.props.addNewPlaylistInputValue };
-    fetch('http://localhost:3000/api/playlists/create-playlist', {
+    fetch('http://siren-server.herokuapp.com/api/playlists/create-playlist', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

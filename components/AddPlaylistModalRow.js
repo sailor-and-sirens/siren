@@ -87,6 +87,8 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     backgroundColor: '#eeeeee',
+    borderBottomWidth: 0.5,
+    borderColor: '#bbbbbb'
   },
   playlistAltBackground: {
     backgroundColor: '#ffffff'

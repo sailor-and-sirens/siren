@@ -76,7 +76,7 @@ class Player extends Component {
 
   updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
     let episodeData = { episodeId, currentTime, lastPlayed };
-    fetch('http://localhost:3000/api/episodes/user-episode', {
+    fetch('http://siren-server.herokuapp.com/api/episodes/user-episode', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

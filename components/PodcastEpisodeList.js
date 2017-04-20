@@ -127,7 +127,7 @@ hmsToSecondsOnly = (duration) => {
 
   addEpisodeToListeningTo = (episodeId) => {
     let episodeData = { episodeId, playlistId: 2 };
-    fetch('http://localhost:3000/api/playlists/add-episode', {
+    fetch('http://siren-server.herokuapp.com/api/playlists/add-episode', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(episodeData)
@@ -137,7 +137,7 @@ hmsToSecondsOnly = (duration) => {
 
   removeCurrentEpisodeFromListeningTo = (episodeId) => {
     let episodeData = { episodeId, playlistId: 2 };
-    fetch('http://localhost:3000/api/playlists/remove-episode', {
+    fetch('http://siren-server.herokuapp.com/api/playlists/remove-episode', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(episodeData)
@@ -147,7 +147,7 @@ hmsToSecondsOnly = (duration) => {
 
   updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
     let episodeData = { episodeId, currentTime, lastPlayed };
-    fetch('http://localhost:3000/api/episodes/user-episode', {
+    fetch('http://siren-server.herokuapp.com/api/episodes/user-episode', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(episodeData)
