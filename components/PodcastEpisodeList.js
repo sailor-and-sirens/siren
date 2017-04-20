@@ -1,4 +1,3 @@
-//UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
 import { Audio } from 'expo';
@@ -6,18 +5,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import { convertMillis } from '../helpers';
+import { convertMillis, hmsToSecondsOnly } from '../helpers';
 import PodcastEpisodeListCard from './PodcastEpisodeListCard';
 import PodcastViewCard from './PodcastViewCard';
 import AddPlaylistModal from './AddPlaylistModal';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
-  inbox: state.main.inbox,
-  isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
-  filters: state.main.inboxFilters
+  episodes: state.podcasts.podcastEpisodes,
+  filters: state.main.inboxFilters,
+  token: state.main.token,
+  visible: state.podcasts.episodesLoadings
 });
 
 class PodcastEpisodeList extends Component {
@@ -28,18 +29,6 @@ class PodcastEpisodeList extends Component {
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
   }
-
-
-hmsToSecondsOnly = (duration) => {
-    var p = duration.split(':'),
-        s = 0, m = 1;
-
-    while (p.length > 0) {
-        s += m * parseInt(p.pop(), 10);
-        m *= 60;
-    }
-    return s;
-}
 
   filterEpisodes = (keys) => {
     if (this.props.filters.liked === 'liked') {
@@ -75,15 +64,15 @@ hmsToSecondsOnly = (duration) => {
         keys = _.filter(keys, (key) => {
         return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 1800;
         });
-      }else if (this.props.filters.time === '45') {
+      } else if (this.props.filters.time === '45') {
         keys = _.filter(keys, (key) => {
         return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 2700;
         });
-      }else if (this.props.filters.time === '60') {
+      } else if (this.props.filters.time === '60') {
         keys = _.filter(keys, (key) => {
         return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 3600;
         });
-      }else if (this.props.filters.time === '60+') {
+      } else if (this.props.filters.time === '60+') {
         keys = _.filter(keys, (key) => {
         return hmsToSecondsOnly(this.props.inbox[key].feed.duration) > 3600;
         });
@@ -210,9 +199,9 @@ hmsToSecondsOnly = (duration) => {
    return (
         <View style={styles.mainView}>
            <View style={styles.PodcastEpisodeList}>
-            {this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
+            {this.props.episodes.map((episode, key) => (
                 <PodcastEpisodeListCard {...itemProps}
-                  episode={this.props.inbox[key]}
+                  episode={episode}
                   handlePlay={this.handlePlay}
                   handleRemovePlayingEpisode={this.handleRemovePlayingEpisode}
                   id={key}

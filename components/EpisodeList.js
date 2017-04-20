@@ -6,15 +6,18 @@ import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { convertMillis, hmsToSecondsOnly } from '../helpers';
+import { actionCreators as mainActions } from '../actions';
 import EpisodeListCard from './EpisodeListCard';
 import AddPlaylistModal from './AddPlaylistModal';
+import moment from 'moment';
 
 let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
-  inbox: state.main.inbox,
   filters: state.main.inboxFilters,
+  inbox: state.main.inbox,
+  isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
   token: state.main.token
 });
 
@@ -25,6 +28,21 @@ class EpisodeList extends Component {
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
+  }
+
+  updateInbox = () => {
+    fetch("http://siren-server.herokuapp.com/api/users/inbox", {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': this.props.token
+      },
+    })
+    .then(inbox => inbox.json())
+    .then((inbox) => {
+      this.props.dispatch(mainActions.updateInbox(inbox));
+    })
+    .catch((err) => console.warn(err));
   }
 
   filterEpisodes = (keys) => {
@@ -61,15 +79,15 @@ class EpisodeList extends Component {
         keys = _.filter(keys, (key) => {
         return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 1800;
         });
-      }else if (this.props.filters.time === '45') {
+      } else if (this.props.filters.time === '45') {
         keys = _.filter(keys, (key) => {
         return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 2700;
         });
-      }else if (this.props.filters.time === '60') {
+      } else if (this.props.filters.time === '60') {
         keys = _.filter(keys, (key) => {
         return hmsToSecondsOnly(this.props.inbox[key].feed.duration) < 3600;
         });
-      }else if (this.props.filters.time === '60+') {
+      } else if (this.props.filters.time === '60+') {
         keys = _.filter(keys, (key) => {
         return hmsToSecondsOnly(this.props.inbox[key].feed.duration) > 3600;
         });
@@ -188,6 +206,7 @@ class EpisodeList extends Component {
   }
 
   render() {
+    this.updateInbox();
     const { currentlyOpenSwipeable } = this.props;
     const itemProps = {
       onOpen: (event, gestureState, swipeable) => {
