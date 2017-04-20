@@ -44,7 +44,7 @@ class EpisodeList extends Component {
     }
     if (this.props.filters.liked === 'notLiked') {
       keys = _.filter(keys, (key) => {
-        return this.props.inbox[key].liked === false || this.props.inbox[key].bookmark === null;
+        return this.props.inbox[key].liked === false || this.props.inbox[key].liked === null;
       });
     }
     if (this.props.filters.bookmarked === 'bookmarked') {
