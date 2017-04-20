@@ -29,19 +29,21 @@ class PodcastEpisodeListCard extends Component {
         'Authorization': this.props.token
       },
       body: JSON.stringify({podcast: this.props.podcast, episode: this.props.episode})
-    });
-    fetch("http://siren-server.herokuapp.com/api/users/inbox", {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': this.props.token
-      },
     })
-    .then(inbox => inbox.json())
-    .then((inbox) => {
-      this.props.dispatch(mainActions.updateInbox(inbox));
+    .then(() => {
+      fetch("http://siren-server.herokuapp.com/api/users/inbox", {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': this.props.token
+        },
+      })
+      .then(inbox => inbox.json())
+      .then((inbox) => {
+        this.props.dispatch(mainActions.updateInbox(inbox));
+      })
+      .catch((err) => console.log(err));
     })
-    .catch((err) => console.warn(err));
   }
 
   renderClock = (duration) => {
@@ -82,7 +84,7 @@ class PodcastEpisodeListCard extends Component {
         onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
         onLeftActionComplete={() => {
           this.addToInbox();
-          Alert.alert('Added ' + ' to inbox.')
+          Alert.alert('Added ' + episode.title + ' to inbox.')
         }}
       >
       <View style={styles.mainView}>
