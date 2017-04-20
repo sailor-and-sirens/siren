@@ -2,6 +2,7 @@ import { actionCreators as playerActions } from './actions/Player';
 import { actionCreators as podcastsActions } from './actions/Podcasts';
 import { actionCreators as swipeActions } from './actions/Swipe';
 import { actionCreators as mainActions } from './actions';
+let _ = require('lodash');
 
 export const truncateTitle = (title) => {
   if (!title) return '';
@@ -87,3 +88,35 @@ export const updateInbox = (props) => {
     })
     .catch((err) => console.warn(err));
   }
+
+export const toggleLike = (id, props) => {
+    id = parseInt(id);
+    var inbox = _.cloneDeep(props.inbox);
+    inbox[id].liked = !inbox[id].liked;
+    props.dispatch(mainActions.toggleLike(inbox));
+    fetch("http://siren-server.herokuapp.com/api/users/likeEpisode", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': props.token
+      },
+      body: JSON.stringify({id: id, liked: !props.inbox[id].liked})
+    })
+  }
+
+export const toggleBookmark = (id, props) => {
+    id = parseInt(id);
+    var inbox = _.cloneDeep(props.inbox);
+    inbox[id].bookmark = !inbox[id].bookmark;
+    props.dispatch(mainActions.toggleBookmark(inbox));
+    fetch("http://siren-server.herokuapp.com/api/users/bookmarkEpisode", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': props.token
+      },
+      body: JSON.stringify({id: id, bookmark: !props.inbox[id].bookmark})
+    })
+  };

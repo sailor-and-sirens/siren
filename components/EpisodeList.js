@@ -6,16 +6,11 @@ import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import { convertMillis, hmsToSecondsOnly } from '../helpers';
+import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
 import { actionCreators as mainActions } from '../actions';
-<<<<<<< HEAD
-=======
 import Spinner from 'react-native-loading-spinner-overlay';
-import { convertMillis } from '../helpers';
->>>>>>> Front end clean up / consolidation
 import EpisodeListCard from './EpisodeListCard';
 import AddPlaylistModal from './AddPlaylistModal';
-import {hmsToSecondsOnly, updateInbox} from '../helpers';
 import moment from 'moment';
 
 let _ = require('lodash');
@@ -25,7 +20,7 @@ const mapStateToProps = (state) => ({
   filters: state.main.inboxFilters,
   inbox: state.main.inbox,
   isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
-  token: state.main.token
+  token: state.main.token,
   filters: state.main.inboxFilters,
   visible: state.podcasts.searchSpinner
 });
