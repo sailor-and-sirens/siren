@@ -6,6 +6,7 @@ import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import {hmsToSecondsOnly} from '../helpers';
+import moment from 'moment';
 
 let _ = require('lodash');
 
@@ -43,6 +44,7 @@ class EpisodeListCard extends Component {
   };
 
   toggleLike = (id) => {
+    id = parseInt(id);
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].liked = !inbox[id].liked;
     this.props.dispatch(mainActions.toggleLike(inbox));
@@ -58,6 +60,7 @@ class EpisodeListCard extends Component {
   };
 
   toggleBookmark = (id) => {
+    id = parseInt(id);
     var inbox = _.cloneDeep(this.props.inbox);
     inbox[id].bookmark = !inbox[id].bookmark;
     this.props.dispatch(mainActions.toggleBookmark(inbox));
@@ -70,6 +73,7 @@ class EpisodeListCard extends Component {
       },
       body: JSON.stringify({id: id, bookmark: !this.props.inbox[id].bookmark})
     })
+      .then(response => console.warn('RESPONSE: ', response));
   };
 
   render() {
@@ -115,8 +119,8 @@ class EpisodeListCard extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
-            <Text style={styles.date}>{this.props.episode.feed.pubDate.substring(0,16)}</Text>
-            <Text style={styles.episode} numberOfLines={1}>{this.props.episode.feed.title}</Text>
+            <Text style={styles.date}>{moment(this.props.episode.feed.pubDate.substring(0,16)).format('ddd, DD MMM YYYY')}</Text>
+            <Text style={styles.episode} numberOfLines={1}>{this.props.episode['feed']['title']}</Text>
             <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode.feed.subtitle}</Text>
           </View>
         </View>

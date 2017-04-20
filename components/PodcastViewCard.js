@@ -1,37 +1,58 @@
-//UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, ScrollView, Platform, Alert} from 'react-native';
+import PodcastEpisodeList from './PodcastEpisodeList';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/index';
+import { actionCreators as podcastsActions } from '../actions/Podcasts';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const mapStateToProps = (state) => ({
-  podcast: state.main.iTunesResult[0]
+  podcast: state.podcasts.currentPodcast,
+  token: state.main.token,
+  visible: state.podcasts.episodesLoading
 });
 
 
 class PodcastViewCard extends Component {
 
   subscribePodcast = () => {
-    //TODO
-  }
+    fetch("http://siren-server.herokuapp.com/api/podcasts/", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify(this.props.podcast)
+    });
+  };
 
   render() {
     return (
-      <View style={styles.mainView}>
-        <View style={styles.leftView}>
-          <Image source={{uri: this.props.podcast.artworkUrl600}} style={styles.image}/>
-        </View>
-        <View style={styles.rightView}>
-          <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
-          <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
-          <ScrollView style={styles.descriptionView}>
-            <Text style={styles.description}>Podcast description goes here. There are many show details that appear here. Guests, topics, info, galore! Even more info. These could be quite long.</Text>
-          </ScrollView>
-          <View style={styles.tagAddView}>
-            <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
-            <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {this.subscribePodcast(); Alert.alert('Subscribed to ' + this.props.podcast.collectionName);}}/>
+      <View>
+        <View style={styles.podcastView}>
+          <View style={styles.leftView}>
+            <Image source={{uri: this.props.podcast.artworkUrl600}} style={styles.image}/>
           </View>
+          <View style={styles.rightView}>
+            <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
+            <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
+            <ScrollView style={styles.descriptionView}>
+              <Text style={styles.description}>Podcast description goes here. There are many show details that appear here. Guests, topics, info, galore! Even more info. These could be quite long.</Text>
+            </ScrollView>
+            <View style={styles.tagAddView}>
+              <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
+              <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {this.subscribePodcast(); Alert.alert('Subscribed to ' + this.props.podcast.collectionName);}}/>
+            </View>
+          </View>
+        </View>
+        <View>
+          <ScrollView>
+          {this.props.visible ?
+            <Spinner visible={this.props.visible} textContent={"Loading Episodes..."} textStyle={{color: '#FFF'}} />  :
+            <PodcastEpisodeList style={styles.episodeScroll}/>}
+          </ScrollView>
         </View>
       </View>
     );
@@ -55,7 +76,10 @@ const styles = StyleSheet.create({
     paddingLeft: (Platform.OS === 'ios') ? 2 : 0,
     paddingRight: 2,
   },
-  mainView: {
+  episodeScroll: {
+    marginBottom: 210,
+  },
+  podcastView: {
     height: 155,
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -127,6 +151,8 @@ const styles = StyleSheet.create({
     padding: 2,
     alignSelf: 'flex-start',
     marginTop: 6,
+    width: 130,
+    textAlign: 'center',
   },
 });
 

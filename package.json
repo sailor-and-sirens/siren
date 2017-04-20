@@ -28,6 +28,7 @@
   "dependencies": {
     "expo": "^15.0.2",
     "jest-expo": "^0.3.1",
+    "moment": "^2.18.1",
     "react": "~15.4.0",
     "react-native": "https://github.com/exponent/react-native/archive/sdk-15.0.0.tar.gz",
     "react-native-loading-spinner-overlay": "^0.4.4",

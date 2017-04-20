@@ -1,4 +1,3 @@
-//UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorage, Alert, Platform} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,7 +5,9 @@ import { connect } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
+import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import {hmsToSecondsOnly} from '../helpers';
+import moment from 'moment';
 
 let _ = require('lodash');
 
@@ -16,12 +17,34 @@ const mapStateToProps = (state) => ({
   token: state.main.token,
   leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
+  podcast: state.podcasts.currentPodcast
 });
 
 class PodcastEpisodeListCard extends Component {
   addToInbox = () => {
-    //TODO
+     fetch("http://siren-server.herokuapp.com/api/episodes", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify({podcast: this.props.podcast, episode: this.props.episode})
+    });
+    fetch("http://siren-server.herokuapp.com/api/users/inbox", {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': this.props.token
+      },
+    })
+    .then(inbox => inbox.json())
+    .then((inbox) => {
+      this.props.dispatch(mainActions.updateInbox(inbox));
+    })
+    .catch((err) => console.warn(err));
   }
+
   renderClock = (duration) => {
     if (duration.length < 5) {
       duration = '00:' + duration;
@@ -45,7 +68,7 @@ class PodcastEpisodeListCard extends Component {
   };
 
   render() {
-    const {leftActionActivated, leftToggle} = this.props;
+    const {leftActionActivated, leftToggle, episode} = this.props;
     return (
       <Swipeable
         leftActionActivationDistance={200}
@@ -60,19 +83,19 @@ class PodcastEpisodeListCard extends Component {
         onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
         onLeftActionComplete={() => {
           this.addToInbox();
-          Alert.alert('Added ' + this.props.episode.title + ' to inbox.')
+          Alert.alert('Added ' + ' to inbox.')
         }}
       >
       <View style={styles.mainView}>
         <View style={styles.topView}>
           <View style={styles.rightView}>
-            <Text style={styles.episode} numberOfLines={1}>{this.props.episode.feed.title}</Text>
-            <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode.feed.subtitle}</Text>
+            <Text style={styles.episode} numberOfLines={1}>{episode.title}</Text>
+            <Text style={styles.subtitle} numberOfLines={2}>{episode.description}</Text>
             <View style={styles.timeDateView}>
-              <Text style={styles.date}>{this.props.episode.feed.pubDate.substring(0,16)}</Text>
+              <Text style={styles.date}>{moment(episode.published.substring(0,10)).format('ddd, DD MMM YYYY')}</Text>
                <View style={styles.timeView}>
-                {this.renderClock(this.props.episode.feed.duration)}
-                <Text style={styles.time}>{this.props.episode.feed.duration}</Text>
+                {this.renderClock(episode.duration)}
+                <Text style={styles.time}>{episode.duration}</Text>
               </View>
             </View>
           </View>

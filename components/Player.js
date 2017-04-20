@@ -32,7 +32,6 @@ class Player extends Component {
   }
 
   handleAppClose = () => {
-    console.warn(AppState.currentState);
     if (['inactive', 'background'].includes(AppState.currentState) && this.props.currentSoundInstance !== null) {
       this.props.currentSoundInstance.getStatusAsync()
       .then(status => {
