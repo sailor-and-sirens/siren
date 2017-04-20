@@ -185,7 +185,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 2,
     borderBottomColor: 'lightgrey',
-    borderTopWidth: 2,
     borderTopColor: 'lightgrey',
   },
   image: {

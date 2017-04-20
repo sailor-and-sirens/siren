@@ -47,11 +47,11 @@ class PodcastViewCard extends Component {
             </View>
           </View>
         </View>
-        <View>
+        <View style={styles.episodeScroll}>
           <ScrollView>
           {this.props.visible ?
             <Spinner visible={this.props.visible} textContent={"Loading Episodes..."} textStyle={{color: '#FFF'}} />  :
-            <PodcastEpisodeList style={styles.episodeScroll}/>}
+            <PodcastEpisodeList/>}
           </ScrollView>
         </View>
       </View>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     paddingRight: 2,
   },
   episodeScroll: {
-    marginBottom: 210,
+    marginBottom: 250,
   },
   podcastView: {
     height: 155,
