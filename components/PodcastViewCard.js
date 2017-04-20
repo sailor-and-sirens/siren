@@ -21,7 +21,6 @@ class PodcastViewCard extends Component {
       method: "POST",
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
         'Authorization': this.props.token
       },
       body: JSON.stringify(this.props.podcast)
