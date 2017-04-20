@@ -9,7 +9,6 @@ import { convertMillis } from '../helpers';
 import PodcastEpisodeListCard from './PodcastEpisodeListCard';
 import PodcastViewCard from './PodcastViewCard';
 import AddPlaylistModal from './AddPlaylistModal';
-import Spinner from 'react-native-loading-spinner-overlay';
 import {hmsToSecondsOnly} from '../helpers';
 
 let _ = require('lodash');
@@ -19,7 +18,6 @@ const mapStateToProps = (state) => ({
   episodes: state.podcasts.podcastEpisodes,
   filters: state.main.inboxFilters,
   token: state.main.token,
-  visible: state.podcasts.episodesLoadings
 });
 
 class PodcastEpisodeList extends Component {

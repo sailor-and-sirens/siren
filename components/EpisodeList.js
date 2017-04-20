@@ -28,6 +28,7 @@ class EpisodeList extends Component {
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
+    this.updateInbox();
   }
 
   updateInbox = () => {
@@ -212,7 +213,6 @@ hmsToSecondsOnly = (duration) => {
   }
 
   render() {
-    this.updateInbox();
     const { currentlyOpenSwipeable } = this.props;
     const itemProps = {
       onOpen: (event, gestureState, swipeable) => {
