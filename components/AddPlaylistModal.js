@@ -18,20 +18,6 @@ const mapStateToProps = (state) => ({
 
 class AddPlaylistModal extends Component {
 
-  componentWillMount = () => {
-    fetch("http://localhost:3000/api/playlists/add-playlist-modal", {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': this.props.token
-      }
-    })
-    .then(response => response.json())
-    .then(playlists => {
-      this.props.dispatch(playlistActions.storeAddModalPlaylists(playlists));
-    })
-  }
-
   handleAddNewPlaylist = () => {
     let playlistData = { name: this.props.addNewPlaylistInputValue };
     fetch('http://localhost:3000/api/playlists/create-playlist', {
@@ -115,7 +101,7 @@ class AddPlaylistModal extends Component {
       <Modal
         animationType={"fade"}
         transparent={false}
-        visible={true}
+        visible={this.props.isAddPlaylistModalVisible}
         onRequestClose={() => console.log('point me to a function')}
       >
         <View style={styles.container}>
