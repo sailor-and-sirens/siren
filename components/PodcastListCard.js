@@ -9,6 +9,7 @@ import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { connect } from 'react-redux';
+import { subscribePodcast } from '../helpers';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -40,35 +41,6 @@ class PodcastListCard extends Component {
       .catch(err => console.log(err));
   }
 
-  subscribePodcast = () => {
-    fetch("http://siren-server.herokuapp.com/api/podcasts/", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      },
-      body: JSON.stringify(this.props.podcast)
-    })
-    .then(() => {
-      fetch("http://siren-server.herokuapp.com/api/users/inbox", {
-        method: "GET",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': this.props.token
-        },
-      })
-    })
-    .then(inbox => inbox.json())
-    .then((inbox) => {
-      console.warn('fetchInbox response: ', inbox);
-      this.props.dispatch(mainActions.updateInbox(inbox));
-    })
-    .catch((err) => console.log(err));
-  };
-
-
   render() {
     const {leftActionActivated, leftToggle} = this.props;
     return (
@@ -84,7 +56,7 @@ class PodcastListCard extends Component {
             onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
             onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
             onLeftActionComplete={() => {
-              this.subscribePodcast();
+              subscribePodcast(this.props);
               Alert.alert('Subscribed to ' + this.props.podcast.collectionName);
             }}
           >

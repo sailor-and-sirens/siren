@@ -14,6 +14,16 @@ const mapStateToProps = (state) => ({
 class Header extends Component {
 
   render() {
+    let filter = null;
+    if (this.props.view === 'Inbox' ||
+        this.props.view === 'Playlist') {
+      filter = (<View>
+        <ModalComponent>
+          <Filter/>
+        </ModalComponent>
+        <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(actionCreators.toggleModal())} size={30} name='filter-list' />
+      </View>)
+    }
     return (
       <View>
         <Text style={styles.header}>{this.props.view}</Text>
@@ -21,10 +31,7 @@ class Header extends Component {
           <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Inbox'))} size={30} name='inbox'/>
           <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Playlist'))} size={30} name='playlist-play'/>
           <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Search'))} size={30} name='search'/>
-          <ModalComponent>
-            <Filter/>
-          </ModalComponent>
-          <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(actionCreators.toggleModal())} size={30} name='filter-list' />
+          {filter}
           <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Settings'))} size={30} name='settings' />
         </View>
       </View>

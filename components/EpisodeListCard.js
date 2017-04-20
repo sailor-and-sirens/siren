@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: 'lightgrey',
     borderTopColor: 'lightgrey',
+    marginLeft: 3,
   },
   image: {
     height: 80,

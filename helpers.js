@@ -1,3 +1,8 @@
+import { actionCreators as playerActions } from './actions/Player';
+import { actionCreators as podcastsActions } from './actions/Podcasts';
+import { actionCreators as swipeActions } from './actions/Swipe';
+import { actionCreators as mainActions } from './actions';
+
 export const truncateTitle = (title) => {
   if (!title) return '';
   let truncatedTitle = [];
@@ -38,3 +43,47 @@ export const hmsToSecondsOnly = (duration) => {
   }
   return s;
 }
+
+export const subscribePodcast = (props) => {
+    fetch("http://siren-server.herokuapp.com/api/podcasts/", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': props.token
+      },
+      body: JSON.stringify(props.podcast)
+    })
+    .then(() => {
+      fetch("http://siren-server.herokuapp.com/api/users/inbox", {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': props.token
+        },
+      })
+    })
+    .then(inbox => inbox.json())
+    .then((inbox) => {
+      props.dispatch(mainActions.updateInbox(inbox));
+    })
+    .catch((err) => console.log(err));
+  }
+
+export const updateInbox = (props) => {
+    props.dispatch(podcastsActions.toggleSearchSpinner(true));
+    fetch("http://siren-server.herokuapp.com/api/users/inbox", {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': props.token
+      },
+    })
+    .then(inbox => inbox.json())
+    .then((inbox) => {
+      props.dispatch(mainActions.updateInbox(inbox));
+      props.dispatch(podcastsActions.toggleSearchSpinner(false));
+    })
+    .catch((err) => console.warn(err));
+  }
