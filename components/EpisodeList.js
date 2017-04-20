@@ -5,15 +5,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as swipeActions } from '../actions/Swipe';
+import { actionCreators as mainActions } from '../actions';
 import { convertMillis } from '../helpers';
 import EpisodeListCard from './EpisodeListCard';
 import AddPlaylistModal from './AddPlaylistModal';
+import moment from 'moment';
 
 let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   inbox: state.main.inbox,
+  token: state.main.token,
   isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
   filters: state.main.inboxFilters
 });
@@ -27,6 +30,20 @@ class EpisodeList extends Component {
     Audio.setIsEnabledAsync(true);
   }
 
+  updateInbox = () => {
+    fetch("http://siren-server.herokuapp.com/api/users/inbox", {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': this.props.token
+      },
+    })
+    .then(inbox => inbox.json())
+    .then((inbox) => {
+      this.props.dispatch(mainActions.updateInbox(inbox));
+    })
+    .catch((err) => console.warn(err));
+  }
 
 hmsToSecondsOnly = (duration) => {
     var p = duration.split(':'),
@@ -195,6 +212,7 @@ hmsToSecondsOnly = (duration) => {
   }
 
   render() {
+    this.updateInbox();
     const { currentlyOpenSwipeable } = this.props;
     const itemProps = {
       onOpen: (event, gestureState, swipeable) => {

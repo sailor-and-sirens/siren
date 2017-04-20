@@ -50,7 +50,7 @@ class Authentication extends Component {
         if (response.status !== 201) {
           response.json()
           .then((responseData) => Alert.alert(responseData.message))
-          .catch(console.warn);
+          .catch(console.log);
         } else {
           return response.json();
         }
@@ -62,7 +62,7 @@ class Authentication extends Component {
         }
       })
       .catch((error) => {
-        console.warn('Error: ', error);
+        console.log('Error: ', error);
       })
       .done();
   }
@@ -96,7 +96,7 @@ class Authentication extends Component {
         }
       })
       .catch((error) => {
-        console.warn('Error: ', error);
+        console.log('Error: ', error);
       })
       .done();
   }

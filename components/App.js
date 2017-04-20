@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, AsyncStorage, ScrollView, Button } from 'react-native';
+import { connect } from 'react-redux';
+import { actionCreators } from '../actions';
+import { headerActions } from '../actions/Header'
 import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
 import EpisodeList from './EpisodeList';
 import PodcastList from './PodcastList';
-import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
-import { headerActions } from '../actions/Header'
 import Player from './Player';
 import Header from './Header';
 import ModalComponent from './Modal';
 import Authentication from './Authentication';
 import Settings from './Settings';
-import PodcastEpisodeList from './PodcastEpisodeList';
 import PodcastViewCard from './PodcastViewCard';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
-  view: state.header.view
+  view: state.header.view,
+  inbox: state.main.inbox
 })
 
 class App extends Component {
@@ -56,9 +56,6 @@ class App extends Component {
         this.props.view === 'Podcast' ?
         <View>
           <PodcastViewCard />
-          <ScrollView style={styles.podcastEpisodes}>
-            <PodcastEpisodeList />
-          </ScrollView>
         </View> :
         <View>
           <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>

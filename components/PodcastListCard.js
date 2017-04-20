@@ -1,12 +1,13 @@
 //UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
+import Swipeable from 'react-native-swipeable';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, Platform, Alert} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header'
-import Swipeable from 'react-native-swipeable';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as mainActions } from '../actions';
+import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({
@@ -18,6 +19,26 @@ const mapStateToProps = (state) => ({
 
 
 class PodcastListCard extends Component {
+
+  getEpisodes = () => {
+    this.props.dispatch(podcastsActions.updateCurrentPodcast(this.props.podcast))
+    this.props.dispatch(headerActions.changeView('Podcast'))
+    query = this.props.podcast.feedUrl;
+    this.props.dispatch(podcastsActions.toggleEpisodesLoading(true));
+    fetch('http://siren-server.herokuapp.com/api/podcasts/feeds/?url=' + query, {
+      method: "GET",
+      headers: {
+        'Authorization': this.props.token,
+        'Accept': 'application/json'
+      }
+      })
+      .then(response =>  response.json())
+      .then(response => {
+        this.props.dispatch(podcastsActions.toggleEpisodesLoading(false));
+        this.props.dispatch(podcastsActions.podcastEpisodes(response.slice(0,10)));
+      })
+      .catch(console.warn);
+  }
 
   subscribePodcast = () => {
     fetch("http://siren-server.herokuapp.com/api/podcasts/", {
@@ -52,7 +73,7 @@ class PodcastListCard extends Component {
           >
         <View style={styles.mainView}>
           <View style={styles.leftView}>
-            <TouchableOpacity onPress={() => this.props.dispatch(headerActions.changeView('Podcast'))}>
+            <TouchableOpacity onPress={() => {this.getEpisodes()}}>
               <Image source={{uri: this.props.podcast.artworkUrl100}} style={styles.image}/>
             </TouchableOpacity>
           </View>

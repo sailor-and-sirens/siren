@@ -1,4 +1,3 @@
-//UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
 import PodcastListCard from './PodcastListCard';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image} from 'react-native';
@@ -6,38 +5,32 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
-import Spinner from 'react-native-loading-spinner-overlay';
+import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const mapStateToProps = (state) => ({
-  podcasts: state.main.iTunesResult,
+  podcasts: state.podcasts.iTunesResult,
   currentEpisode: state.player.currentEpisode,
   inbox: state.main.inbox,
   token: state.main.token,
   leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
+  visible: state.podcasts.searchSpinner,
+  text: state.podcasts.searchText
 })
 
 class PodcastList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: '',
-      visible: false,
-    }
-  }
 
   getPodcasts () {
-    console.log('This.props.podcasts: ', this.props.podcasts);
-    query = this.state.text.slice().split().join('+');
-    this.setState({text: "",  visible: true});
+    query = this.props.text.slice().split().join('+');
+    this.props.dispatch(podcastsActions.searchText(''));
+    this.props.dispatch(podcastsActions.toggleSearchSpinner(true));
     fetch('http://itunes.apple.com/search?entity=podcast&term=' + query)
       .then(response => response.json())
       .then(response => {
-        this.props.dispatch(actionCreators.searchPodcasts(response.results));
-        this.setState({
-          visible: false
-        });
+        this.props.dispatch(podcastsActions.searchPodcasts(response.results));
+        this.props.dispatch(podcastsActions.toggleSearchSpinner(false));
       })
       .catch(console.warn);
   }
@@ -46,12 +39,12 @@ class PodcastList extends Component {
     return (
       <View style={styles.mainView}>
         <View style={styles.searchBar}>
-          <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.setState({text});}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.state.text}/>
+          <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.props.dispatch(podcastsActions.searchText(text));}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.props.text}/>
           <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search" />
         </View>
         <ScrollView style={styles.podcastList}>
-          {this.state.visible?
-            <Spinner visible={this.state.visible} textContent={"Searching..."} textStyle={{color: '#FFF'}} />  :
+          {this.props.visible ?
+            <Spinner visible={this.props.visible} textContent={"Searching..."} textStyle={{color: '#FFF'}} />  :
           this.props.podcasts.map((podcast, i) => (
               <PodcastListCard podcast={podcast} key={i}/>
             ))}

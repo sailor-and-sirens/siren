@@ -12,7 +12,7 @@ export const types = {
   CHANGE_PASSWORD: 'CHANGE_PASSWORD',
   CHANGE_EMAIL: 'CHANGE_EMAIL',
   CHANGE_AUTHVIEW: 'CHANGE_AUTHVIEW',
-  SEARCH_PODCASTS: 'SEARCH_PODCASTS'
+  UPDATE_INBOX: 'UPDATE_INBOX'
 }
 
 export const actionCreators = {
@@ -55,7 +55,7 @@ export const actionCreators = {
   changeAuthView: (value) => {
     return {type: types.CHANGE_AUTHVIEW, payload: value}
   },
-  searchPodcasts: (value) => {
-    return {type: types.SEARCH_PODCASTS, payload: value}
+  updateInbox: (value) => {
+    return {type: types.UPDATE_INBOX, payload: value}
   }
 }
