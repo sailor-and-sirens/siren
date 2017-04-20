@@ -33,6 +33,12 @@ const AddPlaylistModalRow = (props) => {
     )
   };
 
+  convertMinutesToHrsMinutes = (minutes) => {
+    let hours = Math.floor(minutes / 60);
+    minutes = minutes - (hours * 60);
+    return hours + 'h' + ' ' + minutes + 'm';
+  }
+
   const swipeToSelectPlaylistText = (isSelected) => {
     if (isSelected === true) {
       return <Text>Deselect Playlist</Text>
@@ -71,7 +77,8 @@ const AddPlaylistModalRow = (props) => {
         </View>
         <View style={styles.playlistTotalDurationWrapper}>
           <Text style={styles.totalHeading}>Total Time</Text>
-          <Text style={styles.totalNumber}>{playlist.totalTime > 999 ? 999 + '+' : playlist.totalTime}min</Text>
+          {/* <Text style={styles.totalNumber}>{playlist.totalTime > 999 ? 999 + '+' : playlist.totalTime}min</Text> */}
+          <Text style={styles.totalNumber}>{convertMinutesToHrsMinutes(playlist.totalTime)}</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>

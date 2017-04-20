@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import { convertMillis } from '../helpers';
+import { convertMillis, hmsToSecondsOnly } from '../helpers';
 import EpisodeListCard from './EpisodeListCard';
 import AddPlaylistModal from './AddPlaylistModal';
 
@@ -26,18 +26,6 @@ class EpisodeList extends Component {
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
   }
-
-
-hmsToSecondsOnly = (duration) => {
-    var p = duration.split(':'),
-        s = 0, m = 1;
-
-    while (p.length > 0) {
-        s += m * parseInt(p.pop(), 10);
-        m *= 60;
-    }
-    return s;
-}
 
   filterEpisodes = (keys) => {
     if (this.props.filters.liked === 'liked') {

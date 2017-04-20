@@ -75,7 +75,7 @@ class EpisodeListCard extends Component {
 
   toggleAddToPlaylistModal = () => {
     this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
-    fetch("http://siren-server.herokuapp.com/api/playlists/add-playlist-modal", {
+    fetch("http://localhost:3000/api/playlists/add-playlist-modal", {
       method: "GET",
       headers: {
         'Accept': 'application/json',
@@ -105,7 +105,7 @@ class EpisodeListCard extends Component {
           <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
             {rightActionActivated ?
               <Text>(( release ))</Text> :
-              <Text>Remove Episode</Text>}
+              <Text>Remove From Inbox</Text>}
           </View>
         )}
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
