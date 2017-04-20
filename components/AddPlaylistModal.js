@@ -18,6 +18,20 @@ const mapStateToProps = (state) => ({
 
 class AddPlaylistModal extends Component {
 
+  componentWillMount = () => {
+    fetch("http://localhost:3000/api/playlists/add-playlist-modal", {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': this.props.token
+      }
+    })
+    .then(response => response.json())
+    .then(playlists => {
+      this.props.dispatch(playlistActions.storeAddModalPlaylists(playlists));
+    })
+  }
+
   createNewPlaylist = (playlistName) => {
     let playlistData = { name: playlistName };
     fetch('http://localhost:3000/api/playlists/create-playlist', {
@@ -97,12 +111,12 @@ class AddPlaylistModal extends Component {
       }
       return <Text>Select Playlist</Text>
     };
-
+    //visible={this.props.isAddPlaylistModalVisible}
     return (
       <Modal
         animationType={"fade"}
         transparent={false}
-        visible={this.props.isAddPlaylistModalVisible}
+        visible={true}
         onRequestClose={() => console.log('point me to a function')}
       >
         <View style={styles.container}>
@@ -148,7 +162,7 @@ class AddPlaylistModal extends Component {
                   </View>
                   <View style={styles.playlistTotalDurationWrapper}>
                     <Text style={styles.totalHeading}>Total Time</Text>
-                    <Text style={styles.totalNumber}>{playlist.totalTime}min</Text>
+                    <Text style={styles.totalNumber}>{playlist.totalTime > 999 ? 999 + '+' : playlist.totalTime}min</Text>
                   </View>
                 </View>
               </TouchableWithoutFeedback>
@@ -172,12 +186,8 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   topWrapper: {
-    marginLeft: 5,
-    marginRight: 5,
-    paddingTop: 10,
+    padding: 10,
     backgroundColor: '#eeeeee',
-    borderWidth: 1,
-    borderColor: '#bbbbbb'
   },
   topHeading: {
     fontSize: 20,
@@ -195,8 +205,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginRight: 5,
     padding: 5,
-    borderWidth: 1,
-    borderColor: '#bbbbbb',
     backgroundColor: '#ffffff'
   },
   addPlaylistButton: {
@@ -213,15 +221,10 @@ const styles = StyleSheet.create({
   playlistWrapper: {
     height: 60,
     flexDirection: 'row',
-    marginLeft: 5,
-    marginRight: 5,
-    padding: 5,
+    padding: 10,
     paddingTop: 8,
     paddingBottom: 8,
     backgroundColor: '#eeeeee',
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderColor: '#bbbbbb'
   },
   playlistAltBackground: {
     backgroundColor: '#ffffff'
