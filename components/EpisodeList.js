@@ -44,7 +44,7 @@ class EpisodeList extends Component {
     }
     if (this.props.filters.liked === 'notLiked') {
       keys = _.filter(keys, (key) => {
-        return this.props.inbox[key].liked === false;
+        return this.props.inbox[key].liked === false || this.props.inbox[key].bookmark === null;
       });
     }
     if (this.props.filters.bookmarked === 'bookmarked') {
@@ -54,7 +54,7 @@ class EpisodeList extends Component {
     }
     if (this.props.filters.bookmarked === 'notBookmarked') {
        keys = _.filter(keys, (key) => {
-        return this.props.inbox[key].bookmark === false;
+        return this.props.inbox[key].bookmark === false || this.props.inbox[key].bookmark === null;
       });
     }
     if (this.props.filters.time !== 'timeOff') {
