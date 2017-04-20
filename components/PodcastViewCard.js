@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/index';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
+import { actionCreators as mainActions } from '../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const mapStateToProps = (state) => ({
@@ -21,6 +22,7 @@ class PodcastViewCard extends Component {
       method: "POST",
       headers: {
         'Accept': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': this.props.token
       },
       body: JSON.stringify(this.props.podcast)
@@ -30,12 +32,14 @@ class PodcastViewCard extends Component {
         method: "GET",
         headers: {
           'Accept': 'application/json',
+          'Content-Type': 'application/json',
           'Authorization': this.props.token
         },
       })
     })
     .then(inbox => inbox.json())
     .then((inbox) => {
+      console.warn('fetchInbox response: ', inbox);
       this.props.dispatch(mainActions.updateInbox(inbox));
     })
     .catch((err) => console.log(err));

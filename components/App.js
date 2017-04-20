@@ -29,6 +29,7 @@ class App extends Component {
         this.props.dispatch(headerActions.changeView('Authentication'))
       } else {
         this.props.dispatch(actionCreators.addToken(res))
+        console.log('TOKEN: ', this.props.token);
         this.props.dispatch(headerActions.changeView('Inbox'))
       }
     })

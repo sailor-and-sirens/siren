@@ -45,6 +45,7 @@ class PodcastListCard extends Component {
       method: "POST",
       headers: {
         'Accept': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': this.props.token
       },
       body: JSON.stringify(this.props.podcast)
@@ -54,16 +55,19 @@ class PodcastListCard extends Component {
         method: "GET",
         headers: {
           'Accept': 'application/json',
+          'Content-Type': 'application/json',
           'Authorization': this.props.token
         },
       })
     })
     .then(inbox => inbox.json())
     .then((inbox) => {
+      console.warn('fetchInbox response: ', inbox);
       this.props.dispatch(mainActions.updateInbox(inbox));
     })
     .catch((err) => console.log(err));
   };
+
 
   render() {
     const {leftActionActivated, leftToggle} = this.props;
