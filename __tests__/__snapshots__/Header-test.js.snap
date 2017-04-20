@@ -342,21 +342,6 @@ exports[`renders correctly 1`] = `
                               "textColor": undefined,
                               "value": "All",
                             },
-                            Object {
-                              "label": "Tech News",
-                              "textColor": undefined,
-                              "value": "Tech News",
-                            },
-                            Object {
-                              "label": "Science",
-                              "textColor": undefined,
-                              "value": "Science",
-                            },
-                            Object {
-                              "label": "Technology",
-                              "textColor": undefined,
-                              "value": "Technology",
-                            },
                           ]
                         }
                         onChange={[Function]}
