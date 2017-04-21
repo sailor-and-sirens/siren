@@ -134,7 +134,7 @@ class EpisodeList extends Component {
 
   addEpisodeToListeningTo = (episodeId) => {
     let episodeData = { episodeId };
-    fetch('http://localhost:3000/api/playlists/listening-to', {
+    fetch('http://siren-server.herokuapp.com/api/playlists/listening-to', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ class EpisodeList extends Component {
 
   removeCurrentEpisodeFromListeningTo = (episodeId) => {
     let episodeData = { episodeId };
-    fetch('http://localhost:3000/api/playlists/listening-to', {
+    fetch('http://siren-server.herokuapp.com/api/playlists/listening-to', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
