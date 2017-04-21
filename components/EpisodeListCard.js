@@ -7,7 +7,7 @@ import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
 import { hmsToSecondsOnly, toggleBookmark, toggleLike } from '../helpers';
-// import { toggleAddToPlaylistModal } from '../helpers/playlistHelpers';
+import { toggleAddToPlaylistModal } from '../helpers/playlistHelpers';
 import moment from 'moment';
 
 const mapStateToProps = (state) => ({
@@ -43,22 +43,6 @@ class EpisodeListCard extends Component {
     }
   };
 
-  toggleAddToPlaylistModal = () => {
-    this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
-    this.props.dispatch(playlistActions.setSelectedEpisode(this.props.id));
-    fetch("http://siren-server.herokuapp.com/api/playlists/add-playlist-modal", {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': this.props.token
-      }
-    })
-    .then(response => response.json())
-    .then(playlists => {
-      this.props.dispatch(playlistActions.storeAddModalPlaylists(playlists));
-    });
-  }
-
   render() {
     const {leftActionActivated, leftToggle, rightActionActivated, rightToggle} = this.props;
     return (
@@ -82,8 +66,7 @@ class EpisodeListCard extends Component {
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
         onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
         onLeftActionComplete={() => {
-          // toggleAddToPlaylistModal(this.props.dispatch, this.props.id, this.props.token);
-          this.toggleAddToPlaylistModal();
+          toggleAddToPlaylistModal(this.props.dispatch, this.props.id, this.props.token);
         }}
 
         onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
