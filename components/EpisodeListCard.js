@@ -6,7 +6,7 @@ import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
-import {hmsToSecondsOnly, toggleBookmark, toggleLike} from '../helpers';
+import {hmsToSecondsOnly, toggleBookmark, toggleLike, getAllPlaylists} from '../helpers';
 import moment from 'moment';
 
 const mapStateToProps = (state) => ({
@@ -19,24 +19,6 @@ const mapStateToProps = (state) => ({
 });
 
 class EpisodeListCard extends Component {
-
-  getAllPlaylists(){
-    var that = this;
-    fetch("http://siren-server.herokuapp.com/api/playlists/get-playlists", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      }
-    })
-    .then(function(data){
-      console.log('GOT DATA')
-      var data = data.json().then(function(data){
-        that.props.dispatch(playlistActions.getPlaylists(data));
-      });
-    })
-  }
 
   renderClock = (duration) => {
     if (duration.length < 5) {

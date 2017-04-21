@@ -2,6 +2,8 @@ import { actionCreators as playerActions } from './actions/Player';
 import { actionCreators as podcastsActions } from './actions/Podcasts';
 import { actionCreators as swipeActions } from './actions/Swipe';
 import { actionCreators as mainActions } from './actions';
+import { actionCreators as playlistActions } from './actions/Playlist';
+
 let _ = require('lodash');
 
 export const truncateTitle = (title) => {
@@ -119,4 +121,23 @@ export const toggleBookmark = (id, props) => {
       },
       body: JSON.stringify({id: id, bookmark: !props.inbox[id].bookmark})
     })
+    .then(() => getAllPlaylists(props))
   };
+
+export const getAllPlaylists = (props) => {
+    var that = this;
+    fetch("http://siren-server.herokuapp.com/api/playlists/get-playlists", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': props.token
+      }
+    })
+    .then(function(data){
+      console.log('GOT DATA')
+      var data = data.json().then(function(data){
+        props.dispatch(playlistActions.getPlaylists(data));
+      });
+    })
+  }

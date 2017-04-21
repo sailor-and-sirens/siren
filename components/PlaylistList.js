@@ -6,9 +6,9 @@ import { actionCreators as swipeActions } from '../actions/Swipe';
 import PlaylistCard from './PlaylistCard';
 import PlaylistCardNoSwipe from './PlaylistCardNoSwipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
+import { getAllPlaylists } from '../helpers';
 
 const mapStateToProps = (state) => ({
-  // currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   allplaylists: state.playlist.allplaylists,
   token: state.main.token,
 });
@@ -20,24 +20,6 @@ class PlaylistList extends Component {
       text: '',
       visible: false
     }
-  }
-
-  getPlaylists(){
-    var that = this;
-    fetch("http://siren-server.herokuapp.com/api/playlists/get-playlists", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      }
-    })
-    .then(function(data){
-      var data = data.json().then(function(data){
-        console.log('DATAA', data)
-        that.props.dispatch(playlistActions.getPlaylists(data));
-      });
-    })
   }
 
   addPlaylist(){
@@ -54,14 +36,14 @@ class PlaylistList extends Component {
     .then(function(response){
       that.setState({text: ""});
       if(response){
-        that.getPlaylists();
+        getAllPlaylists(that.props);
       }
     });
   }
 
   componentDidMount(){
     if(!this.props.allplaylists.length){
-      this.getPlaylists();
+      getAllPlaylists(this.props);
     }
   }
 
@@ -72,16 +54,16 @@ class PlaylistList extends Component {
         <View style={styles.searchArea}>
           <Text>Create New Playlist</Text>
           <View style={styles.searchBar}>
-            <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.setState({text});}} onSubmitEditing={this.getPlaylists.bind(this)} value={this.state.text}/>
+            <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.setState({text});}} onSubmitEditing={() => getAllPlaylists(this.props)} value={this.state.text}/>
             <Button style={styles.button} onPress={this.addPlaylist.bind(this)} underlayColor='#99d9f4' title='Create' />
           </View>
         </View>
-        {this.props.allplaylists.slice(0,1).map((playlist, index) => {
+        {this.props.allplaylists.slice(0,2).map((playlist, index) => {
           return (
             <PlaylistCardNoSwipe key={index} playlist={playlist}/>
           )
         })}
-          {this.props.allplaylists.slice(1).map((playlist, index) => {
+          {this.props.allplaylists.slice(2).map((playlist, index) => {
             return (
               <PlaylistCard key={index + 1} playlist={playlist}/>
             )
