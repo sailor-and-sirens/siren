@@ -79,7 +79,8 @@ class EpisodeListCard extends Component {
 
   toggleAddToPlaylistModal = () => {
     this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
-    fetch("http://localhost:3000/api/playlists/add-playlist-modal", {
+    this.props.dispatch(playlistActions.setSelectedEpisode(this.props.id));
+    fetch("http://siren-server.herokuapp.com/api/playlists/add-playlist-modal", {
       method: "GET",
       headers: {
         'Accept': 'application/json',
@@ -130,14 +131,14 @@ class EpisodeListCard extends Component {
       <View style={styles.mainView}>
         <View style={styles.topView}>
           <View style={styles.leftView}>
-            <TouchableOpacity onPress={this.props.handlePlay.bind(this, this.props.episode)}>
+            <TouchableOpacity onPress={this.props.handlePlay.bind(this, this.props.episode, this.props.id)}>
               <Image source={{uri: this.props.episode.image}} style={styles.image}/>
             </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
             <Text style={styles.date}>{moment(this.props.episode.feed.pubDate.substring(0,16)).format('ddd, DD MMM YYYY')}</Text>
-            <Text style={styles.episode} numberOfLines={1}>{this.props.episode['feed']['title']}</Text>
-            <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode['feed']['description']}</Text>
+            <Text style={styles.episode} numberOfLines={3}>{this.props.episode['feed']['title']}</Text>
+            {/* <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode['feed']['description']}</Text> */}
           </View>
         </View>
         <View style={styles.bottomView}>

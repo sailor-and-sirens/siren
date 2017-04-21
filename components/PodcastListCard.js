@@ -37,7 +37,7 @@ class PodcastListCard extends Component {
         this.props.dispatch(podcastsActions.toggleEpisodesLoading(false));
         this.props.dispatch(podcastsActions.podcastEpisodes(response.slice(0,10)));
       })
-      .catch(console.warn);
+      .catch(err => console.log(err));
   }
 
   subscribePodcast = () => {
@@ -49,8 +49,25 @@ class PodcastListCard extends Component {
         'Authorization': this.props.token
       },
       body: JSON.stringify(this.props.podcast)
-    });
+    })
+    .then(() => {
+      fetch("http://siren-server.herokuapp.com/api/users/inbox", {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': this.props.token
+        },
+      })
+    })
+    .then(inbox => inbox.json())
+    .then((inbox) => {
+      console.warn('fetchInbox response: ', inbox);
+      this.props.dispatch(mainActions.updateInbox(inbox));
+    })
+    .catch((err) => console.log(err));
   };
+
 
   render() {
     const {leftActionActivated, leftToggle} = this.props;

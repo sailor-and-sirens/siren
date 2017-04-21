@@ -18,7 +18,6 @@ const mapStateToProps = (state) => ({
   episodes: state.podcasts.podcastEpisodes,
   filters: state.main.inboxFilters,
   token: state.main.token,
-  visible: state.podcasts.episodesLoadings
 });
 
 class PodcastEpisodeList extends Component {

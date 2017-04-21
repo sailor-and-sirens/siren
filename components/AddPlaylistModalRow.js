@@ -77,7 +77,6 @@ const AddPlaylistModalRow = (props) => {
         </View>
         <View style={styles.playlistTotalDurationWrapper}>
           <Text style={styles.totalHeading}>Total Time</Text>
-          {/* <Text style={styles.totalNumber}>{playlist.totalTime > 999 ? 999 + '+' : playlist.totalTime}min</Text> */}
           <Text style={styles.totalNumber}>{convertMinutesToHrsMinutes(playlist.totalTime)}</Text>
         </View>
       </View>

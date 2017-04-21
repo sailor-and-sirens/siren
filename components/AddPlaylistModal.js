@@ -10,6 +10,7 @@ const mapStateToProps = (state) => ({
   leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
   playlists: state.playlist.playlists,
+  selectedEpisodeId: state.playlist.selectedEpisodeId,
   selectedPlaylistId: state.playlist.selectedPlaylistId,
   token: state.main.token
 });
@@ -18,7 +19,7 @@ class AddPlaylistModal extends Component {
 
   handleAddNewPlaylist = () => {
     let playlistData = { name: this.props.addNewPlaylistInputValue };
-    fetch('http://localhost:3000/api/playlists/create-playlist', {
+    fetch('http://siren-server.herokuapp.com/api/playlists/create-playlist', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,8 +34,20 @@ class AddPlaylistModal extends Component {
     .catch(err => console.warn(err));
   };
 
-  handleAddToPlaylistModalClose = () => {
-    this.props.dispatch(playlistActions.toggleAddToPlaylistModal(false));
+  handleAddToPlaylistModalClose = (typeOfOperation) => {
+    if (typeOfOperation === 'save') {
+      let episodeData = { episodeId: Number(this.props.selectedEpisodeId), playlistId: this.props.selectedPlaylistId };
+      fetch('http://siren-server.herokuapp.com/api/playlists/add-episode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': this.props.token
+        },
+        body: JSON.stringify(episodeData)
+      })
+      .catch(err => console.warn(err));
+    }
+    this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
   };
 
   handlePlaylistToggle = (playlistId) => {
@@ -51,10 +64,10 @@ class AddPlaylistModal extends Component {
       if (this.props.selectedPlaylistId !== null) {
         return (
           <View style={styles.cancelSaveWrapper}>
-            <TouchableOpacity onPress={this.handleAddToPlaylistModalClose} style={styles.cancelButton}>
+            <TouchableOpacity onPress={this.handleAddToPlaylistModalClose.bind(this, 'cancel')} style={styles.cancelButton}>
               <Text style={styles.cancelSaveText}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleAddToPlaylistModalClose} style={styles.saveButton}>
+            <TouchableOpacity onPress={this.handleAddToPlaylistModalClose.bind(this, 'save')} style={styles.saveButton}>
               <Text style={styles.cancelSaveText}>Save</Text>
             </TouchableOpacity>
           </View>
@@ -62,7 +75,7 @@ class AddPlaylistModal extends Component {
       }
       return (
         <View style={styles.cancelSaveWrapper}>
-          <TouchableOpacity onPress={this.handleAddToPlaylistModalClose} style={styles.cancelButton}>
+          <TouchableOpacity onPress={this.handleAddToPlaylistModalClose.bind(this, 'cancel')} style={styles.cancelButton}>
             <Text style={styles.cancelSaveText}>Cancel</Text>
           </TouchableOpacity>
         </View>

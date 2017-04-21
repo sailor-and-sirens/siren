@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, ActivityIn
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/Player';
-import { truncateTitle, convertMillis } from '../helpers';
+import { convertMillis } from '../helpers';
 import PlayerSpeedModal from './PlayerSpeedModal';
 import PlayerFullSizeModal from './PlayerFullSizeModal';
 
@@ -210,7 +210,7 @@ class Player extends Component {
           <View style={styles.topRowMiddle}>
             {this.props.currentEpisodeTitle === 'LOADING' ?
               <ActivityIndicator animating={true} size="small" />  :
-              <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
+              <Text style={{textAlign: 'center', fontWeight: 'bold'}} numberOfLines={1} ellipsizeMode='tail'>{this.props.currentEpisodeTitle}</Text>
             }
           </View>
           <View style={styles.topRowRight}></View>

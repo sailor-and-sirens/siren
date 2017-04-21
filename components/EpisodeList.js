@@ -28,6 +28,7 @@ class EpisodeList extends Component {
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
+    this.updateInbox();
   }
 
   updateInbox = () => {
@@ -102,14 +103,14 @@ class EpisodeList extends Component {
     return keys;
   }
 
-  handlePlay = (episode) => {
+  handlePlay = (episode, episodeId) => {
     // TODO get real EpisodeId
     let newEpisodeCurrentTime = 0;
     let newEpisodeLastPlayed = new Date();
 
     if (this.newSoundInstance === null) {
-      this.addEpisodeToListeningTo(1);
-      this.updateCurrentEpisodeStats(1, newEpisodeCurrentTime, newEpisodeLastPlayed);
+      this.addEpisodeToListeningTo(episodeId);
+      this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
       this.playNewEpisode(episode);
     } else {
       clearInterval(this.timer);
@@ -130,6 +131,7 @@ class EpisodeList extends Component {
   }
 
   addEpisodeToListeningTo = (episodeId) => {
+    // TODO: need special route for Listening To
     let episodeData = { episodeId, playlistId: 2 };
     fetch('http://siren-server.herokuapp.com/api/playlists/add-episode', {
       method: 'POST',
@@ -143,6 +145,7 @@ class EpisodeList extends Component {
   }
 
   removeCurrentEpisodeFromListeningTo = (episodeId) => {
+    // TODO: need special route for Listening To
     let episodeData = { episodeId, playlistId: 2 };
     fetch('http://siren-server.herokuapp.com/api/playlists/remove-episode', {
       method: 'DELETE',
@@ -206,7 +209,6 @@ class EpisodeList extends Component {
   }
 
   render() {
-    this.updateInbox();
     const { currentlyOpenSwipeable } = this.props;
     const itemProps = {
       onOpen: (event, gestureState, swipeable) => {

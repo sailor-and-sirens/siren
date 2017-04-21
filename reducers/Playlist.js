@@ -3,6 +3,7 @@ import { types } from '../actions/Playlist';
 const initialState = {
   addNewPlaylistInputValue: '',
   isAddPlaylistModalVisible: false,
+  selectedEpisodeId: null,
   selectedPlaylistId: null,
   playlists: []
 };
@@ -12,6 +13,9 @@ const playlist = (state = initialState, action) => {
     let newId = action.payload.id;
     let newPlaylist = { id: newId, name: action.payload.name, totalEpisodes: 0, totalTime: '0' };
     return {...state, addNewPlaylistInputValue: '', playlists: [newPlaylist, ...state.playlists], selectedPlaylistId: newId};
+  }
+  if (action.type === types.SET_SELECTED_EPISODE) {
+    return {...state, selectedEpisodeId: action.payload}
   }
   if (action.type === types.STORE_ADD_MODAL_PLAYLISTS) {
     return {...state, playlists: action.payload}

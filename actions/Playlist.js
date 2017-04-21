@@ -1,5 +1,6 @@
 export const types = {
   ADD_NEW_PLAYLIST: 'ADD_NEW_PLAYLIST',
+  SET_SELECTED_EPISODE: 'SET_SELECTED_EPISODE',
   STORE_ADD_MODAL_PLAYLISTS: 'STORE_ADD_MODAL_PLAYLISTS',
   TOGGLE_ADD_TO_PLAYLIST_MODAL: 'TOGGLE_ADD_TO_PLAYLIST_MODAL',
   TOGGLE_PLAYLIST_SELECTED: 'TOGGLE_PLAYLIST_SELECTED',
@@ -9,6 +10,9 @@ export const types = {
 export const actionCreators = {
   addNewPlaylist: (playlistData) => {
     return {type: types.ADD_NEW_PLAYLIST, payload: playlistData}
+  },
+  setSelectedEpisode: (episodeId) => {
+    return {type: types.SET_SELECTED_EPISODE, payload: episodeId}
   },
   storeAddModalPlaylists: (playlists) => {
     return {type: types.STORE_ADD_MODAL_PLAYLISTS, payload: playlists}
