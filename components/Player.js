@@ -14,6 +14,7 @@ const mapStateToProps = (state) => ({
   currentPlayingTime: state.player.currentPlayingTime,
   currentSoundInstance: state.player.currentSoundInstance,
   currentSpeed: state.player.currentSpeed,
+  inbox: state.main.inbox,
   isModalVisible: state.player.isModalVisible,
   isFullSizeModalVisible: state.player.isFullSizeModalVisible,
   isPlaying: state.player.isPlaying,
@@ -180,6 +181,7 @@ class Player extends Component {
         <PlayerFullSizeModal
           currentPlayingTime={this.props.currentPlayingTime}
           currentSpeed={this.props.currentSpeed}
+          dispatch={this.props.dispatch}
           episode={this.props.currentEpisode}
           handleFullSizeModalClose={this.handleFullSizeModalClose}
           handlePlay={this.handlePlay}
@@ -190,8 +192,10 @@ class Player extends Component {
           handleSkipToEnd={this.handleSkipToEnd}
           handleIncreaseSpeed={this.handleIncreaseSpeed}
           handleDecreaseSpeed={this.handleDecreaseSpeed}
+          inbox={this.props.inbox}
           isFullSizeModalVisible={this.props.isFullSizeModalVisible}
           isPlaying={this.props.isPlaying}
+          token={this.props.token}
         />
       )
 

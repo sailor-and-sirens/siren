@@ -2,6 +2,7 @@ import { Audio } from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, Image, ScrollView, Linking } from 'react-native';
 import { Ionicons, SimpleLineIcons, MaterialIcons } from '@expo/vector-icons';
+import { toggleBookmark, toggleLike } from '../helpers';
 
 const { height, width } = Dimensions.get('window');
 
@@ -10,18 +11,30 @@ const PlayerFullSizeModal = (props) => {
   let episodeLink;
 
   let episodeBookmark = () => {
-    if (props.episode.bookmark) {
-      return {name: 'ios-bookmark', color: 'gray'}
+    let {inbox, dispatch, token } = props;
+    let _props = {inbox, dispatch, token}
+    if (props.episode.bookmark === true) {
+      return (
+        <Ionicons style={styles.actionIcon} size={35} color='gray' name="ios-bookmark" onPress={()=>(toggleBookmark(props.episode.EpisodeId, _props))}/>
+      )
     } else {
-      return {name: 'ios-bookmark-outline', color: 'gray'}
+      return (
+        <Ionicons style={styles.actionIcon} size={35} color='gray' name="ios-bookmark-outline" onPress={() =>(toggleBookmark(props.episode.EpisodeId, _props))}/>
+      )
     }
   }
 
   let episodeLike = () => {
-    if (props.episode.liked) {
-      return {name: 'ios-heart', color: 'gray'}
+    let {inbox, dispatch, token } = props;
+    let _props = {inbox, dispatch, token}
+    if (props.episode.liked === true) {
+      return (
+        <Ionicons style={styles.actionIcon} size={35} color='grey' name="ios-heart" onPress={() =>(toggleLike(props.episode.EpisodeId, _props))}/>
+      )
     } else {
-      return {name: 'ios-heart-outline', color: 'gray'}
+      return (
+        <Ionicons style={styles.actionIcon} size={35} color='grey' name="ios-heart-outline" onPress={() =>(toggleLike(props.episode.EpisodeId, _props))}/>
+      )
     }
   }
 
@@ -75,8 +88,8 @@ const PlayerFullSizeModal = (props) => {
           <View style={styles.actionIconsWrapper}>
             {episodeLink}
             <MaterialIcons style={styles.actionIcon} name="playlist-play" size={35} color={'gray'}></MaterialIcons>
-            <Ionicons style={styles.actionIcon} name={episodeBookmark().name} size={35} color={episodeBookmark().color}></Ionicons>
-            <Ionicons style={styles.actionIcon} name={episodeLike().name} size={35} color={episodeLike().color}></Ionicons>
+            {episodeBookmark()}
+            {episodeLike()}
           </View>
           <Text style={styles.episodeTitle}>{props.episode.feed.title}</Text>
           <Text style={styles.summaryHeading}>Episode Summary</Text>

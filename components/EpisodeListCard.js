@@ -103,7 +103,9 @@ class EpisodeListCard extends Component {
           <View style={styles.rightView}>
             <Text style={styles.date}>{moment(this.props.episode.feed.pubDate.substring(0,16)).format('ddd, DD MMM YYYY')}</Text>
             <Text style={styles.episode} numberOfLines={3}>{this.props.episode['feed']['title']}</Text>
-            <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode['feed']['description']}</Text>
+            <Text style={styles.subtitle} numberOfLines={2}>
+              {this.props.episode['feed']['description']}
+            </Text>
           </View>
         </View>
         <View style={styles.bottomView}>
