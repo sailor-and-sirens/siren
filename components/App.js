@@ -13,6 +13,7 @@ import ModalComponent from './Modal';
 import Authentication from './Authentication';
 import Settings from './Settings';
 import PodcastViewCard from './PodcastViewCard';
+import PlaylistList from './PlaylistList';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -28,7 +29,6 @@ class App extends Component {
         this.props.dispatch(headerActions.changeView('Authentication'))
       } else {
         this.props.dispatch(actionCreators.addToken(res))
-        console.log('TOKEN: ', this.props.token);
         this.props.dispatch(headerActions.changeView('Inbox'))
       }
     })
@@ -57,10 +57,9 @@ class App extends Component {
         <View>
           <PodcastViewCard />
         </View> :
-        <View>
-          <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>
-          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
-        </View>
+        this.props.view === 'Playlist' ?
+        <PlaylistList/> :
+        null
         }
         <Player />
       </View>

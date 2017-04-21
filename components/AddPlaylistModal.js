@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView 
 import { connect } from 'react-redux';
 import { actionCreators as playlistActions } from '../actions/Playlist';
 import AddPlaylistModalRow from './AddPlaylistModalRow';
+import { getAllPlaylists } from '../helpers';
 
 const mapStateToProps = (state) => ({
   addNewPlaylistInputValue: state.playlist.addNewPlaylistInputValue,
@@ -30,6 +31,7 @@ class AddPlaylistModal extends Component {
     .then(response => response.json())
     .then(playlist => {
       this.props.dispatch(playlistActions.addNewPlaylist({ name: playlistData.name, id: playlist[0].id}));
+      getAllPlaylists(this.props);
     })
     .catch(err => console.warn(err));
   };
@@ -48,6 +50,7 @@ class AddPlaylistModal extends Component {
       .catch(err => console.warn(err));
     }
     this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
+    getAllPlaylists(this.props);
   };
 
   handlePlaylistToggle = (playlistId) => {

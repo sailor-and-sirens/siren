@@ -6,7 +6,7 @@ import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
-import {hmsToSecondsOnly, toggleBookmark, toggleLike} from '../helpers';
+import {hmsToSecondsOnly, toggleBookmark, toggleLike, getAllPlaylists} from '../helpers';
 import moment from 'moment';
 
 const mapStateToProps = (state) => ({
