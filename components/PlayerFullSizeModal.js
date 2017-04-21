@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, Image, ScrollView, Linking } from 'react-native';
 import { Ionicons, SimpleLineIcons, MaterialIcons } from '@expo/vector-icons';
 import { toggleBookmark, toggleLike } from '../helpers';
+import { toggleAddToPlaylistModal } from '../helpers/playlistHelpers';
 
 const { height, width } = Dimensions.get('window');
 
@@ -87,7 +88,9 @@ const PlayerFullSizeModal = (props) => {
           </View>
           <View style={styles.actionIconsWrapper}>
             {episodeLink}
-            <MaterialIcons style={styles.actionIcon} name="playlist-play" size={35} color={'gray'}></MaterialIcons>
+            <TouchableOpacity onPress={() => {toggleAddToPlaylistModal(props.dispatch, props.episode.EpisodeId, props.token)}}>
+              <MaterialIcons style={styles.actionIcon} name="playlist-play" size={35} color={'gray'}></MaterialIcons>
+            </TouchableOpacity>
             {episodeBookmark()}
             {episodeLike()}
           </View>

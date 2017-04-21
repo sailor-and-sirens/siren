@@ -1,6 +1,8 @@
 import { actionCreators as playlistActions } from '../actions/Playlist';
+import { actionCreators as playerActions } from '../actions/Player';
 
 export const toggleAddToPlaylistModal = (dispatch, episodeId, authToken) => {
+  dispatch(playerActions.setFullSizeModalVisible(false));
   dispatch(playlistActions.toggleAddToPlaylistModal());
   dispatch(playlistActions.setSelectedEpisode(episodeId));
   fetch("http://siren-server.herokuapp.com/api/playlists/add-playlist-modal", {

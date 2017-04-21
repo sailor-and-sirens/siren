@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, AsyncStorage, ScrollView, Button } f
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header'
+import { swipeActions } from '../actions/Swipe'
 import EpisodeListCard from './EpisodeListCard';
 import PodcastListCard from './PodcastListCard';
 import EpisodeList from './EpisodeList';
@@ -13,11 +14,13 @@ import ModalComponent from './Modal';
 import Authentication from './Authentication';
 import Settings from './Settings';
 import PodcastViewCard from './PodcastViewCard';
+import AddPlaylistModal from './AddPlaylistModal';
 
 const mapStateToProps = (state) => ({
+  inbox: state.main.inbox,
+  isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
   token: state.main.token,
   view: state.header.view,
-  inbox: state.main.inbox
 })
 
 class App extends Component {
@@ -62,6 +65,7 @@ class App extends Component {
           <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
         </View>
         }
+        <AddPlaylistModal isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible} />
         <Player />
       </View>
     );

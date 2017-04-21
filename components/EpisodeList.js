@@ -10,7 +10,6 @@ import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
 import { actionCreators as mainActions } from '../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 import EpisodeListCard from './EpisodeListCard';
-import AddPlaylistModal from './AddPlaylistModal';
 import moment from 'moment';
 
 let _ = require('lodash');
@@ -19,7 +18,6 @@ const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   filters: state.main.inboxFilters,
   inbox: state.main.inbox,
-  isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
   token: state.main.token,
   filters: state.main.inboxFilters,
   visible: state.podcasts.searchSpinner
@@ -210,10 +208,6 @@ class EpisodeList extends Component {
     };
    return (
       <View style={styles.mainView}>
-        <AddPlaylistModal
-          isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible}
-          handleAddToPlaylistModalClose={this.handleAddToPlaylistModalClose}
-        />
         {this.props.visible ?
            <Spinner visible={this.props.visible} textContent={"Loading Inbox..."} textStyle={{color: '#FFF'}} />  :
          <ScrollView style={styles.episodeList}>
