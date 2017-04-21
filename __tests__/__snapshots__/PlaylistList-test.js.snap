@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "marginBottom": 185,
+    }
+  }
+>
+  <ScrollView>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        Create New Playlist
+      </Text>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "margin": 10,
+          }
+        }
+      >
+        <TextInput
+          onChangeText={[Function]}
+          onSubmitEditing={[Function]}
+          style={
+            Object {
+              "borderColor": "gray",
+              "borderWidth": 1,
+              "height": 40,
+              "padding": 10,
+              "width": 200,
+            }
+          }
+          underlineColorAndroid="rgba(0,0,0,0)"
+          value=""
+        />
+        <View
+          accessibilityComponentType="button"
+          accessibilityLabel={undefined}
+          accessibilityTraits={
+            Array [
+              "button",
+            ]
+          }
+          accessible={true}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <View
+            style={
+              Array [
+                Object {},
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "color": "#0C42FD",
+                    "fontSize": 18,
+                    "padding": 8,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              Create
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </ScrollView>
+</View>
+`;
