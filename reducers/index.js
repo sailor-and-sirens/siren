@@ -4,6 +4,7 @@ import { removeItemFromObjectById } from '../helpers'
 import player from './Player';
 import swipe from './Swipe';
 import header from './Header';
+import playlist from './Playlist';
 import podcasts from './Podcasts';
 
 // add your key/values for initialState here
@@ -80,6 +81,7 @@ const rootReducer = combineReducers({
   player,
   swipe,
   header,
+  playlist,
   podcasts
 });
 

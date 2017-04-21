@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, ActivityIn
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/Player';
-import { truncateTitle, convertMillis } from '../helpers';
+import { convertMillis } from '../helpers';
 import PlayerSpeedModal from './PlayerSpeedModal';
 import PlayerFullSizeModal from './PlayerFullSizeModal';
 
@@ -16,7 +16,8 @@ const mapStateToProps = (state) => ({
   currentSpeed: state.player.currentSpeed,
   isModalVisible: state.player.isModalVisible,
   isFullSizeModalVisible: state.player.isFullSizeModalVisible,
-  isPlaying: state.player.isPlaying
+  isPlaying: state.player.isPlaying,
+  token: state.main.token
 });
 
 const { height, width } = Dimensions.get('window');
@@ -37,19 +38,18 @@ class Player extends Component {
       .then(status => {
         let currentTime = status.positionMillis;
         let lastPlayed = new Date();
-        this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+        this.updateCurrentEpisodeStats(this.props.currentEpisode.EpisodeId, currentTime, lastPlayed);
       })
     }
   }
 
   handlePlay = (url) => {
-    // TODO Replace hardcoded episodeId w/ real EpisodeId
     if (this.props.currentSoundInstance !== null) {
       this.props.currentSoundInstance.getStatusAsync()
         .then(status => {
           let currentTime = status.positionMillis;
           let lastPlayed = new Date();
-          this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+          this.updateCurrentEpisodeStats(this.props.currentEpisode.EpisodeId, currentTime, lastPlayed);
           this.props.currentSoundInstance.playAsync()
             .then(played => {
               this.props.dispatch(actionCreators.setPlayStatus(true));
@@ -60,7 +60,6 @@ class Player extends Component {
   }
 
   handlePause = () => {
-    // TODO Replace hardcoded episodeId w/ real EpisodeId
     this.props.currentSoundInstance.pauseAsync()
       .then(paused => {
         this.props.dispatch(actionCreators.setPlayStatus(false));
@@ -68,7 +67,7 @@ class Player extends Component {
         .then(status => {
           let currentTime = status.positionMillis;
           let lastPlayed = new Date();
-          this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+          this.updateCurrentEpisodeStats(this.props.currentEpisode.EpisodeId, currentTime, lastPlayed);
         });
       })
       .catch(error => console.log(error));
@@ -76,9 +75,12 @@ class Player extends Component {
 
   updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
     let episodeData = { episodeId, currentTime, lastPlayed };
-    fetch('http://localhost:3000/api/episodes/user-episode', {
+    fetch('http://siren-server.herokuapp.com/api/episodes/user-episode', {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
       body: JSON.stringify(episodeData)
     })
     .catch(err => console.warn(err));
@@ -207,7 +209,7 @@ class Player extends Component {
           <View style={styles.topRowMiddle}>
             {this.props.currentEpisodeTitle === 'LOADING' ?
               <ActivityIndicator animating={true} size="small" />  :
-              <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{truncateTitle(this.props.currentEpisodeTitle)}</Text>
+              <Text style={{textAlign: 'center', fontWeight: 'bold'}} numberOfLines={1} ellipsizeMode='tail'>{this.props.currentEpisodeTitle}</Text>
             }
           </View>
           <View style={styles.topRowRight}></View>

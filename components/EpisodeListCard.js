@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
+import { actionCreators as playlistActions } from '../actions/Playlist';
 import {hmsToSecondsOnly} from '../helpers';
 import moment from 'moment';
 
@@ -76,6 +77,22 @@ class EpisodeListCard extends Component {
       .then(response => console.warn('RESPONSE: ', response));
   };
 
+  toggleAddToPlaylistModal = () => {
+    this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
+    this.props.dispatch(playlistActions.setSelectedEpisode(this.props.id));
+    fetch("http://siren-server.herokuapp.com/api/playlists/add-playlist-modal", {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': this.props.token
+      }
+    })
+    .then(response => response.json())
+    .then(playlists => {
+      this.props.dispatch(playlistActions.storeAddModalPlaylists(playlists));
+    });
+  }
+
   render() {
     const {leftActionActivated, leftToggle, rightActionActivated, rightToggle} = this.props;
     return (
@@ -93,13 +110,13 @@ class EpisodeListCard extends Component {
           <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
             {rightActionActivated ?
               <Text>(( release ))</Text> :
-              <Text>Remove Episode</Text>}
+              <Text>Remove From Inbox</Text>}
           </View>
         )}
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
         onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
         onLeftActionComplete={() => {
-          this.props.dispatch(swipeActions.toggleAddToPlaylistModal());
+          this.toggleAddToPlaylistModal();
         }}
 
         onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
@@ -114,14 +131,14 @@ class EpisodeListCard extends Component {
       <View style={styles.mainView}>
         <View style={styles.topView}>
           <View style={styles.leftView}>
-            <TouchableOpacity onPress={this.props.handlePlay.bind(this, this.props.episode)}>
+            <TouchableOpacity onPress={this.props.handlePlay.bind(this, this.props.episode, this.props.id)}>
               <Image source={{uri: this.props.episode.image}} style={styles.image}/>
             </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
             <Text style={styles.date}>{moment(this.props.episode.feed.pubDate.substring(0,16)).format('ddd, DD MMM YYYY')}</Text>
-            <Text style={styles.episode} numberOfLines={1}>{this.props.episode['feed']['title']}</Text>
-            <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode.feed.subtitle}</Text>
+            <Text style={styles.episode} numberOfLines={3}>{this.props.episode['feed']['title']}</Text>
+            <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode['feed']['description']}</Text>
           </View>
         </View>
         <View style={styles.bottomView}>
