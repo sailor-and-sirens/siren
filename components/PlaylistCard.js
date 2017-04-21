@@ -1,89 +1,40 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorage} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
 import { connect } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
-import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import {hmsToSecondsOnly} from '../helpers';
-
-let _ = require('lodash');
+import { actionCreators as playlistActions } from '../actions/Playlist';
 
 const mapStateToProps = (state) => ({
-  currentEpisode: state.player.currentEpisode,
-  inbox: state.main.inbox,
   token: state.main.token,
-  leftActionActivated: state.swipe.isLeftActionActivated,
-  leftToggle: state.swipe.isLeftToggled,
-  rightActionActivated: state.swipe.isRightActionActivated
+  rightActionActivated: state.swipe.isRightActionActivated,
 });
 
-class EpisodeListCard extends Component {
-
-  renderClock = (duration) => {
-    if (duration.length < 5) {
-      duration = '00:' + duration;
-    }
-    duration = hmsToSecondsOnly(duration);
-    if (duration <= 300) {
-      return <Image source={require('../assets/clockIcons/clock5.png')} style={styles.clock} />
-    }
-    if (duration <= 900) {
-      return <Image source={require('../assets/clockIcons/clock15.png')} style={styles.clock} />
-    }
-    if (duration <= 1800) {
-      return <Image source={require('../assets/clockIcons/clock30.png')} style={styles.clock} />
-    }
-    if (duration <= 2700) {
-      return <Image source={require('../assets/clockIcons/clock45.png')} style={styles.clock} />
-    }
-    if (duration > 2700) {
-      return <Image source={require('../assets/clockIcons/clock60.png')} style={styles.clock} />
-    }
-  };
-
-  toggleLike = (id) => {
-    var inbox = _.cloneDeep(this.props.inbox);
-    inbox[id].liked = !inbox[id].liked;
-    this.props.dispatch(mainActions.toggleLike(inbox));
-    fetch("http:localhost:3000/api/users/likeEpisode", {
-      method: "POST",
+class PlaylistCard extends Component {
+  removePlaylist(playlistId){
+    fetch("http://localhost:3000/api/playlists/remove-playlist", {
+      // siren-server.herokuapp.com
+      method: "DELETE",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': this.props.token
       },
-      body: JSON.stringify({id: id, liked: !this.props.inbox[id].liked})
+      body: JSON.stringify({playlistId: playlistId})
     })
-  };
+    .then(function(data){
+      console.log('REMOVED');
+    })
+    .catch(function(error){
+      console.log('Error removing playlist: ', error);
+    })
 
-  toggleBookmark = (id) => {
-    var inbox = _.cloneDeep(this.props.inbox);
-    inbox[id].bookmark = !inbox[id].bookmark;
-    this.props.dispatch(mainActions.toggleBookmark(inbox));
-    fetch("http:localhost:3000/api/users/bookmarkEpisode", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      },
-      body: JSON.stringify({id: id, bookmark: !this.props.inbox[id].bookmark})
-    })
-  };
+  }
 
   render() {
     const {leftActionActivated, leftToggle, rightActionActivated, rightToggle} = this.props;
     return (
       <Swipeable
-        leftActionActivationDistance={200}
-        leftContent={(
-          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
-            {leftActionActivated ?
-              <Text>(( release ))</Text> :
-              <Text>Add to Playlist</Text>}
-          </View>
-        )}
         rightActionActivationDistance={200}
         rightContent={(
           <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
@@ -92,36 +43,30 @@ class EpisodeListCard extends Component {
               <Text>Remove Episode</Text>}
           </View>
         )}
-        onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
-        onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
-        onLeftActionComplete={() => {
-          this.props.dispatch(swipeActions.toggleAddToPlaylistModal());
-        }}
-
         onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
         onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
         onRightActionComplete={() => {
-            this.props.dispatch(mainActions.removeEpisodeFromInbox(this.props.id));
-            if (this.props.currentEpisode && this.props.currentEpisode.feed.enclosure.url === this.props.episode.feed.enclosure.url) {
-              this.props.handleRemovePlayingEpisode();
-            }
+          console.log('this is the playlist ud', this.props.playlist.id)
+            this.removePlaylist(this.props.playlist.id);
+            this.props.dispatch(playlistActions.removePlaylist(this.props.playlist.id));
         }}
       >
 
-
       <View style={[styles.cardContainer]}>
         <View style={[styles.image]}>
-          <Text>Pic</Text>
+            <Image source={{uri: 'http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_5639735648c34.png'}} style={styles.image}/>
         </View>
         <View style={[styles.content]}>
-          <Text>Title</Text>
-          <Text>Other stuff here</Text>
+          <Text style={styles.title}>{this.props.playlist.name}</Text>
+          {this.props.playlist.Episodes.map((episode, index) => {
+            var title = episode.title.slice(0, 25) + '...';
+            return <Text key={index}>{title}</Text>
+          })}
         </View>
         <View>
           <Text style={[styles.time]}>Time</Text>
         </View>
       </View>
-
 
     </Swipeable>
     );
@@ -133,8 +78,10 @@ const styles = StyleSheet.create({
   image: {
     height: 80,
     width: 80,
-    backgroundColor: 'grey',
-    flex: .25
+    flex: .25,
+  },
+  title:{
+    fontWeight: "500",
   },
   cardContainer: {
     flexDirection: 'row',
@@ -149,6 +96,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: .60,
+    marginLeft: 5
   },
   topView: {
     justifyContent: 'space-between',
@@ -244,4 +192,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(EpisodeListCard);
+export default connect(mapStateToProps)(PlaylistCard);

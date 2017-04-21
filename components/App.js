@@ -13,7 +13,7 @@ import ModalComponent from './Modal';
 import Authentication from './Authentication';
 import Settings from './Settings';
 import PodcastViewCard from './PodcastViewCard';
-import PlaylistCard from './PlaylistCard';
+import PlaylistList from './PlaylistList';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -58,7 +58,7 @@ class App extends Component {
           <PodcastViewCard />
         </View> :
         this.props.view === 'Playlist' ?
-        <PlaylistCard/> :
+        <PlaylistList/> :
         null
         }
         <Player />

@@ -34,6 +34,15 @@ const playlist = (state = initialState, action) => {
   if (action.type === types.UPDATE_NEW_PLAYLIST_INPUT) {
     return {...state, addNewPlaylistInputValue: action.payload}
   }
+  if (action.type === types.REMOVE_PLAYLIST) {
+    console.log('playlists before',state.playlists);
+    let updatedPlaylists = state.playlists;
+    updatedPlaylists = updatedPlaylists.filter(playlist => {
+      return playlist.id !== action.payload;
+    })
+    console.log('playlists after', updatedPlaylists);
+    return {...state, playlists: updatedPlaylists}
+  }
 
   return state;
 };
