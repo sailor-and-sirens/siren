@@ -58,16 +58,12 @@ class App extends Component {
         <View>
           <PodcastViewCard />
         </View> :
-        this.props.view === 'Playlist' ?
-        <PlaylistList/> : null
          this.props.view === 'Manage Subscriptions' ?
         <View>
           <PodcastManager />
         </View> :
-        <View>
-          <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>
-          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
-        </View>
+        this.props.view === 'Playlist' ?
+        <PlaylistList/> : null
         }
         <Player />
       </View>
