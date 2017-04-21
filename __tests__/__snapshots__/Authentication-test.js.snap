@@ -54,6 +54,7 @@ Object {
   },
   "playlist": Object {
     "addNewPlaylistInputValue": "",
+    "allplaylists": Array [],
     "isAddPlaylistModalVisible": false,
     "playlists": Array [],
     "selectedEpisodeId": null,
@@ -109,6 +110,7 @@ Object {
   },
   "playlist": Object {
     "addNewPlaylistInputValue": "",
+    "allplaylists": Array [],
     "isAddPlaylistModalVisible": false,
     "playlists": Array [],
     "selectedEpisodeId": null,
@@ -164,6 +166,7 @@ Object {
   },
   "playlist": Object {
     "addNewPlaylistInputValue": "",
+    "allplaylists": Array [],
     "isAddPlaylistModalVisible": false,
     "playlists": Array [],
     "selectedEpisodeId": null,
@@ -219,6 +222,7 @@ Object {
   },
   "playlist": Object {
     "addNewPlaylistInputValue": "",
+    "allplaylists": Array [],
     "isAddPlaylistModalVisible": false,
     "playlists": Array [],
     "selectedEpisodeId": null,
