@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
   rightActionActivated: state.swipe.isRightActionActivated,
 });
 
-class PlaylistCard extends Component {
+class PlaylistCardNoSwipe extends Component {
   removePlaylist(playlistId){
     fetch("http://siren-server.herokuapp.com/api/playlists/remove-playlist", {
       method: "DELETE",
@@ -38,23 +38,6 @@ class PlaylistCard extends Component {
   render() {
     const {rightActionActivated, rightToggle} = this.props;
     return (
-      <Swipeable
-        rightActionActivationDistance={200}
-        rightContent={(
-          <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
-            {rightActionActivated ?
-              <Text>(( release ))</Text> :
-              <Text>Remove Playlist</Text>}
-          </View>
-        )}
-        onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
-        onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
-        onRightActionComplete={() => {
-          console.log('this is the playlist ud', this.props.playlist.id)
-            this.removePlaylist(this.props.playlist.id);
-            this.props.dispatch(playlistActions.removePlaylist(this.props.playlist.id));
-        }}
-      >
 
       <View style={[styles.cardContainer]}>
         <View style={[styles.image]}>
@@ -63,7 +46,7 @@ class PlaylistCard extends Component {
         <View style={[styles.content]}>
           <Text style={styles.title}>{this.props.playlist.name}</Text>
           {this.props.playlist.Episodes.slice(0,2).map((episode, index) => {
-            var title = episode.title.slice(0, 18) + '...';
+            var title = episode.title.slice(0, 25) + '...';
             return <Text key={index}>{title}</Text>
           })}
         </View>
@@ -72,7 +55,7 @@ class PlaylistCard extends Component {
         </View>
       </View>
 
-    </Swipeable>
+
     );
   }
 
@@ -196,4 +179,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(PlaylistCard);
+export default connect(mapStateToProps)(PlaylistCardNoSwipe);

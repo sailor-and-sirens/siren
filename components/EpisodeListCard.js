@@ -20,6 +20,24 @@ const mapStateToProps = (state) => ({
 
 class EpisodeListCard extends Component {
 
+  getAllPlaylists(){
+    var that = this;
+    fetch("http://siren-server.herokuapp.com/api/playlists/get-playlists", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      }
+    })
+    .then(function(data){
+      console.log('GOT DATA')
+      var data = data.json().then(function(data){
+        that.props.dispatch(playlistActions.getPlaylists(data));
+      });
+    })
+  }
+
   renderClock = (duration) => {
     if (duration.length < 5) {
       duration = '00:' + duration;

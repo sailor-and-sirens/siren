@@ -17,6 +17,24 @@ const mapStateToProps = (state) => ({
 
 class AddPlaylistModal extends Component {
 
+  getAllPlaylists(){
+    var that = this;
+    fetch("http://siren-server.herokuapp.com/api/playlists/get-playlists", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      }
+    })
+    .then(function(data){
+      console.log('GOT DATA')
+      var data = data.json().then(function(data){
+        that.props.dispatch(playlistActions.getPlaylists(data));
+      });
+    })
+  }
+
   handleAddNewPlaylist = () => {
     let playlistData = { name: this.props.addNewPlaylistInputValue };
     fetch('http://siren-server.herokuapp.com/api/playlists/create-playlist', {
@@ -30,6 +48,7 @@ class AddPlaylistModal extends Component {
     .then(response => response.json())
     .then(playlist => {
       this.props.dispatch(playlistActions.addNewPlaylist({ name: playlistData.name, id: playlist[0].id}));
+      this.getAllPlaylists();
     })
     .catch(err => console.warn(err));
   };
@@ -48,6 +67,7 @@ class AddPlaylistModal extends Component {
       .catch(err => console.warn(err));
     }
     this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
+    this.getAllPlaylists();
   };
 
   handlePlaylistToggle = (playlistId) => {

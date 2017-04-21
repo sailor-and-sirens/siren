@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import PlaylistCard from './PlaylistCard';
+import PlaylistCardNoSwipe from './PlaylistCardNoSwipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
 
 const mapStateToProps = (state) => ({
   // currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
-  playlists: state.playlist.playlists,
+  allplaylists: state.playlist.allplaylists,
   token: state.main.token,
 });
 
@@ -23,18 +24,17 @@ class PlaylistList extends Component {
 
   getPlaylists(){
     var that = this;
-    fetch("http://localhost:3000/api/playlists/get-playlists", {
-      // siren-server.herokuapp.com
+    fetch("http://siren-server.herokuapp.com/api/playlists/get-playlists", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': this.props.token
-      },
-      body: JSON.stringify({name: this.state.text})
+      }
     })
     .then(function(data){
       var data = data.json().then(function(data){
+        console.log('DATAA', data)
         that.props.dispatch(playlistActions.getPlaylists(data));
       });
     })
@@ -42,7 +42,7 @@ class PlaylistList extends Component {
 
   addPlaylist(){
     var that = this;
-    fetch("http://localhost:3000/api/playlists/create-playlist", {
+    fetch("http://siren-server.herokuapp.com/api/playlists/create-playlist", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
@@ -60,22 +60,12 @@ class PlaylistList extends Component {
   }
 
   componentDidMount(){
-    if(!this.props.playlists.length){
+    if(!this.props.allplaylists.length){
       this.getPlaylists();
     }
   }
 
   render() {
-    // const { currentlyOpenSwipeable } = this.props;
-    // const itemProps = {
-    //   onOpen: (event, gestureState, swipeable) => {
-    //     if (currentlyOpenSwipeable && currentlyOpenSwipeable !== swipeable) {
-    //       currentlyOpenSwipeable.recenter();
-    //     }
-    //     this.props.dispatch(swipeActions.toggleOpenSwipeable(swipeable));
-    //   },
-    //   onClose: () => this.props.dispatch(swipeActions.toggleOpenSwipeable(null))
-    // };
    return (
       <View style={styles.mainView}>
         <ScrollView>
@@ -86,9 +76,14 @@ class PlaylistList extends Component {
             <Button style={styles.button} onPress={this.addPlaylist.bind(this)} underlayColor='#99d9f4' title='Create' />
           </View>
         </View>
-          {this.props.playlists.map((playlist, index) => {
+        {this.props.allplaylists.slice(0,1).map((playlist, index) => {
+          return (
+            <PlaylistCardNoSwipe key={index} playlist={playlist}/>
+          )
+        })}
+          {this.props.allplaylists.slice(1).map((playlist, index) => {
             return (
-              <PlaylistCard key={index} playlist={playlist}/>
+              <PlaylistCard key={index + 1} playlist={playlist}/>
             )
           })}
         </ScrollView>
