@@ -22,6 +22,7 @@ const mapStateToProps = (state) => ({
 
 class PodcastEpisodeList extends Component {
 
+  currentEpisodeId = null;
   newSoundInstance = null;
   timer = null;
 
@@ -86,48 +87,55 @@ class PodcastEpisodeList extends Component {
     return keys;
   }
 
-  handlePlay = (episode) => {
-    // TODO get real EpisodeId
+  handlePlay = (episode, episodeId) => {
     let newEpisodeCurrentTime = 0;
     let newEpisodeLastPlayed = new Date();
 
     if (this.newSoundInstance === null) {
-      this.addEpisodeToListeningTo(1);
-      this.updateCurrentEpisodeStats(1, newEpisodeCurrentTime, newEpisodeLastPlayed);
-      this.playNewEpisode(episode);
+      this.currentEpisodeId = episodeId;
+      this.addEpisodeToListeningTo(episodeId);
+      this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
+      this.playNewEpisode(episode, episodeId);
     } else {
       clearInterval(this.timer);
       this.newSoundInstance.getStatusAsync()
       .then(status => {
         let currentEpisodeCurrentTime = status.positionMillis;
         let currentEpisodeLastPlayed = new Date();
-        this.updateCurrentEpisodeStats(1, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
+        this.updateCurrentEpisodeStats(this.currentEpisodeId, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
       });
-      this.updateCurrentEpisodeStats(2, newEpisodeCurrentTime, newEpisodeLastPlayed);
-      this.addEpisodeToListeningTo(2);
+      this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
+      this.addEpisodeToListeningTo(episodeId);
       this.newSoundInstance.stopAsync()
         .then(stopped => {
+          this.currentEpisodeId = episodeId;
           this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
-          this.playNewEpisode(episode);
+          this.playNewEpisode(episode, episodeId);
         });
     }
   }
 
   addEpisodeToListeningTo = (episodeId) => {
-    let episodeData = { episodeId, playlistId: 2 };
-    fetch('http://siren-server.herokuapp.com/api/playlists/add-episode', {
+    let episodeData = { episodeId };
+    fetch('http://siren-server.herokuapp.com/api/playlists/listening-to', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
       body: JSON.stringify(episodeData)
     })
     .catch(err => console.warn(err));
   }
 
   removeCurrentEpisodeFromListeningTo = (episodeId) => {
-    let episodeData = { episodeId, playlistId: 2 };
-    fetch('http://siren-server.herokuapp.com/api/playlists/remove-episode', {
+    let episodeData = { episodeId };
+    fetch('http://siren-server.herokuapp.com/api/playlists/listening-to', {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
       body: JSON.stringify(episodeData)
     })
     .catch(err => console.warn(err));
@@ -143,7 +151,7 @@ class PodcastEpisodeList extends Component {
     .catch(err => console.warn(err));
   }
 
-  playNewEpisode = (episode) => {
+  playNewEpisode = (episode, episodeId) => {
     this.newSoundInstance = new Audio.Sound({ source: episode.feed.enclosure.url });
     this.props.dispatch(playerActions.createNewSoundInstance(this.newSoundInstance));
     this.props.dispatch(playerActions.setPlayStatus(true));
@@ -156,8 +164,8 @@ class PodcastEpisodeList extends Component {
             this.newSoundInstance.setPlaybackFinishedCallback(() => {
               let currentTime = null;
               let lastPlayed = new Date();
-              this.removeCurrentEpisodeFromListeningTo(1)
-              this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+              this.removeCurrentEpisodeFromListeningTo(episodeId)
+              this.updateCurrentEpisodeStats(episodeId, currentTime, lastPlayed);
             })
             this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(episode.feed.title));
             this.timer = setInterval(function() {
