@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, AsyncStorage, TextInput, Platform, Button, Aler
 import { connect } from 'react-redux';
 import { headerActions } from '../actions/Header';
 import { actionCreators } from '../actions';
-import { headerActions } from '../actions/Header';
 
 const mapStateToProps = (state) => ({
   view: state.header.view,
