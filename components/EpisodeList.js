@@ -4,9 +4,11 @@ import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
+import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import { convertMillis, hmsToSecondsOnly } from '../helpers';
+import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
 import { actionCreators as mainActions } from '../actions';
+import Spinner from 'react-native-loading-spinner-overlay';
 import EpisodeListCard from './EpisodeListCard';
 import AddPlaylistModal from './AddPlaylistModal';
 import moment from 'moment';
@@ -18,7 +20,9 @@ const mapStateToProps = (state) => ({
   filters: state.main.inboxFilters,
   inbox: state.main.inbox,
   isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
-  token: state.main.token
+  token: state.main.token,
+  filters: state.main.inboxFilters,
+  visible: state.podcasts.searchSpinner
 });
 
 class EpisodeList extends Component {
@@ -29,22 +33,7 @@ class EpisodeList extends Component {
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
-    this.updateInbox();
-  }
-
-  updateInbox = () => {
-    fetch("http://siren-server.herokuapp.com/api/users/inbox", {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': this.props.token
-      },
-    })
-    .then(inbox => inbox.json())
-    .then((inbox) => {
-      this.props.dispatch(mainActions.updateInbox(inbox));
-    })
-    .catch((err) => console.warn(err));
+    updateInbox(this.props);
   }
 
   filterEpisodes = (keys) => {
@@ -55,7 +44,7 @@ class EpisodeList extends Component {
     }
     if (this.props.filters.liked === 'notLiked') {
       keys = _.filter(keys, (key) => {
-        return this.props.inbox[key].liked === false;
+        return this.props.inbox[key].liked === false || this.props.inbox[key].liked === null;
       });
     }
     if (this.props.filters.bookmarked === 'bookmarked') {
@@ -65,7 +54,7 @@ class EpisodeList extends Component {
     }
     if (this.props.filters.bookmarked === 'notBookmarked') {
        keys = _.filter(keys, (key) => {
-        return this.props.inbox[key].bookmark === false;
+        return this.props.inbox[key].bookmark === false || this.props.inbox[key].bookmark === null;
       });
     }
     if (this.props.filters.time !== 'timeOff') {
@@ -221,7 +210,12 @@ class EpisodeList extends Component {
     };
    return (
       <View style={styles.mainView}>
-        <AddPlaylistModal />
+        <AddPlaylistModal
+          isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible}
+          handleAddToPlaylistModalClose={this.handleAddToPlaylistModalClose}
+        />
+        {this.props.visible ?
+           <Spinner visible={this.props.visible} textContent={"Loading Inbox..."} textStyle={{color: '#FFF'}} />  :
          <ScrollView style={styles.episodeList}>
           {this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
               <EpisodeListCard {...itemProps}
@@ -231,7 +225,7 @@ class EpisodeList extends Component {
                 id={key}
                 key={key}/>
             ))}
-        </ScrollView>
+        </ScrollView>}
       </View>
     );
   }

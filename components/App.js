@@ -22,7 +22,6 @@ const mapStateToProps = (state) => ({
 
 class App extends Component {
 
-
   componentWillMount() {
     AsyncStorage.getItem('id_token', (err, res) => {
       if (err || res === null) {
@@ -78,4 +77,5 @@ const styles = StyleSheet.create({
     marginBottom: 245,
   },
 });
+
 export default connect(mapStateToProps)(App);
