@@ -133,9 +133,8 @@ class EpisodeList extends Component {
   }
 
   addEpisodeToListeningTo = (episodeId) => {
-    // TODO: need special route for Listening To
-    let episodeData = { episodeId, playlistId: 2 };
-    fetch('http://siren-server.herokuapp.com/api/playlists/add-episode', {
+    let episodeData = { episodeId };
+    fetch('http://localhost:3000/api/playlists/listening-to', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
