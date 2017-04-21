@@ -71,7 +71,7 @@ class PodcastListCard extends Component {
             <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
             <View style={styles.tagAddView}>
               <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
-              <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {this.subscribePodcast(); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}/>
+              <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}/>
             </View>
           </View>
         </View>
