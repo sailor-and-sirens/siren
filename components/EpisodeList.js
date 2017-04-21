@@ -23,6 +23,7 @@ const mapStateToProps = (state) => ({
 
 class EpisodeList extends Component {
 
+  currentEpisodeId = null;
   newSoundInstance = null;
   timer = null;
 
@@ -104,11 +105,11 @@ class EpisodeList extends Component {
   }
 
   handlePlay = (episode, episodeId) => {
-    // TODO get real EpisodeId
     let newEpisodeCurrentTime = 0;
     let newEpisodeLastPlayed = new Date();
 
     if (this.newSoundInstance === null) {
+      this.currentEpisodeId = episodeId;
       this.addEpisodeToListeningTo(episodeId);
       this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
       this.playNewEpisode(episode);
@@ -118,12 +119,13 @@ class EpisodeList extends Component {
       .then(status => {
         let currentEpisodeCurrentTime = status.positionMillis;
         let currentEpisodeLastPlayed = new Date();
-        this.updateCurrentEpisodeStats(1, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
+        this.updateCurrentEpisodeStats(this.currentEpisodeId, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
       });
-      this.updateCurrentEpisodeStats(2, newEpisodeCurrentTime, newEpisodeLastPlayed);
-      this.addEpisodeToListeningTo(2);
+      this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
+      this.addEpisodeToListeningTo(episodeId);
       this.newSoundInstance.stopAsync()
         .then(stopped => {
+          this.currentEpisodeId = episodeId;
           this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
           this.playNewEpisode(episode);
         });
