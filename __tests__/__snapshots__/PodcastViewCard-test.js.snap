@@ -1,0 +1,434 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Podcast view renders a podcast's info 1`] = `
+<View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "borderBottomColor": "lightgrey",
+        "borderBottomWidth": 2,
+        "borderTopColor": "lightgrey",
+        "borderTopWidth": 2,
+        "flexDirection": "row",
+        "height": 155,
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 0.5,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "uri": "http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/600x600bb.jpg",
+          }
+        }
+        style={
+          Object {
+            "height": 146,
+            "width": 146,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "stretch",
+          "flex": 0.5,
+          "height": 150,
+          "justifyContent": "space-around",
+          "paddingBottom": 5,
+          "paddingLeft": 2,
+          "paddingRight": 2,
+          "paddingTop": 10,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={
+          Object {
+            "fontSize": 16,
+            "fontWeight": "500",
+          }
+        }
+      >
+        Note to Self
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={
+          Object {
+            "fontSize": 13,
+            "fontWeight": "400",
+            "marginBottom": 5,
+          }
+        }
+      >
+        WNYC Studios
+      </Text>
+      <ScrollView
+        style={
+          Object {
+            "marginBottom": 4,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 12,
+            }
+          }
+        >
+          Podcast description goes here. There are many show details that appear here. Guests, topics, info, galore! Even more info. These could be quite long.
+        </Text>
+      </ScrollView>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 4,
+            "paddingRight": 10,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "alignSelf": "flex-start",
+              "backgroundColor": "#f4a442",
+              "marginTop": 6,
+              "padding": 2,
+              "textAlign": "center",
+              "width": 130,
+            }
+          }
+        >
+           
+          Tech News
+           
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginBottom": 250,
+      }
+    }
+  >
+    <ScrollView>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            leftActionActivationDistance={200}
+            leftActionReleaseAnimationConfig={null}
+            leftActionReleaseAnimationFn={null}
+            leftButtonWidth={75}
+            leftButtonsActivationDistance={75}
+            leftButtonsCloseReleaseAnimationConfig={null}
+            leftButtonsCloseReleaseAnimationFn={null}
+            leftButtonsOpenReleaseAnimationConfig={null}
+            leftButtonsOpenReleaseAnimationFn={null}
+            onLayout={[Function]}
+            onLeftActionActivate={[Function]}
+            onLeftActionComplete={[Function]}
+            onLeftActionDeactivate={[Function]}
+            onLeftActionRelease={[Function]}
+            onLeftButtonsActivate={[Function]}
+            onLeftButtonsCloseComplete={[Function]}
+            onLeftButtonsCloseRelease={[Function]}
+            onLeftButtonsDeactivate={[Function]}
+            onLeftButtonsOpenComplete={[Function]}
+            onLeftButtonsOpenRelease={[Function]}
+            onMoveShouldSetResponder={[Function]}
+            onMoveShouldSetResponderCapture={[Function]}
+            onPanAnimatedValueRef={[Function]}
+            onRef={[Function]}
+            onResponderEnd={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderReject={[Function]}
+            onResponderRelease={[Function]}
+            onResponderStart={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onRightActionActivate={[Function]}
+            onRightActionComplete={[Function]}
+            onRightActionDeactivate={[Function]}
+            onRightActionRelease={[Function]}
+            onRightButtonsActivate={[Function]}
+            onRightButtonsCloseComplete={[Function]}
+            onRightButtonsCloseRelease={[Function]}
+            onRightButtonsDeactivate={[Function]}
+            onRightButtonsOpenComplete={[Function]}
+            onRightButtonsOpenRelease={[Function]}
+            onStartShouldSetResponder={[Function]}
+            onStartShouldSetResponderCapture={[Function]}
+            onSwipeComplete={[Function]}
+            onSwipeMove={[Function]}
+            onSwipeRelease={[Function]}
+            onSwipeStart={[Function]}
+            rightActionActivationDistance={125}
+            rightActionReleaseAnimationConfig={null}
+            rightActionReleaseAnimationFn={null}
+            rightButtonWidth={75}
+            rightButtonsActivationDistance={75}
+            rightButtonsCloseReleaseAnimationConfig={null}
+            rightButtonsCloseReleaseAnimationFn={null}
+            rightButtonsOpenReleaseAnimationConfig={null}
+            rightButtonsOpenReleaseAnimationFn={null}
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                },
+                undefined,
+              ]
+            }
+            swipeReleaseAnimationConfig={
+              Object {
+                "duration": 250,
+                "easing": [Function],
+                "toValue": Object {
+                  "x": 0,
+                  "y": 0,
+                },
+              }
+            }
+            swipeReleaseAnimationFn={[Function]}
+            swipeStartMinDistance={15}
+          >
+            <View
+              style={
+                Object {
+                  "marginLeft": -0,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0,
+                    },
+                  ],
+                  "width": 0,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "flex-end",
+                      "flex": 1,
+                      "justifyContent": "center",
+                      "paddingRight": 20,
+                    },
+                    Object {
+                      "backgroundColor": "#42f4c5",
+                    },
+                  ]
+                }
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                >
+                  Add to Inbox
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                  "transform": Array [
+                    Object {
+                      "translateX": 0,
+                    },
+                  ],
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "borderBottomColor": "lightgrey",
+                    "borderBottomWidth": 2,
+                    "borderTopColor": "lightgrey",
+                    "height": 100,
+                    "justifyContent": "space-between",
+                    "marginLeft": 6,
+                    "marginRight": 2,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "flex": 0.75,
+                      "flexDirection": "row",
+                      "height": 80,
+                      "justifyContent": "space-between",
+                      "marginBottom": 4,
+                      "marginTop": 4,
+                      "paddingRight": 5,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "stretch",
+                        "flex": 0.75,
+                        "height": 80,
+                        "justifyContent": "space-around",
+                        "paddingLeft": 10,
+                      }
+                    }
+                  >
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="tail"
+                      numberOfLines={1}
+                      style={
+                        Object {
+                          "fontSize": 14,
+                          "fontWeight": "500",
+                          "marginBottom": 5,
+                        }
+                      }
+                    >
+                      CARTA: Awareness of Death and Personal Mortality: Implications for Anthropogeny – Mind Over Reality Transition: The Evolution of Human Mortality Denial; Human Mortality Denial and Terror Management Theory; The Lure of Death: Suicide as a Uniquely Human Phenomenon
+                    </Text>
+                    <Text
+                      accessible={true}
+                      allowFontScaling={true}
+                      ellipsizeMode="tail"
+                      numberOfLines={2}
+                      style={
+                        Object {
+                          "fontSize": 12,
+                          "fontWeight": "400",
+                        }
+                      }
+                    >
+                      Ajit Varki explores the human capacity for denial of reality and how that has shaped our evolution; Sheldon Solomon different philosophies surrounding mortality; and Nicholas Humphrey provides a comprehensive look at the motivations for, prevalence of and reactions to the uniquely human act for suicide.  Series: &quot;CARTA - Center for Academic Research and Training in Anthropogeny&quot; [Humanities] [Science] [Show ID: 32048]
+                    </Text>
+                    <View
+                      style={
+                        Object {
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                          "marginBottom": 5,
+                          "marginTop": 8,
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <Text
+                        accessible={true}
+                        allowFontScaling={true}
+                        ellipsizeMode="tail"
+                        style={
+                          Object {
+                            "color": "grey",
+                            "fontSize": 13,
+                            "fontWeight": "400",
+                          }
+                        }
+                      >
+                        Wed, 24 May 2017
+                      </Text>
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                            "marginBottom": 3,
+                            "marginRight": 10,
+                          }
+                        }
+                      >
+                        <Image
+                          source={1}
+                          style={
+                            Object {
+                              "height": 15,
+                              "marginRight": 7,
+                              "width": 15,
+                            }
+                          }
+                        />
+                        <Text
+                          accessible={true}
+                          allowFontScaling={true}
+                          ellipsizeMode="tail"
+                          style={
+                            Object {
+                              "color": "grey",
+                              "fontSize": 13,
+                              "fontWeight": "400",
+                              "marginRight": 5,
+                            }
+                          }
+                        >
+                          00:57:50
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
+  </View>
+</View>
+`;

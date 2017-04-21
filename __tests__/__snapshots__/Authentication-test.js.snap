@@ -67,6 +67,7 @@ Object {
     "podcastEpisodes": Array [],
     "searchSpinner": false,
     "searchText": "",
+    "subscriptions": Array [],
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
@@ -123,6 +124,7 @@ Object {
     "podcastEpisodes": Array [],
     "searchSpinner": false,
     "searchText": "",
+    "subscriptions": Array [],
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
@@ -179,6 +181,7 @@ Object {
     "podcastEpisodes": Array [],
     "searchSpinner": false,
     "searchText": "",
+    "subscriptions": Array [],
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
@@ -235,6 +238,7 @@ Object {
     "podcastEpisodes": Array [],
     "searchSpinner": false,
     "searchText": "",
+    "subscriptions": Array [],
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
