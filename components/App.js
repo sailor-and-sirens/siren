@@ -14,6 +14,7 @@ import Authentication from './Authentication';
 import Settings from './Settings';
 import PodcastViewCard from './PodcastViewCard';
 import PlaylistList from './PlaylistList';
+import PodcastManager from './PodcastManager';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -58,8 +59,15 @@ class App extends Component {
           <PodcastViewCard />
         </View> :
         this.props.view === 'Playlist' ?
-        <PlaylistList/> :
-        null
+        <PlaylistList/> : null
+         this.props.view === 'Manage Subscriptions' ?
+        <View>
+          <PodcastManager />
+        </View> :
+        <View>
+          <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>
+          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
+        </View>
         }
         <Player />
       </View>
