@@ -2,30 +2,39 @@ import { Audio } from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, Image, ScrollView, Linking } from 'react-native';
 import { Ionicons, SimpleLineIcons, MaterialIcons } from '@expo/vector-icons';
+import { toggleBookmark, toggleLike } from '../helpers';
 
 const { height, width } = Dimensions.get('window');
-
-const episode = {
-  summary: "Data mining is nothing new in presidential campaigns. But in 2016, the Trump team took voter research to a new level. They hired consultants called Cambridge Analytica, which says it has thousands of data points on every American. They also claim they can use that data to create personality profiles. Assessments of each of our hopes, fears, and desires - and target us accordingly.\n\nThis is the science of psychometrics. And, as the story went, Cambridge Analytica’s dark digital arts helped Trump win, with ads designed to ring every reader’s individual bell.\n\nOr, did they? Over the past few weeks, reporters and data experts started asking questions. Where did this data come from? Could the Trump campaign really execute a micro-targeted social media strategy? Did they have a secret sauce? Or was it just more ketchup?\n\nThis week, psychometrics and the future of campaign data-mining. With Matt Oczkowski of Cambridge Analytica, psychometrics pioneer Michal Kosinski, and Nicholas Confessore of the New York Times.\n\nAnd if you're curious about Apply Magic Sauce, the psychometric tool we all tried during the Privacy Paradox, you can find it right here."
-};
 
 const PlayerFullSizeModal = (props) => {
   let episodeImage = '';
   let episodeLink;
 
   let episodeBookmark = () => {
-    if (props.episode.bookmark) {
-      return {name: 'ios-bookmark', color: 'gray'}
+    let {inbox, dispatch, token } = props;
+    let _props = {inbox, dispatch, token}
+    if (props.episode.bookmark === true) {
+      return (
+        <Ionicons style={styles.actionIcon} size={35} color='gray' name="ios-bookmark" onPress={()=>(toggleBookmark(props.episode.EpisodeId, _props))}/>
+      )
     } else {
-      return {name: 'ios-bookmark-outline', color: 'gray'}
+      return (
+        <Ionicons style={styles.actionIcon} size={35} color='gray' name="ios-bookmark-outline" onPress={() =>(toggleBookmark(props.episode.EpisodeId, _props))}/>
+      )
     }
   }
 
   let episodeLike = () => {
-    if (props.episode.liked) {
-      return {name: 'ios-heart', color: 'gray'}
+    let {inbox, dispatch, token } = props;
+    let _props = {inbox, dispatch, token}
+    if (props.episode.liked === true) {
+      return (
+        <Ionicons style={styles.actionIcon} size={35} color='grey' name="ios-heart" onPress={() =>(toggleLike(props.episode.EpisodeId, _props))}/>
+      )
     } else {
-      return {name: 'ios-heart-outline', color: 'gray'}
+      return (
+        <Ionicons style={styles.actionIcon} size={35} color='grey' name="ios-heart-outline" onPress={() =>(toggleLike(props.episode.EpisodeId, _props))}/>
+      )
     }
   }
 
@@ -79,12 +88,12 @@ const PlayerFullSizeModal = (props) => {
           <View style={styles.actionIconsWrapper}>
             {episodeLink}
             <MaterialIcons style={styles.actionIcon} name="playlist-play" size={35} color={'gray'}></MaterialIcons>
-            <Ionicons style={styles.actionIcon} name={episodeBookmark().name} size={35} color={episodeBookmark().color}></Ionicons>
-            <Ionicons style={styles.actionIcon} name={episodeLike().name} size={35} color={episodeLike().color}></Ionicons>
+            {episodeBookmark()}
+            {episodeLike()}
           </View>
           <Text style={styles.episodeTitle}>{props.episode.feed.title}</Text>
           <Text style={styles.summaryHeading}>Episode Summary</Text>
-          <Text>{episode.summary}</Text>
+          <Text>{props.episode.feed.description}</Text>
         </ScrollView>
         <View style={styles.playerWrapper}>
           <View style={styles.playerControls}>

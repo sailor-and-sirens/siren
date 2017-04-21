@@ -25,7 +25,7 @@ class Filter extends Component {
   render() {
    return (
       <View style={styles.mainView}>
-        <ScrollView style={{height: '90%', marginBottom: 10}}>
+        <ScrollView style={styles.scrollView}>
           <View style={styles.filterBar}>
             <Ionicons style={styles.icon} size={30} color='grey' name="ios-heart-outline"/>
             <Picker itemStyle={styles.pickerItem} style={styles.picker}
@@ -82,6 +82,14 @@ class Filter extends Component {
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    ...Platform.select({
+      ios: {
+        height: '70%',
+        marginBottom: 10
+      },
+    }),
+  },
   mainView: {
     alignItems: 'center',
     justifyContent: 'space-between',

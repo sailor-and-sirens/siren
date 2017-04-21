@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/index';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as mainActions } from '../actions';
+import { subscribePodcast } from '../helpers';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const mapStateToProps = (state) => ({
@@ -16,33 +17,6 @@ const mapStateToProps = (state) => ({
 
 
 class PodcastViewCard extends Component {
-
-  subscribePodcast = () => {
-    fetch("http://siren-server.herokuapp.com/api/podcasts/", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      },
-      body: JSON.stringify(this.props.podcast)
-    })
-    .then(() => {
-      fetch("http://siren-server.herokuapp.com/api/users/inbox", {
-        method: "GET",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': this.props.token
-        },
-      })
-    })
-    .then(inbox => inbox.json())
-    .then((inbox) => {
-      this.props.dispatch(mainActions.updateInbox(inbox));
-    })
-    .catch((err) => console.log(err));
-  };
 
   render() {
     return (
@@ -59,7 +33,7 @@ class PodcastViewCard extends Component {
             </ScrollView>
             <View style={styles.tagAddView}>
               <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
-              <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {this.subscribePodcast(); Alert.alert('Subscribed to ' + this.props.podcast.collectionName);}}/>
+              <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName);}}/>
             </View>
           </View>
         </View>

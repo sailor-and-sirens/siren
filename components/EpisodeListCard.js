@@ -6,10 +6,9 @@ import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
-import {hmsToSecondsOnly} from '../helpers';
+import { hmsToSecondsOnly, toggleBookmark, toggleLike } from '../helpers';
+// import { toggleAddToPlaylistModal } from '../helpers/playlistHelpers';
 import moment from 'moment';
-
-let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
   currentEpisode: state.player.currentEpisode,
@@ -42,39 +41,6 @@ class EpisodeListCard extends Component {
     if (duration > 2700) {
       return <Image source={require('../assets/clockIcons/clock60.png')} style={styles.clock} />
     }
-  };
-
-  toggleLike = (id) => {
-    id = parseInt(id);
-    var inbox = _.cloneDeep(this.props.inbox);
-    inbox[id].liked = !inbox[id].liked;
-    this.props.dispatch(mainActions.toggleLike(inbox));
-    fetch("http://siren-server.herokuapp.com/api/users/likeEpisode", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      },
-      body: JSON.stringify({id: id, liked: !this.props.inbox[id].liked})
-    })
-  };
-
-  toggleBookmark = (id) => {
-    id = parseInt(id);
-    var inbox = _.cloneDeep(this.props.inbox);
-    inbox[id].bookmark = !inbox[id].bookmark;
-    this.props.dispatch(mainActions.toggleBookmark(inbox));
-    fetch("http://siren-server.herokuapp.com/api/users/bookmarkEpisode", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      },
-      body: JSON.stringify({id: id, bookmark: !this.props.inbox[id].bookmark})
-    })
-      .then(response => console.warn('RESPONSE: ', response));
   };
 
   toggleAddToPlaylistModal = () => {
@@ -116,6 +82,7 @@ class EpisodeListCard extends Component {
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
         onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
         onLeftActionComplete={() => {
+          // toggleAddToPlaylistModal(this.props.dispatch, this.props.id, this.props.token);
           this.toggleAddToPlaylistModal();
         }}
 
@@ -138,7 +105,9 @@ class EpisodeListCard extends Component {
           <View style={styles.rightView}>
             <Text style={styles.date}>{moment(this.props.episode.feed.pubDate.substring(0,16)).format('ddd, DD MMM YYYY')}</Text>
             <Text style={styles.episode} numberOfLines={3}>{this.props.episode['feed']['title']}</Text>
-            {/* <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode['feed']['description']}</Text> */}
+            <Text style={styles.subtitle} numberOfLines={2}>
+              {this.props.episode['feed']['description']}
+            </Text>
           </View>
         </View>
         <View style={styles.bottomView}>
@@ -148,12 +117,12 @@ class EpisodeListCard extends Component {
             <Text style={styles.time}>{this.props.episode.feed.duration}</Text>
           </View>
           {this.props.episode.bookmark === true ?
-          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark" onPress={()=>(this.toggleBookmark(this.props.id))}/> :
-          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark-outline" onPress={() =>(this.toggleBookmark(this.props.id))}/>
+          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark" onPress={()=>(toggleBookmark(this.props.id, this.props))}/> :
+          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark-outline" onPress={() =>(toggleBookmark(this.props.id, this.props))}/>
           }
           {this.props.episode.liked === true ?
-          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart" onPress={() =>(this.toggleLike(this.props.id))}/> :
-          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart-outline" onPress={() =>(this.toggleLike(this.props.id))}/>
+          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart" onPress={() =>(toggleLike(this.props.id, this.props))}/> :
+          <Ionicons style={styles.favorite} size={25} color='grey' name="ios-heart-outline" onPress={() =>(toggleLike(this.props.id, this.props))}/>
           }
         </View>
       </View>
@@ -203,6 +172,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: 'lightgrey',
     borderTopColor: 'lightgrey',
+    marginLeft: 3,
   },
   image: {
     height: 80,

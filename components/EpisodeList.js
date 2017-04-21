@@ -4,9 +4,11 @@ import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
+import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import { convertMillis, hmsToSecondsOnly } from '../helpers';
+import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
 import { actionCreators as mainActions } from '../actions';
+import Spinner from 'react-native-loading-spinner-overlay';
 import EpisodeListCard from './EpisodeListCard';
 import AddPlaylistModal from './AddPlaylistModal';
 import moment from 'moment';
@@ -18,32 +20,20 @@ const mapStateToProps = (state) => ({
   filters: state.main.inboxFilters,
   inbox: state.main.inbox,
   isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
-  token: state.main.token
+  token: state.main.token,
+  filters: state.main.inboxFilters,
+  visible: state.podcasts.searchSpinner
 });
 
 class EpisodeList extends Component {
 
+  currentEpisodeId = null;
   newSoundInstance = null;
   timer = null;
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
-    this.updateInbox();
-  }
-
-  updateInbox = () => {
-    fetch("http://siren-server.herokuapp.com/api/users/inbox", {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': this.props.token
-      },
-    })
-    .then(inbox => inbox.json())
-    .then((inbox) => {
-      this.props.dispatch(mainActions.updateInbox(inbox));
-    })
-    .catch((err) => console.warn(err));
+    updateInbox(this.props);
   }
 
   filterEpisodes = (keys) => {
@@ -54,7 +44,7 @@ class EpisodeList extends Component {
     }
     if (this.props.filters.liked === 'notLiked') {
       keys = _.filter(keys, (key) => {
-        return this.props.inbox[key].liked === false;
+        return this.props.inbox[key].liked === false || this.props.inbox[key].liked === null;
       });
     }
     if (this.props.filters.bookmarked === 'bookmarked') {
@@ -64,7 +54,7 @@ class EpisodeList extends Component {
     }
     if (this.props.filters.bookmarked === 'notBookmarked') {
        keys = _.filter(keys, (key) => {
-        return this.props.inbox[key].bookmark === false;
+        return this.props.inbox[key].bookmark === false || this.props.inbox[key].bookmark === null;
       });
     }
     if (this.props.filters.time !== 'timeOff') {
@@ -104,36 +94,36 @@ class EpisodeList extends Component {
   }
 
   handlePlay = (episode, episodeId) => {
-    // TODO get real EpisodeId
     let newEpisodeCurrentTime = 0;
     let newEpisodeLastPlayed = new Date();
 
     if (this.newSoundInstance === null) {
+      this.currentEpisodeId = episodeId;
       this.addEpisodeToListeningTo(episodeId);
       this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
-      this.playNewEpisode(episode);
+      this.playNewEpisode(episode, episodeId);
     } else {
       clearInterval(this.timer);
       this.newSoundInstance.getStatusAsync()
       .then(status => {
         let currentEpisodeCurrentTime = status.positionMillis;
         let currentEpisodeLastPlayed = new Date();
-        this.updateCurrentEpisodeStats(1, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
+        this.updateCurrentEpisodeStats(this.currentEpisodeId, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
       });
-      this.updateCurrentEpisodeStats(2, newEpisodeCurrentTime, newEpisodeLastPlayed);
-      this.addEpisodeToListeningTo(2);
+      this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
+      this.addEpisodeToListeningTo(episodeId);
       this.newSoundInstance.stopAsync()
         .then(stopped => {
+          this.currentEpisodeId = episodeId;
           this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
-          this.playNewEpisode(episode);
+          this.playNewEpisode(episode, episodeId);
         });
     }
   }
 
   addEpisodeToListeningTo = (episodeId) => {
-    // TODO: need special route for Listening To
-    let episodeData = { episodeId, playlistId: 2 };
-    fetch('http://siren-server.herokuapp.com/api/playlists/add-episode', {
+    let episodeData = { episodeId };
+    fetch('http://siren-server.herokuapp.com/api/playlists/listening-to', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -145,9 +135,8 @@ class EpisodeList extends Component {
   }
 
   removeCurrentEpisodeFromListeningTo = (episodeId) => {
-    // TODO: need special route for Listening To
-    let episodeData = { episodeId, playlistId: 2 };
-    fetch('http://siren-server.herokuapp.com/api/playlists/remove-episode', {
+    let episodeData = { episodeId };
+    fetch('http://siren-server.herokuapp.com/api/playlists/listening-to', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -171,7 +160,7 @@ class EpisodeList extends Component {
     .catch(err => console.warn(err));
   }
 
-  playNewEpisode = (episode) => {
+  playNewEpisode = (episode, episodeId) => {
     this.newSoundInstance = new Audio.Sound({ source: episode.feed.enclosure.url });
     this.props.dispatch(playerActions.createNewSoundInstance(this.newSoundInstance));
     this.props.dispatch(playerActions.setPlayStatus(true));
@@ -184,8 +173,8 @@ class EpisodeList extends Component {
             this.newSoundInstance.setPlaybackFinishedCallback(() => {
               let currentTime = null;
               let lastPlayed = new Date();
-              this.removeCurrentEpisodeFromListeningTo(1)
-              this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+              this.removeCurrentEpisodeFromListeningTo(episodeId)
+              this.updateCurrentEpisodeStats(episodeId, currentTime, lastPlayed);
             })
             this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(episode.feed.title));
             this.timer = setInterval(function() {
@@ -221,7 +210,12 @@ class EpisodeList extends Component {
     };
    return (
       <View style={styles.mainView}>
-        <AddPlaylistModal />
+        <AddPlaylistModal
+          isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible}
+          handleAddToPlaylistModalClose={this.handleAddToPlaylistModalClose}
+        />
+        {this.props.visible ?
+           <Spinner visible={this.props.visible} textContent={"Loading Inbox..."} textStyle={{color: '#FFF'}} />  :
          <ScrollView style={styles.episodeList}>
           {this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
               <EpisodeListCard {...itemProps}
@@ -231,7 +225,7 @@ class EpisodeList extends Component {
                 id={key}
                 key={key}/>
             ))}
-        </ScrollView>
+        </ScrollView>}
       </View>
     );
   }

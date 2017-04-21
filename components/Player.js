@@ -14,9 +14,11 @@ const mapStateToProps = (state) => ({
   currentPlayingTime: state.player.currentPlayingTime,
   currentSoundInstance: state.player.currentSoundInstance,
   currentSpeed: state.player.currentSpeed,
+  inbox: state.main.inbox,
   isModalVisible: state.player.isModalVisible,
   isFullSizeModalVisible: state.player.isFullSizeModalVisible,
-  isPlaying: state.player.isPlaying
+  isPlaying: state.player.isPlaying,
+  token: state.main.token
 });
 
 const { height, width } = Dimensions.get('window');
@@ -37,19 +39,18 @@ class Player extends Component {
       .then(status => {
         let currentTime = status.positionMillis;
         let lastPlayed = new Date();
-        this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+        this.updateCurrentEpisodeStats(this.props.currentEpisode.EpisodeId, currentTime, lastPlayed);
       })
     }
   }
 
   handlePlay = (url) => {
-    // TODO Replace hardcoded episodeId w/ real EpisodeId
     if (this.props.currentSoundInstance !== null) {
       this.props.currentSoundInstance.getStatusAsync()
         .then(status => {
           let currentTime = status.positionMillis;
           let lastPlayed = new Date();
-          this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+          this.updateCurrentEpisodeStats(this.props.currentEpisode.EpisodeId, currentTime, lastPlayed);
           this.props.currentSoundInstance.playAsync()
             .then(played => {
               this.props.dispatch(actionCreators.setPlayStatus(true));
@@ -60,7 +61,6 @@ class Player extends Component {
   }
 
   handlePause = () => {
-    // TODO Replace hardcoded episodeId w/ real EpisodeId
     this.props.currentSoundInstance.pauseAsync()
       .then(paused => {
         this.props.dispatch(actionCreators.setPlayStatus(false));
@@ -68,7 +68,7 @@ class Player extends Component {
         .then(status => {
           let currentTime = status.positionMillis;
           let lastPlayed = new Date();
-          this.updateCurrentEpisodeStats(1, currentTime, lastPlayed);
+          this.updateCurrentEpisodeStats(this.props.currentEpisode.EpisodeId, currentTime, lastPlayed);
         });
       })
       .catch(error => console.log(error));
@@ -181,7 +181,8 @@ class Player extends Component {
         <PlayerFullSizeModal
           currentPlayingTime={this.props.currentPlayingTime}
           currentSpeed={this.props.currentSpeed}
-          episode={this.props.currentEpisode}
+          dispatch={this.props.dispatch}
+          episode={this.props.inbox[this.props.currentEpisode.EpisodeId]}
           handleFullSizeModalClose={this.handleFullSizeModalClose}
           handlePlay={this.handlePlay}
           handlePause={this.handlePause}
@@ -191,8 +192,10 @@ class Player extends Component {
           handleSkipToEnd={this.handleSkipToEnd}
           handleIncreaseSpeed={this.handleIncreaseSpeed}
           handleDecreaseSpeed={this.handleDecreaseSpeed}
+          inbox={this.props.inbox}
           isFullSizeModalVisible={this.props.isFullSizeModalVisible}
           isPlaying={this.props.isPlaying}
+          token={this.props.token}
         />
       )
 
