@@ -6,7 +6,8 @@ import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
-import {hmsToSecondsOnly, toggleBookmark, toggleLike} from '../helpers';
+import { hmsToSecondsOnly, toggleBookmark, toggleLike } from '../helpers';
+// import { toggleAddToPlaylistModal } from '../helpers/playlistHelpers';
 import moment from 'moment';
 
 const mapStateToProps = (state) => ({
@@ -81,6 +82,7 @@ class EpisodeListCard extends Component {
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
         onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
         onLeftActionComplete={() => {
+          // toggleAddToPlaylistModal(this.props.dispatch, this.props.id, this.props.token);
           this.toggleAddToPlaylistModal();
         }}
 
