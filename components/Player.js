@@ -182,7 +182,7 @@ class Player extends Component {
           currentPlayingTime={this.props.currentPlayingTime}
           currentSpeed={this.props.currentSpeed}
           dispatch={this.props.dispatch}
-          episode={this.props.currentEpisode}
+          episode={this.props.inbox[this.props.currentEpisode.EpisodeId]}
           handleFullSizeModalClose={this.handleFullSizeModalClose}
           handlePlay={this.handlePlay}
           handlePause={this.handlePause}
