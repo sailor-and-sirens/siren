@@ -52,6 +52,13 @@ Object {
     "isModalVisible": false,
     "isPlaying": false,
   },
+  "playlist": Object {
+    "addNewPlaylistInputValue": "",
+    "isAddPlaylistModalVisible": false,
+    "playlists": Array [],
+    "selectedEpisodeId": null,
+    "selectedPlaylistId": null,
+  },
   "podcasts": Object {
     "currentPodcast": null,
     "episodesLoading": false,
@@ -62,7 +69,6 @@ Object {
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
-    "isAddPlaylistModalVisible": false,
     "isLeftActionActivated": false,
     "isLeftToggled": false,
     "isRightActionActivated": false,
@@ -101,6 +107,13 @@ Object {
     "isModalVisible": false,
     "isPlaying": false,
   },
+  "playlist": Object {
+    "addNewPlaylistInputValue": "",
+    "isAddPlaylistModalVisible": false,
+    "playlists": Array [],
+    "selectedEpisodeId": null,
+    "selectedPlaylistId": null,
+  },
   "podcasts": Object {
     "currentPodcast": null,
     "episodesLoading": false,
@@ -111,7 +124,6 @@ Object {
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
-    "isAddPlaylistModalVisible": false,
     "isLeftActionActivated": false,
     "isLeftToggled": false,
     "isRightActionActivated": false,
@@ -150,6 +162,13 @@ Object {
     "isModalVisible": false,
     "isPlaying": false,
   },
+  "playlist": Object {
+    "addNewPlaylistInputValue": "",
+    "isAddPlaylistModalVisible": false,
+    "playlists": Array [],
+    "selectedEpisodeId": null,
+    "selectedPlaylistId": null,
+  },
   "podcasts": Object {
     "currentPodcast": null,
     "episodesLoading": false,
@@ -160,7 +179,6 @@ Object {
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
-    "isAddPlaylistModalVisible": false,
     "isLeftActionActivated": false,
     "isLeftToggled": false,
     "isRightActionActivated": false,
@@ -199,6 +217,13 @@ Object {
     "isModalVisible": false,
     "isPlaying": false,
   },
+  "playlist": Object {
+    "addNewPlaylistInputValue": "",
+    "isAddPlaylistModalVisible": false,
+    "playlists": Array [],
+    "selectedEpisodeId": null,
+    "selectedPlaylistId": null,
+  },
   "podcasts": Object {
     "currentPodcast": null,
     "episodesLoading": false,
@@ -209,7 +234,6 @@ Object {
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
-    "isAddPlaylistModalVisible": false,
     "isLeftActionActivated": false,
     "isLeftToggled": false,
     "isRightActionActivated": false,
