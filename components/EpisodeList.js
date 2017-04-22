@@ -190,7 +190,6 @@ class EpisodeList extends Component {
     if (playingEpisode && playingEpisode.feed.enclosure.url === selectedEpisode.feed.enclosure.url) {
       this.handleRemovePlayingEpisode();
     }
-    // TODO full size player causing error when playing episode is removed
 
     let episodeData = { episodeId: id };
     fetch('http://siren-server.herokuapp.com/api/episodes/user-episode-inbox', {
