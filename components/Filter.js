@@ -80,7 +80,7 @@ class Filter extends Component {
           </Picker>
           </View>
           <View style={styles.filterBar}>
-          <Ionicons style={styles.icon} size={30} color='grey' name="ios-pricetag-outline"/>
+          <Ionicons style={styles.icon} size={30} color='grey' name="ios-list-box-outline"/>
           <Picker style={styles.picker}
                 selectedValue={this.props.filters.playlist}
                 onValueChange={(value, i) => {this.props.dispatch(actionCreators.updatePlaylistFilter(value))}}>
