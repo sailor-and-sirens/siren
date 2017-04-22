@@ -58,19 +58,19 @@ class PodcastManagerCard extends Component {
             onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
             onRightActionComplete={() => {
               this.unsubscribe(this.props.id);
-              Alert.alert('Unsubscribed from ' + this.props.podcast.name);
+              Alert.alert('Unsubscribed from ' + this.props.podcast['name']);
             }}
           >
         <View style={styles.mainView}>
           <View style={styles.leftView}>
             <TouchableOpacity onPress={() => {this.getEpisodes()}}>
-              <Image source={{uri: this.props.podcast.artworkUrl}} style={styles.image}/>
+              <Image source={{uri: this.props.podcast['artworkUrl']}} style={styles.image}/>
             </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
-            <Text style={styles.title} numberOfLines={1}>{this.props.podcast.name}</Text>
-            <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
-            <Text style={styles.date}> Added {moment(this.props.podcast.createdAt).format('ddd, DD MMM YYYY')} </Text>
+            <Text style={styles.title} numberOfLines={1}>{this.props.podcast['name']}</Text>
+            <Text style={styles.artist} numberOfLines={1}>{this.props.podcast['artistName']}</Text>
+            <Text style={styles.date}> Added {moment(this.props.podcast['createdAt']).format('ddd, DD MMM YYYY')} </Text>
           </View>
         </View>
       </Swipeable>
