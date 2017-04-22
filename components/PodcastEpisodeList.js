@@ -22,6 +22,7 @@ const mapStateToProps = (state) => ({
 
 class PodcastEpisodeList extends Component {
 // <<<<<<< HEAD
+//I DONT THINK ANY OF THIS IS NEEDED, BUT LEAVING FOR NOW IN CASE IT IS - Bryce Hillman Dooley 2017
 // =======
 //
 //   newSoundInstance = null;
