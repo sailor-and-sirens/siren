@@ -46,10 +46,11 @@ class AddPlaylistModal extends Component {
         },
         body: JSON.stringify(episodeData)
       })
+      .then(() => getAllPlaylists(this.props))
       .catch(err => console.warn(err));
     }
     this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
-    getAllPlaylists(this.props);
+
   };
 
   handlePlaylistToggle = (playlistId) => {

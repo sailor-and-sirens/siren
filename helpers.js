@@ -127,7 +127,6 @@ export const toggleBookmark = (id, props) => {
   };
 
 export const getAllPlaylists = (props) => {
-    var that = this;
     fetch("http://siren-server.herokuapp.com/api/playlists/get-playlists", {
       method: "POST",
       headers: {
@@ -137,7 +136,6 @@ export const getAllPlaylists = (props) => {
       }
     })
     .then(function(data){
-      console.log('GOT DATA')
       var data = data.json().then(function(data){
         props.dispatch(playlistActions.getPlaylists(data));
       });
