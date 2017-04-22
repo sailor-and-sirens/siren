@@ -33,6 +33,7 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
+      "playlist": "All",
       "tag": "All",
       "time": "timeOff",
     },
@@ -90,6 +91,7 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
+      "playlist": "All",
       "tag": "All",
       "time": "timeOff",
     },
@@ -147,6 +149,7 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
+      "playlist": "All",
       "tag": "All",
       "time": "timeOff",
     },
@@ -204,6 +207,7 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
+      "playlist": "All",
       "tag": "All",
       "time": "timeOff",
     },

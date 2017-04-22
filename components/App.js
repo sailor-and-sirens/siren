@@ -65,8 +65,9 @@ class App extends Component {
         <View>
           <PodcastManager />
         </View> :
-        this.props.view === 'Playlist' ?
-        <PlaylistList/> : null
+        this.props.view === 'Playlists' ?
+        <PlaylistList/> :
+        <EpisodeList/>
         }
         <AddPlaylistModal isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible} />
         <Player />

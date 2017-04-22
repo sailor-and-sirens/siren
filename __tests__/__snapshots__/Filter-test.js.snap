@@ -281,6 +281,59 @@ exports[`Displays a list of unique podcast tags 1`] = `
         />
       </View>
     </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": 250,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      />
+      <View
+        style={
+          Object {
+            "justifyContent": "center",
+            "width": 200,
+          }
+        }
+      >
+        <RCTPicker
+          items={
+            Array [
+              Object {
+                "label": "All",
+                "textColor": undefined,
+                "value": "All",
+              },
+              Object {
+                "label": "Test playlist",
+                "textColor": undefined,
+                "value": "Test playlist",
+              },
+            ]
+          }
+          onChange={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          selectedIndex={0}
+          style={
+            Array [
+              Object {
+                "height": 216,
+              },
+              undefined,
+            ]
+          }
+        />
+      </View>
+    </View>
   </ScrollView>
   <View
     style={Object {}}
