@@ -19,37 +19,40 @@ const mapStateToProps = (state) => ({
   subscriptions: state.podcasts.subscriptions
 })
 
-let subscriptions = [{id: 1, artistName: 'This Artist', name: 'A Great Podcast', primaryGenreName: 'Tester', artworkUrl: 'http://is1.mzstatic.com/image/thumb/Music71/v4/4f/67/ae/4f67aea3-f666-360e-703c-ffd419ea5a0c/source/100x100bb.jpg', createdAt: '2017-04-21 13:05:42.503-04'}, {id: 2, artistName: 'test', name: 'test', primaryGenreName: 'test', artworkUrl: 'http://is1.mzstatic.com/image/thumb/Music71/v4/4f/67/ae/4f67aea3-f666-360e-703c-ffd419ea5a0c/source/100x100bb.jpg', createdAt: '2017-04-21 13:05:42.503-04'}];
+// let subscriptions = [{id: 1, artistName: 'This Artist', name: 'A Great Podcast', primaryGenreName: 'Tester', artworkUrl: 'http://is1.mzstatic.com/image/thumb/Music71/v4/4f/67/ae/4f67aea3-f666-360e-703c-ffd419ea5a0c/source/100x100bb.jpg', createdAt: '2017-04-21 13:05:42.503-04'}, {id: 2, artistName: 'test', name: 'test', primaryGenreName: 'test', artworkUrl: 'http://is1.mzstatic.com/image/thumb/Music71/v4/4f/67/ae/4f67aea3-f666-360e-703c-ffd419ea5a0c/source/100x100bb.jpg', createdAt: '2017-04-21 13:05:42.503-04'}];
 
 class PodcastManager extends Component {
 
-  // getSubscriptions () {
-  //   this.props.dispatch(podcastsActions.toggleSearchSpinner(true));
-  //   fetch("http://siren-server.herokuapp.com/api/podcasts", {
-  //     method: "GET",
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Authorization': this.props.token
-  //     },
-  //   })
-  //   .then(subscriptions => subscriptions.json())
-  //   .then((subscriptions) => {
-  //     this.props.dispatch(podcastsActions.updateSubscriptions(subscriptions));
-  //     this.props.dispatch(podcastsActions.toggleSearchSpinner(false));
-  //   })
-  //   .catch(console.warn);
-  // }
+  componentDidMount() {
+    this.getSubscriptions();
+  }
+
+  getSubscriptions () {
+    this.props.dispatch(podcastsActions.toggleSearchSpinner(true));
+    fetch("http://siren-server.herokuapp.com/api/podcasts", {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+    })
+    .then(subscriptions => subscriptions.json())
+    .then((subscriptions) => {
+      this.props.dispatch(podcastsActions.updateSubscriptions(subscriptions[0]));
+      this.props.dispatch(podcastsActions.toggleSearchSpinner(false));
+    })
+    .catch(console.warn);
+  }
 
   render() {
-    // this.getSubscriptions();
     return (
       <View style={styles.mainView}>
         <Text style={styles.instructions}>Swipe to the left to unsubscribe</Text>
         <ScrollView style={styles.podcastList}>
           {this.props.visible ?
             <Spinner visible={this.props.visible} textContent={"Loading Subscriptions..."} textStyle={{color: '#FFF'}} />  :
-          subscriptions.map((podcast, i) => (
+          this.props.subscriptions.map((podcast, i) => (
               <PodcastManagerCard podcast={podcast} key={i} id={i}/>
             ))}
         </ScrollView>
