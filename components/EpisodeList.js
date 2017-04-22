@@ -188,7 +188,9 @@ class EpisodeList extends Component {
 
   handleRemoveEpisodeFromInbox = (id, playingEpisode, selectedEpisode) => {
     if (playingEpisode && playingEpisode.feed.enclosure.url === selectedEpisode.feed.enclosure.url) {
-      this.handleRemovePlayingEpisode();
+      this.handleRemovePlayingEpisode(id);
+    } else {
+      this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
     }
 
     let episodeData = { episodeId: id };
@@ -203,12 +205,13 @@ class EpisodeList extends Component {
     .catch(err => console.warn(err));
   }
 
-  handleRemovePlayingEpisode = () => {
+  handleRemovePlayingEpisode = (id) => {
     this.newSoundInstance.stopAsync()
     .then(stopped => {
       this.props.dispatch(playerActions.createNewSoundInstance(null));
       this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(null));
       this.props.dispatch(playerActions.setPlayStatus(false));
+      this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
     });
   }
 
