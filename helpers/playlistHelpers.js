@@ -5,7 +5,7 @@ export const toggleAddToPlaylistModal = (dispatch, episodeId, authToken) => {
   dispatch(playerActions.setFullSizeModalVisible(false));
   dispatch(playlistActions.toggleAddToPlaylistModal());
   dispatch(playlistActions.setSelectedEpisode(episodeId));
-  fetch("http://localhost:3000/api/playlists/add-playlist-modal", {
+  fetch("http://siren-server.herokuapp.com/api/playlists/add-playlist-modal", {
     method: "GET",
     headers: {
       'Accept': 'application/json',
