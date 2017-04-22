@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, AsyncStorage, TextInput, Platform, Button, Alert} from 'react-native';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header';
+import { actionCreators } from '../actions';
 
 const mapStateToProps = (state) => ({
   view: state.header.view,

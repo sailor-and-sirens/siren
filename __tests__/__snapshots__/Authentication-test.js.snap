@@ -54,6 +54,7 @@ Object {
   },
   "playlist": Object {
     "addNewPlaylistInputValue": "",
+    "allplaylists": Array [],
     "isAddPlaylistModalVisible": false,
     "playlists": Array [],
     "selectedEpisodeId": null,
@@ -66,6 +67,7 @@ Object {
     "podcastEpisodes": Array [],
     "searchSpinner": false,
     "searchText": "",
+    "subscriptions": Array [],
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
@@ -109,6 +111,7 @@ Object {
   },
   "playlist": Object {
     "addNewPlaylistInputValue": "",
+    "allplaylists": Array [],
     "isAddPlaylistModalVisible": false,
     "playlists": Array [],
     "selectedEpisodeId": null,
@@ -121,6 +124,7 @@ Object {
     "podcastEpisodes": Array [],
     "searchSpinner": false,
     "searchText": "",
+    "subscriptions": Array [],
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
@@ -164,6 +168,7 @@ Object {
   },
   "playlist": Object {
     "addNewPlaylistInputValue": "",
+    "allplaylists": Array [],
     "isAddPlaylistModalVisible": false,
     "playlists": Array [],
     "selectedEpisodeId": null,
@@ -176,6 +181,7 @@ Object {
     "podcastEpisodes": Array [],
     "searchSpinner": false,
     "searchText": "",
+    "subscriptions": Array [],
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,
@@ -219,6 +225,7 @@ Object {
   },
   "playlist": Object {
     "addNewPlaylistInputValue": "",
+    "allplaylists": Array [],
     "isAddPlaylistModalVisible": false,
     "playlists": Array [],
     "selectedEpisodeId": null,
@@ -231,6 +238,7 @@ Object {
     "podcastEpisodes": Array [],
     "searchSpinner": false,
     "searchText": "",
+    "subscriptions": Array [],
   },
   "swipe": Object {
     "currentlyOpenSwipeable": null,

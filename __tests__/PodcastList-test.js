@@ -4,7 +4,7 @@ import * as renderer from "react-test-renderer";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from '../reducers/index';
-const store = createStore(reducer);
+const store = createStore(reducer); 
 
 var podcasts = [
 

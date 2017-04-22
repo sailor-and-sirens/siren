@@ -1,0 +1,218 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  leftActionActivationDistance={125}
+  leftActionReleaseAnimationConfig={null}
+  leftActionReleaseAnimationFn={null}
+  leftButtonWidth={75}
+  leftButtonsActivationDistance={75}
+  leftButtonsCloseReleaseAnimationConfig={null}
+  leftButtonsCloseReleaseAnimationFn={null}
+  leftButtonsOpenReleaseAnimationConfig={null}
+  leftButtonsOpenReleaseAnimationFn={null}
+  onLayout={[Function]}
+  onLeftActionActivate={[Function]}
+  onLeftActionComplete={[Function]}
+  onLeftActionDeactivate={[Function]}
+  onLeftActionRelease={[Function]}
+  onLeftButtonsActivate={[Function]}
+  onLeftButtonsCloseComplete={[Function]}
+  onLeftButtonsCloseRelease={[Function]}
+  onLeftButtonsDeactivate={[Function]}
+  onLeftButtonsOpenComplete={[Function]}
+  onLeftButtonsOpenRelease={[Function]}
+  onMoveShouldSetResponder={[Function]}
+  onMoveShouldSetResponderCapture={[Function]}
+  onPanAnimatedValueRef={[Function]}
+  onRef={[Function]}
+  onResponderEnd={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderReject={[Function]}
+  onResponderRelease={[Function]}
+  onResponderStart={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onRightActionActivate={[Function]}
+  onRightActionComplete={[Function]}
+  onRightActionDeactivate={[Function]}
+  onRightActionRelease={[Function]}
+  onRightButtonsActivate={[Function]}
+  onRightButtonsCloseComplete={[Function]}
+  onRightButtonsCloseRelease={[Function]}
+  onRightButtonsDeactivate={[Function]}
+  onRightButtonsOpenComplete={[Function]}
+  onRightButtonsOpenRelease={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onStartShouldSetResponderCapture={[Function]}
+  onSwipeComplete={[Function]}
+  onSwipeMove={[Function]}
+  onSwipeRelease={[Function]}
+  onSwipeStart={[Function]}
+  rightActionActivationDistance={200}
+  rightActionReleaseAnimationConfig={null}
+  rightActionReleaseAnimationFn={null}
+  rightButtonWidth={75}
+  rightButtonsActivationDistance={75}
+  rightButtonsCloseReleaseAnimationConfig={null}
+  rightButtonsCloseReleaseAnimationFn={null}
+  rightButtonsOpenReleaseAnimationConfig={null}
+  rightButtonsOpenReleaseAnimationFn={null}
+  style={
+    Array [
+      Object {
+        "flexDirection": "row",
+      },
+      undefined,
+    ]
+  }
+  swipeReleaseAnimationConfig={
+    Object {
+      "duration": 250,
+      "easing": [Function],
+      "toValue": Object {
+        "x": 0,
+        "y": 0,
+      },
+    }
+  }
+  swipeReleaseAnimationFn={[Function]}
+  swipeStartMinDistance={15}
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "transform": Array [
+          Object {
+            "translateX": 0.5,
+          },
+        ],
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "flex": 0.25,
+              "height": 80,
+              "width": 80,
+            },
+          ]
+        }
+      >
+        <Image
+          source={
+            Object {
+              "uri": "http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_5639735648c34.png",
+            }
+          }
+          style={
+            Object {
+              "flex": 0.25,
+              "height": 80,
+              "width": 80,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "flex": 0.6,
+              "marginLeft": 5,
+            },
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "500",
+            }
+          }
+        />
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          one episode...
+        </Text>
+      </View>
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "grey",
+                "fontSize": 14,
+                "fontWeight": "400",
+                "marginRight": 5,
+              },
+            ]
+          }
+        >
+          1h 40m
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginRight": -0,
+        "transform": Array [
+          Object {
+            "translateX": 0.5,
+          },
+        ],
+        "width": 0,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+            "paddingLeft": 20,
+          },
+          Object {
+            "backgroundColor": "rgb(221, 95, 95)",
+          },
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        Remove Playlist
+      </Text>
+    </View>
+  </View>
+</View>
+`;

@@ -4,7 +4,8 @@ export const types = {
   TOGGLE_SEARCH_SPINNER: 'TOGGLE_SEARCH_SPINNER',
   UPDATE_CURRENT_PODCAST: 'UPDATE_CURRENT_PODCAST',
   PODCAST_EPISODES: 'PODCAST_EPISODES',
-  TOGGLE_EPISODES_LOADING: 'TOGGLE_EPISODES_LOADING'
+  TOGGLE_EPISODES_LOADING: 'TOGGLE_EPISODES_LOADING',
+  UPDATE_SUBSCRIPTIONS: 'UPDATE_SUBSCRIPTIONS'
 }
 
 export const actionCreators = {
@@ -25,5 +26,8 @@ export const actionCreators = {
   },
     toggleEpisodesLoading: (value) => {
     return {type: types.TOGGLE_EPISODES_LOADING, payload: value}
+  },
+    updateSubscriptions: (value) => {
+    return {type: types.UPDATE_SUBSCRIPTIONS, payload: value}
   }
 }

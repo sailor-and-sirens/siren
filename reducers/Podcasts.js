@@ -8,6 +8,7 @@ const initialState = {
   currentPodcast: null,
   podcastEpisodes: [],
   episodesLoading: false,
+  subscriptions: []
 }
 
 const podcasts = (state = initialState, action) => {
@@ -29,7 +30,11 @@ const podcasts = (state = initialState, action) => {
   if (action.type === types.TOGGLE_EPISODES_LOADING) {
     return {...state, episodesLoading: action.payload}
   }
+  if (action.type === types.UPDATE_SUBSCRIPTIONS) {
+    return {...state, subscriptions: action.payload}
+  }
   return state;
 }
+
 
 export default podcasts;

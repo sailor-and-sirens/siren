@@ -15,6 +15,8 @@ import Authentication from './Authentication';
 import Settings from './Settings';
 import PodcastViewCard from './PodcastViewCard';
 import AddPlaylistModal from './AddPlaylistModal';
+import PlaylistList from './PlaylistList';
+import PodcastManager from './PodcastManager';
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
@@ -31,7 +33,6 @@ class App extends Component {
         this.props.dispatch(headerActions.changeView('Authentication'))
       } else {
         this.props.dispatch(actionCreators.addToken(res))
-        console.log('TOKEN: ', this.props.token);
         this.props.dispatch(headerActions.changeView('Inbox'))
       }
     })
@@ -60,10 +61,12 @@ class App extends Component {
         <View>
           <PodcastViewCard />
         </View> :
+         this.props.view === 'Manage Subscriptions' ?
         <View>
-          <ModalComponent><Text>Hey! I'm a modal!</Text></ModalComponent>
-          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
-        </View>
+          <PodcastManager />
+        </View> :
+        this.props.view === 'Playlist' ?
+        <PlaylistList/> : null
         }
         <AddPlaylistModal isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible} />
         <Player />

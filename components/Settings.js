@@ -33,7 +33,10 @@ class Settings extends Component {
         <View style={styles.main}>
           <Button title="Logout" style={styles.button} onPress={() => this.logoutUser()}
           />
+           <Button title="Manage Subscriptions" style={styles.button} onPress={() => this.props.dispatch(headerActions.changeView('Manage Subscriptions'))}
+          />
         </View>
+
     );
   }
 }
@@ -41,6 +44,11 @@ class Settings extends Component {
 const styles = StyleSheet.create({
   main: {
     marginTop: 20,
+    height: '34%',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    alignSelf: 'center',
+    width: '70%'
   },
   button: {
     height: 36,
@@ -50,8 +58,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
     marginTop: 20,
-    alignSelf: 'stretch',
-    justifyContent: 'center',
   },
 })
 

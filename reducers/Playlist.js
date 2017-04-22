@@ -5,10 +5,14 @@ const initialState = {
   isAddPlaylistModalVisible: false,
   selectedEpisodeId: null,
   selectedPlaylistId: null,
-  playlists: []
+  playlists: [],
+  allplaylists: []
 };
 
 const playlist = (state = initialState, action) => {
+  if (action.type === types.GET_PLAYLISTS) {
+    return {...state, allplaylists: action.payload, playlists: action.payload};
+  }
   if (action.type === types.ADD_NEW_PLAYLIST) {
     let newId = action.payload.id;
     let newPlaylist = { id: newId, name: action.payload.name, totalEpisodes: 0, totalTime: '0' };
@@ -30,6 +34,13 @@ const playlist = (state = initialState, action) => {
   }
   if (action.type === types.UPDATE_NEW_PLAYLIST_INPUT) {
     return {...state, addNewPlaylistInputValue: action.payload}
+  }
+  if (action.type === types.REMOVE_PLAYLIST) {
+    let updatedPlaylists = state.allplaylists;
+    updatedPlaylists = updatedPlaylists.filter(playlist => {
+      return playlist.id !== action.payload;
+    })
+    return {...state, allplaylists: updatedPlaylists}
   }
 
   return state;
