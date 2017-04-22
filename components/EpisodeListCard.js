@@ -6,7 +6,8 @@ import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
-import {hmsToSecondsOnly, toggleBookmark, toggleLike, getAllPlaylists} from '../helpers';
+import { hmsToSecondsOnly, toggleBookmark, toggleLike } from '../helpers';
+import { toggleAddToPlaylistModal } from '../helpers/playlistHelpers';
 import moment from 'moment';
 
 const mapStateToProps = (state) => ({
@@ -42,22 +43,6 @@ class EpisodeListCard extends Component {
     }
   };
 
-  toggleAddToPlaylistModal = () => {
-    this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
-    this.props.dispatch(playlistActions.setSelectedEpisode(this.props.id));
-    fetch("http://siren-server.herokuapp.com/api/playlists/add-playlist-modal", {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': this.props.token
-      }
-    })
-    .then(response => response.json())
-    .then(playlists => {
-      this.props.dispatch(playlistActions.storeAddModalPlaylists(playlists));
-    });
-  }
-
   render() {
     const {leftActionActivated, leftToggle, rightActionActivated, rightToggle} = this.props;
     return (
@@ -81,16 +66,14 @@ class EpisodeListCard extends Component {
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
         onLeftActionDeactivate={() => this.props.dispatch(swipeActions.updateLeftActivation(false))}
         onLeftActionComplete={() => {
-          this.toggleAddToPlaylistModal();
+          toggleAddToPlaylistModal(this.props.dispatch, this.props.id, this.props.token);
         }}
 
         onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
         onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
         onRightActionComplete={() => {
-            this.props.dispatch(mainActions.removeEpisodeFromInbox(this.props.id));
-            if (this.props.currentEpisode && this.props.currentEpisode.feed.enclosure.url === this.props.episode.feed.enclosure.url) {
-              this.props.handleRemovePlayingEpisode();
-            }
+          let { currentEpisode, id, episode } = this.props;
+          this.props.handleRemoveEpisodeFromInbox(id, currentEpisode, episode);
         }}
       >
       <View style={styles.mainView}>
@@ -103,7 +86,9 @@ class EpisodeListCard extends Component {
           <View style={styles.rightView}>
             <Text style={styles.date}>{moment(this.props.episode.feed.pubDate.substring(0,16)).format('ddd, DD MMM YYYY')}</Text>
             <Text style={styles.episode} numberOfLines={3}>{this.props.episode['feed']['title']}</Text>
-            <Text style={styles.subtitle} numberOfLines={2}>{this.props.episode['feed']['description']}</Text>
+            <Text style={styles.subtitle} numberOfLines={2}>
+              {this.props.episode['feed']['description']}
+            </Text>
           </View>
         </View>
         <View style={styles.bottomView}>

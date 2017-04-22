@@ -3,14 +3,13 @@ import { StyleSheet, Text, View, TextInput, ScrollView, Image} from 'react-nativ
 import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import { actionCreators as mainActions } from '../actions';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
-import { actionCreators as mainActions } from '../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 import EpisodeListCard from './EpisodeListCard';
-import AddPlaylistModal from './AddPlaylistModal';
 import moment from 'moment';
 
 let _ = require('lodash');
@@ -19,7 +18,6 @@ const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   filters: state.main.inboxFilters,
   inbox: state.main.inbox,
-  isAddPlaylistModalVisible: state.swipe.isAddPlaylistModalVisible,
   token: state.main.token,
   filters: state.main.inboxFilters,
   visible: state.podcasts.searchSpinner
@@ -188,12 +186,32 @@ class EpisodeList extends Component {
       });
   }
 
-  handleRemovePlayingEpisode = () => {
+  handleRemoveEpisodeFromInbox = (id, playingEpisode, selectedEpisode) => {
+    if (playingEpisode && playingEpisode.feed.enclosure.url === selectedEpisode.feed.enclosure.url) {
+      this.handleRemovePlayingEpisode(id);
+    } else {
+      this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
+    }
+
+    let episodeData = { episodeId: id };
+    fetch('http://siren-server.herokuapp.com/api/episodes/user-episode-inbox', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify(episodeData)
+    })
+    .catch(err => console.warn(err));
+  }
+
+  handleRemovePlayingEpisode = (id) => {
     this.newSoundInstance.stopAsync()
     .then(stopped => {
       this.props.dispatch(playerActions.createNewSoundInstance(null));
       this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(null));
       this.props.dispatch(playerActions.setPlayStatus(false));
+      this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
     });
   }
 
@@ -210,10 +228,6 @@ class EpisodeList extends Component {
     };
    return (
       <View style={styles.mainView}>
-        <AddPlaylistModal
-          isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible}
-          handleAddToPlaylistModalClose={this.handleAddToPlaylistModalClose}
-        />
         {this.props.visible ?
            <Spinner visible={this.props.visible} textContent={"Loading Inbox..."} textStyle={{color: '#FFF'}} />  :
          <ScrollView style={styles.episodeList}>
@@ -222,6 +236,7 @@ class EpisodeList extends Component {
                 episode={this.props.inbox[key]}
                 handlePlay={this.handlePlay}
                 handleRemovePlayingEpisode={this.handleRemovePlayingEpisode}
+                handleRemoveEpisodeFromInbox={this.handleRemoveEpisodeFromInbox}
                 id={key}
                 key={key}/>
             ))}

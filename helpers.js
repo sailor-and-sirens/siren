@@ -96,6 +96,7 @@ export const toggleLike = (id, props) => {
     var inbox = _.cloneDeep(props.inbox);
     inbox[id].liked = !inbox[id].liked;
     props.dispatch(mainActions.toggleLike(inbox));
+    props.dispatch(playerActions.storeEpisodeData(inbox[id]));
     fetch("http://siren-server.herokuapp.com/api/users/likeEpisode", {
       method: "POST",
       headers: {
@@ -112,6 +113,7 @@ export const toggleBookmark = (id, props) => {
     var inbox = _.cloneDeep(props.inbox);
     inbox[id].bookmark = !inbox[id].bookmark;
     props.dispatch(mainActions.toggleBookmark(inbox));
+    props.dispatch(playerActions.storeEpisodeData(inbox[id]));
     fetch("http://siren-server.herokuapp.com/api/users/bookmarkEpisode", {
       method: "POST",
       headers: {
