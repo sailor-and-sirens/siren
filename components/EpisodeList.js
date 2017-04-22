@@ -18,16 +18,16 @@ const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   filters: state.main.inboxFilters,
   inbox: state.main.inbox,
+  currentSoundInstance: state.player.currentSoundInstance,
   token: state.main.token,
   filters: state.main.inboxFilters,
+  timer: state.player.timer,
   visible: state.podcasts.searchSpinner
 });
 
 class EpisodeList extends Component {
 
   currentEpisodeId = null;
-  newSoundInstance = null;
-  timer = null;
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
@@ -95,14 +95,14 @@ class EpisodeList extends Component {
     let newEpisodeCurrentTime = 0;
     let newEpisodeLastPlayed = new Date();
 
-    if (this.newSoundInstance === null) {
+    if (this.props.currentSoundInstance === null) {
       this.currentEpisodeId = episodeId;
       this.addEpisodeToListeningTo(episodeId);
       this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
       this.playNewEpisode(episode, episodeId);
     } else {
-      clearInterval(this.timer);
-      this.newSoundInstance.getStatusAsync()
+      clearInterval(this.props.timer);
+      this.props.currentSoundInstance.getStatusAsync()
       .then(status => {
         let currentEpisodeCurrentTime = status.positionMillis;
         let currentEpisodeLastPlayed = new Date();
@@ -110,7 +110,7 @@ class EpisodeList extends Component {
       });
       this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
       this.addEpisodeToListeningTo(episodeId);
-      this.newSoundInstance.stopAsync()
+      this.props.currentSoundInstance.stopAsync()
         .then(stopped => {
           this.currentEpisodeId = episodeId;
           this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
@@ -159,29 +159,30 @@ class EpisodeList extends Component {
   }
 
   playNewEpisode = (episode, episodeId) => {
-    this.newSoundInstance = new Audio.Sound({ source: episode.feed.enclosure.url });
-    this.props.dispatch(playerActions.createNewSoundInstance(this.newSoundInstance));
+    let newSoundInstance = new Audio.Sound({ source: episode.feed.enclosure.url });
+    this.props.dispatch(playerActions.createNewSoundInstance(newSoundInstance));
     this.props.dispatch(playerActions.setPlayStatus(true));
     this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode('LOADING'));
     this.props.dispatch(playerActions.storeEpisodeData(episode));
-    this.newSoundInstance.loadAsync()
+    newSoundInstance.loadAsync()
       .then(loaded => {
-        this.newSoundInstance.playAsync()
+        newSoundInstance.playAsync()
           .then(played => {
-            this.newSoundInstance.setPlaybackFinishedCallback(() => {
+            newSoundInstance.setPlaybackFinishedCallback(() => {
               let currentTime = null;
               let lastPlayed = new Date();
               this.removeCurrentEpisodeFromListeningTo(episodeId)
               this.updateCurrentEpisodeStats(episodeId, currentTime, lastPlayed);
             })
             this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(episode.feed.title));
-            this.timer = setInterval(function() {
-              this.newSoundInstance.getStatusAsync()
+            let timer = setInterval(function() {
+              newSoundInstance.getStatusAsync()
                 .then(status => {
                   let millis = status.positionMillis
                   this.props.dispatch(playerActions.updateCurrentPlayingTime(convertMillis(millis)));
                 })
             }.bind(this), 100);
+            this.props.dispatch(playerActions.storeTimer(timer));
           })
       });
   }
@@ -206,7 +207,7 @@ class EpisodeList extends Component {
   }
 
   handleRemovePlayingEpisode = (id) => {
-    this.newSoundInstance.stopAsync()
+    this.props.currentSoundInstance.stopAsync()
     .then(stopped => {
       this.props.dispatch(playerActions.createNewSoundInstance(null));
       this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(null));

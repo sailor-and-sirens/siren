@@ -9,6 +9,7 @@ const initialState = {
   isModalVisible: false,
   isFullSizeModalVisible: false,
   isPlaying: false,
+  timer: null
 }
 
 const player = (state = initialState, action) => {
@@ -32,6 +33,9 @@ const player = (state = initialState, action) => {
   }
   if (action.type === types.STORE_EPISODE_DATA) {
     return {...state, currentEpisode: action.payload}
+  }
+  if (action.type === types.STORE_TIMER) {
+    return {...state, timer: action.payload}
   }
   if (action.type === types.UPDATE_CURRENT_PLAYING_TIME) {
     return {...state, currentPlayingTime: action.payload}
