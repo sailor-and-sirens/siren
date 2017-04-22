@@ -31,7 +31,6 @@ class AddPlaylistModal extends Component {
     .then(response => response.json())
     .then(playlist => {
       this.props.dispatch(playlistActions.addNewPlaylist({ name: playlistData.name, id: playlist[0].id}));
-      getAllPlaylists(this.props);
     })
     .catch(err => console.warn(err));
   };
