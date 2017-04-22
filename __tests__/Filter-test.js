@@ -24,7 +24,8 @@ const initialState = {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",
     time: "timeOff",
-    tag: "All"
+    tag: "All",
+    playlist: "All"
   },
   username: '',
   password: '',
@@ -58,7 +59,7 @@ const initialState = {
     }
 }
 
-const store = fakeStore({main: initialState});
+const store = fakeStore({main: initialState, playlist: {allplaylists: [{name: 'Test playlist'}]}});
 
 // test('Displays a list of unique podcast tags', () => {
 //   expect(inboxFilter.getTags(inbox)).toBe(['All', 'Tech News', 'Science', 'Technology']);

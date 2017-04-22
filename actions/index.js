@@ -7,6 +7,7 @@ export const types = {
   UPDATE_BOOKMARKED_FILTER: 'UPDATE_BOOKMARKED_FILTER',
   UPDATE_TIME_FILTER: 'UPDATE_TIME_FILTER',
   UPDATE_TAG_FILTER: 'UPDATE_TAG_FILTER',
+  UPDATE_PLAYLIST_FILTER: 'UPDATE_PLAYLIST_FILTER',
   ADD_TOKEN: 'ADD_TOKEN',
   CHANGE_USERNAME: 'CHANGE_USERNAME',
   CHANGE_PASSWORD: 'CHANGE_PASSWORD',
@@ -39,6 +40,9 @@ export const actionCreators = {
   },
   updateTagFilter: (value) => {
     return {type: types.UPDATE_TAG_FILTER, payload: value}
+  },
+  updatePlaylistFilter: (playlistName) => {
+    return {type: types.UPDATE_PLAYLIST_FILTER, payload: playlistName}
   },
   addToken: (value) => {
     return {type: types.ADD_TOKEN, payload: value}

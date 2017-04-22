@@ -16,7 +16,8 @@ const initialState = {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",
     time: "timeOff",
-    tag: "All"
+    tag: "All",
+    playlist: "All"
   },
   username: '',
   password: '',
@@ -54,6 +55,9 @@ const main = (state = initialState, action) => {
   }
   if (action.type === types.UPDATE_TAG_FILTER) {
     return {...state, inboxFilters: {...state.inboxFilters, tag: action.payload}}
+  }
+  if (action.type === types.UPDATE_PLAYLIST_FILTER) {
+    return {...state, inboxFilters: {...state.inboxFilters, playlist: action.payload}}
   }
   if (action.type === types.ADD_TOKEN) {
     return {...state, token: action.payload}

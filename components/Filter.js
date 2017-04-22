@@ -9,7 +9,8 @@ let _ = require('lodash')
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
-  filters: state.main.inboxFilters
+  filters: state.main.inboxFilters,
+  allplaylists: state.playlist.allplaylists,
 })
 
 class Filter extends Component {
@@ -20,6 +21,12 @@ class Filter extends Component {
       tags.push(this.props.inbox[key].tag);
     });
     return  _.uniq(tags);
+  }
+
+  getPlaylists = () => {
+    var playlistNames = this.props.allplaylists.map(playlist => playlist.name);
+    playlistNames.unshift('All');
+    return playlistNames;
   }
 
   render() {
@@ -69,6 +76,16 @@ class Filter extends Component {
                 onValueChange={(value, i) => {this.props.dispatch(actionCreators.updateTagFilter(value))}}>
               {this.getTags().map((tag, i) => (
                 <Picker.Item value={tag} label={tag} key={i}/>
+              ))}
+          </Picker>
+          </View>
+          <View style={styles.filterBar}>
+          <Ionicons style={styles.icon} size={30} color='grey' name="ios-list-box-outline"/>
+          <Picker style={styles.picker}
+                selectedValue={this.props.filters.playlist}
+                onValueChange={(value, i) => {this.props.dispatch(actionCreators.updatePlaylistFilter(value))}}>
+              {this.getPlaylists().map((name, i) => (
+                <Picker.Item value={name} label={name} key={i}/>
               ))}
           </Picker>
           </View>

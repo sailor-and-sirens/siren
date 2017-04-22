@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
+import { headerActions } from '../actions/Header';
+import { actionCreators } from '../actions';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -41,7 +43,12 @@ class PlaylistCardNoSwipe extends Component {
 
       <View style={[styles.cardContainer]}>
         <View style={[styles.image]}>
+          <TouchableOpacity onPress={() => {
+            this.props.dispatch(actionCreators.updatePlaylistFilter(this.props.playlist.name));
+            this.props.dispatch(headerActions.changeView(this.props.playlist.name + ' Playlist'));
+          }}>
             <Image source={{uri: 'http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_5639735648c34.png'}} style={styles.image}/>
+          </TouchableOpacity>
         </View>
         <View style={[styles.content]}>
           <Text style={styles.title}>{this.props.playlist.name}</Text>
@@ -65,7 +72,6 @@ const styles = StyleSheet.create({
   image: {
     height: 80,
     width: 80,
-    flex: .25,
   },
   title:{
     fontWeight: "500",

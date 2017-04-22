@@ -107,27 +107,48 @@ exports[`renders correctly 1`] = `
         style={
           Array [
             Object {
-              "flex": 0.25,
               "height": 80,
               "width": 80,
             },
           ]
         }
       >
-        <Image
-          source={
-            Object {
-              "uri": "http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_5639735648c34.png",
-            }
-          }
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "flex": 0.25,
-              "height": 80,
-              "width": 80,
+              "opacity": 1,
             }
           }
-        />
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <Image
+            source={
+              Object {
+                "uri": "http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_5639735648c34.png",
+              }
+            }
+            style={
+              Object {
+                "height": 80,
+                "width": 80,
+              }
+            }
+          />
+        </View>
       </View>
       <View
         style={

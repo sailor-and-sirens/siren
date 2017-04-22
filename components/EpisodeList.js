@@ -11,6 +11,7 @@ import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
 import Spinner from 'react-native-loading-spinner-overlay';
 import EpisodeListCard from './EpisodeListCard';
 import moment from 'moment';
+import { getAllPlaylists } from '../helpers';
 
 let _ = require('lodash');
 
@@ -20,9 +21,10 @@ const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
   currentSoundInstance: state.player.currentSoundInstance,
   token: state.main.token,
-  filters: state.main.inboxFilters,
   timer: state.player.timer,
-  visible: state.podcasts.searchSpinner
+  visible: state.podcasts.searchSpinner,
+  allplaylists: state.playlist.allplaylists,
+  view: state.header.view
 });
 
 class EpisodeList extends Component {
@@ -31,10 +33,19 @@ class EpisodeList extends Component {
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
-    updateInbox(this.props);
+    if(!this.props.inbox.length || !this.props.allplaylists.length) {
+      updateInbox(this.props);
+      getAllPlaylists(this.props);
+    }
   }
 
   filterEpisodes = (keys) => {
+    if (this.props.filters.playlist !== 'All') {
+      var playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
+      if(playlist.length) {
+        keys = playlist[0].Episodes.map(episode => episode.id);
+      }
+    }
     if (this.props.filters.liked === 'liked') {
       keys = _.filter(keys, (key) => {
         return this.props.inbox[key].liked === true;
@@ -88,6 +99,7 @@ class EpisodeList extends Component {
         return this.props.inbox[key].tag === tag;
       })
     }
+
     return keys;
   }
 
@@ -230,7 +242,7 @@ class EpisodeList extends Component {
    return (
       <View style={styles.mainView}>
         {this.props.visible ?
-           <Spinner visible={this.props.visible} textContent={"Loading Inbox..."} textStyle={{color: '#FFF'}} />  :
+           <Spinner visible={this.props.visible} textContent={`Loading ${this.props.view} ...`} textStyle={{color: '#FFF'}} />  :
          <ScrollView style={styles.episodeList}>
           {this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
               <EpisodeListCard {...itemProps}

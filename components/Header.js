@@ -16,7 +16,7 @@ class Header extends Component {
   render() {
     let filter = null;
     if (this.props.view === 'Inbox' ||
-        this.props.view === 'Playlist') {
+        this.props.view === 'Playlists') {
       filter = (<View>
         <ModalComponent>
           <Filter/>
@@ -28,8 +28,11 @@ class Header extends Component {
       <View>
         <Text style={styles.header}>{this.props.view}</Text>
         <View style={styles.navigation}>
-          <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Inbox'))} size={30} name='inbox'/>
-          <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Playlist'))} size={30} name='playlist-play'/>
+          <MaterialIcons style={styles.navigationLink} onPress={() => {
+            this.props.dispatch(actionCreators.updatePlaylistFilter('All'));
+            this.props.dispatch(headerActions.changeView('Inbox'));
+          }} size={30} name='inbox'/>
+          <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Playlists'))} size={30} name='playlist-play'/>
           <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Search'))} size={30} name='search'/>
           {filter}
           <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Settings'))} size={30} name='settings' />

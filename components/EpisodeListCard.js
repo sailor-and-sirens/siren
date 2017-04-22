@@ -16,7 +16,8 @@ const mapStateToProps = (state) => ({
   token: state.main.token,
   leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
-  rightActionActivated: state.swipe.isRightActionActivated
+  rightActionActivated: state.swipe.isRightActionActivated,
+  view: state.header.view
 });
 
 class EpisodeListCard extends Component {
@@ -60,7 +61,7 @@ class EpisodeListCard extends Component {
           <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
             {rightActionActivated ?
               <Text>(( release ))</Text> :
-              <Text>Remove From Inbox</Text>}
+              <Text>{`Remove From ${this.props.view}`}</Text>}
           </View>
         )}
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
