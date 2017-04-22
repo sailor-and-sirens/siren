@@ -3,11 +3,11 @@ import { StyleSheet, Text, View, TextInput, ScrollView, Image} from 'react-nativ
 import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import { actionCreators as mainActions } from '../actions';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
-import { actionCreators as mainActions } from '../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 import EpisodeListCard from './EpisodeListCard';
 import moment from 'moment';
@@ -186,6 +186,24 @@ class EpisodeList extends Component {
       });
   }
 
+  handleRemoveEpisodeFromInbox = (id, playingEpisode, selectedEpisode) => {
+    if (playingEpisode && playingEpisode.feed.enclosure.url === selectedEpisode.feed.enclosure.url) {
+      this.handleRemovePlayingEpisode();
+    }
+    // TODO full size player causing error when playing episode is removed
+
+    let episodeData = { episodeId: id };
+    fetch('http://siren-server.herokuapp.com/api/episodes/user-episode-inbox', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify(episodeData)
+    })
+    .catch(err => console.warn(err));
+  }
+
   handleRemovePlayingEpisode = () => {
     this.newSoundInstance.stopAsync()
     .then(stopped => {
@@ -216,6 +234,7 @@ class EpisodeList extends Component {
                 episode={this.props.inbox[key]}
                 handlePlay={this.handlePlay}
                 handleRemovePlayingEpisode={this.handleRemovePlayingEpisode}
+                handleRemoveEpisodeFromInbox={this.handleRemoveEpisodeFromInbox}
                 id={key}
                 key={key}/>
             ))}
