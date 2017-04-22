@@ -23,7 +23,7 @@ const initialState = {
   password: '',
   email: '',
   authView: 'login',
-  inbox: {}
+  inbox: []
 }
 
 // store.dispatch(...) is what triggers the reducer

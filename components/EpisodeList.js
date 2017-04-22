@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, Image, AppState} from 'react-native';
 import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -33,10 +33,15 @@ class EpisodeList extends Component {
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
-    if(!this.props.inbox.length || !this.props.allplaylists.length) {
+    if(this.props.inbox.length || !this.props.allplaylists.length) {
       updateInbox(this.props);
       getAllPlaylists(this.props);
     }
+    AppState.addEventListener('change', this.updateInboxOnActive);
+  }
+
+  updateInboxOnActive = () => {
+    updateInbox(this.props);
   }
 
   filterEpisodes = (keys) => {

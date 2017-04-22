@@ -18,7 +18,8 @@ class Authentication extends Component {
   async _onValueChange(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
-      this.props.dispatch(actionCreators.addToken(selectedValue));
+      await this.props.dispatch(actionCreators.addToken(selectedValue));
+      this.props.dispatch(headerActions.changeView('Inbox'))
      } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
@@ -57,7 +58,7 @@ class Authentication extends Component {
       })
       .then((responseData) => {
         if (responseData) {
-          this.props.dispatch(headerActions.changeView('Inbox'))
+
           return this._onValueChange('id_token', responseData.id_token)
         }
       })
@@ -91,7 +92,7 @@ class Authentication extends Component {
       })
       .then((responseData) => {
         if (responseData) {
-          this.props.dispatch(headerActions.changeView('Inbox'))
+
           return this._onValueChange('id_token', responseData.id_token)
         }
       })
