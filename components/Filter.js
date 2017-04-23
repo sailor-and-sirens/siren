@@ -29,6 +29,14 @@ class Filter extends Component {
     return playlistNames;
   }
 
+  getNames = () => {
+    var names = ['All'];
+    Object.keys(this.props.inbox).forEach((key) => {
+      names.push(this.props.inbox[key].name);
+    });
+    return  _.uniq(names);
+  }
+
   render() {
    return (
       <View style={styles.mainView}>
@@ -76,6 +84,16 @@ class Filter extends Component {
                 onValueChange={(value, i) => {this.props.dispatch(actionCreators.updateTagFilter(value))}}>
               {this.getTags().map((tag, i) => (
                 <Picker.Item value={tag} label={tag} key={i}/>
+              ))}
+          </Picker>
+          </View>
+           <View style={styles.filterBar}>
+          <Ionicons style={styles.icon} size={30} color='grey' name="ios-pricetag-outline"/>
+          <Picker style={styles.picker}
+                selectedValue={this.props.filters.name}
+                onValueChange={(value, i) => {this.props.dispatch(actionCreators.updateNameFilter(value))}}>
+              {this.getNames().map((name, i) => (
+                <Picker.Item value={name} label={name} key={i}/>
               ))}
           </Picker>
           </View>

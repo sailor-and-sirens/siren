@@ -11,6 +11,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 const mapStateToProps = (state) => ({
   podcast: state.podcasts.currentPodcast,
+  episodes: state.podcasts.podcastEpisodes,
   token: state.main.token,
   visible: state.podcasts.episodesLoading
 });
@@ -29,7 +30,7 @@ class PodcastViewCard extends Component {
             <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
             <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
             <ScrollView style={styles.descriptionView}>
-              <Text style={styles.description}>Podcast description goes here. There are many show details that appear here. Guests, topics, info, galore! Even more info. These could be quite long.</Text>
+              <Text style={styles.description}>{this.props.episodes[0].podcast.description.long}</Text>
             </ScrollView>
             <View style={styles.tagAddView}>
               <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>

@@ -104,6 +104,12 @@ class EpisodeList extends Component {
         return this.props.inbox[key].tag === tag;
       })
     }
+    if (this.props.filters.name !== 'All') {
+      var name = this.props.filters.name;
+      keys = _.filter(keys, (key) => {
+        return this.props.inbox[key].name === name;
+      })
+    }
 
     return keys;
   }

@@ -66,12 +66,14 @@ export const subscribePodcast = (props) => {
           'Authorization': props.token
         },
       })
-    })
-    .then(inbox => inbox.json())
-    .then((inbox) => {
-      props.dispatch(mainActions.updateInbox(inbox));
+      .then(inbox => inbox.json())
+      .then((inbox) => {
+        props.dispatch(mainActions.updateInbox(inbox));
+      })
     })
     .catch((err) => console.log(err));
+
+    //POST request to siren-discovery here
   }
 
 export const updateInbox = (props) => {

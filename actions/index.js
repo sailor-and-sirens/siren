@@ -13,7 +13,8 @@ export const types = {
   CHANGE_PASSWORD: 'CHANGE_PASSWORD',
   CHANGE_EMAIL: 'CHANGE_EMAIL',
   CHANGE_AUTHVIEW: 'CHANGE_AUTHVIEW',
-  UPDATE_INBOX: 'UPDATE_INBOX'
+  UPDATE_INBOX: 'UPDATE_INBOX',
+  UPDATE_NAME_FILTER: 'UPDATE_NAME_FILTER'
 }
 
 export const actionCreators = {
@@ -37,6 +38,9 @@ export const actionCreators = {
   },
   updateTimeFilter: (value) => {
     return {type: types.UPDATE_TIME_FILTER, payload: value}
+  },
+  updateNameFilter: (value) => {
+    return {type: types.UPDATE_NAME_FILTER, payload: value}
   },
   updateTagFilter: (value) => {
     return {type: types.UPDATE_TAG_FILTER, payload: value}
