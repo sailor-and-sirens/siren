@@ -17,13 +17,14 @@ const initialState = {
     bookmarked: "bookmarkedOff",
     time: "timeOff",
     tag: "All",
-    playlist: "All"
+    playlist: "All",
+    name: "All"
   },
   username: '',
   password: '',
   email: '',
   authView: 'login',
-  inbox: []
+  inbox: [],
 }
 
 // store.dispatch(...) is what triggers the reducer
@@ -57,6 +58,9 @@ const main = (state = initialState, action) => {
     return {...state, inboxFilters: {...state.inboxFilters, tag: action.payload}}
   }
   if (action.type === types.UPDATE_PLAYLIST_FILTER) {
+    return {...state, inboxFilters: {...state.inboxFilters, playlist: action.payload}}
+  }
+  if (action.type === types.UPDATE_NAME_FILTER) {
     return {...state, inboxFilters: {...state.inboxFilters, playlist: action.payload}}
   }
   if (action.type === types.ADD_TOKEN) {

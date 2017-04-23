@@ -6,7 +6,7 @@ import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
-import {hmsToSecondsOnly} from '../helpers';
+import {hmsToSecondsOnly, updateInbox} from '../helpers';
 import moment from 'moment';
 
 let _ = require('lodash');
@@ -40,10 +40,10 @@ class PodcastEpisodeListCard extends Component {
           'Authorization': this.props.token
         },
       })
-    })
-    .then(inbox => inbox.json())
-    .then((inbox) => {
-      this.props.dispatch(mainActions.updateInbox(inbox));
+      .then(inbox => inbox.json())
+      .then((inbox) => {
+        this.props.dispatch(mainActions.updateInbox(inbox));
+      })
     })
     .catch((err) => console.log(err));
   }
