@@ -6,7 +6,8 @@ export const types = {
   TOGGLE_PLAYLIST_SELECTED: 'TOGGLE_PLAYLIST_SELECTED',
   UPDATE_NEW_PLAYLIST_INPUT: 'UPDATE_NEW_PLAYLIST_INPUT',
   GET_PLAYLISTS: 'GET_PLAYLISTS',
-  REMOVE_PLAYLIST: 'REMOVE_PLAYLIST'
+  REMOVE_PLAYLIST: 'REMOVE_PLAYLIST',
+  REMOVE_EPISODE_FROM_PLAYLIST: 'REMOVE_EPISODE_FROM_PLAYLIST'
 }
 
 export const actionCreators = {
@@ -33,5 +34,8 @@ export const actionCreators = {
   },
   removePlaylist: (playlistId) => {
     return {type: types.REMOVE_PLAYLIST, payload: playlistId}
+  },
+  removeEpisodeFromPlaylist: (data) => {
+    return {type: types.REMOVE_EPISODE_FROM_PLAYLIST, payload: data}
   }
 }

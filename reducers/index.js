@@ -30,7 +30,7 @@ const initialState = {
 // store.dispatch(...) is what triggers the reducer
 const main = (state = initialState, action) => {
   if (action.type === types.REMOVE_EPISODE_FROM_INBOX) {
-    let newInbox = removeItemFromObjectById(state.inbox, action.payload);
+    let newInbox = removeItemFromObjectById(state.allplaylists, action.payload);
     return {...state, inbox: newInbox}
   }
   if (action.type === types.TOGGLE_MODAL) {

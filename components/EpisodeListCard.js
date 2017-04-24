@@ -74,7 +74,7 @@ class EpisodeListCard extends Component {
         onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
         onRightActionComplete={() => {
           let { currentEpisode, id, episode } = this.props;
-          this.props.handleRemoveEpisodeFromInbox(id, currentEpisode, episode);
+          this.props.handleRemoveEpisode(id, currentEpisode, episode);
         }}
       >
       <View style={styles.mainView}>

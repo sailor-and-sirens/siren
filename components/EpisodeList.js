@@ -7,6 +7,7 @@ import { actionCreators as mainActions } from '../actions';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
+import { actionCreators as playlistActions } from '../actions/Playlist';
 import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
 import Spinner from 'react-native-loading-spinner-overlay';
 import EpisodeListCard from './EpisodeListCard';
@@ -31,6 +32,8 @@ class EpisodeList extends Component {
 
   currentEpisodeId = null;
 
+  currentPlaylistId = null;
+
   componentWillMount = () => {
     this.view = this.props.view.split(' ');
     this.viewEnd = this.view[this.view.length - 1];
@@ -49,6 +52,9 @@ class EpisodeList extends Component {
       updateInbox(this.props);
       getAllPlaylists(this.props);
     }
+    if(this.props.view !== "Inbox"){
+      this.currentPlaylistId = this.props.allplaylists.find(playlist => playlist.name === this.props.filters.playlist).id;
+    }
     AppState.addEventListener('change', this.updateInboxOnActive);
   }
 
@@ -63,9 +69,6 @@ class EpisodeList extends Component {
         keys = playlist[0].Episodes.map(episode => episode.id);
     if (this.props.filters.playlist !== 'All') {
       this.playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
-      if(this.props.filters.playlist === 'Bookmarks') {
-        this.playlist = this.playlist.filter(episode => episode.Users[0].UserEpisode.bookmarked === true);
-      }
       if(this.playlist.length) {
         keys = this.playlist[0].Episodes.map(episode => episode.id);
         keys = keys.filter(key => this.props.inbox.hasOwnProperty(key));
@@ -249,13 +252,36 @@ class EpisodeList extends Component {
     .catch(err => console.warn(err));
   }
 
+  handleRemoveEpisodeFromPlaylist = (id, playingEpisode, selectedEpisode) => {
+    let episodeData = { episodeId: id, playlistId: this.currentPlaylistId };
+    if (playingEpisode && playingEpisode.feed.enclosure.url === selectedEpisode.feed.enclosure.url) {
+      this.handleRemovePlayingEpisode(id);
+    } else {
+      this.props.dispatch(playlistActions.removeEpisodeFromPlaylist(episodeData));
+    }
+    fetch('http://siren-server.herokuapp.com/api/playlists/remove-episode', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify(episodeData)
+    })
+    .then(() => getAllPlaylists(this.props))
+    .catch(err => console.warn(err));
+  }
+
   handleRemovePlayingEpisode = (id) => {
     this.props.currentSoundInstance.stopAsync()
     .then(stopped => {
       this.props.dispatch(playerActions.createNewSoundInstance(null));
       this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(null));
       this.props.dispatch(playerActions.setPlayStatus(false));
-      this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
+      if(this.props.view === "Inbox") {
+        this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
+      } else {
+        this.props.dispatch(playlistActions.removeEpisodeFromPlaylist(episodeData));
+      }
     });
   }
 
@@ -275,6 +301,7 @@ class EpisodeList extends Component {
         {this.props.visible ?
            <Spinner visible={this.props.visible} textContent={`Loading ${this.props.view} ...`} textStyle={{color: '#FFF'}} />  :
          <ScrollView style={styles.episodeList}>
+
          {this.viewEnd === "Playlist" && this.props.view !== 'Inbox' ?
         this.props.allplaylists.filter((playlist) => playlist.name === this.props.filters.playlist)[0].Episodes.map(episode => {
            episode.episodeTitle = episode.title;
@@ -288,7 +315,7 @@ class EpisodeList extends Component {
                episode={episode}
                handlePlay={this.handlePlay}
                handleRemovePlayingEpisode={this.handleRemovePlayingEpisode}
-               handleRemoveEpisodeFromInbox={this.handleRemoveEpisodeFromInbox}
+               handleRemoveEpisode={this.handleRemoveEpisodeFromPlaylist}
                id={episode.id}
                key={episode.id}/>)
            })
@@ -300,7 +327,7 @@ class EpisodeList extends Component {
                 episode={this.props.inbox[key]}
                 handlePlay={this.handlePlay}
                 handleRemovePlayingEpisode={this.handleRemovePlayingEpisode}
-                handleRemoveEpisodeFromInbox={this.handleRemoveEpisodeFromInbox}
+                handleRemoveEpisode={this.handleRemoveEpisodeFromInbox}
                 id={key}
                 key={key}/>
             ))
