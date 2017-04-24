@@ -31,6 +31,16 @@ class EpisodeList extends Component {
 
   currentEpisodeId = null;
 
+  componentWillMount = () => {
+    this.view = this.props.view.split(' ');
+    this.viewEnd = this.view[this.view.length - 1];
+  }
+
+  componentWillUpdate = () => {
+    this.view = this.props.view.split(' ');
+    this.viewEnd = this.view[this.view.length - 1];
+  }
+
   componentDidMount = () => {
     //temporary fix for blank inbox on login
     // updateInbox(this.props);
@@ -51,6 +61,14 @@ class EpisodeList extends Component {
       var playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
       if(playlist.length) {
         keys = playlist[0].Episodes.map(episode => episode.id);
+    if (this.props.filters.playlist !== 'All') {
+      this.playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
+      if(this.props.filters.playlist === 'Bookmarks') {
+        this.playlist = this.playlist.filter(episode => episode.Users[0].UserEpisode.bookmarked === true);
+      }
+      if(this.playlist.length) {
+        keys = this.playlist[0].Episodes.map(episode => episode.id);
+        keys = keys.filter(key => this.props.inbox.hasOwnProperty(key));
       }
     }
     if (this.props.filters.liked === 'liked') {
@@ -257,7 +275,27 @@ class EpisodeList extends Component {
         {this.props.visible ?
            <Spinner visible={this.props.visible} textContent={`Loading ${this.props.view} ...`} textStyle={{color: '#FFF'}} />  :
          <ScrollView style={styles.episodeList}>
-          {this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
+         {this.viewEnd === "Playlist" && this.props.view !== 'Inbox' ?
+        this.props.allplaylists.filter((playlist) => playlist.name === this.props.filters.playlist)[0].Episodes.map(episode => {
+           episode.episodeTitle = episode.title;
+           episode.image = episode.Podcast.artworkUrl;
+           episode.image600 = episode.Podcast.artworkUrl600;
+           episode.tag = episode.Podcast.primaryGenreName;
+           episode.liked = episode.Users[0].UserEpisode.liked;
+           episode.bookmark = episode.Users[0].UserEpisode.bookmarked;
+           episode.feed.pubDate = episode.feed.published;
+             return (<EpisodeListCard {...itemProps}
+               episode={episode}
+               handlePlay={this.handlePlay}
+               handleRemovePlayingEpisode={this.handleRemovePlayingEpisode}
+               handleRemoveEpisodeFromInbox={this.handleRemoveEpisodeFromInbox}
+               id={episode.id}
+               key={episode.id}/>)
+           })
+
+          :
+
+          this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
               <EpisodeListCard {...itemProps}
                 episode={this.props.inbox[key]}
                 handlePlay={this.handlePlay}
@@ -265,7 +303,8 @@ class EpisodeList extends Component {
                 handleRemoveEpisodeFromInbox={this.handleRemoveEpisodeFromInbox}
                 id={key}
                 key={key}/>
-            ))}
+            ))
+          }
         </ScrollView>}
       </View>
     );
