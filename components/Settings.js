@@ -23,6 +23,9 @@ class Settings extends Component {
     fetch("http://siren-server.herokuapp.com/logout", { method: "GET" });
     this.deleteToken('id_token')
     .then (() => {
+      this.props.dispatch(actionCreators.updateInbox([]));
+      this.props.dispatch(actionCreators.changeEmail(''));
+      this.props.dispatch(actionCreators.changeUsername(''));
       this.props.dispatch(actionCreators.addToken(null));
       this.props.dispatch(headerActions.changeView('Authentication'));
     })
