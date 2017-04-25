@@ -66,12 +66,12 @@ export const subscribePodcast = (props) => {
           'Authorization': props.token
         },
       })
-    })
-    .then(inbox => inbox.json())
-    .then((inbox) => {
-      props.dispatch(mainActions.updateInbox(inbox));
-    })
-    .catch((err) => console.log(err));
+      .then(inbox => inbox.json())
+      .then(inbox => {
+        props.dispatch(mainActions.updateInbox(inbox));
+      })
+      .catch((err) => console.log(err));
+    });
   }
 
 export const updateInbox = (props) => {

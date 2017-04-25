@@ -30,10 +30,11 @@ const mapStateToProps = (state) => ({
 class EpisodeList extends Component {
 
   currentEpisodeId = null;
+  fetchedEpisodeTime;
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
-    if(this.props.inbox.length || !this.props.allplaylists.length) {
+    if (this.props.inbox.length || !this.props.allplaylists.length) {
       updateInbox(this.props);
       getAllPlaylists(this.props);
     }
@@ -108,31 +109,35 @@ class EpisodeList extends Component {
     return keys;
   }
 
-  handlePlay = (episode, episodeId) => {
-    let newEpisodeCurrentTime = 0;
+  handlePlay = async (episode, episodeId) => {
+    let newEpisodeCurrentTime = episode.currentTime;
     let newEpisodeLastPlayed = new Date();
+    if (newEpisodeCurrentTime === null) newEpisodeCurrentTime = 0;
 
     if (this.props.currentSoundInstance === null) {
       this.currentEpisodeId = episodeId;
       this.addEpisodeToListeningTo(episodeId);
       this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
-      this.playNewEpisode(episode, episodeId);
+      this.playNewEpisode(episode, episodeId, newEpisodeCurrentTime);
     } else {
-      clearInterval(this.props.timer);
       this.props.currentSoundInstance.getStatusAsync()
       .then(status => {
+        clearInterval(this.props.timer);
         let currentEpisodeCurrentTime = status.positionMillis;
         let currentEpisodeLastPlayed = new Date();
         this.updateCurrentEpisodeStats(this.currentEpisodeId, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
-      });
-      this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
-      this.addEpisodeToListeningTo(episodeId);
-      this.props.currentSoundInstance.stopAsync()
+        this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
+        this.addEpisodeToListeningTo(episodeId);
+        this.props.currentSoundInstance.stopAsync()
         .then(stopped => {
           this.currentEpisodeId = episodeId;
           this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
-          this.playNewEpisode(episode, episodeId);
+          this.playNewEpisode(episode, episodeId, newEpisodeCurrentTime);
         });
+      })
+      .catch(err => {
+        console.log(err);
+      })
     }
   }
 
@@ -175,7 +180,7 @@ class EpisodeList extends Component {
     .catch(err => console.warn(err));
   }
 
-  playNewEpisode = (episode, episodeId) => {
+  playNewEpisode = (episode, episodeId, currentEpisodeTime) => {
     let newSoundInstance = new Audio.Sound({ source: episode.feed.enclosure.url });
     this.props.dispatch(playerActions.createNewSoundInstance(newSoundInstance));
     this.props.dispatch(playerActions.setPlayStatus(true));
@@ -185,6 +190,7 @@ class EpisodeList extends Component {
       .then(loaded => {
         newSoundInstance.playAsync()
           .then(played => {
+            newSoundInstance.setPositionAsync(currentEpisodeTime);
             newSoundInstance.setPlaybackFinishedCallback(() => {
               let currentTime = null;
               let lastPlayed = new Date();
