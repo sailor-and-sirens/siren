@@ -33,9 +33,9 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
-      "name": "All",
-      "playlist": "All",
-      "tag": "All",
+      "name": "Podcasts",
+      "playlist": "Playlists",
+      "tag": "Tags",
       "time": "timeOff",
     },
     "modalVisible": false,
@@ -46,6 +46,7 @@ Object {
   },
   "player": Object {
     "currentEpisode": null,
+    "currentEpisodeId": null,
     "currentEpisodeTitle": null,
     "currentPlayingTime": "0:00",
     "currentSoundInstance": null,
@@ -101,9 +102,9 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
-      "name": "All",
-      "playlist": "All",
-      "tag": "All",
+      "name": "Podcasts",
+      "playlist": "Playlists",
+      "tag": "Tags",
       "time": "timeOff",
     },
     "modalVisible": false,
@@ -114,6 +115,7 @@ Object {
   },
   "player": Object {
     "currentEpisode": null,
+    "currentEpisodeId": null,
     "currentEpisodeTitle": null,
     "currentPlayingTime": "0:00",
     "currentSoundInstance": null,
@@ -169,9 +171,9 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
-      "name": "All",
-      "playlist": "All",
-      "tag": "All",
+      "name": "Podcasts",
+      "playlist": "Playlists",
+      "tag": "Tags",
       "time": "timeOff",
     },
     "modalVisible": false,
@@ -182,6 +184,7 @@ Object {
   },
   "player": Object {
     "currentEpisode": null,
+    "currentEpisodeId": null,
     "currentEpisodeTitle": null,
     "currentPlayingTime": "0:00",
     "currentSoundInstance": null,
@@ -237,9 +240,9 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
-      "name": "All",
-      "playlist": "All",
-      "tag": "All",
+      "name": "Podcasts",
+      "playlist": "Playlists",
+      "tag": "Tags",
       "time": "timeOff",
     },
     "modalVisible": false,
@@ -250,6 +253,7 @@ Object {
   },
   "player": Object {
     "currentEpisode": null,
+    "currentEpisodeId": null,
     "currentEpisodeTitle": null,
     "currentPlayingTime": "0:00",
     "currentSoundInstance": null,
