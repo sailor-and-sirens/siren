@@ -7,6 +7,7 @@ export const types = {
   SET_PLAY_STATUS: 'SET_PLAY_STATUS',
   STORE_EPISODE_DATA: 'STORE_EPISODE_DATA',
   STORE_TIMER: 'STORE_TIMER',
+  UPDATE_CURRENT_EPISODE_ID: 'UPDATE_CURRENT_EPISODE_ID',
   UPDATE_CURRENT_PLAYING_TIME: 'UPDATE_CURRENT_PLAYING_TIME',
   UPDATE_CURRENTLY_PLAYING_EPISODE: 'UPDATE_CURRENTLY_PLAYING_EPISODE'
 }
@@ -35,6 +36,9 @@ export const actionCreators = {
   },
   storeTimer: (timer) => {
     return {type: types.STORE_TIMER, payload: timer}
+  },
+  updateCurrentEpisodeId: (episodeId) => {
+    return {type: types.UPDATE_CURRENT_EPISODE_ID, payload: episodeId}
   },
   updateCurrentPlayingTime: (time) => {
     return {type: types.UPDATE_CURRENT_PLAYING_TIME, payload: time}

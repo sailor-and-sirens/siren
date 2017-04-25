@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, ActivityIndicator, AppState } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions/Player';
+import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as mainActions } from '../actions';
 import { convertMillis } from '../helpers';
+import { removeCurrentEpisodeFromListeningTo } from '../helpers/playerHelpers.js';
 import PlayerSpeedModal from './PlayerSpeedModal';
 import PlayerFullSizeModal from './PlayerFullSizeModal';
 
@@ -27,11 +28,52 @@ const { height, width } = Dimensions.get('window');
 class Player extends Component {
 
   componentDidMount = () => {
+    Audio.setIsEnabledAsync(true);
+    this.loadEpisode();
     AppState.addEventListener('change', this.handleAppClose);
   }
 
   componentWillUnmount = () => {
     AppState.removeEventListener('change');
+  }
+
+  loadEpisode = () => {
+    fetch('http://siren-server.herokuapp.com/api/episodes/currently-playing', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': this.props.token
+      }
+    })
+    .then(response => response.json())
+    .then(episode => {
+      if (episode !== null) {
+        let newSoundInstance = new Audio.Sound({ source: episode.feed.enclosure.url });
+        this.props.dispatch(playerActions.updateCurrentEpisodeId(episode.EpisodeId));
+        this.props.dispatch(playerActions.storeEpisodeData(episode));
+        this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(episode.episodeTitle));
+        this.props.dispatch(playerActions.createNewSoundInstance(newSoundInstance));
+        newSoundInstance.loadAsync()
+        .then(loaded => {
+          newSoundInstance.setPlaybackFinishedCallback(() => {
+            let currentTime = null;
+            let lastPlayed = new Date();
+            removeCurrentEpisodeFromListeningTo(this.props.token, episode.EpisodeId);
+            this.updateCurrentEpisodeStats(episode.EpisodeId, currentTime, lastPlayed);
+          });
+          newSoundInstance.setPositionAsync(episode.currentTime);
+          let timer = setInterval(function() {
+            newSoundInstance.getStatusAsync()
+              .then(status => {
+                let millis = status.positionMillis
+                this.props.dispatch(playerActions.updateCurrentPlayingTime(convertMillis(millis)));
+              })
+          }.bind(this), 100);
+          this.props.dispatch(playerActions.storeTimer(timer));
+        })
+      }
+    })
+    .catch(err => console.warn(err));
   }
 
   handleAppClose = () => {
@@ -54,7 +96,7 @@ class Player extends Component {
           this.updateCurrentEpisodeStats(this.props.currentEpisode.EpisodeId, currentTime, lastPlayed);
           this.props.currentSoundInstance.playAsync()
             .then(played => {
-              this.props.dispatch(actionCreators.setPlayStatus(true));
+              this.props.dispatch(playerActions.setPlayStatus(true));
             })
         })
         .catch(error => console.log(error));
@@ -64,7 +106,7 @@ class Player extends Component {
   handlePause = () => {
     this.props.currentSoundInstance.pauseAsync()
       .then(paused => {
-        this.props.dispatch(actionCreators.setPlayStatus(false));
+        this.props.dispatch(playerActions.setPlayStatus(false));
         this.props.currentSoundInstance.getStatusAsync()
         .then(status => {
           let currentTime = status.positionMillis;
@@ -131,7 +173,7 @@ class Player extends Component {
   handleSkipToEnd = () => {
     if (this.props.currentSoundInstance !== null) {
       this.props.currentSoundInstance.setPositionAsync(this.props.currentSoundInstance.getDurationMillis())
-        .then(endOfSong => this.props.dispatch(actionCreators.setPlayStatus(false)))
+        .then(endOfSong => this.props.dispatch(playerActions.setPlayStatus(false)))
         .catch(error => console.log(error));
     }
   }
@@ -139,7 +181,7 @@ class Player extends Component {
   handleDecreaseSpeed = () => {
     if (this.props.currentSoundInstance !== null && this.props.currentSpeed > 0.75) {
       this.props.currentSoundInstance.setRateAsync(this.props.currentSpeed - 0.25, true)
-        .then(status => this.props.dispatch(actionCreators.decreaseSpeed(0.25)))
+        .then(status => this.props.dispatch(playerActions.decreaseSpeed(0.25)))
         .catch(error => console.log(error));
     }
   }
@@ -147,25 +189,25 @@ class Player extends Component {
   handleIncreaseSpeed = () => {
     if (this.props.currentSoundInstance !== null && this.props.currentSpeed < 2.5) {
       this.props.currentSoundInstance.setRateAsync(this.props.currentSpeed + 0.25, true)
-        .then(status => this.props.dispatch(actionCreators.increaseSpeed(0.25)))
+        .then(status => this.props.dispatch(playerActions.increaseSpeed(0.25)))
         .catch(error => console.log(error));
     }
   }
 
   handleSpeedButtonPress = () => {
-    this.props.dispatch(actionCreators.setModalVisible(true));
+    this.props.dispatch(playerActions.setModalVisible(true));
   }
 
   handleModalClose = () => {
-    this.props.dispatch(actionCreators.setModalVisible(false));
+    this.props.dispatch(playerActions.setModalVisible(false));
   }
 
   handleFullSizeButtonPress = () => {
-    this.props.dispatch(actionCreators.setFullSizeModalVisible(true));
+    this.props.dispatch(playerActions.setFullSizeModalVisible(true));
   }
 
   handleFullSizeModalClose = () => {
-    this.props.dispatch(actionCreators.setFullSizeModalVisible(false));
+    this.props.dispatch(playerActions.setFullSizeModalVisible(false));
   }
 
   render() {
