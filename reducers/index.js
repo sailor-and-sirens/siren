@@ -81,6 +81,9 @@ const main = (state = initialState, action) => {
   if (action.type === types.UPDATE_INBOX) {
     return {...state, inbox: action.payload}
   }
+  if (action.type === types.UPDATE_EPISODE_CURRENT_TIME) {
+    return {...state, inbox: action.payload}
+  }
   return state;
 }
 

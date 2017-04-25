@@ -14,7 +14,8 @@ export const types = {
   CHANGE_EMAIL: 'CHANGE_EMAIL',
   CHANGE_AUTHVIEW: 'CHANGE_AUTHVIEW',
   UPDATE_INBOX: 'UPDATE_INBOX',
-  UPDATE_NAME_FILTER: 'UPDATE_NAME_FILTER'
+  UPDATE_NAME_FILTER: 'UPDATE_NAME_FILTER',
+  UPDATE_EPISODE_CURRENT_TIME: 'UPDATE_EPISODE_CURRENT_TIME'
 }
 
 export const actionCreators = {
@@ -65,5 +66,8 @@ export const actionCreators = {
   },
   updateInbox: (value) => {
     return {type: types.UPDATE_INBOX, payload: value}
+  }
+  updateEpisodeCurrentTime: (inbox) => {
+    return {type: types.UPDATE_EPISODE_CURRENT_TIME, payload: inbox}
   }
 }

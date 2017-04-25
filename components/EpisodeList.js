@@ -191,6 +191,7 @@ class EpisodeList extends Component {
     this.props.dispatch(playerActions.setPlayStatus(true));
     this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode('LOADING'));
     this.props.dispatch(playerActions.storeEpisodeData(episode));
+    // dispatch an action to store the currentTime for the episode in the inbox
     newSoundInstance.loadAsync()
       .then(loaded => {
         newSoundInstance.playAsync()
