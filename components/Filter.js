@@ -16,7 +16,7 @@ const mapStateToProps = (state) => ({
 class Filter extends Component {
 
   getTags = () => {
-    var tags = ['All'];
+    var tags = ['Tags'];
     Object.keys(this.props.inbox).forEach((key) => {
       tags.push(this.props.inbox[key].tag);
     });
@@ -25,14 +25,15 @@ class Filter extends Component {
 
   getPlaylists = () => {
     var playlistNames = this.props.allplaylists.map(playlist => playlist.name);
-    playlistNames.unshift('All');
+    playlistNames.unshift('Playlists');
     return playlistNames;
   }
 
   getNames = () => {
-    var names = ['All'];
+    var names = ['Podcasts'];
+    console.log('Inbox: ', this.props.inbox);
     Object.keys(this.props.inbox).forEach((key) => {
-      names.push(this.props.inbox[key].name);
+      names.push(this.props.inbox[key].title);
     });
     return  _.uniq(names);
   }
@@ -46,7 +47,7 @@ class Filter extends Component {
             <Picker itemStyle={styles.pickerItem} style={styles.picker}
                 selectedValue={this.props.filters.liked}
                 onValueChange={(value) => {this.props.dispatch(actionCreators.updateLikedFilter(value))}}>
-              <Picker.Item style={styles.pickerItem} value="likedOff" label="All" />
+              <Picker.Item style={styles.pickerItem} value="likedOff" label="Likes" />
               <Picker.Item style={styles.pickerItem} value="liked" label="Liked" />
               <Picker.Item style={styles.pickerItem} value="notLiked" label="Not Liked" />
             </Picker>
@@ -57,7 +58,7 @@ class Filter extends Component {
               <Picker style={styles.picker}
                   selectedValue={this.props.filters.bookmarked}
                   onValueChange={(value) => {this.props.dispatch(actionCreators.updateBookmarkedFilter(value))}}>
-                <Picker.Item value="bookmarkedOff" label="All" />
+                <Picker.Item value="bookmarkedOff" label="Bookmarks" />
                 <Picker.Item value="bookmarked" label="Bookmarked" />
                 <Picker.Item value="notBookmarked" label="Not Bookmarked" />
               </Picker>
@@ -68,7 +69,7 @@ class Filter extends Component {
             <Picker style={styles.picker}
                 selectedValue={this.props.filters.time}
                 onValueChange={(value) => {this.props.dispatch(actionCreators.updateTimeFilter(value))}}>
-              <Picker.Item value="timeOff" label="All" />
+              <Picker.Item value="timeOff" label="Duration" />
               <Picker.Item value="5" label="< 5 min" />
               <Picker.Item value="15" label="< 15 min" />
               <Picker.Item value="30" label="< 30 min" />
@@ -88,7 +89,7 @@ class Filter extends Component {
           </Picker>
           </View>
            <View style={styles.filterBar}>
-          <Ionicons style={styles.icon} size={30} color='grey' name="ios-pricetag-outline"/>
+          <Ionicons style={styles.icon} size={30} color='grey' name="ios-play-outline"/>
           <Picker style={styles.picker}
                 selectedValue={this.props.filters.name}
                 onValueChange={(value, i) => {this.props.dispatch(actionCreators.updateNameFilter(value))}}>

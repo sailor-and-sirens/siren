@@ -16,9 +16,9 @@ const initialState = {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",
     time: "timeOff",
-    tag: "All",
-    playlist: "All",
-    name: "All"
+    tag: "Tags",
+    playlist: "Playlists",
+    name: "Podcasts"
   },
   username: '',
   password: '',
@@ -44,6 +44,16 @@ const main = (state = initialState, action) => {
   }
   if (action.type === types.TOGGLE_OPEN_SWIPEABLE) {
     return {...state, currentlyOpenSwipeable: action.payload}
+  }
+  if (action.type === types.UPDATE_FILTERS) {
+    return {...state, inboxFilters: {
+    liked: "likedOff",
+    bookmarked: "bookmarkedOff",
+    time: "timeOff",
+    tag: "Tags",
+    playlist: "Playlists",
+    name: "Name"
+  }}
   }
   if (action.type === types.UPDATE_LIKED_FILTER) {
     return {...state, inboxFilters: {...state.inboxFilters, liked: action.payload}}

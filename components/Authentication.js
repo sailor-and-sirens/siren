@@ -58,7 +58,6 @@ class Authentication extends Component {
       })
       .then((responseData) => {
         if (responseData) {
-
           return this._onValueChange('id_token', responseData.id_token)
         }
       })

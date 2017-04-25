@@ -17,29 +17,27 @@ const mapStateToProps = (state) => ({
   view: state.header.view,
   rightActionActivated: state.swipe.isRightActionActivated,
   rightToggle: state.swipe.isRightToggled,
-  subscriptions: state.main.subscriptions
+  subscriptions: state.podcasts.subscriptions
 });
 
 
 class PodcastManagerCard extends Component {
 
   unsubscribe = (id) => {
-  //   var subscriptions = this.props.subscriptions.slice().splice(id, 1);
-  //   fetch("http://siren-server.herokuapp.com/api/podcasts/delete", {
-  //     method: "POST",
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Authorization': this.props.token
-  //     },
-  //     body: JSON.stringify({id: key})
-  //   })
-  //     .then(response =>  response.json())
-  //     .then(response => {
-  //       this.this.props.dispatch(podcastsActions.updateSubscriptions(subscriptions));
-  //     })
-  //     .catch(err => console.log(err));
-  console.warn('Unsubscribe under construction. Key = ', id);
+    var subscriptions = this.props.subscriptions.slice().filter((item) => {
+      return item['id'] !== id;
+    });
+    this.props.dispatch(podcastsActions.updateSubscriptions(subscriptions));
+    fetch("http://siren-server.herokuapp.com/api/podcasts/:" + id, {
+      method: "DELETE",
+      headers: {
+        'Authorization': this.props.token
+      }
+    })
+      .then(response => {
+        console.log('Unsubscribe response: ', response);
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -57,7 +55,7 @@ class PodcastManagerCard extends Component {
             onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
             onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
             onRightActionComplete={() => {
-              this.unsubscribe(this.props.id);
+              this.unsubscribe(this.props.podcast['id']);
               Alert.alert('Unsubscribed from ' + this.props.podcast['name']);
             }}
           >
