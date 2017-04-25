@@ -4,6 +4,7 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header';
+import { actionCreators as podcastsActions } from '../actions/Podcasts';
 
 const mapStateToProps = (state) => ({
   token: state.main.token
@@ -27,6 +28,7 @@ class Settings extends Component {
       this.props.dispatch(actionCreators.changeEmail(''));
       this.props.dispatch(actionCreators.changeUsername(''));
       this.props.dispatch(actionCreators.addToken(null));
+      this.props.dispatch(podcastsActions.searchText(''));
       this.props.dispatch(headerActions.changeView('Authentication'));
     })
   }

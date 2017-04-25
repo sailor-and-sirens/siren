@@ -32,8 +32,10 @@ class EpisodeList extends Component {
   currentEpisodeId = null;
 
   componentDidMount = () => {
+    //temporary fix for blank inbox on login
+    // updateInbox(this.props);
     Audio.setIsEnabledAsync(true);
-    if(this.props.inbox.length || !this.props.allplaylists.length) {
+    if(this.props.inbox.length === 0 || !this.props.allplaylists.length) {
       updateInbox(this.props);
       getAllPlaylists(this.props);
     }
@@ -45,7 +47,7 @@ class EpisodeList extends Component {
   }
 
   filterEpisodes = (keys) => {
-    if (this.props.filters.playlist !== 'All') {
+    if (this.props.filters.playlist !== 'Playlists') {
       var playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
       if(playlist.length) {
         keys = playlist[0].Episodes.map(episode => episode.id);
@@ -98,13 +100,13 @@ class EpisodeList extends Component {
         });
       }
     }
-    if (this.props.filters.tag !== 'All') {
+    if (this.props.filters.tag !== 'Tags') {
       var tag = this.props.filters.tag;
       keys = _.filter(keys, (key) => {
         return this.props.inbox[key].tag === tag;
       })
     }
-    if (this.props.filters.name !== 'All') {
+    if (this.props.filters.name !== 'Name') {
       var name = this.props.filters.name;
       keys = _.filter(keys, (key) => {
         return this.props.inbox[key].name === name;
@@ -240,6 +242,7 @@ class EpisodeList extends Component {
   }
 
   render() {
+    console.log('This.props.inbox: ', this.props.inbox);
     const { currentlyOpenSwipeable } = this.props;
     const itemProps = {
       onOpen: (event, gestureState, swipeable) => {

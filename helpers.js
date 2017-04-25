@@ -126,7 +126,25 @@ export const toggleBookmark = (id, props) => {
       body: JSON.stringify({id: id, bookmark: !props.inbox[id].bookmark})
     })
     .then(() => getAllPlaylists(props))
-  };
+  }
+
+export const getSubscriptions = (props) => {
+    props.dispatch(podcastsActions.toggleSearchSpinner(true));
+    fetch("http://siren-server.herokuapp.com/api/podcasts", {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': props.token
+      },
+    })
+    .then(subscriptions => subscriptions.json())
+    .then((subscriptions) => {
+      props.dispatch(podcastsActions.updateSubscriptions(subscriptions[0]));
+      props.dispatch(podcastsActions.toggleSearchSpinner(false));
+    })
+    .catch(console.warn);
+  }
 
 export const getAllPlaylists = (props) => {
     fetch("http://siren-server.herokuapp.com/api/playlists/get-playlists", {

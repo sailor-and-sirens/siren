@@ -49,7 +49,7 @@ class App extends Component {
     return (
       <View style={styles.container}>
         <Header/>
-        {this.props.view === 'Search' ?
+        {this.props.view === 'Search' || this.props.view === 'Discovery' ?
         <PodcastList/> :
         this.props.view === 'Inbox' ?
         <EpisodeList/> :

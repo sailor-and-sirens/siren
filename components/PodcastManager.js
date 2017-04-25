@@ -8,6 +8,7 @@ import { actionCreators } from '../actions';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { getSubscriptions } from '../helpers';
 
 const mapStateToProps = (state) => ({
   currentPodcast: state.podcasts.currentPodcast,
@@ -24,25 +25,7 @@ const mapStateToProps = (state) => ({
 class PodcastManager extends Component {
 
   componentDidMount() {
-    this.getSubscriptions();
-  }
-
-  getSubscriptions () {
-    this.props.dispatch(podcastsActions.toggleSearchSpinner(true));
-    fetch("http://siren-server.herokuapp.com/api/podcasts", {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      },
-    })
-    .then(subscriptions => subscriptions.json())
-    .then((subscriptions) => {
-      this.props.dispatch(podcastsActions.updateSubscriptions(subscriptions[0]));
-      this.props.dispatch(podcastsActions.toggleSearchSpinner(false));
-    })
-    .catch(console.warn);
+    getSubscriptions(this.props);
   }
 
   render() {

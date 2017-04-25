@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
+import { headerActions } from '../actions/Header';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const mapStateToProps = (state) => ({
@@ -17,7 +18,8 @@ const mapStateToProps = (state) => ({
   leftActionActivated: state.swipe.isLeftActionActivated,
   leftToggle: state.swipe.isLeftToggled,
   visible: state.podcasts.searchSpinner,
-  text: state.podcasts.searchText
+  text: state.podcasts.searchText,
+  view: state.header.view
 })
 
 class PodcastList extends Component {
@@ -38,10 +40,25 @@ class PodcastList extends Component {
   render() {
     return (
       <View style={styles.mainView}>
-        <View style={styles.searchBar}>
-          <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.props.dispatch(podcastsActions.searchText(text));}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.props.text}/>
-          <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search" />
+      <View style={styles.buttonRow}>
+          {this.props.view === 'Search' ?
+            <View>
+              <Text style={styles.switchTo} onPress={() => {this.props.dispatch(headerActions.changeView('Discovery'))}}>Switch to Discovery</Text>
+            </View> :
+            <View>
+              <Text style={styles.switchTo} onPress={() => {this.props.dispatch(headerActions.changeView('Search'))}}>Switch to Search</Text>
+            </View>
+          }
         </View>
+         {this.props.view === 'Search' ?
+          <View style={styles.searchBar}>
+            <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.props.dispatch(podcastsActions.searchText(text));}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.props.text}/>
+            <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search" />
+          </View> :
+            <View style={styles.recommendationBar}>
+              <Text style={styles.recommended}>Recommended for You</Text>
+            </View>
+        }
         <ScrollView style={styles.podcastList}>
           {this.props.visible ?
             <Spinner visible={this.props.visible} textContent={"Searching..."} textStyle={{color: '#FFF'}} />  :
@@ -57,17 +74,37 @@ class PodcastList extends Component {
 const styles = StyleSheet.create({
   searchInput: {
     height: 40,
-    width: 250,
+    width: '80%',
     borderColor: 'gray',
     borderWidth: 1,
-    padding: 10
+    padding: 6,
   },
   mainView: {
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 35,
   },
   searchButton: {
     marginLeft: 8,
+  },
+  recommendationBar: {
+    justifyContent: 'center',
+  },
+  recommended: {
+    height: 30,
+    marginTop: 10,
+    color: 'grey',
+    fontSize: 22,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
+  switchTo: {
+    height: 20,
+    marginTop: 10,
+    color: 'grey',
+    fontSize: 16,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
   },
   podcastList:{
     width: '100%',
