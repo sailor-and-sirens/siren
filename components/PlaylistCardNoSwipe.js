@@ -13,6 +13,7 @@ const mapStateToProps = (state) => ({
 });
 
 class PlaylistCardNoSwipe extends Component {
+
   removePlaylist(playlistId){
     fetch("http://siren-server.herokuapp.com/api/playlists/remove-playlist", {
       method: "DELETE",
@@ -37,6 +38,37 @@ class PlaylistCardNoSwipe extends Component {
     return hours + 'h' + ' ' + minutes + 'm';
   }
 
+  setPlaylistImages(){
+    var placeholderImage = 'http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_5639735648c34.png';
+    this.props.playlist.Episodes.forEach(episode => {
+      if(this.imagesArr.every(url => url !== episode.Podcast.artworkUrl) && this.imagesArr.length < 4){
+        this.imagesArr.push(episode.Podcast.artworkUrl);
+      }
+    });
+    if(this.imagesArr.length === 4){
+      this.imageClass = 'quad';
+    } else if(this.imagesArr.length === 3){
+      this.imageClass = 'quad';
+      this.imagesArr.push(this.imagesArr[0]);
+    } else if(this.imagesArr.length === 2){
+      this.imageClass = 'quad';
+      this.imagesArr.splice(1, 0, this.imagesArr[1]);
+      this.imagesArr.splice(3, 0, this.imagesArr[0]);
+    } else if(this.imagesArr.length < 1){
+      this.imageClass = 'single';
+      this.imagesArr.push(placeholderImage);
+    } else {
+      this.imageClass = 'single';
+      this.imagesArr = this.imagesArr.slice(0,1);
+    }
+    console.log(this.imagesArr);
+  }
+
+  componentWillMount(){
+    this.imagesArr = [];
+    this.setPlaylistImages();
+  }
+
   render() {
     const {rightActionActivated, rightToggle} = this.props;
     return (
@@ -47,7 +79,9 @@ class PlaylistCardNoSwipe extends Component {
             this.props.dispatch(actionCreators.updatePlaylistFilter(this.props.playlist.name));
             this.props.dispatch(headerActions.changeView(this.props.playlist.name + ' Playlist'));
           }}>
-            <Image source={{uri: 'http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_5639735648c34.png'}} style={styles.image}/>
+            <View style={styles.image}>
+              {this.imagesArr.map((image, index) => <Image key={index} source={{uri: image}} style={styles[this.imageClass]}/>)}
+            </View>
           </TouchableOpacity>
         </View>
         <View style={[styles.content]}>
@@ -70,6 +104,17 @@ class PlaylistCardNoSwipe extends Component {
 
 const styles = StyleSheet.create({
   image: {
+    height: 80,
+    width: 80,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginBottom: 10,
+  },
+  quad: {
+    height: 40,
+    width: 40,
+  },
+  single: {
     height: 80,
     width: 80,
   },
