@@ -3,14 +3,14 @@ import { StyleSheet, Text, View, TextInput, ScrollView, Image, AppState} from 'r
 import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
+import moment from 'moment';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
-import Spinner from 'react-native-loading-spinner-overlay';
 import EpisodeListCard from './EpisodeListCard';
-import moment from 'moment';
 import { getAllPlaylists } from '../helpers';
 
 let _ = require('lodash');
@@ -30,7 +30,6 @@ const mapStateToProps = (state) => ({
 class EpisodeList extends Component {
 
   currentEpisodeId = null;
-  fetchedEpisodeTime;
 
   componentDidMount = () => {
     Audio.setIsEnabledAsync(true);
@@ -103,6 +102,12 @@ class EpisodeList extends Component {
       var tag = this.props.filters.tag;
       keys = _.filter(keys, (key) => {
         return this.props.inbox[key].tag === tag;
+      })
+    }
+    if (this.props.filters.name !== 'All') {
+      var name = this.props.filters.name;
+      keys = _.filter(keys, (key) => {
+        return this.props.inbox[key].name === name;
       })
     }
 

@@ -67,11 +67,12 @@ export const subscribePodcast = (props) => {
         },
       })
       .then(inbox => inbox.json())
-      .then(inbox => {
+      .then((inbox) => {
         props.dispatch(mainActions.updateInbox(inbox));
       })
-      .catch((err) => console.log(err));
-    });
+    })
+    .catch((err) => console.log(err));
+    //POST request to siren-discovery here
   }
 
 export const updateInbox = (props) => {

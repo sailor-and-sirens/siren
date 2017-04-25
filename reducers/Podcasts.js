@@ -6,7 +6,7 @@ const initialState = {
   searchText: '',
   searchSpinner: false,
   currentPodcast: null,
-  podcastEpisodes: [],
+  podcastEpisodes: [{podcast: {description:{long: ''}}}],
   episodesLoading: false,
   subscriptions: []
 }

@@ -35,8 +35,8 @@ class PodcastListCard extends Component {
       })
       .then(response =>  response.json())
       .then(response => {
+        this.props.dispatch(podcastsActions.podcastEpisodes(response.slice(0, 20)));
         this.props.dispatch(podcastsActions.toggleEpisodesLoading(false));
-        this.props.dispatch(podcastsActions.podcastEpisodes(response));
       })
       .catch(err => console.log(err));
   }
