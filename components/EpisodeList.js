@@ -63,10 +63,6 @@ class EpisodeList extends Component {
   }
 
   filterEpisodes = (keys) => {
-    if (this.props.filters.playlist !== 'Playlists') {
-      var playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
-      if(playlist.length) {
-        keys = playlist[0].Episodes.map(episode => episode.id);
     if (this.props.filters.playlist !== 'All') {
       this.playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
       if(this.playlist.length) {
