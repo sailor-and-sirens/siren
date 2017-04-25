@@ -49,7 +49,7 @@ class Settings extends Component {
 const styles = StyleSheet.create({
   main: {
     marginTop: 20,
-    height: '34%',
+    height: '38%',
     justifyContent: 'space-between',
     alignItems: 'stretch',
     alignSelf: 'center',
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     borderColor: '#48BBEC',
     borderWidth: 1,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: 20,
     marginTop: 20,
   },
 })

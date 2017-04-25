@@ -25,17 +25,17 @@ class Filter extends Component {
 
   getPlaylists = () => {
     var playlistNames = this.props.allplaylists.map(playlist => playlist.name);
-    // playlistNames.unshift('All');
+    playlistNames.unshift('Playlists');
     return playlistNames;
   }
 
   getNames = () => {
-    var tags = ['Podcasts'];
+    var names = ['Podcasts'];
     console.log('Inbox: ', this.props.inbox);
     Object.keys(this.props.inbox).forEach((key) => {
-      tags.push(this.props.inbox[key].title);
+      names.push(this.props.inbox[key].title);
     });
-    return  _.uniq(tags);
+    return  _.uniq(names);
   }
 
   render() {
