@@ -242,7 +242,6 @@ class EpisodeList extends Component {
   }
 
   render() {
-    console.log('This.props.inbox: ', this.props.inbox);
     const { currentlyOpenSwipeable } = this.props;
     const itemProps = {
       onOpen: (event, gestureState, swipeable) => {
