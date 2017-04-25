@@ -114,7 +114,8 @@ class EpisodeList extends Component {
     return keys;
   }
 
-  handlePlay = async (episode, episodeId) => {
+  handlePlay =
+  (episode, episodeId) => {
     let newEpisodeCurrentTime = episode.currentTime;
     let newEpisodeLastPlayed = new Date();
     if (newEpisodeCurrentTime === null) newEpisodeCurrentTime = 0;
@@ -174,6 +175,10 @@ class EpisodeList extends Component {
 
   updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
     let episodeData = { episodeId, currentTime, lastPlayed };
+    this.props.dispatch(mainActions.updateEpisodeCurrentTime({
+      id: episodeId,
+      currentTime: currentTime
+    }));
     fetch('http://siren-server.herokuapp.com/api/episodes/user-episode', {
       method: 'PUT',
       headers: {
@@ -191,7 +196,6 @@ class EpisodeList extends Component {
     this.props.dispatch(playerActions.setPlayStatus(true));
     this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode('LOADING'));
     this.props.dispatch(playerActions.storeEpisodeData(episode));
-    // dispatch an action to store the currentTime for the episode in the inbox
     newSoundInstance.loadAsync()
       .then(loaded => {
         newSoundInstance.playAsync()

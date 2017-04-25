@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, ActivityIn
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions/Player';
+import { actionCreators as mainActions } from '../actions';
 import { convertMillis } from '../helpers';
 import PlayerSpeedModal from './PlayerSpeedModal';
 import PlayerFullSizeModal from './PlayerFullSizeModal';
@@ -69,12 +70,20 @@ class Player extends Component {
           let currentTime = status.positionMillis;
           let lastPlayed = new Date();
           this.updateCurrentEpisodeStats(this.props.currentEpisode.EpisodeId, currentTime, lastPlayed);
+          this.props.dispatch(mainActions.updateEpisodeCurrentTime({
+            id: this.props.currentEpisode.EpisodeId,
+            currentTime: currentTime
+          }));
         });
       })
       .catch(error => console.log(error));
   }
 
   updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
+    this.props.dispatch(mainActions.updateEpisodeCurrentTime({
+      id: episodeId,
+      currentTime: currentTime
+    }));
     let episodeData = { episodeId, currentTime, lastPlayed };
     fetch('http://siren-server.herokuapp.com/api/episodes/user-episode', {
       method: 'PUT',

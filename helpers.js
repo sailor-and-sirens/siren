@@ -15,11 +15,18 @@ export const convertMillis = (millis) => {
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
-export const removeItemFromObjectById = (object, id) => {
-  return Object.keys(object).reduce((accum, key) => {
-    if (key !== id) accum[key] = object[key];
+export const removeItemFromObjectById = (inbox, id) => {
+  return Object.keys(inbox).reduce((accum, key) => {
+    if (key !== id) accum[key] = inbox[key];
     return accum;
   }, {});
+}
+
+export const updateEpisodeCurrentTime = (inbox, episodeData) => {
+  let { id, currentTime } = episodeData;
+  let newInbox = _.cloneDeep(inbox);
+  newInbox[id].currentTime = currentTime;
+  return newInbox;
 }
 
 export const hmsToSecondsOnly = (duration) => {

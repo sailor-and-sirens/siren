@@ -66,8 +66,8 @@ export const actionCreators = {
   },
   updateInbox: (value) => {
     return {type: types.UPDATE_INBOX, payload: value}
-  }
-  updateEpisodeCurrentTime: (inbox) => {
-    return {type: types.UPDATE_EPISODE_CURRENT_TIME, payload: inbox}
+  },
+  updateEpisodeCurrentTime: (episodeData) => {
+    return {type: types.UPDATE_EPISODE_CURRENT_TIME, payload: episodeData}
   }
 }
