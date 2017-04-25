@@ -114,10 +114,6 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
   },
-  double: {
-    height: 40,
-    width: 40,
-  },
   single: {
     height: 80,
     width: 80,
