@@ -4,6 +4,7 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header';
+import { actionCreators as podcastsActions } from '../actions/Podcasts';
 
 const mapStateToProps = (state) => ({
   token: state.main.token
@@ -23,7 +24,11 @@ class Settings extends Component {
     fetch("http://siren-server.herokuapp.com/logout", { method: "GET" });
     this.deleteToken('id_token')
     .then (() => {
+      this.props.dispatch(actionCreators.updateInbox([]));
+      this.props.dispatch(actionCreators.changeEmail(''));
+      this.props.dispatch(actionCreators.changeUsername(''));
       this.props.dispatch(actionCreators.addToken(null));
+      this.props.dispatch(podcastsActions.searchText(''));
       this.props.dispatch(headerActions.changeView('Authentication'));
     })
   }
@@ -44,7 +49,7 @@ class Settings extends Component {
 const styles = StyleSheet.create({
   main: {
     marginTop: 20,
-    height: '34%',
+    height: '38%',
     justifyContent: 'space-between',
     alignItems: 'stretch',
     alignSelf: 'center',
@@ -56,7 +61,7 @@ const styles = StyleSheet.create({
     borderColor: '#48BBEC',
     borderWidth: 1,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: 20,
     marginTop: 20,
   },
 })

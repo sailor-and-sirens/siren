@@ -33,6 +33,7 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
+      "name": "All",
       "playlist": "All",
       "tag": "All",
       "time": "timeOff",
@@ -66,7 +67,15 @@ Object {
     "currentPodcast": null,
     "episodesLoading": false,
     "iTunesResult": Array [],
-    "podcastEpisodes": Array [],
+    "podcastEpisodes": Array [
+      Object {
+        "podcast": Object {
+          "description": Object {
+            "long": "",
+          },
+        },
+      },
+    ],
     "searchSpinner": false,
     "searchText": "",
     "subscriptions": Array [],
@@ -92,6 +101,7 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
+      "name": "All",
       "playlist": "All",
       "tag": "All",
       "time": "timeOff",
@@ -125,7 +135,15 @@ Object {
     "currentPodcast": null,
     "episodesLoading": false,
     "iTunesResult": Array [],
-    "podcastEpisodes": Array [],
+    "podcastEpisodes": Array [
+      Object {
+        "podcast": Object {
+          "description": Object {
+            "long": "",
+          },
+        },
+      },
+    ],
     "searchSpinner": false,
     "searchText": "",
     "subscriptions": Array [],
@@ -151,6 +169,7 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
+      "name": "All",
       "playlist": "All",
       "tag": "All",
       "time": "timeOff",
@@ -184,7 +203,15 @@ Object {
     "currentPodcast": null,
     "episodesLoading": false,
     "iTunesResult": Array [],
-    "podcastEpisodes": Array [],
+    "podcastEpisodes": Array [
+      Object {
+        "podcast": Object {
+          "description": Object {
+            "long": "",
+          },
+        },
+      },
+    ],
     "searchSpinner": false,
     "searchText": "",
     "subscriptions": Array [],
@@ -210,6 +237,7 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
+      "name": "All",
       "playlist": "All",
       "tag": "All",
       "time": "timeOff",
@@ -243,7 +271,15 @@ Object {
     "currentPodcast": null,
     "episodesLoading": false,
     "iTunesResult": Array [],
-    "podcastEpisodes": Array [],
+    "podcastEpisodes": Array [
+      Object {
+        "podcast": Object {
+          "description": Object {
+            "long": "",
+          },
+        },
+      },
+    ],
     "searchSpinner": false,
     "searchText": "",
     "subscriptions": Array [],

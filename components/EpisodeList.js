@@ -9,6 +9,7 @@ import { actionCreators as mainActions } from '../actions';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
+import { actionCreators as playlistActions } from '../actions/Playlist';
 import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
 import { removeCurrentEpisodeFromListeningTo } from '../helpers/playerHelpers.js';
 import EpisodeListCard from './EpisodeListCard';
@@ -31,10 +32,27 @@ const mapStateToProps = (state) => ({
 
 class EpisodeList extends Component {
 
+  currentPlaylistId = null;
+
+  componentWillMount = () => {
+    this.view = this.props.view.split(' ');
+    this.viewEnd = this.view[this.view.length - 1];
+  }
+
+  componentWillUpdate = () => {
+    this.view = this.props.view.split(' ');
+    this.viewEnd = this.view[this.view.length - 1];
+  }
+
   componentDidMount = () => {
-    if (this.props.inbox.length || !this.props.allplaylists.length) {
+    //temporary fix for blank inbox on login
+    // updateInbox(this.props);
+    if(this.props.inbox.length === 0 || !this.props.allplaylists.length) {
       updateInbox(this.props);
       getAllPlaylists(this.props);
+    }
+    if (this.props.view !== "Inbox"){
+      this.currentPlaylistId = this.props.allplaylists.find(playlist => playlist.name === this.props.filters.playlist).id;
     }
     AppState.addEventListener('change', this.updateInboxOnActive);
   }
@@ -45,9 +63,10 @@ class EpisodeList extends Component {
 
   filterEpisodes = (keys) => {
     if (this.props.filters.playlist !== 'All') {
-      var playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
-      if(playlist.length) {
-        keys = playlist[0].Episodes.map(episode => episode.id);
+      this.playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
+      if(this.playlist.length) {
+        keys = this.playlist[0].Episodes.map(episode => episode.id);
+        keys = keys.filter(key => this.props.inbox.hasOwnProperty(key));
       }
     }
     if (this.props.filters.liked === 'liked') {
@@ -97,13 +116,13 @@ class EpisodeList extends Component {
         });
       }
     }
-    if (this.props.filters.tag !== 'All') {
+    if (this.props.filters.tag !== 'Tags') {
       var tag = this.props.filters.tag;
       keys = _.filter(keys, (key) => {
         return this.props.inbox[key].tag === tag;
       })
     }
-    if (this.props.filters.name !== 'All') {
+    if (this.props.filters.name !== 'Name') {
       var name = this.props.filters.name;
       keys = _.filter(keys, (key) => {
         return this.props.inbox[key].name === name;
@@ -158,19 +177,6 @@ class EpisodeList extends Component {
     .catch(err => console.warn(err));
   }
 
-  // removeCurrentEpisodeFromListeningTo = (episodeId) => {
-  //   let episodeData = { episodeId };
-  //   fetch('http://siren-server.herokuapp.com/api/playlists/listening-to', {
-  //     method: 'DELETE',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': this.props.token
-  //     },
-  //     body: JSON.stringify(episodeData)
-  //   })
-  //   .catch(err => console.warn(err));
-  // }
-
   updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
     let episodeData = { episodeId, currentTime, lastPlayed };
     this.props.dispatch(mainActions.updateEpisodeCurrentTime({
@@ -222,6 +228,7 @@ class EpisodeList extends Component {
     if (playingEpisode && playingEpisode.feed.enclosure.url === selectedEpisode.feed.enclosure.url) {
       this.handleRemovePlayingEpisode(id);
     } else {
+      console.log('triggered remove ep inbox')
       this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
     }
 
@@ -237,13 +244,36 @@ class EpisodeList extends Component {
     .catch(err => console.warn(err));
   }
 
+  handleRemoveEpisodeFromPlaylist = (id, playingEpisode, selectedEpisode) => {
+    let episodeData = { episodeId: id, playlistId: this.currentPlaylistId };
+    if (playingEpisode && playingEpisode.feed.enclosure.url === selectedEpisode.feed.enclosure.url) {
+      this.handleRemovePlayingEpisode(id);
+    } else {
+      this.props.dispatch(playlistActions.removeEpisodeFromPlaylist(episodeData));
+    }
+    fetch('http://siren-server.herokuapp.com/api/playlists/remove-episode', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.props.token
+      },
+      body: JSON.stringify(episodeData)
+    })
+    .then(() => getAllPlaylists(this.props))
+    .catch(err => console.warn(err));
+  }
+
   handleRemovePlayingEpisode = (id) => {
     this.props.currentSoundInstance.stopAsync()
     .then(stopped => {
       this.props.dispatch(playerActions.createNewSoundInstance(null));
       this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(null));
       this.props.dispatch(playerActions.setPlayStatus(false));
-      this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
+      if(this.props.view === "Inbox") {
+        this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
+      } else {
+        this.props.dispatch(playlistActions.removeEpisodeFromPlaylist(episodeData));
+      }
     });
   }
 
@@ -263,15 +293,38 @@ class EpisodeList extends Component {
         {this.props.visible ?
            <Spinner visible={this.props.visible} textContent={`Loading ${this.props.view} ...`} textStyle={{color: '#FFF'}} />  :
          <ScrollView style={styles.episodeList}>
-          {this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
+
+         {this.viewEnd === "Playlist" && this.props.view !== 'Inbox' ?
+        this.props.allplaylists.filter((playlist) => playlist.name === this.props.filters.playlist)[0].Episodes.map(episode => {
+           episode.episodeTitle = episode.title;
+           episode.image = episode.Podcast.artworkUrl;
+           episode.image600 = episode.Podcast.artworkUrl600;
+           episode.tag = episode.Podcast.primaryGenreName;
+           episode.liked = episode.Users[0].UserEpisode.liked;
+           episode.bookmark = episode.Users[0].UserEpisode.bookmarked;
+           episode.feed.pubDate = episode.feed.published;
+             return (<EpisodeListCard {...itemProps}
+               episode={episode}
+               handlePlay={this.handlePlay}
+               handleRemovePlayingEpisode={this.handleRemovePlayingEpisode}
+               handleRemoveEpisode={this.handleRemoveEpisodeFromPlaylist}
+               id={episode.id}
+               key={episode.id}/>)
+           })
+
+          :
+
+          this.filterEpisodes(Object.keys(this.props.inbox)).map(key => (
               <EpisodeListCard {...itemProps}
                 episode={this.props.inbox[key]}
                 handlePlay={this.handlePlay}
                 handleRemovePlayingEpisode={this.handleRemovePlayingEpisode}
-                handleRemoveEpisodeFromInbox={this.handleRemoveEpisodeFromInbox}
+                handleRemoveEpisode={this.handleRemoveEpisodeFromInbox}
                 id={key}
                 key={key}/>
-            ))}
+            ))
+          }
+
         </ScrollView>}
       </View>
     );

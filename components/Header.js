@@ -11,6 +11,15 @@ const mapStateToProps = (state) => ({
   view: state.header.view
 })
 
+let defualtInbox = {
+    liked: "likedOff",
+    bookmarked: "bookmarkedOff",
+    time: "timeOff",
+    tag: "All",
+    playlist: "All",
+    name: "All"
+  };
+
 class Header extends Component {
 
   render() {
@@ -30,6 +39,7 @@ class Header extends Component {
         <View style={styles.navigation}>
           <MaterialIcons style={styles.navigationLink} onPress={() => {
             this.props.dispatch(actionCreators.updatePlaylistFilter('All'));
+            this.props.dispatch(actionCreators.updateFilters());
             this.props.dispatch(headerActions.changeView('Inbox'));
           }} size={30} name='inbox'/>
           <MaterialIcons style={styles.navigationLink} onPress={() => this.props.dispatch(headerActions.changeView('Playlists'))} size={30} name='playlist-play'/>

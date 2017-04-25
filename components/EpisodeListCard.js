@@ -74,7 +74,7 @@ class EpisodeListCard extends Component {
         onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
         onRightActionComplete={() => {
           let { currentEpisode, id, episode } = this.props;
-          this.props.handleRemoveEpisodeFromInbox(id, currentEpisode, episode);
+          this.props.handleRemoveEpisode(id, currentEpisode, episode);
         }}
       >
       <View style={styles.mainView}>
@@ -85,18 +85,18 @@ class EpisodeListCard extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
-            <Text style={styles.date}>{moment(this.props.episode.feed.pubDate.substring(0,16)).format('ddd, DD MMM YYYY')}</Text>
-            <Text style={styles.episode} numberOfLines={3}>{this.props.episode['feed']['title']}</Text>
+            <Text style={styles.date}>{moment(this.props.episode['feed']['pubDate'].substring(0,16)).format('ddd, DD MMM YYYY')}</Text>
+            <Text style={styles.episode} numberOfLines={1}>{this.props.episode['feed']['title']}</Text>
             <Text style={styles.subtitle} numberOfLines={2}>
-              {this.props.episode['feed']['description']}
+              {this.props.episode['feed']['subtitle']}
             </Text>
           </View>
         </View>
         <View style={styles.bottomView}>
-          <Text style={styles.tag} numberOfLines={1} ellipsizeMode='tail'> {this.props.episode.tag} </Text>
+          <Text style={styles.tag} numberOfLines={1} ellipsizeMode='tail'> {this.props.episode['tag']} </Text>
           <View style={styles.timeView}>
-            {this.renderClock(this.props.episode.feed.duration)}
-            <Text style={styles.time}>{this.props.episode.feed.duration}</Text>
+            {this.renderClock(this.props.episode['feed']['duration'])}
+            <Text style={styles.time}>{this.props.episode['feed']['duration']}</Text>
           </View>
           {this.props.episode.bookmark === true ?
           <Ionicons style={styles.favorite} size={25} color='grey' name="ios-bookmark" onPress={()=>(toggleBookmark(this.props.id, this.props))}/> :
