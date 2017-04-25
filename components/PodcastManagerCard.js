@@ -28,7 +28,7 @@ class PodcastManagerCard extends Component {
       return item['id'] !== id;
     });
     this.props.dispatch(podcastsActions.updateSubscriptions(subscriptions));
-    fetch("http://siren-server.herokuapp.com/api/podcasts/:" + id, {
+    fetch("http://siren-server.herokuapp.com/api/podcasts/" + id, {
       method: "DELETE",
       headers: {
         'Authorization': this.props.token

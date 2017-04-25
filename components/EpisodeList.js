@@ -63,7 +63,7 @@ class EpisodeList extends Component {
   }
 
   filterEpisodes = (keys) => {
-    if (this.props.filters.playlist !== 'All') {
+    if (this.props.filters.playlist !== 'All Playlists') {
       this.playlist = this.props.allplaylists.filter(playlist => playlist.name === this.props.filters.playlist);
       if(this.playlist.length) {
         keys = this.playlist[0].Episodes.map(episode => episode.id);
@@ -117,13 +117,13 @@ class EpisodeList extends Component {
         });
       }
     }
-    if (this.props.filters.tag !== 'Tags') {
+    if (this.props.filters.tag !== 'All Tags') {
       var tag = this.props.filters.tag;
       keys = _.filter(keys, (key) => {
         return this.props.inbox[key].tag === tag;
       })
     }
-    if (this.props.filters.name !== 'Name') {
+    if (this.props.filters.name !== 'All Podcasts') {
       var name = this.props.filters.name;
       keys = _.filter(keys, (key) => {
         return this.props.inbox[key].name === name;

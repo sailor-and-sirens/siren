@@ -16,7 +16,7 @@ const mapStateToProps = (state) => ({
 class Filter extends Component {
 
   getTags = () => {
-    var tags = ['Tags'];
+    var tags = ['All Tags'];
     Object.keys(this.props.inbox).forEach((key) => {
       tags.push(this.props.inbox[key].tag);
     });
@@ -25,12 +25,12 @@ class Filter extends Component {
 
   getPlaylists = () => {
     var playlistNames = this.props.allplaylists.map(playlist => playlist.name);
-    playlistNames.unshift('Playlists');
+    playlistNames.unshift('All Playlists');
     return playlistNames;
   }
 
   getNames = () => {
-    var names = ['Podcasts'];
+    var names = ['All Podcasts'];
     console.log('Inbox: ', this.props.inbox);
     Object.keys(this.props.inbox).forEach((key) => {
       names.push(this.props.inbox[key].title);
@@ -47,7 +47,7 @@ class Filter extends Component {
             <Picker itemStyle={styles.pickerItem} style={styles.picker}
                 selectedValue={this.props.filters.liked}
                 onValueChange={(value) => {this.props.dispatch(actionCreators.updateLikedFilter(value))}}>
-              <Picker.Item style={styles.pickerItem} value="likedOff" label="Likes" />
+              <Picker.Item style={styles.pickerItem} value="likedOff" label="All Likes" />
               <Picker.Item style={styles.pickerItem} value="liked" label="Liked" />
               <Picker.Item style={styles.pickerItem} value="notLiked" label="Not Liked" />
             </Picker>
@@ -58,7 +58,7 @@ class Filter extends Component {
               <Picker style={styles.picker}
                   selectedValue={this.props.filters.bookmarked}
                   onValueChange={(value) => {this.props.dispatch(actionCreators.updateBookmarkedFilter(value))}}>
-                <Picker.Item value="bookmarkedOff" label="Bookmarks" />
+                <Picker.Item value="bookmarkedOff" label="All Bookmarks" />
                 <Picker.Item value="bookmarked" label="Bookmarked" />
                 <Picker.Item value="notBookmarked" label="Not Bookmarked" />
               </Picker>
@@ -69,7 +69,7 @@ class Filter extends Component {
             <Picker style={styles.picker}
                 selectedValue={this.props.filters.time}
                 onValueChange={(value) => {this.props.dispatch(actionCreators.updateTimeFilter(value))}}>
-              <Picker.Item value="timeOff" label="Duration" />
+              <Picker.Item value="timeOff" label="All Durations" />
               <Picker.Item value="5" label="< 5 min" />
               <Picker.Item value="15" label="< 15 min" />
               <Picker.Item value="30" label="< 30 min" />
