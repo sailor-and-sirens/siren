@@ -47,8 +47,11 @@ class PlaylistCardNoSwipe extends Component {
     });
     if(this.imagesArr.length === 4){
       this.imageClass = 'quad';
+    } else if(this.imagesArr.length === 3){
+      this.imageClass = 'quad';
+      this.imagesArr.push(this.imagesArr[0]);
     } else if(this.imagesArr.length === 2){
-      this.imageClass = 'double';
+      this.imageClass = 'quad';
       this.imagesArr.splice(1, 0, this.imagesArr[1]);
       this.imagesArr.splice(3, 0, this.imagesArr[0]);
     } else if(this.imagesArr.length < 1){
