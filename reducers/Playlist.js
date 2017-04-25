@@ -42,6 +42,19 @@ const playlist = (state = initialState, action) => {
     })
     return {...state, allplaylists: updatedPlaylists}
   }
+  if (action.type === types.REMOVE_EPISODE_FROM_PLAYLIST) {
+    var playlistId = action.payload.playlistId;
+    var episodeId = action.payload.episodeId;
+    var allplaylists = state.allplaylists.map(playlist => {
+      if(playlist.id === playlistId) {
+        playlist.Episodes = playlist.Episodes.filter(episode => episode.id !== episodeId);
+        return playlist;
+      } else {
+        return playlist;
+      }
+    })
+    return {...state, allplaylists: allplaylists}
+  }
 
   return state;
 };

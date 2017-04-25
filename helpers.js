@@ -30,6 +30,7 @@ export const convertMillis = (millis) => {
 }
 
 export const removeItemFromObjectById = (object, id) => {
+  console.log(object)
   return Object.keys(object).reduce((accum, key) => {
     if (key !== id) accum[key] = object[key];
     return accum;
