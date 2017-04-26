@@ -16,9 +16,9 @@ const initialState = {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",
     time: "timeOff",
-    tag: "Tags",
-    playlist: "Playlists",
-    name: "Podcasts"
+    tag: "All Tags",
+    playlist: "All Playlists",
+    name: "All Podcasts"
   },
   username: '',
   password: '',

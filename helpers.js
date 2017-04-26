@@ -132,6 +132,7 @@ export const getSubscriptions = (props) => {
     })
     .then(subscriptions => subscriptions.json())
     .then((subscriptions) => {
+      console.log('Subscriptions[0]: ', subscriptions[0]);
       props.dispatch(podcastsActions.updateSubscriptions(subscriptions[0]));
       props.dispatch(podcastsActions.toggleSearchSpinner(false));
     })
