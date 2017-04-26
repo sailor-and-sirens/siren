@@ -46,6 +46,7 @@ Object {
   },
   "player": Object {
     "currentEpisode": null,
+    "currentEpisodeId": null,
     "currentEpisodeTitle": null,
     "currentPlayingTime": "0:00",
     "currentSoundInstance": null,
@@ -115,6 +116,7 @@ Object {
   },
   "player": Object {
     "currentEpisode": null,
+    "currentEpisodeId": null,
     "currentEpisodeTitle": null,
     "currentPlayingTime": "0:00",
     "currentSoundInstance": null,
@@ -184,6 +186,7 @@ Object {
   },
   "player": Object {
     "currentEpisode": null,
+    "currentEpisodeId": null,
     "currentEpisodeTitle": null,
     "currentPlayingTime": "0:00",
     "currentSoundInstance": null,
@@ -253,6 +256,7 @@ Object {
   },
   "player": Object {
     "currentEpisode": null,
+    "currentEpisodeId": null,
     "currentEpisodeTitle": null,
     "currentPlayingTime": "0:00",
     "currentSoundInstance": null,

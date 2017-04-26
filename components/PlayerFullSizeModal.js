@@ -96,7 +96,7 @@ const PlayerFullSizeModal = (props) => {
           </View>
           <Text style={styles.episodeTitle}>{props.episode.feed.title}</Text>
           <Text style={styles.summaryHeading}>Episode Summary</Text>
-          <Text>{props.episode.feed.description}</Text>
+          <Text>{props.episode['feed']['subtitle']}</Text>
         </ScrollView>
         <View style={styles.playerWrapper}>
           <View style={styles.playerControls}>

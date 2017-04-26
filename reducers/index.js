@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { types } from '../actions';
-import { removeItemFromObjectById } from '../helpers'
+import { removeItemFromObjectById, updateEpisodeCurrentTime } from '../helpers'
 import player from './Player';
 import swipe from './Swipe';
 import header from './Header';
@@ -90,6 +90,10 @@ const main = (state = initialState, action) => {
   }
   if (action.type === types.UPDATE_INBOX) {
     return {...state, inbox: action.payload}
+  }
+  if (action.type === types.UPDATE_EPISODE_CURRENT_TIME) {
+    let newInbox = updateEpisodeCurrentTime(state.inbox, action.payload);
+    return {...state, inbox: newInbox}
   }
   return state;
 }

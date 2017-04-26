@@ -2,6 +2,7 @@ import { types } from '../actions/Player';
 
 const initialState = {
   currentEpisode: null,
+  currentEpisodeId: null,
   currentEpisodeTitle: null,
   currentPlayingTime: '0:00',
   currentSoundInstance: null,
@@ -32,10 +33,14 @@ const player = (state = initialState, action) => {
     return {...state, isPlaying: action.payload}
   }
   if (action.type === types.STORE_EPISODE_DATA) {
+    console.log(action.payload);
     return {...state, currentEpisode: action.payload}
   }
   if (action.type === types.STORE_TIMER) {
     return {...state, timer: action.payload}
+  }
+  if (action.type === types.UPDATE_CURRENT_EPISODE_ID) {
+    return {...state, currentEpisodeId: action.payload}
   }
   if (action.type === types.UPDATE_CURRENT_PLAYING_TIME) {
     return {...state, currentPlayingTime: action.payload}

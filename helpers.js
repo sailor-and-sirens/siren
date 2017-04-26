@@ -6,20 +6,6 @@ import { actionCreators as playlistActions } from './actions/Playlist';
 
 let _ = require('lodash');
 
-export const truncateTitle = (title) => {
-  if (!title) return '';
-  let truncatedTitle = [];
-  let currentLength = 0;
-  if (title.length <= 45) return title;
-  title.split(' ').forEach(word => {
-    if (word.length + currentLength <= 45) {
-      truncatedTitle.push(word);
-      currentLength += word.length;
-    };
-  });
-  return truncatedTitle.join(' ') + '...';
-}
-
 export const convertMillis = (millis) => {
   let seconds = (millis / 1000).toFixed(0);
   let hours = parseInt( seconds / 3600 );
@@ -29,12 +15,18 @@ export const convertMillis = (millis) => {
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
-export const removeItemFromObjectById = (object, id) => {
-  console.log(object)
-  return Object.keys(object).reduce((accum, key) => {
-    if (key !== id) accum[key] = object[key];
+export const removeItemFromObjectById = (inbox, id) => {
+  return Object.keys(inbox).reduce((accum, key) => {
+    if (key !== id) accum[key] = inbox[key];
     return accum;
   }, {});
+}
+
+export const updateEpisodeCurrentTime = (inbox, episodeData) => {
+  let { id, currentTime } = episodeData;
+  let newInbox = _.cloneDeep(inbox);
+  newInbox[id].currentTime = currentTime;
+  return newInbox;
 }
 
 export const hmsToSecondsOnly = (duration) => {

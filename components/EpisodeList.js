@@ -3,20 +3,22 @@ import { StyleSheet, Text, View, TextInput, ScrollView, Image, AppState} from 'r
 import { Audio } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
+import moment from 'moment';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
 import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
-import Spinner from 'react-native-loading-spinner-overlay';
+import { removeCurrentEpisodeFromListeningTo } from '../helpers/playerHelpers.js';
 import EpisodeListCard from './EpisodeListCard';
-import moment from 'moment';
 import { getAllPlaylists } from '../helpers';
 
 let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
+  currentEpisodeId: state.player.currentEpisodeId,
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,
   filters: state.main.inboxFilters,
   inbox: state.main.inbox,
@@ -29,8 +31,6 @@ const mapStateToProps = (state) => ({
 });
 
 class EpisodeList extends Component {
-
-  currentEpisodeId = null;
 
   currentPlaylistId = null;
 
@@ -47,12 +47,11 @@ class EpisodeList extends Component {
   componentDidMount = () => {
     //temporary fix for blank inbox on login
     // updateInbox(this.props);
-    Audio.setIsEnabledAsync(true);
     if(this.props.inbox.length === 0 || !this.props.allplaylists.length) {
       updateInbox(this.props);
       getAllPlaylists(this.props);
     }
-    if(this.props.view !== "Inbox"){
+    if (this.props.view !== "Inbox"){
       this.currentPlaylistId = this.props.allplaylists.find(playlist => playlist.name === this.props.filters.playlist).id;
     }
     AppState.addEventListener('change', this.updateInboxOnActive);
@@ -133,30 +132,34 @@ class EpisodeList extends Component {
   }
 
   handlePlay = (episode, episodeId) => {
-    let newEpisodeCurrentTime = 0;
+    let newEpisodeCurrentTime = episode.currentTime;
     let newEpisodeLastPlayed = new Date();
+    if (newEpisodeCurrentTime === null) newEpisodeCurrentTime = 0;
 
     if (this.props.currentSoundInstance === null) {
-      this.currentEpisodeId = episodeId;
+      this.props.dispatch(playerActions.updateCurrentEpisodeId(episodeId));
       this.addEpisodeToListeningTo(episodeId);
       this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
-      this.playNewEpisode(episode, episodeId);
+      this.playNewEpisode(episode, episodeId, newEpisodeCurrentTime);
     } else {
-      clearInterval(this.props.timer);
       this.props.currentSoundInstance.getStatusAsync()
       .then(status => {
+        clearInterval(this.props.timer);
         let currentEpisodeCurrentTime = status.positionMillis;
         let currentEpisodeLastPlayed = new Date();
-        this.updateCurrentEpisodeStats(this.currentEpisodeId, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
-      });
-      this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
-      this.addEpisodeToListeningTo(episodeId);
-      this.props.currentSoundInstance.stopAsync()
+        this.updateCurrentEpisodeStats(this.props.currentEpisodeId, currentEpisodeCurrentTime, currentEpisodeLastPlayed);
+        this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
+        this.addEpisodeToListeningTo(episodeId);
+        this.props.currentSoundInstance.stopAsync()
         .then(stopped => {
-          this.currentEpisodeId = episodeId;
+          this.props.dispatch(playerActions.updateCurrentEpisodeId(episodeId));
           this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
-          this.playNewEpisode(episode, episodeId);
+          this.playNewEpisode(episode, episodeId, newEpisodeCurrentTime);
         });
+      })
+      .catch(err => {
+        console.log(err);
+      })
     }
   }
 
@@ -173,21 +176,12 @@ class EpisodeList extends Component {
     .catch(err => console.warn(err));
   }
 
-  removeCurrentEpisodeFromListeningTo = (episodeId) => {
-    let episodeData = { episodeId };
-    fetch('http://siren-server.herokuapp.com/api/playlists/listening-to', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': this.props.token
-      },
-      body: JSON.stringify(episodeData)
-    })
-    .catch(err => console.warn(err));
-  }
-
   updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
     let episodeData = { episodeId, currentTime, lastPlayed };
+    this.props.dispatch(mainActions.updateEpisodeCurrentTime({
+      id: episodeId,
+      currentTime: currentTime
+    }));
     fetch('http://siren-server.herokuapp.com/api/episodes/user-episode', {
       method: 'PUT',
       headers: {
@@ -199,7 +193,7 @@ class EpisodeList extends Component {
     .catch(err => console.warn(err));
   }
 
-  playNewEpisode = (episode, episodeId) => {
+  playNewEpisode = (episode, episodeId, currentEpisodeTime) => {
     let newSoundInstance = new Audio.Sound({ source: episode.feed.enclosure.url });
     this.props.dispatch(playerActions.createNewSoundInstance(newSoundInstance));
     this.props.dispatch(playerActions.setPlayStatus(true));
@@ -209,10 +203,11 @@ class EpisodeList extends Component {
       .then(loaded => {
         newSoundInstance.playAsync()
           .then(played => {
+            newSoundInstance.setPositionAsync(currentEpisodeTime);
             newSoundInstance.setPlaybackFinishedCallback(() => {
               let currentTime = null;
               let lastPlayed = new Date();
-              this.removeCurrentEpisodeFromListeningTo(episodeId)
+              removeCurrentEpisodeFromListeningTo(this.props.token, episodeId);
               this.updateCurrentEpisodeStats(episodeId, currentTime, lastPlayed);
             })
             this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(episode.feed.title));
