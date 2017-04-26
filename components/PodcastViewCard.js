@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/index';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as mainActions } from '../actions';
+import { headerActions } from '../actions/Header';
 import { subscribePodcast } from '../helpers';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -16,8 +17,41 @@ const mapStateToProps = (state) => ({
   visible: state.podcasts.episodesLoading
 });
 
-
 class PodcastViewCard extends Component {
+
+  getEpisodeDiscovery () {
+    //Add/evaluate podcast if not in Siren-Disovery yet
+    podcast = [this.props.podcast];
+    fetch("https://siren-discovery.herokuapp.com/api/subscribe", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.props.podcast)
+      })
+      .then((response) => {
+        podcast = [{
+          name: this.props.podcast.collectionName
+        }];
+        //fetch recommendations
+        fetch("https://siren-discovery.herokuapp.com/api/recommend", {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(podcast)
+        })
+        .then(response => response.json())
+        .then(response => {
+          console.log('GET DISCOVERY RESPONSE: ', response.slice(0,1));
+          this.props.dispatch(podcastsActions.searchDiscovery(response.slice(0, 10)));
+          this.props.dispatch(headerActions.changeView('Discovery'));
+        })
+      })
+      .catch(console.log);
+  }
 
   render() {
     return (
@@ -33,8 +67,11 @@ class PodcastViewCard extends Component {
               <Text style={styles.description}>{this.props.episodes[0].podcast.description.long}</Text>
             </ScrollView>
             <View style={styles.tagAddView}>
-              <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
+              <Text style={styles.tag} numberOfLines={1}> {this.props.podcast.primaryGenreName} </Text>
               <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName);}}/>
+            </View>
+            <View style={styles.discoveryBar}>
+              <Text style={styles.discovery} onPress={ () => {this.getEpisodeDiscovery();}}>See more like this</Text>
             </View>
           </View>
         </View>
@@ -59,11 +96,11 @@ const styles = StyleSheet.create({
   rightView: {
     paddingLeft: 2,
     flex: .5,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'stretch',
     height: 150,
-    paddingTop: 10,
-    paddingBottom: 5,
+    paddingTop: 5,
+    paddingBottom: 3,
     paddingLeft: (Platform.OS === 'ios') ? 2 : 0,
     paddingRight: 2,
   },
@@ -82,6 +119,7 @@ const styles = StyleSheet.create({
   },
   descriptionView: {
     marginBottom: 4,
+    height: 100,
   },
   image: {
     height: 146,
@@ -134,15 +172,24 @@ const styles = StyleSheet.create({
   tagAddView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight: 10,
-    marginBottom: 4,
+    paddingRight: 8,
+    marginBottom: 1,
+  },
+  discovery: {
+    textAlign: 'center',
+    height: 20,
+    color: 'grey',
+    fontSize: 15,
+    alignSelf: 'stretch',
+    fontWeight: '600',
+    justifyContent: 'center'
   },
   tag: {
     backgroundColor: '#f4a442',
     padding: 2,
     alignSelf: 'flex-start',
     marginTop: 6,
-    width: 130,
+    width: 120,
     textAlign: 'center',
   },
 });

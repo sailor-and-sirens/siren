@@ -6,38 +6,58 @@ exports[`renders correctly without data 1`] = `
     Object {
       "alignItems": "center",
       "justifyContent": "space-between",
+      "marginBottom": 35,
     }
   }
 >
   <View
+    style={undefined}
+  >
+    <View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+        style={
+          Object {
+            "alignSelf": "stretch",
+            "color": "grey",
+            "fontSize": 16,
+            "height": 20,
+            "justifyContent": "center",
+            "marginTop": 10,
+          }
+        }
+      >
+        Switch to Search
+      </Text>
+    </View>
+  </View>
+  <View
     style={
       Object {
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-        "margin": 10,
+        "justifyContent": "center",
       }
     }
   >
-    <TextInput
-      onChangeText={[Function]}
-      onSubmitEditing={[Function]}
-      style={
-        Object {
-          "borderColor": "gray",
-          "borderWidth": 1,
-          "height": 40,
-          "padding": 10,
-          "width": 250,
-        }
-      }
-      underlineColorAndroid="rgba(0,0,0,0)"
-      value=""
-    />
     <Text
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
-    />
+      style={
+        Object {
+          "alignSelf": "stretch",
+          "color": "grey",
+          "fontSize": 22,
+          "height": 30,
+          "justifyContent": "center",
+          "marginTop": 10,
+        }
+      }
+    >
+      Recommended for You
+    </Text>
   </View>
   <ScrollView
     style={
@@ -46,6 +66,99 @@ exports[`renders correctly without data 1`] = `
         "width": "100%",
       }
     }
-  />
+  >
+    <Modal
+      hardwareAccelerated={false}
+      onRequestClose={[Function]}
+      supportedOrientations={
+        Array [
+          "landscape",
+          "portrait",
+        ]
+      }
+      transparent={true}
+      visible={true}
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "bottom": 0,
+              "flex": 1,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            Object {
+              "backgroundColor": "rgba(0, 0, 0, 0.25)",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <ActivityIndicator
+            animating={true}
+            color="white"
+            hidesWhenStopped={true}
+            size="large"
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "bottom": 0,
+                "flex": 1,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "fontSize": 20,
+                    "fontWeight": "bold",
+                    "height": 50,
+                    "top": 80,
+                  },
+                  Object {
+                    "color": "#FFF",
+                  },
+                ]
+              }
+            >
+              Searching...
+            </Text>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  </ScrollView>
 </View>
 `;

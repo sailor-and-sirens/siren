@@ -125,10 +125,9 @@ class EpisodeList extends Component {
     if (this.props.filters.name !== 'All Podcasts') {
       var name = this.props.filters.name;
       keys = _.filter(keys, (key) => {
-        return this.props.inbox[key].name === name;
+        return this.props.inbox[key].title === name;
       })
     }
-
     return keys;
   }
 
@@ -228,7 +227,6 @@ class EpisodeList extends Component {
     if (playingEpisode && playingEpisode.feed.enclosure.url === selectedEpisode.feed.enclosure.url) {
       this.handleRemovePlayingEpisode(id);
     } else {
-      console.log('triggered remove ep inbox')
       this.props.dispatch(mainActions.removeEpisodeFromInbox(id));
     }
 

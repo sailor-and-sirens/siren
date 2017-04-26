@@ -31,7 +31,6 @@ class Filter extends Component {
 
   getNames = () => {
     var names = ['All Podcasts'];
-    console.log('Inbox: ', this.props.inbox);
     Object.keys(this.props.inbox).forEach((key) => {
       names.push(this.props.inbox[key].title);
     });
@@ -88,7 +87,7 @@ class Filter extends Component {
               ))}
           </Picker>
           </View>
-           <View style={styles.filterBar}>
+          <View style={styles.filterBar}>
           <Ionicons style={styles.icon} size={30} color='grey' name="ios-play-outline"/>
           <Picker style={styles.picker}
                 selectedValue={this.props.filters.name}
