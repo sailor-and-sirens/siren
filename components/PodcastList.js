@@ -26,9 +26,9 @@ const mapStateToProps = (state) => ({
 })
 
 class PodcastList extends Component {
-  componentDidMount () {
-    getSubscriptions(this.props);
-  }
+  // componentDidMount () {
+  //   getSubscriptions(this.props);
+  // }
 
   getPodcasts () {
     query = this.props.text.slice().split().join('+');
@@ -44,8 +44,8 @@ class PodcastList extends Component {
   }
 
   getDiscovery () {
-    if(this.props.subscriptions.length === 0) {
-      console.warn(('Add no subscriptions message'));
+    if(this.props.subscriptions.length === 0) {x
+      console.log('No subscriptions.');
       return;
     }
       this.props.dispatch(podcastsActions.toggleSearchSpinner(true));
@@ -59,7 +59,6 @@ class PodcastList extends Component {
       })
       .then(response => response.json())
       .then(response => {
-        console.log('GET DISCOVERY RESPONSE at 0: ', response.slice(0,1));
         this.props.dispatch(podcastsActions.searchDiscovery(response));
         this.props.dispatch(podcastsActions.toggleSearchSpinner(false));
       })
@@ -70,7 +69,6 @@ class PodcastList extends Component {
     var list = this.props.podcasts;
     if (this.props.view === 'Discovery') {
       list = this.props.discovered;
-      console.log('DISCOVERED: ', this.props.discovered);
     }
     return (
       <View style={styles.mainView}>

@@ -33,9 +33,9 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
-      "name": "All",
-      "playlist": "All",
-      "tag": "All",
+      "name": "All Podcasts",
+      "playlist": "All Playlists",
+      "tag": "All Tags",
       "time": "timeOff",
     },
     "modalVisible": false,
@@ -65,6 +65,7 @@ Object {
   },
   "podcasts": Object {
     "currentPodcast": null,
+    "discoveryResults": Array [],
     "episodesLoading": false,
     "iTunesResult": Array [],
     "podcastEpisodes": Array [
@@ -101,9 +102,9 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
-      "name": "All",
-      "playlist": "All",
-      "tag": "All",
+      "name": "All Podcasts",
+      "playlist": "All Playlists",
+      "tag": "All Tags",
       "time": "timeOff",
     },
     "modalVisible": false,
@@ -133,6 +134,7 @@ Object {
   },
   "podcasts": Object {
     "currentPodcast": null,
+    "discoveryResults": Array [],
     "episodesLoading": false,
     "iTunesResult": Array [],
     "podcastEpisodes": Array [
@@ -169,9 +171,9 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
-      "name": "All",
-      "playlist": "All",
-      "tag": "All",
+      "name": "All Podcasts",
+      "playlist": "All Playlists",
+      "tag": "All Tags",
       "time": "timeOff",
     },
     "modalVisible": false,
@@ -201,6 +203,7 @@ Object {
   },
   "podcasts": Object {
     "currentPodcast": null,
+    "discoveryResults": Array [],
     "episodesLoading": false,
     "iTunesResult": Array [],
     "podcastEpisodes": Array [
@@ -237,9 +240,9 @@ Object {
     "inboxFilters": Object {
       "bookmarked": "bookmarkedOff",
       "liked": "likedOff",
-      "name": "All",
-      "playlist": "All",
-      "tag": "All",
+      "name": "All Podcasts",
+      "playlist": "All Playlists",
+      "tag": "All Tags",
       "time": "timeOff",
     },
     "modalVisible": false,
@@ -269,6 +272,7 @@ Object {
   },
   "podcasts": Object {
     "currentPodcast": null,
+    "discoveryResults": Array [],
     "episodesLoading": false,
     "iTunesResult": Array [],
     "podcastEpisodes": Array [

@@ -14,7 +14,6 @@ const mapStateToProps = (state) => ({
   podcast: state.podcasts.currentPodcast,
   episodes: state.podcasts.podcastEpisodes,
   token: state.main.token,
-  view: state.header.view,
   visible: state.podcasts.episodesLoading
 });
 
@@ -32,7 +31,6 @@ class PodcastViewCard extends Component {
         body: JSON.stringify(this.props.podcast)
       })
       .then((response) => {
-        console.log(response);
         podcast = [{
           name: this.props.podcast.collectionName
         }];

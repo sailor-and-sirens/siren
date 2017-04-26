@@ -48,7 +48,6 @@ export const hmsToSecondsOnly = (duration) => {
   return s;
 }
 
-
 export const updateInbox = (props) => {
     props.dispatch(podcastsActions.toggleSearchSpinner(true));
     fetch("http://siren-server.herokuapp.com/api/users/inbox", {
@@ -113,7 +112,6 @@ export const getSubscriptions = (props) => {
     })
     .then(subscriptions => subscriptions.json())
     .then((subscriptions) => {
-      console.log('Subscriptions[0]: ', subscriptions[0]);
       props.dispatch(podcastsActions.updateSubscriptions(subscriptions[0]));
       props.dispatch(podcastsActions.toggleSearchSpinner(false));
     })

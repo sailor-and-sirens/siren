@@ -50,9 +50,9 @@ const main = (state = initialState, action) => {
     liked: "likedOff",
     bookmarked: "bookmarkedOff",
     time: "timeOff",
-    tag: "Tags",
-    playlist: "Playlists",
-    name: "Name"
+    tag: "All Tags",
+    playlist: "All Playlists",
+    name: "All Podcasts"
   }}
   }
   if (action.type === types.UPDATE_LIKED_FILTER) {
@@ -71,7 +71,7 @@ const main = (state = initialState, action) => {
     return {...state, inboxFilters: {...state.inboxFilters, playlist: action.payload}}
   }
   if (action.type === types.UPDATE_NAME_FILTER) {
-    return {...state, inboxFilters: {...state.inboxFilters, playlist: action.payload}}
+    return {...state, inboxFilters: {...state.inboxFilters, name: action.payload}}
   }
   if (action.type === types.ADD_TOKEN) {
     return {...state, token: action.payload}
