@@ -17,6 +17,7 @@ import PodcastViewCard from './PodcastViewCard';
 import AddPlaylistModal from './AddPlaylistModal';
 import PlaylistList from './PlaylistList';
 import PodcastManager from './PodcastManager';
+import { updateInbox, getSubscriptions } from '../helpers';
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
@@ -32,10 +33,15 @@ class App extends Component {
       if (err || res === null) {
         this.props.dispatch(headerActions.changeView('Authentication'))
       } else {
+        if(this.props.inbox.length === 0) {updateInbox(this.props)};
         this.props.dispatch(actionCreators.addToken(res))
         this.props.dispatch(headerActions.changeView('Inbox'))
       }
     })
+  }
+
+  componentDidMount() {
+    getSubscriptions(this.props);
   }
 
   render() {

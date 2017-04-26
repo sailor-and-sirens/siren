@@ -48,34 +48,6 @@ export const hmsToSecondsOnly = (duration) => {
   return s;
 }
 
-export const subscribePodcast = (props) => {
-    fetch("http://siren-server.herokuapp.com/api/podcasts/", {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': props.token
-      },
-      body: JSON.stringify(props.podcast)
-    })
-    .then(() => {
-      fetch("http://siren-server.herokuapp.com/api/users/inbox", {
-        method: "GET",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': props.token
-        },
-      })
-      .then(inbox => inbox.json())
-      .then((inbox) => {
-        props.dispatch(mainActions.updateInbox(inbox));
-      })
-    })
-    .catch((err) => console.log(err));
-
-    //POST request to siren-discovery here
-  }
 
 export const updateInbox = (props) => {
     props.dispatch(podcastsActions.toggleSearchSpinner(true));
@@ -162,4 +134,50 @@ export const getAllPlaylists = (props) => {
         props.dispatch(playlistActions.getPlaylists(data));
       });
     })
+  }
+
+export const subscribePodcast = (props) => {
+    fetch("http://siren-server.herokuapp.com/api/podcasts/", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': props.token
+      },
+      body: JSON.stringify(props.podcast)
+    })
+    .then(() => {
+      fetch("http://siren-server.herokuapp.com/api/users/inbox", {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': props.token
+        },
+      })
+      .then(inbox => inbox.json())
+      .then((inbox) => {
+        props.dispatch(mainActions.updateInbox(inbox));
+      })
+      .then(() => {
+        getSubscriptions(props);
+      })
+    })
+    .catch((err) => console.log(err));
+    //add podcast to recommendation engine
+    fetch("https://siren-discovery.herokuapp.com/api/subscribe", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(props.podcast)
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log('SUBSCRIBE RESPONSE: ', response);
+      })
+      .catch(console.log);
+
+    //POST request to siren-discovery here
   }

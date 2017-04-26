@@ -8,10 +8,12 @@ import { actionCreators } from '../actions';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { headerActions } from '../actions/Header';
+import { getSubscriptions } from '../helpers';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const mapStateToProps = (state) => ({
   podcasts: state.podcasts.iTunesResult,
+  discovered: state.podcasts.discoveryResults,
   currentEpisode: state.player.currentEpisode,
   inbox: state.main.inbox,
   token: state.main.token,
@@ -19,10 +21,14 @@ const mapStateToProps = (state) => ({
   leftToggle: state.swipe.isLeftToggled,
   visible: state.podcasts.searchSpinner,
   text: state.podcasts.searchText,
-  view: state.header.view
+  view: state.header.view,
+  subscriptions: state.podcasts.subscriptions
 })
 
 class PodcastList extends Component {
+  componentDidMount () {
+    getSubscriptions(this.props);
+  }
 
   getPodcasts () {
     query = this.props.text.slice().split().join('+');
@@ -34,16 +40,44 @@ class PodcastList extends Component {
         this.props.dispatch(podcastsActions.searchPodcasts(response.results));
         this.props.dispatch(podcastsActions.toggleSearchSpinner(false));
       })
-      .catch(console.warn);
+      .catch(console.log);
+  }
+
+  getDiscovery () {
+    if(this.props.subscriptions.length === 0) {
+      console.warn(('Add no subscriptions message'));
+      return;
+    }
+      this.props.dispatch(podcastsActions.toggleSearchSpinner(true));
+      fetch("https://siren-discovery.herokuapp.com/api/recommend", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(this.props.subscriptions)
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log('GET DISCOVERY RESPONSE at 0: ', response.slice(0,1));
+        this.props.dispatch(podcastsActions.searchDiscovery(response));
+        this.props.dispatch(podcastsActions.toggleSearchSpinner(false));
+      })
+      .catch(console.log);
   }
 
   render() {
+    var list = this.props.podcasts;
+    if (this.props.view === 'Discovery') {
+      list = this.props.discovered;
+      console.log('DISCOVERED: ', this.props.discovered);
+    }
     return (
       <View style={styles.mainView}>
       <View style={styles.buttonRow}>
           {this.props.view === 'Search' ?
             <View>
-              <Text style={styles.switchTo} onPress={() => {this.props.dispatch(headerActions.changeView('Discovery'))}}>Switch to Discovery</Text>
+              <Text style={styles.switchTo} onPress={() => {this.getDiscovery(); this.props.dispatch(headerActions.changeView('Discovery'));}}>Switch to Discovery</Text>
             </View> :
             <View>
               <Text style={styles.switchTo} onPress={() => {this.props.dispatch(headerActions.changeView('Search'))}}>Switch to Search</Text>
@@ -62,7 +96,7 @@ class PodcastList extends Component {
         <ScrollView style={styles.podcastList}>
           {this.props.visible ?
             <Spinner visible={this.props.visible} textContent={"Searching..."} textStyle={{color: '#FFF'}} />  :
-          this.props.podcasts.map((podcast, i) => (
+          list.map((podcast, i) => (
               <PodcastListCard podcast={podcast} key={i}/>
             ))}
         </ScrollView>

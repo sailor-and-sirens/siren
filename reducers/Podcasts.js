@@ -3,6 +3,7 @@ import { types } from '../actions/Podcasts';
 const initialState = {
   currentPodcast: null,
   iTunesResult: [],
+  discoveryResults: [],
   searchText: '',
   searchSpinner: false,
   currentPodcast: null,
@@ -14,6 +15,9 @@ const initialState = {
 const podcasts = (state = initialState, action) => {
   if (action.type === types.SEARCH_PODCASTS) {
     return {...state, iTunesResult: action.payload}
+  }
+  if (action.type === types.SEARCH_DISCOVERY) {
+    return {...state, discoveryResults: action.payload}
   }
   if (action.type === types.SEARCH_TEXT) {
     return {...state, searchText: action.payload}

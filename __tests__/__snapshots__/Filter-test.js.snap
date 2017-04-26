@@ -45,7 +45,7 @@ exports[`Displays a list of unique podcast tags 1`] = `
           items={
             Array [
               Object {
-                "label": "All",
+                "label": "All Likes",
                 "textColor": undefined,
                 "value": "likedOff",
               },
@@ -105,7 +105,7 @@ exports[`Displays a list of unique podcast tags 1`] = `
           items={
             Array [
               Object {
-                "label": "All",
+                "label": "All Bookmarks",
                 "textColor": undefined,
                 "value": "bookmarkedOff",
               },
@@ -167,7 +167,7 @@ exports[`Displays a list of unique podcast tags 1`] = `
           items={
             Array [
               Object {
-                "label": "All",
+                "label": "All Durations",
                 "textColor": undefined,
                 "value": "timeOff",
               },
@@ -245,9 +245,9 @@ exports[`Displays a list of unique podcast tags 1`] = `
           items={
             Array [
               Object {
-                "label": "All",
+                "label": "All Tags",
                 "textColor": undefined,
-                "value": "All",
+                "value": "All Tags",
               },
               Object {
                 "label": "Tech News",
@@ -308,9 +308,72 @@ exports[`Displays a list of unique podcast tags 1`] = `
           items={
             Array [
               Object {
-                "label": "All",
+                "label": "All Podcasts",
                 "textColor": undefined,
-                "value": "All",
+                "value": "All Podcasts",
+              },
+              Object {
+                "label": "Note to Self",
+                "textColor": undefined,
+                "value": "Note to Self",
+              },
+              Object {
+                "label": "Science VS",
+                "textColor": undefined,
+                "value": "Science VS",
+              },
+              Object {
+                "label": "Science Vs",
+                "textColor": undefined,
+                "value": "Science Vs",
+              },
+            ]
+          }
+          onChange={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          selectedIndex={0}
+          style={
+            Array [
+              Object {
+                "height": 216,
+              },
+              undefined,
+            ]
+          }
+        />
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "width": 250,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      />
+      <View
+        style={
+          Object {
+            "justifyContent": "center",
+            "width": 200,
+          }
+        }
+      >
+        <RCTPicker
+          items={
+            Array [
+              Object {
+                "label": "All Playlists",
+                "textColor": undefined,
+                "value": "All Playlists",
               },
               Object {
                 "label": "Test playlist",

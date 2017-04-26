@@ -5,12 +5,16 @@ export const types = {
   UPDATE_CURRENT_PODCAST: 'UPDATE_CURRENT_PODCAST',
   PODCAST_EPISODES: 'PODCAST_EPISODES',
   TOGGLE_EPISODES_LOADING: 'TOGGLE_EPISODES_LOADING',
-  UPDATE_SUBSCRIPTIONS: 'UPDATE_SUBSCRIPTIONS'
+  UPDATE_SUBSCRIPTIONS: 'UPDATE_SUBSCRIPTIONS',
+  SEARCH_DISCOVERY: 'SEARCH_DISCOVERY'
 }
 
 export const actionCreators = {
-  searchPodcasts: (value) => {
+    searchPodcasts: (value) => {
     return {type: types.SEARCH_PODCASTS, payload: value}
+  },
+    searchDiscovery: (value) => {
+    return {type: types.SEARCH_DISCOVERY, payload: value}
   },
     searchText: (value) => {
     return {type: types.SEARCH_TEXT, payload: value}
