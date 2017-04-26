@@ -126,7 +126,6 @@ class EpisodeList extends Component {
     if (this.props.filters.name !== 'All Podcasts') {
       var name = this.props.filters.name;
       keys = _.filter(keys, (key) => {
-        console.log('this.props.inbox[key].title: ', this.props.inbox[key].title);
         return this.props.inbox[key].title === name;
       })
     }
