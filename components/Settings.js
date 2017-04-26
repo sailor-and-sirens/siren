@@ -49,7 +49,7 @@ class Settings extends Component {
 const styles = StyleSheet.create({
   main: {
     marginTop: 20,
-    height: '38%',
+    height: '30%',
     justifyContent: 'space-between',
     alignItems: 'stretch',
     alignSelf: 'center',

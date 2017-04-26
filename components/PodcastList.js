@@ -26,9 +26,9 @@ const mapStateToProps = (state) => ({
 })
 
 class PodcastList extends Component {
-  // componentDidMount () {
-  //   getSubscriptions(this.props);
-  // }
+  componentDidMount () {
+    getSubscriptions(this.props);
+  }
 
   getPodcasts () {
     query = this.props.text.slice().split().join('+');
@@ -44,7 +44,7 @@ class PodcastList extends Component {
   }
 
   getDiscovery () {
-    if(this.props.subscriptions.length === 0) {x
+    if(this.props.subscriptions.length === 0) {
       console.log('No subscriptions.');
       return;
     }

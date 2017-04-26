@@ -112,8 +112,12 @@ export const getSubscriptions = (props) => {
     })
     .then(subscriptions => subscriptions.json())
     .then((subscriptions) => {
-      props.dispatch(podcastsActions.updateSubscriptions(subscriptions[0]));
-      props.dispatch(podcastsActions.toggleSearchSpinner(false));
+      if (!subscriptions[0]) {
+        props.dispatch(podcastsActions.updateSubscriptions([]));
+      } else {
+        props.dispatch(podcastsActions.updateSubscriptions(subscriptions[0]));
+        props.dispatch(podcastsActions.toggleSearchSpinner(false));
+      }
     })
     .catch(console.warn);
   }

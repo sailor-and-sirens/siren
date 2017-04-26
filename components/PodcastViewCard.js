@@ -176,10 +176,12 @@ const styles = StyleSheet.create({
     marginBottom: 1,
   },
   discovery: {
+    textAlign: 'center',
     height: 20,
     color: 'grey',
     fontSize: 15,
     alignSelf: 'stretch',
+    fontWeight: '600',
     justifyContent: 'center'
   },
   tag: {
