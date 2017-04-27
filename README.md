@@ -12,7 +12,7 @@
 The server/database repository is available [here](https://github.com/sailor-and-sirens/siren-server).
 
 ## Team
-[@lmegviar](https://github.com/lmegviar) | [@danyadsmith](https://github.com/danyadsmith) | [@livfwd](https://github.com/livfwd) | [@brycegit](https://github.com/livfwd)
+[@lmegviar](https://github.com/lmegviar) | [@danyadsmith](https://github.com/danyadsmith) | [@livfwd](https://github.com/livfwd) | [@brycegit](https://github.com/brycegit)
 
 ## Features
 
