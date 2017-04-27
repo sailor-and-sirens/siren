@@ -67,13 +67,13 @@ class PodcastListCard extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
-            <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
-            <Text style={styles.artist} numberOfLines={2}>{this.props.podcast.artistName}</Text>
+            <Text style={styles.title} numberOfLines={1} onPress={() => {this.getEpisodes()}}>{this.props.podcast.collectionName}</Text>
+            <Text style={styles.artist} numberOfLines={2} onPress={() => {this.getEpisodes()}}>{this.props.podcast.artistName}</Text>
             <View style={styles.tagAddView}>
-              <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
-              <Text style={styles.tag} onPress={() => {this.getEpisodes()}}> More Info </Text>
-              <Text style={styles.tag} onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}> Subscribe </Text>
-              {/* <Ionicons style={styles.subscribeButton} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}/> */}
+              <Text style={styles.tag}>{this.props.podcast.primaryGenreName}</Text>
+              <TouchableOpacity onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}>
+                <Ionicons style={styles.subscribeButton} size={25} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}/>
+            </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -133,10 +133,11 @@ const styles = StyleSheet.create({
   tagAddView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    alignItems: 'flex-end'
   },
   tag: {
     padding: 3,
+    textAlign: 'center',
     backgroundColor: '#50BFB9',
     ...Platform.select({
       ios: {
@@ -148,7 +149,15 @@ const styles = StyleSheet.create({
     }),
   },
   subscribeButton: {
-
+    paddingRight: 5,
+    ...Platform.select({
+      ios: {
+        marginBottom: -3,
+      },
+      android: {
+        marginBottom: -2,
+      },
+    })
   },
   leftSwipeItem: {
     flex: 1,
