@@ -3,7 +3,7 @@
 
 [https://sailor-and-sirens.github.io/](https://sailor-and-sirens.github.io/)
 
-## Setup
+## Development Setup
 
 1. Install [Expo XDE](https://docs.expo.io/versions/v16.0.0/introduction/installation.html)
 2. Clone the repo and run 'npm install' to install dependencies  
