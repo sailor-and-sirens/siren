@@ -47,10 +47,10 @@ class PodcastListCard extends Component {
       <Swipeable
             leftActionActivationDistance={200}
             leftContent={(
-              <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
+              <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#114B5F' : '#288D91'}]}>
                 {leftActionActivated ?
-                  <Text>(( release ))</Text> :
-                  <Text>Subscribe</Text>}
+                  <Text style={styles.swipeText}>(( release ))</Text> :
+                  <Text style={styles.swipeText}>Subscribe</Text>}
               </View>
             )}
             onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
@@ -67,11 +67,13 @@ class PodcastListCard extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.rightView}>
-            <Text style={styles.title} numberOfLines={1}>{this.props.podcast.collectionName}</Text>
-            <Text style={styles.artist} numberOfLines={1}>{this.props.podcast.artistName}</Text>
+            <Text style={styles.title} numberOfLines={1} onPress={() => {this.getEpisodes()}}>{this.props.podcast.collectionName}</Text>
+            <Text style={styles.artist} numberOfLines={2} onPress={() => {this.getEpisodes()}}>{this.props.podcast.artistName}</Text>
             <View style={styles.tagAddView}>
-              <Text style={styles.tag}> {this.props.podcast.primaryGenreName} </Text>
-              <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}/>
+              <Text style={styles.tag}>{this.props.podcast.primaryGenreName}</Text>
+              <TouchableOpacity onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}>
+                <Ionicons style={styles.subscribeButton} size={25} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}/>
+            </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -81,76 +83,81 @@ class PodcastListCard extends Component {
 }
 
 const styles = StyleSheet.create({
-  leftView: {
-    flex: .25,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  rightView: {
-    paddingLeft: 3,
-    flex: .75,
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
-    height: 100,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: (Platform.OS === 'ios') ? 10 : 0,
-  },
   mainView: {
     height: 100,
-    justifyContent: 'space-between',
     flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 2,
+    marginBottom: 5,
+    marginLeft: 5,
+    marginRight: 5,
+    borderBottomWidth: 1,
     borderBottomColor: 'lightgrey',
   },
+  leftView: {
+    height: 90,
+    width: 90,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
+  },
+  rightView: {
+    flex: 1,
+    height: 90,
+    justifyContent: 'space-between',
+    paddingLeft: 5,
+  },
   image: {
-    height: 80,
-    width: 80,
+    height: 90,
+    width: 90,
   },
   title: {
-    fontWeight: "500",
+    fontSize: 15,
     ...Platform.select({
-      ios: {
-        fontSize: 16,
-      },
-      android: {
-        fontSize: 18,
-      },
+       ios: {
+         fontWeight: '500',
+       },
+       android: {
+         fontWeight: '400'
+       },
     }),
+    marginBottom: -3
   },
   artist: {
-  fontWeight: "400",
-  ...Platform.select({
-    ios: {
-      fontSize: 13,
-    },
-    android: {
-      fontSize: 14,
-    },
-  }),
-  marginBottom: 5,
-  },
-  podcast: {
-    fontWeight: "600",
     ...Platform.select({
       ios: {
         fontSize: 14,
       },
       android: {
-        fontSize: 16,
+        fontSize: 13,
       },
-    }),
+    })
   },
   tagAddView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight: 10,
+    alignItems: 'flex-end'
   },
   tag: {
-    backgroundColor: '#f4a442',
-    padding: 2,
-    alignSelf: 'flex-start',
+    padding: 3,
+    textAlign: 'center',
+    backgroundColor: '#50BFB9',
+    ...Platform.select({
+      ios: {
+        fontSize: 13,
+      },
+      android: {
+        fontSize: 12,
+      },
+    }),
+  },
+  subscribeButton: {
+    paddingRight: 5,
+    ...Platform.select({
+      ios: {
+        marginBottom: -3,
+      },
+      android: {
+        marginBottom: -2,
+      },
+    })
   },
   leftSwipeItem: {
     flex: 1,
@@ -158,6 +165,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingRight: 20
   },
+  swipeText: {
+    color: '#ffffff'
+  }
 });
 
 export default connect(mapStateToProps)(PodcastListCard);

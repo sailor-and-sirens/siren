@@ -54,20 +54,29 @@ class Header extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    marginTop: 20,
+    marginTop: 0,
     padding: 10,
-    textAlign: 'center'
+    paddingTop: 30,
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#000',
+    backgroundColor: '#50BFB9'
   },
   navigation: {
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: '#cccccc',
+    backgroundColor: '#BCDDD4',
   },
   navigationLink: {
     padding: 20,
     paddingTop: 8,
-    paddingBottom: 8
+    paddingBottom: 8,
+    color: '#000',
+    textShadowColor: '#999',
+    textShadowOffset: {width: 1.25, height: 1.25},
+    textShadowRadius: 2
   }
 });
 

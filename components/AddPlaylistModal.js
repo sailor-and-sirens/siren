@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   topWrapper: {
     padding: 10,
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#E3E4DB',
   },
   topHeading: {
     fontSize: 20,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     height: 40,
     flex: 0.35,
     justifyContent: 'center',
-    backgroundColor: '#2EAC6D'
+    backgroundColor: '#288D91'
   },
   addPlaylistButtonText: {
     textAlign: 'center',
@@ -185,14 +185,14 @@ const styles = StyleSheet.create({
     flex: 0.5,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#b00404'
+    backgroundColor: '#D62828'
   },
   saveButton: {
     height: '100%',
     flex: 0.5,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2EAC6D'
+    backgroundColor: '#288D91'
   }
 })
 

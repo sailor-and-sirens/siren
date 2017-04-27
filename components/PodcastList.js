@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PodcastListCard from './PodcastListCard';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image, TouchableOpacity} from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
@@ -72,24 +72,33 @@ class PodcastList extends Component {
     }
     return (
       <View style={styles.mainView}>
-      <View style={styles.buttonRow}>
           {this.props.view === 'Search' ?
-            <View>
-              <Text style={styles.switchTo} onPress={() => {this.getDiscovery(); this.props.dispatch(headerActions.changeView('Discovery'));}}>Switch to Discovery</Text>
-            </View> :
-            <View>
-              <Text style={styles.switchTo} onPress={() => {this.props.dispatch(headerActions.changeView('Search'))}}>Switch to Search</Text>
+          <View style={styles.tabRow}>
+            <View style={[styles.searchTab, styles.activeTab]}>
+              <Text style={styles.searchText}>Search</Text>
             </View>
+            <TouchableOpacity style={styles.discoveryTab} onPress={() => {this.getDiscovery(); this.props.dispatch(headerActions.changeView('Discovery'))}}>
+              <Text style={styles.discoveryText}>Recommendations</Text>
+            </TouchableOpacity>
+          </View> :
+          <View style={styles.tabRow}>
+            <TouchableOpacity style={styles.searchTab} onPress={() => {this.props.dispatch(headerActions.changeView('Search'))}}>
+              <Text style={styles.searchText}>Search</Text>
+            </TouchableOpacity>
+            <View style={[styles.discoveryTab, styles.activeTab]}>
+              <Text style={styles.discoveryText}>Recommendations</Text>
+            </View>
+          </View>
           }
-        </View>
          {this.props.view === 'Search' ?
           <View style={styles.searchBar}>
-            <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.props.dispatch(podcastsActions.searchText(text));}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.props.text}/>
+            <TextInput underlineColorAndroid='rgba(0,0,0,0)' placeholder='Seach for podcast' style={styles.searchInput} onChangeText={(text) => {this.props.dispatch(podcastsActions.searchText(text));}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.props.text}/>
             <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search" />
           </View> :
-            <View style={styles.recommendationBar}>
-              <Text style={styles.recommended}>Recommended for You</Text>
-            </View>
+          <View style={styles.discoverySpacer}></View>
+            // <View style={styles.recommendationBar}>
+            //   <Text style={styles.recommended}>Recommended for You</Text>
+            // </View>
         }
         <ScrollView style={styles.podcastList}>
           {this.props.visible ?
@@ -104,17 +113,50 @@ class PodcastList extends Component {
 }
 
 const styles = StyleSheet.create({
+  mainView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  tabRow: {
+    flexDirection: 'row',
+    height: 50,
+    margin: 2
+  },
+  searchTab: {
+    flex: 0.5,
+    justifyContent: 'center',
+    backgroundColor: 'lightgrey',
+    borderWidth: 1,
+    borderRightWidth: 0.5,
+    borderColor: 'gray'
+  },
+  discoveryTab: {
+    flex: 0.5,
+    justifyContent: 'center',
+    backgroundColor: 'lightgrey',
+    borderWidth: 1,
+    borderLeftWidth: 0.5,
+    borderColor: 'gray'
+  },
+  activeTab: {
+    backgroundColor: '#ffffff'
+  },
+  searchText: {
+    textAlign: 'center'
+  },
+  discoverySpacer: {
+    marginBottom: 10
+  },
+  discoveryText: {
+    textAlign: 'center'
+  },
   searchInput: {
     height: 40,
     width: '80%',
     borderColor: 'gray',
     borderWidth: 1,
     padding: 6,
-  },
-  mainView: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 35,
   },
   searchButton: {
     marginLeft: 8,
@@ -140,7 +182,7 @@ const styles = StyleSheet.create({
   },
   podcastList:{
     width: '100%',
-    marginBottom: 210,
+    marginBottom: 80,
   },
   searchBar: {
     flexDirection: 'row',

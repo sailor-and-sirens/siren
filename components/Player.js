@@ -1,7 +1,7 @@
 import { Audio } from 'expo';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, ActivityIndicator, AppState } from 'react-native';
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { SimpleLineIcons, FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as mainActions } from '../actions';
@@ -215,14 +215,14 @@ class Player extends Component {
     let openModalButton;
     let playPauseButton = (
       <TouchableOpacity onPress={this.handlePlay}>
-        <SimpleLineIcons style={{textAlign: 'center'}} name="control-play" size={40} color="black" />
+        <FontAwesome style={styles.icon} name="play" size={40} color="#000" />
       </TouchableOpacity>
     )
 
     if (this.props.isPlaying) {
       playPauseButton = (
         <TouchableOpacity onPress={this.handlePause}>
-          <SimpleLineIcons style={{textAlign: 'center'}} name="control-pause" size={40} color="black" />
+          <SimpleLineIcons style={styles.icon} name="control-pause" size={40} color="#000" />
         </TouchableOpacity>
       )
     }
@@ -252,7 +252,7 @@ class Player extends Component {
 
       openModalButton = (
         <TouchableOpacity onPress={this.handleFullSizeButtonPress}>
-          <SimpleLineIcons name="arrow-up" size={20}/>
+          <SimpleLineIcons name="arrow-up" size={20} style={styles.icon} color='#000'/>
         </TouchableOpacity>
       )
     }
@@ -264,7 +264,7 @@ class Player extends Component {
           <View style={styles.topRowMiddle}>
             {this.props.currentEpisodeTitle === 'LOADING' ?
               <ActivityIndicator animating={true} size="small" />  :
-              <Text style={{textAlign: 'center', fontWeight: 'bold'}} numberOfLines={1} ellipsizeMode='tail'>{this.props.currentEpisodeTitle}</Text>
+              <Text style={{textAlign: 'center', fontWeight: 'bold', color: '#000'}} numberOfLines={1} ellipsizeMode='tail'>{this.props.currentEpisodeTitle}</Text>
             }
           </View>
           <View style={styles.topRowRight}></View>
@@ -272,18 +272,18 @@ class Player extends Component {
         <View style={styles.timeSpeedPlayerWrapper}>
           <View style={styles.currentTimeWrapper}>
             <View style={styles.currentTime}>
-              <Text style={{textAlign: 'left'}}><SimpleLineIcons style={{textAlign: 'center'}} name="clock" size={20} color="black" /> {this.props.currentPlayingTime}</Text>
+              <Text style={{textAlign: 'left', color: '#000'}}><SimpleLineIcons style={styles.icon} name="clock" size={20} color="#000" /> {this.props.currentPlayingTime}</Text>
             </View>
           </View>
           <View style={styles.playerControls}>
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={this.handleSkipToBeginning}>
-                <SimpleLineIcons style={{textAlign: 'center'}} name="control-start" size={20} color="black" />
+                <SimpleLineIcons style={styles.icon} name="control-start" size={20} color="#000" />
               </TouchableOpacity>
             </View>
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={this.handleSkipBack}>
-                <SimpleLineIcons style={{textAlign: 'center'}} name="control-rewind" size={25} color="black" />
+                <SimpleLineIcons style={styles.icon} name="control-rewind" size={25} color="#000" />
               </TouchableOpacity>
             </View>
             <View style={styles.playButton}>
@@ -291,19 +291,19 @@ class Player extends Component {
             </View>
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={this.handleSkipAhead}>
-                <SimpleLineIcons style={{textAlign: 'center'}} name="control-forward" size={25} color="black" />
+                <SimpleLineIcons style={styles.icon} name="control-forward" size={25} color="#000" />
               </TouchableOpacity>
             </View>
             <View style={styles.skipButton}>
               <TouchableOpacity onPress={this.handleSkipToEnd}>
-                <SimpleLineIcons style={{textAlign: 'center'}} name="control-end" size={20} color="black" />
+                <SimpleLineIcons style={styles.icon} name="control-end" size={20} color="#000" />
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.currentSpeedWrapper}>
             <View style={styles.currentSpeed}>
               <TouchableOpacity onPress={this.handleSpeedButtonPress}>
-                <Text style={{textAlign: 'right'}}><SimpleLineIcons style={{textAlign: 'center'}} name="speedometer" size={20} color="black" /> {this.props.currentSpeed}x </Text>
+                <Text style={{textAlign: 'right', color: '#000'}}><SimpleLineIcons style={styles.icon} name="speedometer" size={20} color="#000" /> {this.props.currentSpeed}x </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: '#dcdcdc',
+    backgroundColor: '#BCDDD4',
   },
   topRowWrapper: {
     flex: 0.2,
@@ -392,6 +392,12 @@ const styles = StyleSheet.create({
   },
   currentSpeed: {
     flex: 1
+  },
+  icon: {
+    textAlign: 'center',
+    textShadowColor: '#999',
+    textShadowOffset: {width: 1.25, height: 1.25},
+    textShadowRadius: 2
   }
 });
 
