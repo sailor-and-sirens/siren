@@ -61,10 +61,7 @@ class Authentication extends Component {
           return this._onValueChange('id_token', responseData.id_token)
         }
       })
-      .catch((error) => {
-        console.log('Error: ', error);
-      })
-      .done();
+      .catch(console.log);
   }
 
   _userLogin() {
@@ -95,10 +92,7 @@ class Authentication extends Component {
           return this._onValueChange('id_token', responseData.id_token)
         }
       })
-      .catch((error) => {
-        console.log('Error: ', error);
-      })
-      .done();
+      .catch(console.log);
   }
 
   render() {

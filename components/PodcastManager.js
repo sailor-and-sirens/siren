@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import PodcastManagerCard from './PodcastManagerCard';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image} from 'react-native';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import Swipeable from 'react-native-swipeable';
+import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
-import { actionCreators as podcastsActions } from '../actions/Podcasts';
-import { actionCreators as swipeActions } from '../actions/Swipe';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getSubscriptions } from '../helpers';
 
@@ -19,6 +14,7 @@ const mapStateToProps = (state) => ({
   visible: state.podcasts.searchSpinner,
   subscriptions: state.podcasts.subscriptions
 });
+
 
 class PodcastManager extends Component {
 

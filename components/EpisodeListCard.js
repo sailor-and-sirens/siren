@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorage, Platform} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Platform} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
-import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import { actionCreators as playlistActions } from '../actions/Playlist';
 import { hmsToSecondsOnly, toggleBookmark, toggleLike } from '../helpers';
 import { toggleAddToPlaylistModal } from '../helpers/playlistHelpers';
 import moment from 'moment';
@@ -45,7 +43,7 @@ class EpisodeListCard extends Component {
   };
 
   render() {
-    const {leftActionActivated, leftToggle, rightActionActivated, rightToggle} = this.props;
+    const {leftActionActivated, rightActionActivated} = this.props;
     return (
       <Swipeable
         leftActionActivationDistance={200}

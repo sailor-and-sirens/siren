@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, Image, AppState} from 'react-native';
-import { Audio } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import Spinner from 'react-native-loading-spinner-overlay';
-import moment from 'moment';
+import { StyleSheet, View, ScrollView, AppState} from 'react-native';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as playerActions } from '../actions/Player';
-import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import { actionCreators as playlistActions } from '../actions/Playlist';
+import { Audio } from 'expo';
+import { connect } from 'react-redux';
 import { convertMillis, hmsToSecondsOnly, updateInbox } from '../helpers';
 import { removeCurrentEpisodeFromListeningTo } from '../helpers/playerHelpers.js';
-import EpisodeListCard from './EpisodeListCard';
 import { getAllPlaylists } from '../helpers';
+import EpisodeListCard from './EpisodeListCard';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 let _ = require('lodash');
 
@@ -151,15 +148,13 @@ class EpisodeList extends Component {
         this.updateCurrentEpisodeStats(episodeId, newEpisodeCurrentTime, newEpisodeLastPlayed);
         this.addEpisodeToListeningTo(episodeId);
         this.props.currentSoundInstance.stopAsync()
-        .then(stopped => {
+        .then(() => {
           this.props.dispatch(playerActions.updateCurrentEpisodeId(episodeId));
           this.props.dispatch(playerActions.updateCurrentPlayingTime('0:00'));
           this.playNewEpisode(episode, episodeId, newEpisodeCurrentTime);
         });
       })
-      .catch(err => {
-        console.log(err);
-      })
+      .catch(console.log);
     }
   }
 
@@ -173,7 +168,7 @@ class EpisodeList extends Component {
       },
       body: JSON.stringify(episodeData)
     })
-    .catch(err => console.warn(err));
+    .catch(console.log);
   }
 
   updateCurrentEpisodeStats = (episodeId, currentTime, lastPlayed) => {
@@ -190,7 +185,7 @@ class EpisodeList extends Component {
       },
       body: JSON.stringify(episodeData)
     })
-    .catch(err => console.warn(err));
+    .catch(console.log);
   }
 
   playNewEpisode = (episode, episodeId, currentEpisodeTime) => {
@@ -200,9 +195,9 @@ class EpisodeList extends Component {
     this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode('LOADING'));
     this.props.dispatch(playerActions.storeEpisodeData(episode));
     newSoundInstance.loadAsync()
-      .then(loaded => {
+      .then(() => {
         newSoundInstance.playAsync()
-          .then(played => {
+          .then(() => {
             newSoundInstance.setPositionAsync(currentEpisodeTime);
             newSoundInstance.setPlaybackFinishedCallback(() => {
               let currentTime = null;
@@ -239,7 +234,7 @@ class EpisodeList extends Component {
       },
       body: JSON.stringify(episodeData)
     })
-    .catch(err => console.warn(err));
+    .catch(console.log);
   }
 
   handleRemoveEpisodeFromPlaylist = (id, playingEpisode, selectedEpisode) => {
@@ -258,12 +253,12 @@ class EpisodeList extends Component {
       body: JSON.stringify(episodeData)
     })
     .then(() => getAllPlaylists(this.props))
-    .catch(err => console.warn(err));
+    .catch(console.log);
   }
 
   handleRemovePlayingEpisode = (id) => {
     this.props.currentSoundInstance.stopAsync()
-    .then(stopped => {
+    .then(() => {
       this.props.dispatch(playerActions.createNewSoundInstance(null));
       this.props.dispatch(playerActions.updateCurrentlyPlayingEpisode(null));
       this.props.dispatch(playerActions.setPlayStatus(false));

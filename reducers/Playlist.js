@@ -28,7 +28,6 @@ const playlist = (state = initialState, action) => {
     return {...state, isAddPlaylistModalVisible: !state.isAddPlaylistModalVisible, selectedPlaylistId: null}
   }
   if (action.type === types.TOGGLE_PLAYLIST_SELECTED) {
-    let playlistId = action.payload;
     let newSelectedPlaylistId = state.selectedPlaylistId === action.payload ? null : action.payload
     return {...state, selectedPlaylistId: newSelectedPlaylistId};
   }

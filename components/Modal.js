@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Modal, TouchableHighlight, Button } from 'react-native';
+import { StyleSheet, View, Modal} from 'react-native';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
 
 const mapStateToProps = (state) => ({
   modalVisible: state.main.modalVisible
@@ -17,7 +16,6 @@ class ModalComponent extends Component {
           animationType={"fade"}
           transparent={true}
           visible={this.props.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
           >
          <View style={styles.outerView}>
           <View style={styles.innerView}>
@@ -25,7 +23,6 @@ class ModalComponent extends Component {
           </View>
          </View>
         </Modal>
-
        </View>
     );
   }
@@ -46,9 +43,3 @@ const styles = StyleSheet.create({
 
 export default connect(mapStateToProps)(ModalComponent);
 
-
-{/* Example Button
-
-          <Button title="Show Modal" onPress={() => this.props.dispatch(actionCreators.toggleModal())} />
-
-   */}

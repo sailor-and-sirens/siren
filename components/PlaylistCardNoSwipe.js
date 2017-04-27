@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import { connect } from 'react-redux';
-import Swipeable from 'react-native-swipeable';
-import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header';
-import { actionCreators as playlistActions } from '../actions/Playlist';
-import { actionCreators as swipeActions } from '../actions/Swipe';
+import { actionCreators } from '../actions';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -30,13 +26,7 @@ class PlaylistCardNoSwipe extends Component {
       },
       body: JSON.stringify({playlistId: playlistId})
     })
-    .then(function(data){
-      console.log('REMOVED');
-    })
-    .catch(function(error){
-      console.log('Error removing playlist: ', error);
-    })
-
+    .catch(console.log);
   }
   convertMinutesToHrsMinutes(minutes) {
     let hours = Math.floor(minutes / 60);
@@ -69,8 +59,12 @@ class PlaylistCardNoSwipe extends Component {
     }
   }
 
+  componentWillMount(){
+    this.imagesArr = [];
+    this.setPlaylistImages();
+  }
+
   render() {
-    const {rightActionActivated, rightToggle} = this.props;
     return (
 
       <View style={[styles.cardContainer]}>

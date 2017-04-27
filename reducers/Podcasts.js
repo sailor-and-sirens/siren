@@ -6,7 +6,6 @@ const initialState = {
   discoveryResults: [],
   searchText: '',
   searchSpinner: false,
-  currentPodcast: null,
   podcastEpisodes: [{podcast: {description:{long: ''}}}],
   episodesLoading: false,
   subscriptions: []

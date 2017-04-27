@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, AsyncStorage, ScrollView, Button } from 'react-native';
+import { StyleSheet, View, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header'
-import { swipeActions } from '../actions/Swipe'
-import EpisodeListCard from './EpisodeListCard';
-import PodcastListCard from './PodcastListCard';
+import { getSubscriptions } from '../helpers';
 import EpisodeList from './EpisodeList';
 import PodcastList from './PodcastList';
 import Player from './Player';
 import Header from './Header';
-import ModalComponent from './Modal';
 import Authentication from './Authentication';
 import Settings from './Settings';
 import PodcastViewCard from './PodcastViewCard';
 import AddPlaylistModal from './AddPlaylistModal';
 import PlaylistList from './PlaylistList';
 import PodcastManager from './PodcastManager';
-import { updateInbox, getSubscriptions } from '../helpers';
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,

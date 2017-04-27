@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, AsyncStorage, Alert, Platform} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, View, Image, Alert, Platform} from 'react-native';
 import { connect } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
 import { actionCreators as mainActions } from '../actions';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import { actionCreators as podcastsActions } from '../actions/Podcasts';
-import {hmsToSecondsOnly, updateInbox} from '../helpers';
+import {hmsToSecondsOnly} from '../helpers';
 import moment from 'moment';
-
-let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
   currentEpisode: state.player.currentEpisode,
@@ -45,7 +41,7 @@ class PodcastEpisodeListCard extends Component {
         this.props.dispatch(mainActions.updateInbox(inbox));
       })
     })
-    .catch((err) => console.log(err));
+    .catch(console.log);
   }
 
   renderClock = (duration) => {
@@ -71,7 +67,7 @@ class PodcastEpisodeListCard extends Component {
   };
 
   render() {
-    const {leftActionActivated, leftToggle, episode} = this.props;
+    const {leftActionActivated, episode} = this.props;
     return (
       <Swipeable
         leftActionActivationDistance={200}
@@ -107,7 +103,6 @@ class PodcastEpisodeListCard extends Component {
     </Swipeable>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -122,7 +117,6 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   rightView: {
-    paddingLeft: 3,
     flex: .75,
     justifyContent: 'space-around',
     alignItems: 'stretch',

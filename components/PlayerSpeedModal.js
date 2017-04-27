@@ -1,9 +1,8 @@
-import { Audio } from 'expo';
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const PlayerSpeedModal = (props) => {
   return (

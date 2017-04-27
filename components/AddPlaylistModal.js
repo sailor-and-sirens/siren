@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators as playlistActions } from '../actions/Playlist';
-import AddPlaylistModalRow from './AddPlaylistModalRow';
 import { getAllPlaylists } from '../helpers';
+import AddPlaylistModalRow from './AddPlaylistModalRow';
 
 const mapStateToProps = (state) => ({
   addNewPlaylistInputValue: state.playlist.addNewPlaylistInputValue,
   isAddPlaylistModalVisible: state.playlist.isAddPlaylistModalVisible,
-  leftActionActivated: state.swipe.isLeftActionActivated,
-  leftToggle: state.swipe.isLeftToggled,
   playlists: state.playlist.playlists,
   selectedEpisodeId: state.playlist.selectedEpisodeId,
   selectedPlaylistId: state.playlist.selectedPlaylistId,
+  leftActionActivated: state.swipe.isLeftActionActivated,
+  leftToggle: state.swipe.isLeftToggled,
   token: state.main.token
 });
 
@@ -32,7 +32,7 @@ class AddPlaylistModal extends Component {
     .then(playlist => {
       this.props.dispatch(playlistActions.addNewPlaylist({ name: playlistData.name, id: playlist[0].id}));
     })
-    .catch(err => console.warn(err));
+    .catch(console.log);
   };
 
   handleAddToPlaylistModalClose = (typeOfOperation) => {
@@ -47,7 +47,7 @@ class AddPlaylistModal extends Component {
         body: JSON.stringify(episodeData)
       })
       .then(() => getAllPlaylists(this.props))
-      .catch(err => console.warn(err));
+      .catch(console.log);
     }
     this.props.dispatch(playlistActions.toggleAddToPlaylistModal());
 
@@ -91,7 +91,7 @@ class AddPlaylistModal extends Component {
         transparent={false}
         visible={this.props.isAddPlaylistModalVisible}
         onRequestClose={() => this.handleAddToPlaylistModalClose}
-      >
+        >
         <View style={styles.container}>
           <ScrollView style={styles.scrollWrapper}>
             <View style={styles.topWrapper}>

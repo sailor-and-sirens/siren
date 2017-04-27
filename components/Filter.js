@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, Button, Image, Platform, Picker} from 'react-native';
+import { StyleSheet, View, ScrollView, Button, Image, Platform, Picker} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
-import EpisodeListCard from './EpisodeListCard';
 
-let _ = require('lodash')
+const _ = require('lodash')
 
 const mapStateToProps = (state) => ({
   inbox: state.main.inbox,
@@ -81,7 +80,7 @@ class Filter extends Component {
           <Ionicons style={styles.icon} size={30} color='grey' name="ios-pricetag-outline"/>
           <Picker style={styles.picker}
                 selectedValue={this.props.filters.tag}
-                onValueChange={(value, i) => {this.props.dispatch(actionCreators.updateTagFilter(value))}}>
+                onValueChange={(value) => {this.props.dispatch(actionCreators.updateTagFilter(value))}}>
               {this.getTags().map((tag, i) => (
                 <Picker.Item value={tag} label={tag} key={i}/>
               ))}
@@ -91,7 +90,7 @@ class Filter extends Component {
           <Ionicons style={styles.icon} size={30} color='grey' name="ios-play-outline"/>
           <Picker style={styles.picker}
                 selectedValue={this.props.filters.name}
-                onValueChange={(value, i) => {this.props.dispatch(actionCreators.updateNameFilter(value))}}>
+                onValueChange={(value) => {this.props.dispatch(actionCreators.updateNameFilter(value))}}>
               {this.getNames().map((name, i) => (
                 <Picker.Item value={name} label={name} key={i}/>
               ))}
@@ -101,7 +100,7 @@ class Filter extends Component {
           <Ionicons style={styles.icon} size={30} color='grey' name="ios-list-box-outline"/>
           <Picker style={styles.picker}
                 selectedValue={this.props.filters.playlist}
-                onValueChange={(value, i) => {this.props.dispatch(actionCreators.updatePlaylistFilter(value))}}>
+                onValueChange={(value) => {this.props.dispatch(actionCreators.updatePlaylistFilter(value))}}>
               {this.getPlaylists().map((name, i) => (
                 <Picker.Item value={name} label={name} key={i}/>
               ))}

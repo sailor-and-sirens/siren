@@ -3,9 +3,7 @@ import { StyleSheet, Text, View, TextInput, Image, ScrollView, Platform, Alert, 
 import PodcastEpisodeList from './PodcastEpisodeList';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators as playerActions } from '../actions/index';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
-import { actionCreators as mainActions } from '../actions';
 import { headerActions } from '../actions/Header';
 import { subscribePodcast } from '../helpers';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -21,7 +19,7 @@ class PodcastViewCard extends Component {
 
   getEpisodeDiscovery () {
     //Add/evaluate podcast if not in Siren-Disovery yet
-    podcast = [this.props.podcast];
+    let podcast = [this.props.podcast];
     fetch("https://siren-discovery.herokuapp.com/api/subscribe", {
         method: "POST",
         headers: {
@@ -30,7 +28,7 @@ class PodcastViewCard extends Component {
         },
         body: JSON.stringify(this.props.podcast)
       })
-      .then((response) => {
+      .then(() => {
         podcast = [{
           name: this.props.podcast.collectionName
         }];
@@ -45,7 +43,6 @@ class PodcastViewCard extends Component {
         })
         .then(response => response.json())
         .then(response => {
-          console.log('GET DISCOVERY RESPONSE: ', response.slice(0,1));
           this.props.dispatch(podcastsActions.searchDiscovery(response.slice(0, 10)));
           this.props.dispatch(headerActions.changeView('Discovery'));
         })
@@ -109,8 +106,12 @@ const styles = StyleSheet.create({
     paddingLeft: 5
   },
   rightView: {
+<<<<<<< HEAD
     paddingLeft: 3,
     flex: 1,
+=======
+    flex: .5,
+>>>>>>> Linting
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: 150,

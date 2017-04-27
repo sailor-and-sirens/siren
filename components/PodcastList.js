@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import PodcastListCard from './PodcastListCard';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, Image, TouchableOpacity} from 'react-native';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import Swipeable from 'react-native-swipeable';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators } from '../actions';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
-import { actionCreators as swipeActions } from '../actions/Swipe';
 import { headerActions } from '../actions/Header';
 import { getSubscriptions } from '../helpers';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -31,7 +28,7 @@ class PodcastList extends Component {
   }
 
   getPodcasts () {
-    query = this.props.text.slice().split().join('+');
+    let query = this.props.text.slice().split().join('+');
     this.props.dispatch(podcastsActions.searchText(''));
     this.props.dispatch(podcastsActions.toggleSearchSpinner(true));
     fetch('http://itunes.apple.com/search?entity=podcast&term=' + query)
@@ -45,7 +42,6 @@ class PodcastList extends Component {
 
   getDiscovery () {
     if(this.props.subscriptions.length === 0) {
-      console.log('No subscriptions.');
       return;
     }
       this.props.dispatch(podcastsActions.toggleSearchSpinner(true));

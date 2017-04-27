@@ -11,15 +11,6 @@ const mapStateToProps = (state) => ({
   view: state.header.view
 })
 
-let defualtInbox = {
-    liked: "likedOff",
-    bookmarked: "bookmarkedOff",
-    time: "timeOff",
-    tag: "All",
-    playlist: "All",
-    name: "All"
-  };
-
 class Header extends Component {
 
   render() {

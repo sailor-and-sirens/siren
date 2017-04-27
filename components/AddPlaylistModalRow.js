@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { actionCreators as swipeActions } from '../actions/Swipe';
@@ -33,7 +33,7 @@ const AddPlaylistModalRow = (props) => {
     )
   };
 
-  convertMinutesToHrsMinutes = (minutes) => {
+  const convertMinutesToHrsMinutes = (minutes) => {
     let hours = Math.floor(minutes / 60);
     minutes = minutes - (hours * 60);
     return hours + 'h' + ' ' + minutes + 'm';

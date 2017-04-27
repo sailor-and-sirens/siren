@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { StyleSheet, Text, View, AsyncStorage, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header';
