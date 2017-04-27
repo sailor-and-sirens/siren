@@ -50,18 +50,18 @@ class EpisodeListCard extends Component {
       <Swipeable
         leftActionActivationDistance={200}
         leftContent={(
-          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
+          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#114B5F' : '#288D91'}]}>
             {leftActionActivated ?
-              <Text>(( release ))</Text> :
-              <Text>Add to Playlist</Text>}
+              <Text style={styles.swipeText}>(( release ))</Text> :
+              <Text style={styles.swipeText}>Add to Playlist</Text>}
           </View>
         )}
         rightActionActivationDistance={200}
         rightContent={(
-          <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
+          <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#114B5F' : '#D62828'}]}>
             {rightActionActivated ?
-              <Text>(( release ))</Text> :
-              <Text>{`Remove From ${this.props.view}`}</Text>}
+              <Text style={styles.swipeText}>(( release ))</Text> :
+              <Text style={styles.swipeText}>{`Remove From ${this.props.view}`}</Text>}
           </View>
         )}
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
@@ -251,6 +251,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: 20
   },
+  swipeText: {
+    color: '#ffffff'
+  }
 });
 
 export default connect(mapStateToProps)(EpisodeListCard);

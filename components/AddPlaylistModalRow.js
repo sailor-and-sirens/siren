@@ -25,7 +25,7 @@ const AddPlaylistModalRow = (props) => {
   const iconStyle = (isSelected) => {
     if (isSelected) {
       return (
-        <MaterialIcons size={25} name='playlist-add-check' color='#2EAC6D'></MaterialIcons>
+        <MaterialIcons size={25} name='playlist-add-check' color='#288D91'></MaterialIcons>
       )
     }
     return (
@@ -41,9 +41,9 @@ const AddPlaylistModalRow = (props) => {
 
   const swipeToSelectPlaylistText = (isSelected) => {
     if (isSelected === true) {
-      return <Text>Deselect Playlist</Text>
+      return <Text style={styles.swipeText}>Deselect Playlist</Text>
     }
-    return <Text>Select Playlist</Text>
+    return <Text style={styles.swipeText}>Select Playlist</Text>
   };
 
   return (
@@ -51,9 +51,9 @@ const AddPlaylistModalRow = (props) => {
       key={index}
       leftActionActivationDistance={200}
       leftContent={(
-        <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
+        <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#114B5F' : '#288D91'}]}>
           {leftActionActivated ?
-            <Text>(( release ))</Text> :
+            <Text style={styles.swipeText}>(( release ))</Text> :
             swipeToSelectPlaylistText(isPlaylistSelected(playlist.id))}
         </View>
       )}
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 8,
     paddingBottom: 8,
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#E3E4DB',
     borderBottomWidth: 0.5,
     borderColor: '#bbbbbb'
   },
@@ -144,6 +144,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingLeft: 20
+  },
+  swipeText: {
+    color: '#ffffff'
   }
 });
 

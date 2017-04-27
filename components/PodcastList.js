@@ -84,7 +84,7 @@ class PodcastList extends Component {
         </View>
          {this.props.view === 'Search' ?
           <View style={styles.searchBar}>
-            <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.props.dispatch(podcastsActions.searchText(text));}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.props.text}/>
+            <TextInput underlineColorAndroid='rgba(0,0,0,0)' placeholder='Seach for podcast' style={styles.searchInput} onChangeText={(text) => {this.props.dispatch(podcastsActions.searchText(text));}} onSubmitEditing={this.getPodcasts.bind(this)} value={this.props.text}/>
             <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search" />
           </View> :
             <View style={styles.recommendationBar}>
