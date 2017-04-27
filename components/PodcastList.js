@@ -72,7 +72,7 @@ class PodcastList extends Component {
     }
     return (
       <View style={styles.mainView}>
-      <View style={styles.buttonRow}>
+        <View style={styles.buttonRow}>
           {this.props.view === 'Search' ?
             <View>
               <Text style={styles.switchTo} onPress={() => {this.getDiscovery(); this.props.dispatch(headerActions.changeView('Discovery'));}}>Switch to Discovery</Text>
@@ -104,17 +104,17 @@ class PodcastList extends Component {
 }
 
 const styles = StyleSheet.create({
+  mainView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
   searchInput: {
     height: 40,
     width: '80%',
     borderColor: 'gray',
     borderWidth: 1,
     padding: 6,
-  },
-  mainView: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 35,
   },
   searchButton: {
     marginLeft: 8,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   podcastList:{
     width: '100%',
-    marginBottom: 210,
+    marginBottom: 80,
   },
   searchBar: {
     flexDirection: 'row',

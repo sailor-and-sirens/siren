@@ -86,7 +86,7 @@ class EpisodeListCard extends Component {
           </View>
           <View style={styles.rightView}>
             <Text style={styles.date}>{moment(this.props.episode['feed']['pubDate'].substring(0,16)).format('ddd, DD MMM YYYY')}</Text>
-            <Text style={styles.episode} numberOfLines={1}>{this.props.episode['feed']['title']}</Text>
+            <Text style={styles.episode} numberOfLines={2}>{this.props.episode['feed']['title']}</Text>
             <Text style={styles.subtitle} numberOfLines={2}>
               {this.props.episode['feed']['subtitle']}
             </Text>
@@ -115,28 +115,36 @@ class EpisodeListCard extends Component {
 }
 
 const styles = StyleSheet.create({
-  topView: {
+  mainView: {
+    height: 140,
     justifyContent: 'space-between',
-    height: 80,
     alignItems: 'center',
-    flexDirection: 'row',
+    marginLeft: 5,
+    marginRight: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgrey',
+  },
+  topView: {
     flex: .75,
-    marginBottom: 8,
+    height: 90,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 10,
+    marginBottom: 8,
+    marginLeft: 5,
     paddingRight: 5,
   },
   leftView: {
-    flex: .25,
+    height: 90,
+    width: 90,
     justifyContent: 'space-around',
-    alignItems: 'center',
+    alignItems: 'flex-start'
   },
   rightView: {
-    paddingLeft: 3,
-    flex: .75,
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
-    height: 80,
-    paddingLeft: (Platform.OS === 'ios') ? 10 : 0,
+    paddingLeft: 5,
+    flex: 1,
+    justifyContent: 'flex-start',
+    height: 90,
   },
   bottomView: {
     flex: .25,
@@ -144,43 +152,45 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: 10,
-    paddingLeft: 5,
-    paddingRight: 8,
-  },
-  mainView: {
-    height: 140,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: 'lightgrey',
-    borderTopColor: 'lightgrey',
-    marginLeft: 3,
+    marginLeft: 10,
+    paddingRight: 15
   },
   image: {
-    height: 80,
-    width: 80,
+    height: 90,
+    width: 90,
+  },
+  date: {
+    marginBottom: 3,
+    ...Platform.select({
+       ios: {
+         fontSize: 11,
+       },
+       android: {
+         fontSize: 10
+       },
+     }),
   },
   episode: {
-    fontWeight: "500",
-   ...Platform.select({
-      ios: {
-        fontSize: 14,
-      },
-      android: {
-        fontSize: 16,
-      },
-    }),
+    marginBottom: 4,
+    fontSize: 14,
+    ...Platform.select({
+       ios: {
+         fontWeight: '500',
+       },
+       android: {
+         fontWeight: '400'
+       },
+     }),
   },
   subtitle: {
-  fontWeight: "400",
-   ...Platform.select({
-      ios: {
-        fontSize: 12,
-      },
-      android: {
-        fontSize: 14,
-      },
-    }),
+    ...Platform.select({
+       ios: {
+         fontSize: 12,
+       },
+       android: {
+         fontSize: 11
+       },
+     }),
   },
   podcast: {
     fontWeight: "600",
@@ -194,17 +204,12 @@ const styles = StyleSheet.create({
     }),
   },
   tag: {
-    backgroundColor: '#42f4c5',
-    alignSelf: 'center',
+    width: 90,
     padding: 2,
-    width: 80,
-    marginLeft: 1,
+    alignSelf: 'center',
+    backgroundColor: '#50BFB9',
     fontSize: 12,
     textAlign: 'center',
-  },
-  date: {
-    fontWeight: "400",
-    fontSize: 12,
   },
   time: {
     fontWeight: "400",
