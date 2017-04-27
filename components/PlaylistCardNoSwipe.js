@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import Swipeable from 'react-native-swipeable';
-import { actionCreators as swipeActions } from '../actions/Swipe';
-import { actionCreators as playlistActions } from '../actions/Playlist';
-import { headerActions } from '../actions/Header';
 import { actionCreators } from '../actions';
+import { headerActions } from '../actions/Header';
+import { actionCreators as playlistActions } from '../actions/Playlist';
+import { actionCreators as swipeActions } from '../actions/Swipe';
 
 const mapStateToProps = (state) => ({
   token: state.main.token,
@@ -13,6 +14,11 @@ const mapStateToProps = (state) => ({
 });
 
 class PlaylistCardNoSwipe extends Component {
+
+  componentWillMount(){
+    this.imagesArr = [];
+    this.setPlaylistImages();
+  }
 
   removePlaylist(playlistId){
     fetch("http://siren-server.herokuapp.com/api/playlists/remove-playlist", {
@@ -38,35 +44,29 @@ class PlaylistCardNoSwipe extends Component {
     return hours + 'h' + ' ' + minutes + 'm';
   }
 
-  setPlaylistImages(){
-    var placeholderImage = 'http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_5639735648c34.png';
+  setPlaylistImages() {
+    var placeholderImage = 'https://render.fineartamerica.com/images/rendered/small/print/images-square-real-5/soothing-sea-abstract-painting-linda-woods.jpg';
     this.props.playlist.Episodes.forEach(episode => {
       if(this.imagesArr.every(url => url !== episode.Podcast.artworkUrl) && this.imagesArr.length < 4){
         this.imagesArr.push(episode.Podcast.artworkUrl);
       }
     });
-    if(this.imagesArr.length === 4){
+    if (this.imagesArr.length === 4) {
       this.imageClass = 'quad';
-    } else if(this.imagesArr.length === 3){
+    } else if (this.imagesArr.length === 3) {
       this.imageClass = 'quad';
       this.imagesArr.push(this.imagesArr[0]);
-    } else if(this.imagesArr.length === 2){
+    } else if (this.imagesArr.length === 2){
       this.imageClass = 'quad';
       this.imagesArr.splice(1, 0, this.imagesArr[1]);
       this.imagesArr.splice(3, 0, this.imagesArr[0]);
-    } else if(this.imagesArr.length < 1){
+    } else if (this.imagesArr.length < 1) {
       this.imageClass = 'single';
       this.imagesArr.push(placeholderImage);
     } else {
       this.imageClass = 'single';
       this.imagesArr = this.imagesArr.slice(0,1);
     }
-    console.log(this.imagesArr);
-  }
-
-  componentWillMount(){
-    this.imagesArr = [];
-    this.setPlaylistImages();
   }
 
   render() {
@@ -84,25 +84,35 @@ class PlaylistCardNoSwipe extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={[styles.content]}>
-          <Text style={styles.title}>{this.props.playlist.name}</Text>
+        <View style={styles.content}>
+          <Text style={styles.playlistName}>{this.props.playlist.name}</Text>
+          {this.props.playlist.Episodes.length > 0 ?
+            <Text style={styles.recentlyAdded}>Recently Added:</Text> : <View></View>
+          }
           {this.props.playlist.Episodes.slice(0,2).map((episode, index) => {
-            var title = episode.title.slice(0, 25) + '...';
-            return <Text key={index}>{title}</Text>
+            return (
+              <Text key={index} style={styles.episodeTitle} numberOfLines={1}>{episode.title}</Text>
+            )
           })}
         </View>
-        <View>
-          <Text style={[styles.time]}>{this.convertMinutesToHrsMinutes(this.props.playlist.totalTime)}</Text>
+        <View style={styles.timeContainer}>
+          <Text style={styles.time}>{this.convertMinutesToHrsMinutes(this.props.playlist.totalTime)}</Text>
         </View>
       </View>
-
-
     );
   }
 
 }
 
 const styles = StyleSheet.create({
+  cardContainer: {
+    height: 90,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 5,
+    borderBottomWidth: 1,
+    borderColor: 'lightgrey'
+  },
   image: {
     height: 80,
     width: 80,
@@ -118,104 +128,34 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
   },
-  title:{
-    fontWeight: "500",
+  content: {
+    flex: .60,
+    height: 80,
+    marginLeft: 5,
+    paddingRight: 5,
+    justifyContent: 'center'
   },
-  cardContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  playlistName: {
+    fontWeight: "500",
+    fontSize: 16,
+    marginBottom: 5
+  },
+  recentlyAdded: {
+    fontWeight: "500",
+    fontSize: 12
+  },
+  episodeTitle: {
+    fontSize: 12
+  },
+  timeContainer: {
+    height: 80,
+    justifyContent: 'center',
   },
   time: {
     fontWeight: "400",
     fontSize: 14,
     marginRight: 5,
     color: 'grey',
-  },
-  content: {
-    flex: .60,
-    marginLeft: 5
-  },
-  topView: {
-    justifyContent: 'space-between',
-    height: 80,
-    alignItems: 'center',
-    flexDirection: 'row',
-    flex: .75,
-    marginBottom: 8,
-    marginTop: 10,
-    paddingRight: 5,
-  },
-  leftView: {
-    flex: .25,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  rightView: {
-    paddingLeft: 3,
-    flex: .75,
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
-    height: 80,
-  },
-  bottomView: {
-    flex: .25,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: 10,
-    paddingLeft: 5,
-    paddingRight: 8,
-  },
-  mainView: {
-    height: 140,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: 'lightgrey',
-    borderTopWidth: 2,
-    borderTopColor: 'lightgrey',
-  },
-  episode: {
-    fontWeight: "500",
-    fontSize: 16,
-  },
-  subtitle: {
-  fontWeight: "400",
-  fontSize: 12,
-  },
-  podcast: {
-    fontWeight: "600",
-    fontSize: 16,
-  },
-  tag: {
-    backgroundColor: '#42f4c5',
-    alignSelf: 'center',
-    padding: 2,
-    width: 80,
-    marginLeft: 1,
-    fontSize: 12,
-    textAlign: 'center',
-  },
-  date: {
-    fontWeight: "400",
-    fontSize: 12,
-  },
-  favorite: {
-    alignSelf: 'center',
-  },
-  bookmark: {
-    alignSelf: 'center',
-  },
-  clock: {
-    marginRight: 7,
-    height: 21,
-    width: 21,
-  },
-  timeView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   leftSwipeItem: {
     flex: 1,

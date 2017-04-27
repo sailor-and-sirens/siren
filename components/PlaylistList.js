@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, Image, Button} from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, Image, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators as playerActions } from '../actions/Player';
+import { actionCreators as playlistActions } from '../actions/Playlist';
 import { actionCreators as swipeActions } from '../actions/Swipe';
 import PlaylistCard from './PlaylistCard';
 import PlaylistCardNoSwipe from './PlaylistCardNoSwipe';
-import { actionCreators as playlistActions } from '../actions/Playlist';
 import { getAllPlaylists } from '../helpers';
 
 const mapStateToProps = (state) => ({
@@ -50,19 +50,16 @@ class PlaylistList extends Component {
   render() {
    return (
       <View style={styles.mainView}>
-        <ScrollView>
-        <View style={styles.searchArea}>
-          <Text>Create New Playlist</Text>
-          <View style={styles.searchBar}>
-            <TextInput underlineColorAndroid='rgba(0,0,0,0)' style={styles.searchInput} onChangeText={(text) => {this.setState({text});}} onSubmitEditing={() => getAllPlaylists(this.props)} value={this.state.text}/>
-            <Button style={styles.button} onPress={this.addPlaylist.bind(this)} underlayColor='#99d9f4' title='Create' />
+        <ScrollView style={styles.scrollArea}>
+          <View style={styles.createPlaylistWrapper}>
+            <TextInput underlineColorAndroid="transparent" style={styles.addPlaylistInput} onChangeText={(text) => {this.setState({text});}} onSubmitEditing={() => getAllPlaylists(this.props)} placeholder={'Enter Name of New Playlist'} value={this.state.text} />
+            <TouchableOpacity onPress={this.addPlaylist.bind(this)} style={styles.addPlaylistButton}><Text style={styles.addPlaylistButtonText}>Create Playlist</Text></TouchableOpacity>
           </View>
-        </View>
-        {this.props.allplaylists.slice(0,2).map((playlist, index) => {
-          return (
-            <PlaylistCardNoSwipe key={index} playlist={playlist}/>
-          )
-        })}
+          {this.props.allplaylists.slice(0,2).map((playlist, index) => {
+            return (
+              <PlaylistCardNoSwipe key={index} playlist={playlist}/>
+            )
+          })}
           {this.props.allplaylists.slice(2).map((playlist, index) => {
             return (
               <PlaylistCard key={index + 1} playlist={playlist}/>
@@ -76,31 +73,40 @@ class PlaylistList extends Component {
 
 const styles = StyleSheet.create({
   mainView:{
-    marginBottom: 185,
+    flex: 1,
+    marginRight: 5,
+    marginLeft: 5
   },
-  searchArea: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  scrollArea: {
+    marginBottom: 80
   },
-  episodeList:{
-    width: '100%',
-    marginBottom: 210,
-  },
-  searchInput: {
-    height: 40,
-    width: 200,
-    borderColor: 'gray',
-    borderWidth: 1,
-    padding: 10
-  },
-  searchBar: {
+  createPlaylistWrapper: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    margin: 10,
+    margin: 5,
+    marginBottom: 5,
+    marginLeft: 0
   },
-  searchButton: {
-    marginLeft: 8,
+  addPlaylistInput: {
+    height: 40,
+    flex: 0.65,
+    alignSelf: 'center',
+    marginRight: 5,
+    padding: 5,
+    backgroundColor: '#ffffff',
+    borderColor: 'gray',
+    borderWidth: 1
   },
+  addPlaylistButton: {
+    height: 40,
+    flex: 0.35,
+    justifyContent: 'center',
+    backgroundColor: '#288D91'
+  },
+  addPlaylistButtonText: {
+    textAlign: 'center',
+    color: '#ffffff',
+    fontSize: 12,
+  }
 })
 
 export default connect(mapStateToProps)(PlaylistList);
