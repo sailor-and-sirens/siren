@@ -18,6 +18,7 @@ const mapStateToProps = (state) => ({
   leftToggle: state.swipe.isLeftToggled,
 });
 
+var update = false;
 
 class PodcastListCard extends Component {
 

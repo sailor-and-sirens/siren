@@ -170,6 +170,4 @@ export const subscribePodcast = (props) => {
         console.log('SUBSCRIBE RESPONSE: ', response);
       })
       .catch(console.log);
-
-    //POST request to siren-discovery here
   }
