@@ -1,8 +1,6 @@
 # Siren
 > Discover podcasts you’ll love, organized just the way you want them.
 
-[https://sailor-and-sirens.github.io/](https://sailor-and-sirens.github.io/)
-
 ## Development Setup
 
 1. Install [Expo XDE](https://docs.expo.io/versions/v16.0.0/introduction/installation.html)
