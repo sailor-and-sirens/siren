@@ -189,10 +189,12 @@ const styles = StyleSheet.create({
   subscribeIcon: {
     flex: 0.2,
     marginBottom: -4,
+    paddingRight: 5,
     textAlign: 'right'
   },
   discoveryBar: {
-    flex: 1
+    flex: 1,
+    paddingBottom: 5,
   },
   discovery: {
     justifyContent: 'center',
