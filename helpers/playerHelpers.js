@@ -8,5 +8,5 @@ export const removeCurrentEpisodeFromListeningTo = (token, episodeId) => {
     },
     body: JSON.stringify(episodeData)
   })
-  .catch(err => console.warn(err));
+  .catch(console.log);
 }

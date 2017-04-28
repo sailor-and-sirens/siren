@@ -5,160 +5,106 @@ exports[`renders correctly without data 1`] = `
   style={
     Object {
       "alignItems": "center",
+      "flex": 1,
       "justifyContent": "space-between",
-      "marginBottom": 35,
     }
   }
 >
   <View
-    style={undefined}
+    style={
+      Object {
+        "flexDirection": "row",
+        "height": 50,
+        "margin": 2,
+      }
+    }
   >
-    <View>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "lightgrey",
+          "borderColor": "gray",
+          "borderRightWidth": 0.5,
+          "borderWidth": 1,
+          "flex": 0.5,
+          "justifyContent": "center",
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
       <Text
         accessible={true}
         allowFontScaling={true}
         ellipsizeMode="tail"
-        onPress={[Function]}
         style={
           Object {
-            "alignSelf": "stretch",
-            "color": "grey",
-            "fontSize": 16,
-            "height": 20,
-            "justifyContent": "center",
-            "marginTop": 10,
+            "textAlign": "center",
           }
         }
       >
-        Switch to Search
+        Search
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "lightgrey",
+            "borderColor": "gray",
+            "borderLeftWidth": 0.5,
+            "borderWidth": 1,
+            "flex": 0.5,
+            "justifyContent": "center",
+          },
+          Object {
+            "backgroundColor": "#ffffff",
+          },
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "textAlign": "center",
+          }
+        }
+      >
+        Recommendations
       </Text>
     </View>
   </View>
   <View
     style={
       Object {
-        "justifyContent": "center",
+        "marginBottom": 10,
       }
     }
-  >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={
-        Object {
-          "alignSelf": "stretch",
-          "color": "grey",
-          "fontSize": 22,
-          "height": 30,
-          "justifyContent": "center",
-          "marginTop": 10,
-        }
-      }
-    >
-      Recommended for You
-    </Text>
-  </View>
+  />
   <ScrollView
     style={
       Object {
-        "marginBottom": 210,
+        "marginBottom": 80,
         "width": "100%",
       }
     }
-  >
-    <Modal
-      hardwareAccelerated={false}
-      onRequestClose={[Function]}
-      supportedOrientations={
-        Array [
-          "landscape",
-          "portrait",
-        ]
-      }
-      transparent={true}
-      visible={true}
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "bottom": 0,
-              "flex": 1,
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            },
-            Object {
-              "backgroundColor": "rgba(0, 0, 0, 0.25)",
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "bottom": 0,
-              "justifyContent": "center",
-              "left": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            }
-          }
-        >
-          <ActivityIndicator
-            animating={true}
-            color="white"
-            hidesWhenStopped={true}
-            size="large"
-            style={
-              Object {
-                "flex": 1,
-              }
-            }
-          />
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "bottom": 0,
-                "flex": 1,
-                "justifyContent": "center",
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              }
-            }
-          >
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              style={
-                Array [
-                  Object {
-                    "fontSize": 20,
-                    "fontWeight": "bold",
-                    "height": 50,
-                    "top": 80,
-                  },
-                  Object {
-                    "color": "#FFF",
-                  },
-                ]
-              }
-            >
-              Searching...
-            </Text>
-          </View>
-        </View>
-      </View>
-    </Modal>
-  </ScrollView>
+  />
 </View>
 `;

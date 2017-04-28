@@ -98,7 +98,7 @@ const main = (state = initialState, action) => {
   return state;
 }
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   main,
   player,
   swipe,
@@ -106,5 +106,12 @@ const rootReducer = combineReducers({
   playlist,
   podcasts
 });
+
+const rootReducer = (state, action) => {
+   if (action.type === 'USER_LOGOUT') {
+    state = undefined
+  }
+  return appReducer(state, action)
+}
 
 export default rootReducer;

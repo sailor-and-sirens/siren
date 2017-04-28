@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import { connect } from 'react-redux';
-import { MaterialIcons } from '@expo/vector-icons';
 import Swipeable from 'react-native-swipeable';
 import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header';
@@ -30,14 +29,9 @@ class PlaylistCard extends Component {
       },
       body: JSON.stringify({playlistId: playlistId})
     })
-    .then(function(data){
-      console.log('REMOVED');
-    })
-    .catch(function(error){
-      console.log('Error removing playlist: ', error);
-    })
-
+    .catch(console.log);
   }
+
   convertMinutesToHrsMinutes(minutes) {
     let hours = Math.floor(minutes / 60);
     minutes = minutes - (hours * 60);
@@ -70,7 +64,7 @@ class PlaylistCard extends Component {
   }
 
   render() {
-    const {rightActionActivated, rightToggle} = this.props;
+    const {rightActionActivated} = this.props;
     return (
       <Swipeable
         rightActionActivationDistance={200}
@@ -86,6 +80,7 @@ class PlaylistCard extends Component {
         onRightActionComplete={() => {
           this.removePlaylist(this.props.playlist.id);
           this.props.dispatch(playlistActions.removePlaylist(this.props.playlist.id));
+
         }}
       >
       <View style={styles.cardContainer}>

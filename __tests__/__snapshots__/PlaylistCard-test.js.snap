@@ -107,7 +107,10 @@ exports[`renders correctly 1`] = `
         style={
           Array [
             Object {
+              "flexDirection": "row",
+              "flexWrap": "wrap",
               "height": 80,
+              "marginBottom": 10,
               "width": 80,
             },
           ]
@@ -135,19 +138,31 @@ exports[`renders correctly 1`] = `
           testID={undefined}
           tvParallaxProperties={undefined}
         >
-          <Image
-            source={
-              Object {
-                "uri": "http://www.iconsfind.com/wp-content/uploads/2015/11/20151104_5639735648c34.png",
-              }
-            }
+          <View
             style={
               Object {
+                "flexDirection": "row",
+                "flexWrap": "wrap",
                 "height": 80,
+                "marginBottom": 10,
                 "width": 80,
               }
             }
-          />
+          >
+            <Image
+              source={
+                Object {
+                  "uri": "test.com",
+                }
+              }
+              style={
+                Object {
+                  "height": 80,
+                  "width": 80,
+                }
+              }
+            />
+          </View>
         </View>
       </View>
       <View

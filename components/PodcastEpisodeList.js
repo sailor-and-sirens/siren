@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
-import { Audio } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, View} from 'react-native';
 import { connect } from 'react-redux';
-import { actionCreators as playerActions } from '../actions/Player';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import { convertMillis } from '../helpers';
 import PodcastEpisodeListCard from './PodcastEpisodeListCard';
-import PodcastViewCard from './PodcastViewCard';
-import AddPlaylistModal from './AddPlaylistModal';
-import {hmsToSecondsOnly} from '../helpers';
-
-let _ = require('lodash');
 
 const mapStateToProps = (state) => ({
   currentlyOpenSwipeable: state.swipe.currentlyOpenSwipeable,

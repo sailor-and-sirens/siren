@@ -33,7 +33,6 @@ const player = (state = initialState, action) => {
     return {...state, isPlaying: action.payload}
   }
   if (action.type === types.STORE_EPISODE_DATA) {
-    console.log(action.payload);
     return {...state, currentEpisode: action.payload}
   }
   if (action.type === types.STORE_TIMER) {

@@ -3,11 +3,9 @@ import { StyleSheet, Text, View, TextInput, Image, ScrollView, Platform, Alert, 
 import PodcastEpisodeList from './PodcastEpisodeList';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { actionCreators as playerActions } from '../actions/index';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
-import { actionCreators as mainActions } from '../actions';
 import { headerActions } from '../actions/Header';
-import { subscribePodcast } from '../helpers';
+import { subscribePodcast, getEpisodeDiscovery } from '../helpers';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const mapStateToProps = (state) => ({
@@ -18,40 +16,6 @@ const mapStateToProps = (state) => ({
 });
 
 class PodcastViewCard extends Component {
-
-  getEpisodeDiscovery () {
-    //Add/evaluate podcast if not in Siren-Disovery yet
-    podcast = [this.props.podcast];
-    fetch("https://siren-discovery.herokuapp.com/api/subscribe", {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(this.props.podcast)
-      })
-      .then((response) => {
-        podcast = [{
-          name: this.props.podcast.collectionName
-        }];
-        //fetch recommendations
-        fetch("https://siren-discovery.herokuapp.com/api/recommend", {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(podcast)
-        })
-        .then(response => response.json())
-        .then(response => {
-          console.log('GET DISCOVERY RESPONSE: ', response.slice(0,1));
-          this.props.dispatch(podcastsActions.searchDiscovery(response.slice(0, 10)));
-          this.props.dispatch(headerActions.changeView('Discovery'));
-        })
-      })
-      .catch(console.log);
-  }
 
   render() {
     return (

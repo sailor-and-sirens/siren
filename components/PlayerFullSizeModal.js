@@ -1,14 +1,12 @@
-import { Audio } from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal, Dimensions, Image, ScrollView, Linking } from 'react-native';
 import { Ionicons, SimpleLineIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { toggleBookmark, toggleLike } from '../helpers';
 import { toggleAddToPlaylistModal } from '../helpers/playlistHelpers';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const PlayerFullSizeModal = (props) => {
-  let episodeImage = '';
   let episodeLink;
 
   let episodeBookmark = () => {

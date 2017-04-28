@@ -1,15 +1,9 @@
-//UNDER CONSTRUCTION -M
 import React, { Component } from 'react';
 import Swipeable from 'react-native-swipeable';
-import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, Platform, Alert} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { actionCreators } from '../actions';
-import { headerActions } from '../actions/Header'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, Alert} from 'react-native';
 import { actionCreators as swipeActions } from '../actions/Swipe';
-import { actionCreators as mainActions } from '../actions';
 import { actionCreators as podcastsActions } from '../actions/Podcasts';
 import { connect } from 'react-redux';
-import { subscribePodcast } from '../helpers';
 import moment from 'moment';
 
 const mapStateToProps = (state) => ({
@@ -34,14 +28,11 @@ class PodcastManagerCard extends Component {
         'Authorization': this.props.token
       }
     })
-      .then(response => {
-        console.log('Unsubscribe response: ', response);
-      })
-      .catch(err => console.log(err));
+    .catch(console.log);
   }
 
   render() {
-    const {rightActionActivated, rightToggle} = this.props;
+    const {rightActionActivated} = this.props;
     return (
       <Swipeable
             rightActionActivationDistance={200}
@@ -56,7 +47,7 @@ class PodcastManagerCard extends Component {
             onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
             onRightActionComplete={() => {
               this.unsubscribe(this.props.podcast['id']);
-              Alert.alert('Unsubscribed from ' + this.props.podcast['name']);
+              Alert.alert('Unsubscribed');
             }}
           >
         <View style={styles.mainView}>
@@ -77,6 +68,23 @@ class PodcastManagerCard extends Component {
 }
 
 const styles = StyleSheet.create({
+  leftView: {
+    width: 70,
+    height: 70,
+    flex: .25,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  rightView: {
+    flex: 1,
+    height: 70,
+    paddingRight: 5,
+    justifyContent: 'space-around',
+    alignItems: 'stretch',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: (Platform.OS === 'ios') ? 10 : 7,
+  },
   mainView: {
     height: 85,
     marginLeft: 5,
@@ -86,18 +94,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: 'lightgrey',
-  },
-  leftView: {
-    width: 70,
-    height: 70,
-    alignItems: 'center',
-  },
-  rightView: {
-    flex: 1,
-    height: 70,
-    justifyContent: 'space-between',
-    paddingLeft: 5,
-    paddingRight: 5
   },
   image: {
     height: 70,

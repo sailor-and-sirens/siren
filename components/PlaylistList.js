@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, Image, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { actionCreators as playerActions } from '../actions/Player';
-import { actionCreators as playlistActions } from '../actions/Playlist';
-import { actionCreators as swipeActions } from '../actions/Swipe';
 import PlaylistCard from './PlaylistCard';
 import PlaylistCardNoSwipe from './PlaylistCardNoSwipe';
 import { getAllPlaylists } from '../helpers';

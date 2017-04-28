@@ -8,20 +8,15 @@ const store = createStore(reducer);
 
 var playlist = {
   title: 'Test playlist',
-  Episodes: [{title: 'one episode'}],
+  Episodes: [{title: 'one episode', Podcast: {artworkUrl: 'test.com'}}],
   totalTime: 100
 }
 
-//TESTING REACT COMPONENT
 test('renders correctly', () => {
   const tree = renderer.create(
-    //wrap component in provide so it has access to store
     <Provider store={store}>
       <PlaylistCard playlist={playlist} />
     </Provider>
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });
-
-
-//To retake snapshot: npm test -- -u PlaylistCard
