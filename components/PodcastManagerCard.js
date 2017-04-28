@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     height: 70,
     justifyContent: 'space-between',
     paddingLeft: 5,
-    paddingRight: 5
+    paddingRight: 5,
     justifyContent: 'space-around',
     alignItems: 'stretch',
     paddingTop: 10,
