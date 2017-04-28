@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, ScrollView, Platform, Alert} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, ScrollView, Platform, Alert, TouchableOpacity } from 'react-native';
 import PodcastEpisodeList from './PodcastEpisodeList';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -68,13 +68,17 @@ class PodcastViewCard extends Component {
             </ScrollView>
             <View style={styles.tagAddView}>
               <Text style={styles.tag} numberOfLines={1}> {this.props.podcast.primaryGenreName} </Text>
-              <Ionicons style={styles.subscribeIcon} size={25} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName);}}/>
+              <TouchableOpacity onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName)}}>
+                <Ionicons style={styles.subscribeIcon} size={25} color='grey' name="ios-add-circle-outline" />
+              </TouchableOpacity>
             </View>
           </View>
         </View>
         <View style={styles.podcastBottomView}>
           <View style={styles.discoveryBar}>
-            <Text style={styles.discovery} onPress={ () => {this.getEpisodeDiscovery();}}>Discover more podcasts like this</Text>
+            <TouchableOpacity onPress={ () => {this.getEpisodeDiscovery()}}>
+              <Text style={styles.discovery} >Discover more podcasts like this</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <ScrollView style={styles.episodeScroll}>
@@ -194,6 +198,7 @@ const styles = StyleSheet.create({
   },
   discoveryBar: {
     flex: 1,
+    paddingTop: 5,
     paddingBottom: 5,
   },
   discovery: {
