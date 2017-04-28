@@ -47,7 +47,7 @@ class PodcastManagerCard extends Component {
             onRightActionDeactivate={() => this.props.dispatch(swipeActions.updateRightActivation(false))}
             onRightActionComplete={() => {
               this.unsubscribe(this.props.podcast['id']);
-              Alert.alert('Unsubscribed from ' + this.props.podcast['name']);
+              Alert.alert('Unsubscribed');
             }}
           >
         <View style={styles.mainView}>
@@ -78,14 +78,12 @@ const styles = StyleSheet.create({
   rightView: {
     flex: 1,
     height: 70,
-    justifyContent: 'space-between',
-    paddingLeft: 5,
     paddingRight: 5,
     justifyContent: 'space-around',
     alignItems: 'stretch',
     paddingTop: 10,
     paddingBottom: 10,
-    paddingLeft: (Platform.OS === 'ios') ? 10 : 0,
+    paddingLeft: (Platform.OS === 'ios') ? 10 : 7,
   },
   mainView: {
     height: 85,

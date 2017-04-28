@@ -53,10 +53,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 10,
     backgroundColor: '#288D91',
+    justifyContent: 'center',
   },
   buttonText: {
     color: '#ffffff',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: '500',
   }
 })
 
