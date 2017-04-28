@@ -73,12 +73,8 @@ const styles = StyleSheet.create({
     paddingLeft: 5
   },
   rightView: {
-<<<<<<< HEAD
     paddingLeft: 3,
     flex: 1,
-=======
-    flex: .5,
->>>>>>> Linting
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: 150,
