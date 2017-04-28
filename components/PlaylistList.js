@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   mainView:{
     flex: 1,
     marginRight: 5,
-    marginLeft: 5
+    marginLeft: 10
   },
   scrollArea: {
     marginBottom: 80
