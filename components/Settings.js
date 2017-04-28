@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, AsyncStorage, TouchableOpacity } from 'react-na
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header';
-import { actionCreators as podcastsActions } from '../actions/Podcasts';
 
 const mapStateToProps = (state) => ({
   token: state.main.token
@@ -23,11 +22,7 @@ class Settings extends Component {
     fetch("http://siren-server.herokuapp.com/logout", { method: "GET" });
     this.deleteToken('id_token')
     .then (() => {
-      this.props.dispatch(actionCreators.updateInbox([]));
-      this.props.dispatch(actionCreators.changeEmail(''));
-      this.props.dispatch(actionCreators.changeUsername(''));
-      this.props.dispatch(actionCreators.addToken(null));
-      this.props.dispatch(podcastsActions.searchText(''));
+      this.props.dispatch(actionCreators.userLogout());
       this.props.dispatch(headerActions.changeView('Authentication'));
     })
   }

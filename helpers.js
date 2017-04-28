@@ -171,3 +171,34 @@ export const subscribePodcast = (props) => {
       })
       .catch(console.log);
   }
+
+export const getEpisodeDiscovery = (props) => {
+    let podcast = [props.podcast];
+    fetch("https://siren-discovery.herokuapp.com/api/subscribe", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(props.podcast)
+      })
+      .then(() => {
+        podcast = [{
+          name: props.podcast.collectionName
+        }];
+        fetch("https://siren-discovery.herokuapp.com/api/recommend", {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(podcast)
+        })
+        .then(response => response.json())
+        .then(response => {
+          props.dispatch(podcastsActions.searchDiscovery(response.slice(0, 10)));
+          props.dispatch(headerActions.changeView('Discovery'));
+        })
+      })
+      .catch(console.log);
+  }

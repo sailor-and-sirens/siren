@@ -24,15 +24,15 @@ const initialState = {
   podcastEpisodes: [
   {
     "title": "CARTA: Awareness of Death and Personal Mortality: Implications for Anthropogeny – Mind Over Reality Transition: The Evolution of Human Mortality Denial; Human Mortality Denial and Terror Management Theory; The Lure of Death: Suicide as a Uniquely Human Phenomenon",
+    "podcast":{
+      "description": {
+        "long": "test"
+      }
+     },
     "enclosure": {
       "filesize": 27844374,
       "type": "audio/mpeg",
       "url": "http://podcast.uctv.tv/mp3/32048.mp3",
-    podcast:{
-      description: {
-        "long": "test"
-      }
-     }
     },
     "guid": "32048carta-awareness-of-death-and-personal-mortality-implications-for-anthropogeny-–-“mind-over-reality-transition”-the-evolution-of-human-mortality-denial-human-mortality-denial-and-terror-management-theory-the-lure-of-death-suicide-as-a-uniquely-human-phenomenon",
     "published": "2017-05-24T21:00:00.000Z",

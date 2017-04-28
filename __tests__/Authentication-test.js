@@ -9,7 +9,6 @@ import { actionCreators } from '../actions';
 import { headerActions } from '../actions/Header.js';
 const store = createStore(reducer);
 
-//TEST REACT COMPONENT
 test('renders correctly', () => {
   const tree = renderer.create(
     <Provider store={store}>
@@ -36,7 +35,6 @@ test('reducer changes state and renders correctly', () => {
   expect(reducer(initialState, {type: 'CHANGE_PASSWORD', payload: 'password'})).toMatchSnapshot();
 });
 
-//TEST ACTIONS
 test('Creates changeview action for Inbox', () => {
   expect(headerActions.changeView('Inbox')).toMatchSnapshot();
 });
@@ -46,5 +44,3 @@ test('Creates changeview action for Playlist', () => {
 test('Creates changeview action for Playlist', () => {
   expect(actionCreators.changeUsername('password')).toMatchSnapshot();
 });
-
-//To retake snapshot: npm test -- -u Authentication

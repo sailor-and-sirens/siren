@@ -16,7 +16,8 @@ export const types = {
   UPDATE_INBOX: 'UPDATE_INBOX',
   UPDATE_NAME_FILTER: 'UPDATE_NAME_FILTER',
   UPDATE_EPISODE_CURRENT_TIME: 'UPDATE_EPISODE_CURRENT_TIME',
-  UPDATE_FILTERS: 'UPDATE_FILTERS'
+  UPDATE_FILTERS: 'UPDATE_FILTERS',
+  USER_LOGOUT: 'USER_LOGOUT'
 }
 
 export const actionCreators = {
@@ -73,5 +74,8 @@ export const actionCreators = {
   },
   updateFilters: () => {
     return {type: types.UPDATE_FILTERS}
+  },
+  userLogout: () => {
+    return {type: types.USER_LOGOUT}
   }
 }

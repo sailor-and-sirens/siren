@@ -38,7 +38,7 @@ const initialState = {
 
     {"wrapperType":"track", "kind":"podcast", "collectionId":1197015104, "trackId":1197015104, "artistName":"C David Baker", "collectionName":"Notes to Self", "trackName":"Notes to Self", "collectionCensoredName":"Notes to Self", "trackCensoredName":"Notes to Self", "collectionViewUrl":"https://itunes.apple.com/us/podcast/notes-to-self/id1197015104?mt=2&uo=4", "feedUrl":"http://cdbaker.podomatic.com/rss2.xml", "trackViewUrl":"https://itunes.apple.com/us/podcast/notes-to-self/id1197015104?mt=2&uo=4", "artworkUrl30":"http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/30x30bb.jpg", "artworkUrl60":"http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/60x60bb.jpg", "artworkUrl100":"http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/100x100bb.jpg", "collectionPrice":0.00, "trackPrice":0.00, "trackRentalPrice":0, "collectionHdPrice":0, "trackHdPrice":0, "trackHdRentalPrice":0, "releaseDate":"2017-04-07T20:41:00Z", "collectionExplicitness":"cleaned", "trackExplicitness":"cleaned", "trackCount":9, "country":"USA", "currency":"USD", "primaryGenreName":"Literature", "contentAdvisoryRating":"Clean", "artworkUrl600":"http://is2.mzstatic.com/image/thumb/Music111/v4/8b/f6/0f/8bf60f3d-da43-c1d8-0d89-096f36a4b7e2/source/600x600bb.jpg", "genreIds":["1401", "26", "1301"], "genres":["Literature", "Podcasts", "Arts"]}
   ],
-  //sample until DB is set up
+
   inbox: {
 
     1: {title: 'Note to Self', liked: true, bookmark: false, tag: 'Tech News', image: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/100x100bb.jpg', image600: 'http://is3.mzstatic.com/image/thumb/Music111/v4/d6/04/42/d60442fb-dbc3-22e0-e23b-121cef5d511e/source/600x600bb.jpg', creator: 'NPR', feed: {title:"Deep-Dark-Data-Driven Politics\r\n", link:"http://www.wnyc.org/story/cambridge-analytica-psychometrics/", duration:"00:26:14", subtitle:" Data mining is nothing new in presidential campaigns. But in 2016, the Trump team took voter research to a new level. They hired consultants called Cambridge Analytica, which says it has thousands of data points on every American. They also claim they ca", pubDate: "Wed, 29 Mar 2017 00:00:00 -0400", enclosure: {"url":"https://www.podtrac.com/pts/redirect.mp3/audio.wnyc.org/notetoself/notetoself032917_cms745660_pod.mp3", length: 0, type: "audio/mpeg"}}},
@@ -59,13 +59,8 @@ const initialState = {
 
 const store = fakeStore({main: initialState, playlist: {allplaylists: [{name: 'Test playlist'}]}});
 
-// test('Displays a list of unique podcast tags', () => {
-//   expect(inboxFilter.getTags(inbox)).toBe(['All', 'Tech News', 'Science', 'Technology']);
-// });
-
 test('Displays a list of unique podcast tags', () => {
   const tree = renderer.create(
-    //wrap component in provide so it has access to store
     <Provider store={store}>
       <Filter />
     </Provider>

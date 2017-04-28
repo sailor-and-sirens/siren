@@ -34,8 +34,13 @@ exports[`renders correctly 1`] = `
     ellipsizeMode="tail"
     style={
       Object {
-        "marginTop": 20,
+        "backgroundColor": "#50BFB9",
+        "color": "#000",
+        "fontSize": 16,
+        "fontWeight": "bold",
+        "marginTop": 0,
         "padding": 10,
+        "paddingTop": 30,
         "textAlign": "center",
       }
     }
@@ -46,7 +51,7 @@ exports[`renders correctly 1`] = `
     style={
       Object {
         "alignSelf": "stretch",
-        "backgroundColor": "#cccccc",
+        "backgroundColor": "#BCDDD4",
         "flexDirection": "row",
         "justifyContent": "space-around",
       }

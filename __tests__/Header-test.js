@@ -9,10 +9,8 @@ import { createStore } from 'redux';
 import reducer from '../reducers/index';
 const store = createStore(reducer);
 
-//TESTING REACT COMPONENT
 test('renders correctly', () => {
   const tree = renderer.create(
-    //wrap component in provide so it has access to store
     <Provider store={store}>
       <Header />
     </Provider>
@@ -40,5 +38,3 @@ test('Creates changeview action for Inbox', () => {
 test('Creates changeview action for Playlist', () => {
   expect(headerActions.changeView('Playlist')).toMatchSnapshot();
 });
-
-//To retake snapshot: npm test -- -u Header
