@@ -46,10 +46,10 @@ class PodcastManagerCard extends Component {
       <Swipeable
             rightActionActivationDistance={200}
             rightContent={(
-              <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#42f4c5' : 'rgb(221, 95, 95)'}]}>
+              <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#114B5F' : '#D62828'}]}>
                 {rightActionActivated ?
-                  <Text>(( release ))</Text> :
-                  <Text>Unsubscribe</Text>}
+                  <Text style={styles.swipeText}>(( release ))</Text> :
+                  <Text style={styles.swipeText}>Unsubscribe</Text>}
               </View>
             )}
             onRightActionActivate={() => this.props.dispatch(swipeActions.updateRightActivation(true))}
@@ -67,8 +67,8 @@ class PodcastManagerCard extends Component {
           </View>
           <View style={styles.rightView}>
             <Text style={styles.title} numberOfLines={1}>{this.props.podcast['name']}</Text>
-            <Text style={styles.artist} numberOfLines={1}>{this.props.podcast['artistName']}</Text>
-            <Text style={styles.date}> Added {moment(this.props.podcast['createdAt']).format('ddd, DD MMM YYYY')} </Text>
+            <Text style={styles.artist} numberOfLines={2}>{this.props.podcast['artistName']}</Text>
+            <Text style={styles.date}>Added {moment(this.props.podcast['createdAt']).format('ddd, DD MMM YYYY')} </Text>
           </View>
         </View>
       </Swipeable>
@@ -77,61 +77,34 @@ class PodcastManagerCard extends Component {
 }
 
 const styles = StyleSheet.create({
-  leftView: {
-    flex: .25,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  rightView: {
-    paddingLeft: 3,
-    flex: .75,
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: (Platform.OS === 'ios') ? 10 : 0,
-  },
   mainView: {
     height: 85,
+    marginLeft: 5,
+    marginRight: 5,
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomColor: 'lightgrey',
+  },
+  leftView: {
+    width: 70,
+    height: 70,
+    alignItems: 'center',
+  },
+  rightView: {
+    flex: 1,
+    height: 70,
+    justifyContent: 'space-between',
+    paddingLeft: 5,
+    paddingRight: 5
   },
   image: {
     height: 70,
     width: 70,
-    marginLeft: 5,
   },
   title: {
     fontWeight: "500",
-    ...Platform.select({
-      ios: {
-        fontSize: 16,
-      },
-      android: {
-        fontSize: 18,
-      },
-    }),
-    paddingLeft: 2,
-    paddingTop: 2,
-  },
-  artist: {
-  fontWeight: "400",
-  ...Platform.select({
-    ios: {
-      fontSize: 13,
-    },
-    android: {
-      fontSize: 14,
-    },
-  }),
-  paddingLeft: 2,
-  marginBottom: 5,
-  },
-  podcast: {
-    fontWeight: "600",
     ...Platform.select({
       ios: {
         fontSize: 14,
@@ -139,16 +112,37 @@ const styles = StyleSheet.create({
       android: {
         fontSize: 16,
       },
-    }),
+    })
+  },
+  artist: {
+  ...Platform.select({
+    ios: {
+      fontSize: 12,
+    },
+    android: {
+      fontSize: 13,
+    },
+  })
   },
   date: {
     color: 'grey',
+    ...Platform.select({
+      ios: {
+        fontSize: 11,
+      },
+      android: {
+        fontSize: 12,
+      },
+    })
   },
-    rightSwipeItem: {
+  rightSwipeItem: {
     flex: 1,
     justifyContent: 'center',
     paddingLeft: 20
   },
+  swipeText: {
+    color: '#ffffff'
+  }
 });
 
 export default connect(mapStateToProps)(PodcastManagerCard);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, AsyncStorage, TextInput, Platform, Button, Alert} from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage, TextInput, Platform, Button, Alert, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { headerActions } from '../actions/Header';
 import { actionCreators } from '../actions';
@@ -123,11 +123,19 @@ class Authentication extends Component {
         <View style={styles.buttonRow}>
           {this.props.authView === 'login' ?
             <View>
-              <Button style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4' title='Login' />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={this._userLogin.bind(this)}>
+                  <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
+              </View>
               <Text style={styles.switchTo} onPress={() => {this.props.dispatch(actionCreators.changeAuthView('signup'))}}>Switch to signup</Text>
             </View> :
             <View>
-              <Button style={styles.button} onPress={this._userSignup.bind(this)} underlayColor='#99d9f4' title='Signup' />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={this._userSignup.bind(this)}>
+                  <Text style={styles.buttonText}>Signup</Text>
+                </TouchableOpacity>
+              </View>
               <Text style={styles.switchTo} onPress={() => {this.props.dispatch(actionCreators.changeAuthView('login'))}}>Switch to login</Text>
             </View>
           }
@@ -150,21 +158,23 @@ var styles = StyleSheet.create({
     marginBottom: 20,
     fontWeight: '600',
   },
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    alignSelf: 'center'
+  buttonContainer: {
+    height: 70,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 5,
   },
   button: {
-    height: 36,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 10,
-    marginTop: 20,
-    alignSelf: 'stretch',
+    height: 40,
+    flex: 0.35,
     justifyContent: 'center',
+    backgroundColor: '#288D91'
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#ffffff',
+    fontSize: 14,
+    paddingBottom: 2,
   },
   switchTo: {
     height: 36,

@@ -59,23 +59,17 @@ class App extends Component {
         this.props.view === 'Inbox' ?
         <EpisodeList/> :
         this.props.view === 'Settings' ?
-         <View>
-          <Settings />
-        </View> :
+        <Settings/> :
         this.props.view === 'Podcast' ?
-        <View>
-          <PodcastViewCard />
-        </View> :
+        <PodcastViewCard/> :
          this.props.view === 'Manage Subscriptions' ?
-        <View>
-          <PodcastManager />
-        </View> :
+        <PodcastManager/> :
         this.props.view === 'Playlists' ?
         <PlaylistList/> :
         <EpisodeList/>
         }
         <AddPlaylistModal isAddPlaylistModalVisible={this.props.isAddPlaylistModalVisible} />
-        <Player />
+        <Player/>
       </View>
     );
   }
@@ -85,10 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  podcastEpisodes: {
-    marginBottom: 245,
-  },
+  }
 });
 
 export default connect(mapStateToProps)(App);

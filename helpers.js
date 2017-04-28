@@ -93,7 +93,6 @@ export const toggleBookmark = (id, props) => {
   }
 
 export const getSubscriptions = (props) => {
-    props.dispatch(podcastsActions.toggleSearchSpinner(true));
     fetch("http://siren-server.herokuapp.com/api/podcasts", {
       method: "GET",
       headers: {
@@ -108,7 +107,6 @@ export const getSubscriptions = (props) => {
         props.dispatch(podcastsActions.updateSubscriptions([]));
       } else {
         props.dispatch(podcastsActions.updateSubscriptions(subscriptions[0]));
-        props.dispatch(podcastsActions.toggleSearchSpinner(false));
       }
     })
     .catch(console.warn);

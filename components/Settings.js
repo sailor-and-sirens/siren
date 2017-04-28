@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage, TouchableOpacity } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { actionCreators } from '../actions';
@@ -36,34 +36,34 @@ class Settings extends Component {
   render() {
     return (
         <View style={styles.main}>
-          <Button title="Logout" style={styles.button} onPress={() => this.logoutUser()}
-          />
-           <Button title="Manage Subscriptions" style={styles.button} onPress={() => this.props.dispatch(headerActions.changeView('Manage Subscriptions'))}
-          />
+          <TouchableOpacity style={styles.button} onPress={() => this.props.dispatch(headerActions.changeView('Manage Subscriptions'))}>
+            <Text style={styles.buttonText}>Manage Subscriptions</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => this.logoutUser()}>
+            <Text style={styles.buttonText}>Logout</Text>
+          </TouchableOpacity>
         </View>
-
     );
   }
 }
 
 const styles = StyleSheet.create({
   main: {
+    flex: 1,
     marginTop: 20,
-    height: '30%',
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
-    alignSelf: 'center',
-    width: '70%'
+    alignItems: 'center'
   },
   button: {
-    height: 36,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    borderRadius: 8,
+    height: 35,
+    width: '50%',
     marginBottom: 20,
-    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#288D91',
   },
+  buttonText: {
+    color: '#ffffff',
+    textAlign: 'center'
+  }
 })
 
 export default connect(mapStateToProps)(Settings);

@@ -76,10 +76,10 @@ class PodcastEpisodeListCard extends Component {
       <Swipeable
         leftActionActivationDistance={200}
         leftContent={(
-          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'rgb(221, 95, 95)' : '#42f4c5'}]}>
+          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#114B5F' : '#288D91'}]}>
             {leftActionActivated ?
-              <Text>(( release ))</Text> :
-              <Text>Add to Inbox</Text>}
+              <Text style={styles.swipeText}>(( release ))</Text> :
+              <Text style={styles.swipeText}>Add to Inbox</Text>}
           </View>
         )}
         onLeftActionActivate={() => this.props.dispatch(swipeActions.updateLeftActivation(true))}
@@ -223,6 +223,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingRight: 20
   },
+  swipeText: {
+    color: '#ffffff'
+  }
 });
 
 export default connect(mapStateToProps)(PodcastEpisodeListCard);
