@@ -1,14 +1,13 @@
 import { actionCreators as playerActions } from './actions/Player';
 import { actionCreators as podcastsActions } from './actions/Podcasts';
-import { actionCreators as swipeActions } from './actions/Swipe';
 import { actionCreators as mainActions } from './actions';
 import { actionCreators as playlistActions } from './actions/Playlist';
+import { headerActions } from './actions/Header';
 
 let _ = require('lodash');
 
 export const convertMillis = (millis) => {
   let seconds = (millis / 1000).toFixed(0);
-  let hours = parseInt( seconds / 3600 );
   seconds = seconds % 3600;
   let minutes = parseInt( seconds / 60 );
   seconds = seconds % 60;
@@ -54,7 +53,7 @@ export const updateInbox = (props) => {
       props.dispatch(mainActions.updateInbox(inbox));
       props.dispatch(podcastsActions.toggleSearchSpinner(false));
     })
-    .catch((err) => console.warn(err));
+    .catch(console.warn);
   }
 
 export const toggleLike = (id, props) => {
@@ -121,8 +120,8 @@ export const getAllPlaylists = (props) => {
         'Authorization': props.token
       }
     })
-    .then(function(data){
-      var data = data.json().then(function(data){
+    .then((data) => {
+        data = data.json().then(function(data){
         props.dispatch(playlistActions.getPlaylists(data));
       });
     })
@@ -155,7 +154,7 @@ export const subscribePodcast = (props) => {
         getSubscriptions(props);
       })
     })
-    .catch((err) => console.log(err));
+    .catch(console.log);
     //add podcast to recommendation engine
     fetch("https://siren-discovery.herokuapp.com/api/subscribe", {
         method: "POST",
@@ -166,9 +165,6 @@ export const subscribePodcast = (props) => {
         body: JSON.stringify(props.podcast)
       })
       .then(response => response.json())
-      .then(response => {
-        console.log('SUBSCRIBE RESPONSE: ', response);
-      })
       .catch(console.log);
   }
 
