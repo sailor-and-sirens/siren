@@ -61,9 +61,7 @@ class App extends Component {
         this.props.view === 'Settings' ?
         <Settings/> :
         this.props.view === 'Podcast' ?
-        <View>
-          <PodcastViewCard/>
-        </View> :
+        <PodcastViewCard/> :
          this.props.view === 'Manage Subscriptions' ?
         <PodcastManager/> :
         this.props.view === 'Playlists' ?

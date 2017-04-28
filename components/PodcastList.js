@@ -96,9 +96,6 @@ class PodcastList extends Component {
             <Ionicons style={styles.searchButton} onPress={this.getPodcasts.bind(this)} size={30} color='grey' name="ios-search" />
           </View> :
           <View style={styles.discoverySpacer}></View>
-            // <View style={styles.recommendationBar}>
-            //   <Text style={styles.recommended}>Recommended for You</Text>
-            // </View>
         }
         <ScrollView style={styles.podcastList}>
           {this.props.visible ?
@@ -120,27 +117,27 @@ const styles = StyleSheet.create({
   },
   tabRow: {
     flexDirection: 'row',
-    height: 50,
-    margin: 2
+    height: 35,
+    margin: 5
   },
   searchTab: {
     flex: 0.5,
     justifyContent: 'center',
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#ffffff',
     borderWidth: 1,
     borderRightWidth: 0.5,
-    borderColor: 'gray'
+    borderColor: 'lightgrey'
   },
   discoveryTab: {
     flex: 0.5,
     justifyContent: 'center',
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#ffffff',
     borderWidth: 1,
     borderLeftWidth: 0.5,
-    borderColor: 'gray'
+    borderColor: 'lightgrey'
   },
   activeTab: {
-    backgroundColor: '#ffffff'
+    backgroundColor: '#50BFB9'
   },
   searchText: {
     textAlign: 'center'

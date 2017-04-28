@@ -55,7 +55,7 @@ class PodcastViewCard extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.wrapper}>
         <View style={styles.podcastView}>
           <View style={styles.leftView}>
             <Image source={{uri: this.props.podcast.artworkUrl600}} style={styles.image}/>
@@ -68,62 +68,68 @@ class PodcastViewCard extends Component {
             </ScrollView>
             <View style={styles.tagAddView}>
               <Text style={styles.tag} numberOfLines={1}> {this.props.podcast.primaryGenreName} </Text>
-              <Ionicons style={styles.favorite} size={30} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName);}}/>
-            </View>
-            <View style={styles.discoveryBar}>
-              <Text style={styles.discovery} onPress={ () => {this.getEpisodeDiscovery();}}>See more like this</Text>
+              <Ionicons style={styles.subscribeIcon} size={25} color='grey' name="ios-add-circle-outline" onPress={ () => {subscribePodcast(this.props); Alert.alert('Subscribed to ' + this.props.podcast.collectionName);}}/>
             </View>
           </View>
         </View>
-        <View style={styles.episodeScroll}>
-          <ScrollView>
-          {this.props.visible ?
-            <Spinner visible={this.props.visible} textContent={"Loading Episodes..."} textStyle={{color: '#FFF'}} />  :
-            <PodcastEpisodeList/>}
-          </ScrollView>
+        <View style={styles.podcastBottomView}>
+          <View style={styles.discoveryBar}>
+            <Text style={styles.discovery} onPress={ () => {this.getEpisodeDiscovery();}}>Discover more podcasts like this</Text>
+          </View>
         </View>
+        <ScrollView style={styles.episodeScroll}>
+        {this.props.visible ?
+          <Spinner visible={this.props.visible} textContent={"Loading Episodes..."} textStyle={{color: '#FFF'}} />  :
+          <PodcastEpisodeList/>}
+        </ScrollView>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
+  podcastView: {
+    height: 160,
+    flexDirection: 'row',
+    paddingTop: 5,
+    paddingBottom: 5,
+    borderTopWidth: 2,
+    borderTopColor: 'lightgrey',
+  },
   leftView: {
-    flex: .5,
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: 150,
+    width: 155,
+    paddingLeft: 5
   },
   rightView: {
-    paddingLeft: 2,
-    flex: .5,
+    paddingLeft: 3,
+    flex: 1,
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: 150,
     paddingTop: 5,
-    paddingBottom: 3,
-    paddingLeft: (Platform.OS === 'ios') ? 2 : 0,
-    paddingRight: 2,
+    paddingRight: 2
+  },
+  podcastBottomView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 5,
+    borderBottomWidth: 2,
+    borderBottomColor: 'lightgrey'
   },
   episodeScroll: {
-    marginBottom: 250,
-  },
-  podcastView: {
-    height: 155,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: 'lightgrey',
-    borderTopWidth: 2,
-    borderTopColor: 'lightgrey',
+    marginBottom: 80,
   },
   descriptionView: {
-    marginBottom: 4,
+    marginBottom: 5,
     height: 100,
   },
   image: {
-    height: 146,
-    width: 146,
+    height: 150,
+    width: 150,
   },
   description: {
      ...Platform.select({
@@ -170,28 +176,30 @@ const styles = StyleSheet.create({
     }),
   },
   tagAddView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingRight: 8,
-    marginBottom: 1,
-  },
-  discovery: {
-    textAlign: 'center',
-    height: 20,
-    color: 'grey',
-    fontSize: 15,
-    alignSelf: 'stretch',
-    fontWeight: '600',
-    justifyContent: 'center'
+    flexDirection: 'row'
   },
   tag: {
-    backgroundColor: '#f4a442',
+    flex: 0.8,
+    alignSelf: 'flex-end',
+    marginRight: 5,
     padding: 2,
-    alignSelf: 'flex-start',
-    marginTop: 6,
-    width: 120,
+    backgroundColor: '#50BFB9',
     textAlign: 'center',
   },
+  subscribeIcon: {
+    flex: 0.2,
+    marginBottom: -4,
+    textAlign: 'right'
+  },
+  discoveryBar: {
+    flex: 1
+  },
+  discovery: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '500',
+  }
 });
 
 export default connect(mapStateToProps)(PodcastViewCard);
