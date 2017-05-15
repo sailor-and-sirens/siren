@@ -73,3 +73,21 @@ Access your podcasts from any device.
 
 - A token stored in your phone’s async storage on sign-in keeps you logged between visits to the app.
 - User passwords are hashed before being added to the token, providing added security.
+
+
+### Presentation and Screenshots
+See a presenation with demo video [here](https://docs.google.com/presentation/d/1qV3TlrqWDSrvRfoprRAkKIiAZI6-f6qQosH3a3EW-ns/edit?usp=sharing). 
+
+<img src="https://cloud.githubusercontent.com/assets/23217560/26075966/270ac840-3985-11e7-9bdc-6ef15ae9eff8.png" width="300"/>
+
+<img src="https://cloud.githubusercontent.com/assets/23217560/26075967/28364f1e-3985-11e7-8e52-5dc078443231.png" width="300"/>
+
+<img src="https://cloud.githubusercontent.com/assets/23217560/26075969/2969ce6a-3985-11e7-8972-3474005ea571.png" width="300"/>
+
+<img src="https://cloud.githubusercontent.com/assets/23217560/26075970/2b221b22-3985-11e7-9eb9-2b17047cbaef.png" width="300"/>
+
+<img src="https://cloud.githubusercontent.com/assets/23217560/26075972/2cf6cfb0-3985-11e7-9d51-fefb153b0ffe.png" width="300"/>
+
+<img src="https://cloud.githubusercontent.com/assets/23217560/26075977/2ed294a4-3985-11e7-8876-4f3b1493cbff.png" width="300"/>
+
+<img src="https://cloud.githubusercontent.com/assets/23217560/26075982/306b84ec-3985-11e7-803e-1897fb7485f2.png" width="300"/>
